@@ -101,6 +101,112 @@ NodeInfo* GetNodeInfo
 	return NULL;
 }
 
+
+//-----------------------------------------------------------------------------
+// <parseHSM100>
+// Callback that is triggered when a value, group or node changes
+//-----------------------------------------------------------------------------
+void parseHSM100(ValueID value_id) {
+
+    // Initialize Variables
+    bool success = false;
+    uint8 byte_value = 0;
+    float float_value = 0.0;
+
+    // Perform action based on CommandClassID
+    // For HSM-100, the following Classes need to be taken care of:
+    // 1. COMMAND_CLASS_BASIC (0x20)
+    // 2. COMMAND_CLASS_WAKE_UP (0x84)
+    // 3. COMMAND_CLASS_BATTERY (0x80)
+    // 4. COMMAND_CLASS_CONFIGURATION (0x70)
+    // 5. COMMAND_CLASS_SENSOR_MULTILEVEL (0x31)
+    // 6. COMMAND_CLASS_VERSION (0x86)
+    // 7. COMMAND_CLASS_CONFIGURATION (0x70)
+    // 8. COMMAND_CLASS_SENSOR_MULTILEVEL (0x31)
+    
+    switch(value_id.GetCommandClassId()) {
+        case COMMAND_CLASS_BASIC:
+            printf("Jason: Got COMMAND_CLASS_BASIC!\n");
+
+            goto parseType;
+
+            break;
+        case COMMAND_CLASS_SENSOR_MULTILEVEL:
+
+            printf("Jason: Got COMMAND_CLASS_SENSOR_MULTILEVEL!\n");
+
+parseType:
+            printf("    Jason: ValueType: %d\n", (int) value_id.GetType());
+            printf("    Jason: ValueGenre: %d\n", (int) value_id.GetGenre());
+            printf("    Jason: Instance: %u\n", (uint8) value_id.GetInstance());
+            printf("    Jason: ID: %u\n", (uint64) value_id.GetId());
+
+            switch((int) value_id.GetType()) {
+                // See open-zwave/cpp/src/value_classes/ValueID.h for ValueType enum 
+                case 1:
+                    // Byte Type
+                    success = Manager::Get()->GetValueAsByte(value_id, &byte_value);
+                    printf("Successfully got Value? %s\n", (success)?"Yes":"No");
+
+                    printf("Byte Read: %u\n", byte_value);
+
+                    break;
+                case 2:
+                    // Decimal Type
+                    success = Manager::Get()->GetValueAsFloat(value_id, &float_value);
+                    //printf("Successfully got Value? %s\n", (success)?"Yes":"No");
+                    //printf("Decimal Read: %f\n", float_value);
+
+                    // Report based on instance:
+                    // 1. General
+                    // 2. Luminance
+                    // 3. Temperature
+                    switch((uint8) value_id.GetInstance()) {
+                        case 1:
+                            // General
+                            printf("General Value: %f\n", float_value);
+                            break;
+                        case 2:
+                            printf("Luminance: %f\n", float_value);
+                            break;
+                        case 3:
+                            printf("Temperature: %f\n", float_value);
+                            break;
+
+                        default:
+                            printf("Unrecognized Instance\n");
+                            break;
+                    }
+
+
+                    break;
+                default:
+                    printf("Unrecognized Type\n");
+                    break;
+            }
+
+            break;
+        case COMMAND_CLASS_CONFIGURATION:
+            printf("Jason: Got COMMAND_CLASS_CONFIGURATION!\n");
+            break;
+        case COMMAND_CLASS_WAKE_UP:
+            printf("Jason: Got COMMAND_CLASS_WAKE_UP!\n");
+            break;
+        case COMMAND_CLASS_BATTERY:
+            printf("Jason: Got COMMAND_CLASS_BATTERY!\n");
+            break;
+        case COMMAND_CLASS_VERSION:
+            printf("Jason: Got COMMAND_CLASS_VERSION!\n");
+            break;
+        default:
+            printf("Jason: Got an Unknown COMMAND CLASS!\n");
+            break;
+    }
+
+    printf("\n");
+}
+
+
 //-----------------------------------------------------------------------------
 // <OnNotification>
 // Callback that is triggered when a value, group or node changes
@@ -156,114 +262,58 @@ void OnNotification
 
                 printf("nodeID: %u\n", nodeInfo->m_nodeId);
 
+                // ValueID of value involved
+                ValueID value_id = _notification->GetValueID();
+
+                printf("ValueID->CommandClassID: %x\n", value_id.GetCommandClassId());
+
+
+				for( list<ValueID>::iterator it = nodeInfo->m_values.begin(); it != nodeInfo->m_values.end(); ++it )
+				{
+					if(it->GetNodeId() == 8) 
+                    {
+                        if(it->GetCommandClassId() == COMMAND_CLASS_CONFIGURATION) 
+                        {
+
+                            if(it->GetIndex() == 6) 
+                            {
+                                printf("    Jason: ValueType: %d\n", (int) it->GetType());
+                                printf("    Jason: ValueGenre: %d\n", (int) it->GetGenre());
+                                printf("    Jason: Instance: %u\n", (uint8) it->GetInstance());
+                                printf("    Jason: ID: %u\n", (uint64) it->GetId());
+
+                                uint8 byte_value = 0;
+                                bool success = Manager::Get()->GetValueAsByte(*it, &byte_value);
+                                printf("Jason: On Value: %u\n", byte_value);
+
+                            }
+
+
+                        }
+
+					}
+				}
+
                 // Initialize values
-                list<ValueID> valueIDList = nodeInfo->m_values;
-                bool success = false;
-                uint8 byte_value = 0;
-                float float_value = 0.0;
+                //list<ValueID> valueIDList = nodeInfo->m_values;
 
                 // Perform different actions based on which node
                 switch(nodeInfo->m_nodeId) {
                     case 8: 
                         // Read the values in the node information
-                        for( list<ValueID>::iterator it = valueIDList.begin(); it != valueIDList.end(); ++it) {
+                        //for( list<ValueID>::iterator it = valueIDList.begin(); it != valueIDList.end(); ++it) {
 
-                            // Perform action based on CommandClassID
-                            // For HSM-100, the following Classes need to be taken care of:
-                            // 1. COMMAND_CLASS_BASIC (0x20)
-                            // 2. COMMAND_CLASS_WAKE_UP (0x84)
-                            // 3. COMMAND_CLASS_BATTERY (0x80)
-                            // 4. COMMAND_CLASS_CONFIGURATION (0x70)
-                            // 5. COMMAND_CLASS_SENSOR_MULTILEVEL (0x31)
-                            // 6. COMMAND_CLASS_VERSION (0x86)
-                            // 7. COMMAND_CLASS_CONFIGURATION (0x70)
-                            // 8. COMMAND_CLASS_SENSOR_MULTILEVEL (0x31)
-
-                            printf("CommandClassID: %x\n", it->GetCommandClassId());
-
-                            switch(it->GetCommandClassId()) {
-                                case COMMAND_CLASS_BASIC:
-                                    printf("Jason: Got COMMAND_CLASS_BASIC!\n");
-                                    printf("    Jason: ValueType: %d\n", (int) it->GetType());
-                                    printf("    Jason: ValueGenre: %d\n", (int) it->GetGenre());
-                                    printf("    Jason: Instance: %u\n", (uint8) it->GetInstance());
-                                    printf("    Jason: ID: %u\n", (uint64) it->GetId());
-
-
-                                    //printf("Event: %u", _notification->GetEvent());
-                                    //if(_notification->GetEvent()) {
-                                    //    printf("Door is Open!\n");
-                                    //}
-                                    //else {
-                                    //    printf("Door is Closed!\n");
-                                    //}
-
-                                    break;
-                                case COMMAND_CLASS_SENSOR_MULTILEVEL:
-                                    printf("Jason: Got COMMAND_CLASS_SENSOR_MULTILEVEL!\n");
-                                    printf("    Jason: ValueType: %d\n", (int) it->GetType());
-                                    printf("    Jason: ValueGenre: %d\n", (int) it->GetGenre());
-                                    printf("    Jason: Instance: %u\n", (uint8) it->GetInstance());
-                                    printf("    Jason: ID: %u\n", (uint64) it->GetId());
-
-                                    switch((int) it->GetType()) {
-                                        // See open-zwave/cpp/src/value_classes/ValueID.h for ValueType enum 
-                                        case 1:
-                                            // Byte Type
-                                            success = Manager::Get()->GetValueAsByte(*it, &byte_value);
-                                            printf("Successfully got Value? %s\n", (success)?"Yes":"No");
-
-                                            printf("Byte Read: %u\n", byte_value);
-
-                                            break;
-                                        case 2:
-                                            // Decimal Type
-                                            success = Manager::Get()->GetValueAsFloat(*it, &float_value);
-                                            printf("Successfully got Value? %s\n", (success)?"Yes":"No");
-
-                                            printf("Decimal Read: %f\n", float_value);
-                                            break;
-                                        default:
-                                            printf("Unrecognized Type\n");
-                                            break;
-                                    }
-
-
-
-
-                                    break;
-                                case COMMAND_CLASS_CONFIGURATION:
-                                    printf("Jason: Got COMMAND_CLASS_CONFIGURATION!\n");
-                                    break;
-                                case COMMAND_CLASS_WAKE_UP:
-                                    printf("Jason: Got COMMAND_CLASS_WAKE_UP!\n");
-                                    break;
-                                case COMMAND_CLASS_BATTERY:
-                                    printf("Jason: Got COMMAND_CLASS_BATTERY!\n");
-                                    break;
-                                case COMMAND_CLASS_VERSION:
-                                    printf("Jason: Got COMMAND_CLASS_VERSION!\n");
-                                    break;
-                                default:
-                                    printf("Jason: Got an Unknown COMMAND CLASS!\n");
-                                    break;
-                            }
-
-                            printf("\n");
-                            
-                        }
-                    break;
+                        parseHSM100(value_id);
+                        break;
                     default:
                         printf("Unknown Node\n");
                         break;
                 }
-
-
                 printf("Jason: Finished ValueChanged\n");
                 // Jason Tsao Changes End
-			}
-			break;
-		}
+            }
+            break;
+        }
 
 		case Notification::Type_Group:
 		{
