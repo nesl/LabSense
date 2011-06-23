@@ -1,3 +1,8 @@
 LabSenseDB
 *.pyc
 .DS_Store
+*.o
+test
+LabSenseZwave/OZW_Log.txt
+*.swp
+*.svn

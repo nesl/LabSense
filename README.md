@@ -21,8 +21,26 @@ LabSenseServer
   data from the different sensors. Other applications can then process the
   data and perform their own analysis of the streaming data.
 
+  Dependency:
+
+  * [Django 1.3.1](https://www.djangoproject.com/download/)
+
 ------------------------------------------------------------------------------
 
-Project dependencies:
+LabSenseZwave
+--------------
 
-  * [Django 1.3.1](https://www.djangoproject.com/download/
+    LabSenseZwave contains the code running on the guruplug. This code 
+    specifically focuses on the zwave aspect of the guruplug. The open-zwave 
+    project is used for the zwave implementation. The Main.cpp file contains the
+    code that receives notifications from the HSM-100 and the Aeon Labs Door/
+    Window Sensor. 
+
+    Dependency:
+
+    * [Open-Zwave](http://code.google.com/p/open-zwave/)
+
+
+------------------------------------------------------------------------------
+By Jason Tsao
+
