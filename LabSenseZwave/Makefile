@@ -30,16 +30,16 @@ LIBS = $(wildcard ../../../lib/linux/*.a)
 %.o : %.cpp
 	$(CXX) $(CFLAGS) $(INCLUDES) -o $@ $<
 
-all: test
+all: LabSenseZwave 
 
 lib:
 	$(MAKE) -C ../../../build/linux
 
-test:	Main.o lib
+LabSenseZwave:	Main.o lib
 	$(LD) -o $@ $(LDFLAGS) $< $(LIBS) -pthread -ludev
 
 clean:
-	rm -f test Main.o
+	rm -f LabSenseZwave Main.o
 
 XMLLINT := $(shell whereis -b xmllint | cut -c10-)
 

@@ -112,6 +112,7 @@ void parseHSM100(ValueID value_id) {
     bool success = false;
     uint8 byte_value = 0;
     float float_value = 0.0;
+    int32 int_value = 0;
 
     // Perform action based on CommandClassID
     // For HSM-100, the following Classes need to be taken care of:
@@ -124,86 +125,89 @@ void parseHSM100(ValueID value_id) {
     // 7. COMMAND_CLASS_CONFIGURATION (0x70)
     // 8. COMMAND_CLASS_SENSOR_MULTILEVEL (0x31)
     
-    switch(value_id.GetCommandClassId()) {
-        case COMMAND_CLASS_BASIC:
-            printf("Jason: Got COMMAND_CLASS_BASIC!\n");
+    // Print value parameters
+    /*
+       printf("    ValueType: %d\n", (int) value_id.GetType());
+       printf("    ValueGenre: %d\n", (int) value_id.GetGenre());
+       printf("    Instance: %u\n", (uint8) value_id.GetInstance());
+       printf("    ID: %u\n", (uint64) value_id.GetId());
+    */
 
-            goto parseType;
-
-            break;
-        case COMMAND_CLASS_SENSOR_MULTILEVEL:
-
-            printf("Jason: Got COMMAND_CLASS_SENSOR_MULTILEVEL!\n");
-
-parseType:
-            printf("    Jason: ValueType: %d\n", (int) value_id.GetType());
-            printf("    Jason: ValueGenre: %d\n", (int) value_id.GetGenre());
-            printf("    Jason: Instance: %u\n", (uint8) value_id.GetInstance());
-            printf("    Jason: ID: %u\n", (uint64) value_id.GetId());
-
-            switch((int) value_id.GetType()) {
-                // See open-zwave/cpp/src/value_classes/ValueID.h for ValueType enum 
-                case 1:
-                    // Byte Type
-                    success = Manager::Get()->GetValueAsByte(value_id, &byte_value);
-                    printf("Successfully got Value? %s\n", (success)?"Yes":"No");
-
-                    printf("Byte Read: %u\n", byte_value);
-
-                    break;
-                case 2:
-                    // Decimal Type
-                    success = Manager::Get()->GetValueAsFloat(value_id, &float_value);
-                    //printf("Successfully got Value? %s\n", (success)?"Yes":"No");
-                    //printf("Decimal Read: %f\n", float_value);
-
-                    // Report based on instance:
-                    // 1. General
-                    // 2. Luminance
-                    // 3. Temperature
-                    switch((uint8) value_id.GetInstance()) {
-                        case 1:
-                            // General
-                            printf("General Value: %f\n", float_value);
-                            break;
-                        case 2:
-                            printf("Luminance: %f\n", float_value);
-                            break;
-                        case 3:
-                            printf("Temperature: %f\n", float_value);
-                            break;
-
-                        default:
-                            printf("Unrecognized Instance\n");
-                            break;
-                    }
-
-
-                    break;
-                default:
-                    printf("Unrecognized Type\n");
-                    break;
-            }
+    // Get the Changed Value Based on the type
+    switch((int) value_id.GetType()) {
+        // See open-zwave/cpp/src/value_classes/ValueID.h for ValueType enum 
+        case 1:
+            // Byte Type
+            success = Manager::Get()->GetValueAsByte(value_id, &byte_value);
+            // printf("Successfully got Value? %s\n", (success)?"Yes":"No");
 
             break;
-        case COMMAND_CLASS_CONFIGURATION:
-            printf("Jason: Got COMMAND_CLASS_CONFIGURATION!\n");
+        case 2:
+            // Decimal Type
+            success = Manager::Get()->GetValueAsFloat(value_id, &float_value);
             break;
-        case COMMAND_CLASS_WAKE_UP:
-            printf("Jason: Got COMMAND_CLASS_WAKE_UP!\n");
-            break;
-        case COMMAND_CLASS_BATTERY:
-            printf("Jason: Got COMMAND_CLASS_BATTERY!\n");
-            break;
-        case COMMAND_CLASS_VERSION:
-            printf("Jason: Got COMMAND_CLASS_VERSION!\n");
+        case 3:
+            // Int Type
+            success = Manager::Get()->GetValueAsInt(value_id, &int_value);
             break;
         default:
-            printf("Jason: Got an Unknown COMMAND CLASS!\n");
+            printf("Unrecognized Type: %d\n", (int) value_id.GetType());
+            break;
+    }
+    if(!success)
+        printf("Unable to Get the Value\n");
+    
+    // Output based on the CommandClassId
+    switch(value_id.GetCommandClassId()) {
+        case COMMAND_CLASS_BASIC:
+            //printf("Got COMMAND_CLASS_BASIC!\n");
+            
+            printf("It has been %u minutes since the last Motion Detected.\n", byte_value);
+            break;
+        case COMMAND_CLASS_SENSOR_MULTILEVEL:
+            //printf("Got COMMAND_CLASS_SENSOR_MULTILEVEL!\n");
+
+            // Report based on instance:
+            // 1. General
+            // 2. Luminance
+            // 3. Temperature
+            switch((uint8) value_id.GetInstance()) {
+                case 1:
+                    // General
+                    printf("It has been %f minutes since the last Motion Detected.\n", float_value);
+                    break;
+                case 2:
+                    printf("Luminance: %f\n", float_value);
+                    break;
+                case 3:
+                    printf("Temperature: %f\n", float_value);
+                    break;
+
+                default:
+                    printf("Unrecognized Instance\n");
+                    break;
+            }
+            break;
+        case COMMAND_CLASS_CONFIGURATION:
+            printf("Configured Value: %u\n", byte_value);
+            break;
+        case COMMAND_CLASS_WAKE_UP:
+            printf("\nGot COMMAND_CLASS_WAKE_UP!\n");
+            printf("Wake-up interval: %d\n", int_value);
+
+            break;
+        case COMMAND_CLASS_BATTERY:
+            printf("Got COMMAND_CLASS_BATTERY!\n");
+            printf("\n");
+            break;
+        case COMMAND_CLASS_VERSION:
+            printf("Got COMMAND_CLASS_VERSION!\n");
+            break;
+        default:
+            printf("Got an Unknown COMMAND CLASS!\n");
             break;
     }
 
-    printf("\n");
 }
 
 
@@ -220,7 +224,7 @@ void OnNotification
 	// Must do this inside a critical section to avoid conflicts with the main thread
 	pthread_mutex_lock( &g_criticalSection );
 
-    printf("_notification->GetType(): %d\n", _notification->GetType());
+    // printf("_notification->GetType(): %d\n", _notification->GetType());
 
 	switch( _notification->GetType() )
 	{
@@ -256,18 +260,23 @@ void OnNotification
 			// One of the node values has changed
 			if( NodeInfo* nodeInfo = GetNodeInfo( _notification ) )
 			{
-                // Jason Tsao Changes
-                
-                printf("Jason: Got a ValueChanged!\n");
+                // printf("Got a ValueChanged!\n");
 
-                printf("nodeID: %u\n", nodeInfo->m_nodeId);
+                // printf("HomeId: %u\n", nodeInfo->m_homeId);
+                // printf("nodeID: %u\n", nodeInfo->m_nodeId);
 
                 // ValueID of value involved
                 ValueID value_id = _notification->GetValueID();
 
-                printf("ValueID->CommandClassID: %x\n", value_id.GetCommandClassId());
+                //printf("    ValueType: %d\n", (int) value_id.GetType());
+                //printf("    ValueGenre: %d\n", (int) value_id.GetGenre());
+                //printf("    Instance: %u\n", (uint8) value_id.GetInstance());
+                //printf("    ID: %u\n", (uint64) value_id.GetId());
+
+                //printf("ValueID->CommandClassID: %x\n", value_id.GetCommandClassId());
 
 
+                /*
 				for( list<ValueID>::iterator it = nodeInfo->m_values.begin(); it != nodeInfo->m_values.end(); ++it )
 				{
 					if(it->GetNodeId() == 8) 
@@ -277,14 +286,14 @@ void OnNotification
 
                             if(it->GetIndex() == 6) 
                             {
-                                printf("    Jason: ValueType: %d\n", (int) it->GetType());
-                                printf("    Jason: ValueGenre: %d\n", (int) it->GetGenre());
-                                printf("    Jason: Instance: %u\n", (uint8) it->GetInstance());
-                                printf("    Jason: ID: %u\n", (uint64) it->GetId());
+                                printf("    ValueType: %d\n", (int) it->GetType());
+                                printf("    ValueGenre: %d\n", (int) it->GetGenre());
+                                printf("    Instance: %u\n", (uint8) it->GetInstance());
+                                printf("    ID: %u\n", (uint64) it->GetId());
 
                                 uint8 byte_value = 0;
                                 bool success = Manager::Get()->GetValueAsByte(*it, &byte_value);
-                                printf("Jason: On Value: %u\n", byte_value);
+                                printf("On Value: %u\n", byte_value);
 
                             }
 
@@ -293,6 +302,7 @@ void OnNotification
 
 					}
 				}
+                */
 
                 // Initialize values
                 //list<ValueID> valueIDList = nodeInfo->m_values;
@@ -309,7 +319,7 @@ void OnNotification
                         printf("Unknown Node\n");
                         break;
                 }
-                printf("Jason: Finished ValueChanged\n");
+                // printf("Finished ValueChanged\n");
                 // Jason Tsao Changes End
             }
             break;
@@ -364,74 +374,77 @@ void OnNotification
 			{
                 // Jason Tsao Changes
                 
-                printf("Jason: Got a NodeEvent!\n");
+                // printf("Got a NodeEvent!\n");
 
                 printf("nodeID: %u\n", nodeInfo->m_nodeId);
 
+                // ValueID of value involved
+                ValueID value_id = _notification->GetValueID();
+
                 // Perform different actions based on which node
-                switch(nodeInfo->m_nodeId) {
-                    case 8: 
-                    case 6:
-                        // Read the values in the node information
-                        list<ValueID> valueIDList = nodeInfo->m_values;
-                        for( list<ValueID>::iterator it = valueIDList.begin(); it != valueIDList.end(); ++it) {
+                if(nodeInfo->m_nodeId == 6) {
+                    // Read the values in the node information
+                    //list<ValueID> valueIDList = nodeInfo->m_values;
+                    //for( list<ValueID>::iterator it = valueIDList.begin(); it != valueIDList.end(); ++it) {
 
-                            // Perform action based on CommandClassID
-                            // For Aeon Labs Door/Window Sensor, there are 3 Class to take care of:
-                            // 1. COMMAND_CLASS_BASIC (0x20)
-                            // 2. COMMAND_CLASS_SENSOR_BINARY (0x30)
-                            // 3. COMMAND_CLASS_WAKE_UP (0x84)
-                            printf("CommandClassID: %x\n", it->GetCommandClassId());
+                    // Perform action based on CommandClassID
+                    // For Aeon Labs Door/Window Sensor, there are 3 Class to take care of:
+                    // 1. COMMAND_CLASS_BASIC (0x20)
+                    // 2. COMMAND_CLASS_SENSOR_BINARY (0x30)
+                    // 3. COMMAND_CLASS_WAKE_UP (0x84)
+                    /*
+                    printf("CommandClassID: %x\n", value_id.GetCommandClassId());
+                    switch(value_id.GetCommandClassId()) {
+                        case COMMAND_CLASS_BASIC:
+                            printf("Got COMMAND_CLASS_BASIC!\n");
+                            printf("    ValueType: %d\n", (int) value_id.GetType());
+                            printf("    ValueGenre: %d\n", (int) value_id.GetGenre());
+                            printf("    Instance: %u\n", (uint8) value_id.GetInstance());
+                            printf("    ID: %u\n", (uint64) value_id.GetId());
 
-                            switch(it->GetCommandClassId()) {
-                                case COMMAND_CLASS_BASIC:
-                                    printf("Jason: Got COMMAND_CLASS_BASIC!\n");
-                                    printf("    Jason: ValueType: %d\n", (int) it->GetType());
-                                    printf("    Jason: ValueGenre: %d\n", (int) it->GetGenre());
-                                    printf("    Jason: Instance: %u\n", (uint8) it->GetInstance());
-                                    printf("    Jason: ID: %u\n", (uint64) it->GetId());
+                            // COMMAND_CLASS_BASIC gives a boolean specifying if:
+                            // 0: Door is closed
+                            // 255: Door is open
+                     */
 
-                                    // COMMAND_CLASS_BASIC gives a boolean specifying if:
-                                    // 0: Door is closed
-                                    // 255: Door is open
-
-                                    if(_notification->GetEvent()) {
-                                        printf("Door is Open!\n");
-                                    }
-                                    else {
-                                        printf("Door is Closed!\n");
-                                    }
-
-                                    break;
-                                case COMMAND_CLASS_SENSOR_BINARY:
-                                    printf("Jason: Got COMMAND_CLASS_SENSOR_BINARY!\n");
-                                    break;
-                                case COMMAND_CLASS_WAKE_UP:
-                                    printf("Jason: Got COMMAND_CLASS_WAKE_UP!\n");
-                                    break;
-                                case COMMAND_CLASS_BATTERY:
-                                    printf("Jason: Got COMMAND_CLASS_BATTERY!\n");
-                                    break;
-                                case COMMAND_CLASS_ALARM:
-                                    printf("Jason: Got COMMAND_CLASS_ALARM!\n");
-                                    break;
-                                case COMMAND_CLASS_VERSION:
-                                    printf("Jason: Got COMMAND_CLASS_VERSION!\n");
-                                    break;
-                                default:
-                                    printf("Jason: Got an Unknown COMMAND CLASS!\n");
-                                    break;
+                            if(_notification->GetEvent()) {
+                                printf("Door is Open!\n");
+                            }
+                            else {
+                                printf("Door is Closed!\n");
                             }
 
+                            /*
+                            break;
+                        case COMMAND_CLASS_SENSOR_BINARY:
+                            printf("Got COMMAND_CLASS_SENSOR_BINARY!\n");
+                            break;
+                        case COMMAND_CLASS_WAKE_UP:
+                            printf("Got COMMAND_CLASS_WAKE_UP!\n");
+                            break;
+                        case COMMAND_CLASS_BATTERY:
+                            printf("Got COMMAND_CLASS_BATTERY!\n");
+                            break;
+                        case COMMAND_CLASS_ALARM:
+                            printf("Got COMMAND_CLASS_ALARM!\n");
+                            break;
+                        case COMMAND_CLASS_VERSION:
+                            printf("Got COMMAND_CLASS_VERSION!\n");
+                            break;
+                        default:
+                            printf("Got an Unknown COMMAND CLASS!\n");
+                            break;
+                    }
+                    */
+                    printf("\n");
 
-                            printf("\n");
-                            
-                        }
-                    break;
+                }
+                else {
+                    printf("Received Node Event for Unknown Node %u", nodeInfo->m_nodeId);
                 }
 
 
-                printf("Jason: Finished NodeEvent\n");
+                // printf("Finished NodeEvent\n");
                 // Jason Tsao Changes End
 			}
 			break;
@@ -514,6 +527,9 @@ int main( int argc, char* argv[] )
 	Options::Get()->AddOptionInt( "PollInterval", 500 );
 	Options::Get()->AddOptionBool( "IntervalBetweenPolls", true );
 	Options::Get()->AddOptionBool("ValidateValueChanges", true);
+
+    // Turn off Console Logging
+    Options::Get()->AddOptionBool("ConsoleOutput", false);
 	Options::Get()->Lock();
 
 	Manager::Create();
@@ -556,6 +572,8 @@ int main( int argc, char* argv[] )
 
 		Manager::Get()->WriteConfig( g_homeId );
 
+        uint8 ccId = 0;
+
 		// The section below demonstrates setting up polling for a variable.  In this simple
 		// example, it has been hardwired to poll COMMAND_CLASS_BASIC on the each node that 
 		// supports this setting.
@@ -570,7 +588,9 @@ int main( int argc, char* argv[] )
 			for( list<ValueID>::iterator it2 = nodeInfo->m_values.begin(); it2 != nodeInfo->m_values.end(); ++it2 )
 			{
 				ValueID v = *it2;
-				if( v.GetCommandClassId() == 0x20 )
+                ccId = v.GetCommandClassId();
+				//if( ccId == COMMAND_CLASS_BASIC || ccId == COMMAND_CLASS_SENSOR_MULTILEVEL)
+                if(false)
 				{
 					Manager::Get()->EnablePoll( v, 2 );		// enables polling with "intensity" of 2, though this is irrelevant with only one value polled
 					break;
@@ -578,6 +598,13 @@ int main( int argc, char* argv[] )
 			}
 		}
 		pthread_mutex_unlock( &g_criticalSection );
+
+        // Initialize Configuration Parameters
+        pthread_mutex_lock( &g_criticalSection );
+        // Request and Set the "On Time" Config Param to 1 with index 2 (See zwcfg*.xml)
+        Manager::Get()->RequestConfigParam(g_homeId, 8, 2); 
+        Manager::Get()->SetConfigParam(g_homeId, 8, 2, 1); 
+        pthread_mutex_unlock( &g_criticalSection );
 
 		// If we want to access our NodeInfo list, that has been built from all the
 		// notification callbacks we received from the library, we have to do so
@@ -587,12 +614,17 @@ int main( int argc, char* argv[] )
 		// stalling the OpenZWave drivers.
 		// At this point, the program just waits for 3 minutes (to demonstrate polling),
 		// then exits
-		for( int i = 0; i < 60*3; i++ )
+		// for( int i = 0; i < 60*30; i++ )
+        while(1)
 		{
 			pthread_mutex_lock( &g_criticalSection );
 			// but NodeInfo list and similar data should be inside critical section
+            Manager::Get()->RefreshNodeInfo(g_homeId, 8);
+            // Manager::Get()->RequestNodeState(g_homeId, 8);
+            Manager::Get()->RequestNodeDynamic(g_homeId, 8);
+
 			pthread_mutex_unlock( &g_criticalSection );
-			sleep(1);
+			sleep(5);
 		}
 
 		Driver::DriverData data;
