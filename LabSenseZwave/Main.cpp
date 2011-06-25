@@ -63,6 +63,9 @@
 using namespace OpenZWave;
 
 static uint32 g_homeId = 0;
+static uint8 AlDWSensorId = 0;
+static uint8 Hsm100SensorId = 0;
+static uint8 ZstickId = 0;
 static bool   g_initFailed = false;
 
 typedef struct
@@ -143,7 +146,7 @@ void parseHSM100(ValueID value_id) {
 
             break;
         case 2:
-            // Decimal Type
+            // Float Type
             success = Manager::Get()->GetValueAsFloat(value_id, &float_value);
             break;
         case 3:
@@ -193,7 +196,8 @@ void parseHSM100(ValueID value_id) {
             break;
         case COMMAND_CLASS_WAKE_UP:
             printf("\nGot COMMAND_CLASS_WAKE_UP!\n");
-            printf("Wake-up interval: %d\n", int_value);
+            printf("Wake-up interval: %d seconds\n", int_value);
+
 
             break;
         case COMMAND_CLASS_BATTERY:
@@ -382,7 +386,8 @@ void OnNotification
                 ValueID value_id = _notification->GetValueID();
 
                 // Perform different actions based on which node
-                if(nodeInfo->m_nodeId == 6) {
+                switch(nodeInfo->m_nodeId) {
+                    case 6:
                     // Read the values in the node information
                     //list<ValueID> valueIDList = nodeInfo->m_values;
                     //for( list<ValueID>::iterator it = valueIDList.begin(); it != valueIDList.end(); ++it) {
@@ -436,17 +441,21 @@ void OnNotification
                             break;
                     }
                     */
-                    printf("\n");
-
-                }
-                else {
-                    printf("Received Node Event for Unknown Node %u", nodeInfo->m_nodeId);
+                            printf("\n");
+                            break;
+                        case 8:
+                            printf("Received Node Event for Node 8\n");
+                            printf("Event value: %u\n", _notification->GetEvent());
+                            break;
+                        default:
+                            printf("Received Node Event for Unknown Node %u", nodeInfo->m_nodeId);
                 }
 
 
                 // printf("Finished NodeEvent\n");
                 // Jason Tsao Changes End
 			}
+
 			break;
 		}
 
@@ -492,6 +501,39 @@ void OnNotification
 		case Notification::Type_MsgComplete:
 		case Notification::Type_NodeNaming:
 		case Notification::Type_NodeProtocolInfo:
+        {
+            if( NodeInfo* nodeInfo = GetNodeInfo(_notification)) {
+
+                // With all protocol info found, set the sensor ids
+                // for the zstick, door/window sensor, and hsm-100
+                uint32 homeId = nodeInfo->m_homeId;
+                uint8 nodeId = nodeInfo->m_nodeId;
+
+                // printf("Finished protocol info for Node %u\n", nodeId);
+                //printf("With type: %s\n", Manager::Get()->GetNodeType(nodeInfo->m_homeId, nodeInfo->m_nodeId));
+                string name = Manager::Get()->GetNodeProductName(homeId, nodeId);
+                string manufacturer_name = Manager::Get()->GetNodeManufacturerName(homeId, nodeId);
+                //printf("    With Name: %s\n", name.c_str());
+                //printf("    and Manufacturer: %s\n", manufacturer_name.c_str());
+                
+                if(name == "Door/Window Sensor" && manufacturer_name == "Aeon Labs") {
+                    AlDWSensorId = nodeId;
+                }
+                else if(name == "HSM100 Wireless Multi-Sensor" && manufacturer_name == "Homeseer") {
+                    Hsm100SensorId = nodeId;
+                }
+                else if(name == "Z-Stick S2" && manufacturer_name == "Aeon Labs") {
+                    ZstickId = nodeId;
+                }
+
+
+                //printf("Node Type of node %u: %s\n", nodeInfo->m_nodeId, (Manager::Get()->GetNodeType(nodeInfo->m_homeId, nodeInfo->m_nodeId)));
+
+
+            }
+            break;
+
+        }
 		case Notification::Type_NodeQueriesComplete:
 		default:
 		{
@@ -589,12 +631,16 @@ int main( int argc, char* argv[] )
 			{
 				ValueID v = *it2;
                 ccId = v.GetCommandClassId();
-				//if( ccId == COMMAND_CLASS_BASIC || ccId == COMMAND_CLASS_SENSOR_MULTILEVEL)
-                if(false)
+				if(ccId == COMMAND_CLASS_SENSOR_MULTILEVEL)
 				{
-					Manager::Get()->EnablePoll( v, 2 );		// enables polling with "intensity" of 2, though this is irrelevant with only one value polled
-					break;
+                    // Poll every 5 seconds
+					Manager::Get()->EnablePoll( v, 2);		// enables polling with "intensity" of 2, though this is irrelevant with only one value polled
 				}
+                else if(nodeInfo->m_nodeId == 8 && ccId == COMMAND_CLASS_WAKE_UP) {
+                    // Set the Wake-up interval
+                    bool success = Manager::Get()->SetValue(v, 360);
+                    printf("Set Wake-up Interval Successfully: %s", (success)?"Yes":"No");
+                }
 			}
 		}
 		pthread_mutex_unlock( &g_criticalSection );
@@ -602,9 +648,13 @@ int main( int argc, char* argv[] )
         // Initialize Configuration Parameters
         pthread_mutex_lock( &g_criticalSection );
         // Request and Set the "On Time" Config Param to 1 with index 2 (See zwcfg*.xml)
-        Manager::Get()->RequestConfigParam(g_homeId, 8, 2); 
-        Manager::Get()->SetConfigParam(g_homeId, 8, 2, 1); 
+        Manager::Get()->SetConfigParam(g_homeId, Hsm100SensorId, 2, 1); 
+        Manager::Get()->RequestConfigParam(g_homeId, Hsm100SensorId, 2); 
+
+        // Request Sensitivity
+        Manager::Get()->RequestConfigParam(g_homeId, Hsm100SensorId, 1);
         pthread_mutex_unlock( &g_criticalSection );
+
 
 		// If we want to access our NodeInfo list, that has been built from all the
 		// notification callbacks we received from the library, we have to do so
@@ -619,10 +669,9 @@ int main( int argc, char* argv[] )
 		{
 			pthread_mutex_lock( &g_criticalSection );
 			// but NodeInfo list and similar data should be inside critical section
-            Manager::Get()->RefreshNodeInfo(g_homeId, 8);
-            // Manager::Get()->RequestNodeState(g_homeId, 8);
-            Manager::Get()->RequestNodeDynamic(g_homeId, 8);
-
+            
+            //Manager::Get()->RefreshNodeInfo(g_homeId, 8);
+            //Manager::Get()->RequestNodeDynamic(g_homeId, 8);
 			pthread_mutex_unlock( &g_criticalSection );
 			sleep(5);
 		}
