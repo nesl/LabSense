@@ -44,6 +44,9 @@
 #include "ValueBool.h"
 #include "Log.h"
 
+// Includes for Zeromq transport layer to make zwave notifications decoupled from updating SensorSafe over http request
+#include <zmq.hpp>
+
 
 // Defines
 // For Aeon Labs Door/Window Sensor, the following command classes send events
@@ -81,6 +84,31 @@ static pthread_mutex_t g_criticalSection;
 static pthread_cond_t  initCond  = PTHREAD_COND_INITIALIZER;
 static pthread_mutex_t initMutex = PTHREAD_MUTEX_INITIALIZER;
 
+// Zeromq initialization for context and publisher
+zmq::context_t context(1);
+zmq::socket_t publisher(context, ZMQ_PUB);
+
+// Zeromq Functions
+
+//-----------------------------------------------------------------------------
+// <sendMessage>
+// This function sends the data to the python process using zeromq. 
+//-----------------------------------------------------------------------------
+void sendMessage(const char *s, float f_val) {
+
+    // char *temp_string = (char *) malloc(30);
+    // zmq::message_t message(30);
+    // snprintf( temp_string, 30, 
+    //         "%s %f", s, f_val);
+    // strncpy((char *)message.data(), temp_string, 30);
+    // publisher.send(message);
+    zmq::message_t message(30);
+    sprintf((char *) message.data(), 
+            "%s %f ", s, f_val);
+    publisher.send(message);
+}
+
+
 //-----------------------------------------------------------------------------
 // <GetNodeInfo>
 // Return the NodeInfo object associated with this notification
@@ -103,7 +131,6 @@ NodeInfo* GetNodeInfo
 
 	return NULL;
 }
-
 
 //-----------------------------------------------------------------------------
 // <parseHSM100>
@@ -178,12 +205,15 @@ void parseHSM100(ValueID value_id) {
                 case 1:
                     // General
                     printf("It has been %f minutes since the last Motion Detected.\n", float_value);
+                    sendMessage("Motion", float_value);
                     break;
                 case 2:
                     printf("Luminance: %f\n", float_value);
+                    sendMessage("Luminance", float_value);
                     break;
                 case 3:
                     printf("Temperature: %f\n", float_value);
+                    sendMessage("Temperature", float_value);
                     break;
 
                 default:
@@ -414,9 +444,11 @@ void OnNotification
 
                             if(_notification->GetEvent()) {
                                 printf("Door is Open!\n");
+                                sendMessage("Door", 1.0);
                             }
                             else {
                                 printf("Door is Closed!\n");
+                                sendMessage("Door", 0);
                             }
 
                             /*
@@ -557,6 +589,9 @@ int main( int argc, char* argv[] )
 	pthread_mutexattr_destroy( &mutexattr );
 
 	pthread_mutex_lock( &initMutex );
+
+    // Bind zeromq to tcp port 5556
+    publisher.bind("tcp://*:5556");
 
 	// Create the OpenZWave Manager.
 	// The first argument is the path to the config files (where the manufacturer_specific.xml file is located

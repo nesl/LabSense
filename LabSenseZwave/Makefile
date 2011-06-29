@@ -36,7 +36,7 @@ lib:
 	$(MAKE) -C ../../../build/linux
 
 LabSenseZwave:	Main.o lib
-	$(LD) -o $@ $(LDFLAGS) $< $(LIBS) -pthread -ludev
+	$(LD) -o $@ $(LDFLAGS) $< $(LIBS) -pthread -ludev -lzmq
 
 clean:
 	rm -f LabSenseZwave Main.o

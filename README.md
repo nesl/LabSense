@@ -34,11 +34,15 @@ LabSenseZwave contains the code running on the guruplug. This code
 specifically focuses on the zwave aspect of the guruplug. The open-zwave 
 project is used for the zwave implementation. The Main.cpp file contains the
 code that receives notifications from the HSM-100 and the Aeon Labs Door/
-Window Sensor. 
+Window Sensor. Zeromq is used as a transport layer to send the data from the 
+LabSenseZwave executable to a python process that sends the data to SensorSafe.
+This is meant to decouple the Zwave data retrieval from the possible slower
+Http requests and network latency. 
 
 Dependency:
 
 * [Open-zwave](http://code.google.com/p/open-zwave/)
+* [Zeromq](http://www.zeromq.org/intro:get-the-software)
 
 ------------------------------------------------------------------------------
 By Jason Tsao
