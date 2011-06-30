@@ -57,7 +57,10 @@ def main():
     # Continually receive data from zwave and send data to SensorSafe
     while(1):
         string = socket.recv()
-        measurement, str_value, end_of_string = string.split()
+        string_list = string.split()
+        measurement = string_list[0]
+        str_value = string_list[1]
+        # measurement, str_value, end_of_string = string.split()
 
         value = float(str_value)
         # print "%s: %f" % (measurement, float(value))
@@ -80,6 +83,7 @@ def main():
 
             print "Sending to SensorSafe"
             sensorData = {
+                "sampling_interval": 2,
                 "timestamp": int(round(time.time()*1000)),
                 "location": {"latitude": 34.068839550018311, "longitude": -118.44383955001831},
                 "data_channel": [ "Temperature", "Luminance", "Motion", "Door"],

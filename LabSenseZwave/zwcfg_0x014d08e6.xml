@@ -109,7 +109,7 @@
 				<Value type="byte" genre="config" instance="1" index="2" label="On Time" units="minutes" read_only="false" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="255" value="">
 					<Help>On Time sets the number of minutes that the lights stay on when motion has not been detected. A value of 0 On Time is a special mode where the lights are constantly sent a command to turn them on whenever motion is detected. The device will NOT turn the lights off in this mode. Note that this mode will significantly shorten battery life. Recommended values: 5 min for hallways. 20 min for an office environment. 60 min for a library or other room where someone may be sitting still for a long time. This may be inaccurate, but default for Homeseer HSM100 may actually be 3 minutes, instead of 20?</Help>
 				</Value>
-				<Value type="list" genre="config" instance="1" index="3" label="LED ON/OFF" units="" read_only="false" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="0" vindex="" size="105">
+				<Value type="list" genre="config" instance="1" index="3" label="LED ON/OFF" units="" read_only="false" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="0" vindex="" size="103">
 					<Help>LED ON/OFF turns the LED on or off. A slight improvement in battery life is obtained by turning the LED off. Setting LED ON/OFF to zero will turn the LED off and 255 turns it on. Default is On (255).</Help>
 					<Item label="Off" value="0" />
 					<Item label="On" value="255" />

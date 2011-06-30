@@ -134,12 +134,13 @@ NodeInfo* GetNodeInfo
 
 //-----------------------------------------------------------------------------
 // <parseHSM100>
-// Callback that is triggered when a value, group or node changes
+// Parses the HSM100 ValueChanged for luminance, temperature, motion, etc.
 //-----------------------------------------------------------------------------
 void parseHSM100(ValueID value_id) {
 
     // Initialize Variables
     bool success = false;
+    bool bool_value = false;
     uint8 byte_value = 0;
     float float_value = 0.0;
     int32 int_value = 0;
@@ -166,6 +167,9 @@ void parseHSM100(ValueID value_id) {
     // Get the Changed Value Based on the type
     switch((int) value_id.GetType()) {
         // See open-zwave/cpp/src/value_classes/ValueID.h for ValueType enum 
+        case 0:
+            // Boolean Type
+            success = Manager::Get()->GetValueAsBool(value_id, &bool_value);
         case 1:
             // Byte Type
             success = Manager::Get()->GetValueAsByte(value_id, &byte_value);
@@ -228,7 +232,6 @@ void parseHSM100(ValueID value_id) {
             printf("\nGot COMMAND_CLASS_WAKE_UP!\n");
             printf("Wake-up interval: %d seconds\n", int_value);
 
-
             break;
         case COMMAND_CLASS_BATTERY:
             printf("Got COMMAND_CLASS_BATTERY!\n");
@@ -242,6 +245,96 @@ void parseHSM100(ValueID value_id) {
             break;
     }
 
+}
+
+//-----------------------------------------------------------------------------
+// <parseDWSensor>
+// Parses the Aeon Labs Door/Window Sensor for basic values (open/closed)
+//-----------------------------------------------------------------------------
+void parseDWSensor(ValueID value_id) {
+
+    // Initialize Variables
+    bool success = false;
+    bool bool_value = false;
+    uint8 byte_value = 0;
+    float float_value = 0;
+    int int_value = 0;
+
+    // Get the Changed Value Based on the type
+    switch((int) value_id.GetType()) {
+        // See open-zwave/cpp/src/value_classes/ValueID.h for ValueType enum 
+        case 0:
+            // Boolean Type
+            success = Manager::Get()->GetValueAsBool(value_id, &bool_value);
+        case 1:
+            // Byte Type
+            success = Manager::Get()->GetValueAsByte(value_id, &byte_value);
+            // printf("Successfully got Value? %s\n", (success)?"Yes":"No");
+            break;
+        case 2:
+            // Float Type
+            success = Manager::Get()->GetValueAsFloat(value_id, &float_value);
+            break;
+        case 3:
+            // Int Type
+            success = Manager::Get()->GetValueAsInt(value_id, &int_value);
+            break;
+        default:
+            printf("Unrecognized Type: %d\n", (int) value_id.GetType());
+            break;
+    }
+    if(!success)
+        printf("Unable to Get the Value\n");
+
+    // Perform action based on CommandClassID
+    // For Aeon Labs Door/Window Sensor, there are 3 Class to take care of:
+    // 1. COMMAND_CLASS_BASIC (0x20)
+    // 2. COMMAND_CLASS_SENSOR_BINARY (0x30)
+    // 3. COMMAND_CLASS_WAKE_UP (0x84)
+    // printf("CommandClassID: %x\n", value_id.GetCommandClassId());
+    switch(value_id.GetCommandClassId()) {
+        case COMMAND_CLASS_BASIC:
+            /*
+            printf("Got COMMAND_CLASS_BASIC!\n");
+            printf("    ValueType: %d\n", (int) value_id.GetType());
+            printf("    ValueGenre: %d\n", (int) value_id.GetGenre());
+            printf("    Instance: %u\n", (uint8) value_id.GetInstance());
+            printf("    ID: %u\n", (uint64) value_id.GetId());
+            */
+
+            // COMMAND_CLASS_BASIC gives a boolean specifying if:
+            // 0: Door is closed
+            // 255: Door is open
+
+            if(byte_value) {
+                printf("Door is Open!\n");
+                sendMessage("Door", 1.0);
+            }
+            else {
+                printf("Door is Closed!\n");
+                sendMessage("Door", 0);
+            }
+
+            break;
+        case COMMAND_CLASS_SENSOR_BINARY:
+            printf("Got COMMAND_CLASS_SENSOR_BINARY!\n");
+            break;
+        case COMMAND_CLASS_WAKE_UP:
+            printf("Got COMMAND_CLASS_WAKE_UP!\n");
+            break;
+        case COMMAND_CLASS_BATTERY:
+            printf("Got COMMAND_CLASS_BATTERY!\n");
+            break;
+        case COMMAND_CLASS_ALARM:
+            printf("Got COMMAND_CLASS_ALARM!\n");
+            break;
+        case COMMAND_CLASS_VERSION:
+            printf("Got COMMAND_CLASS_VERSION!\n");
+            break;
+        default:
+            printf("Got an Unknown COMMAND CLASS!\n");
+            break;
+    }
 }
 
 
@@ -348,6 +441,10 @@ void OnNotification
                         //for( list<ValueID>::iterator it = valueIDList.begin(); it != valueIDList.end(); ++it) {
 
                         parseHSM100(value_id);
+                        break;
+                    case 6:
+                        // printf("Got a value from Node 6!\n");
+                        parseDWSensor(value_id);
                         break;
                     default:
                         printf("Unknown Node\n");
@@ -671,11 +768,11 @@ int main( int argc, char* argv[] )
                     // Poll every 5 seconds
 					Manager::Get()->EnablePoll( v, 2);		// enables polling with "intensity" of 2, though this is irrelevant with only one value polled
 				}
-                else if(nodeInfo->m_nodeId == 8 && ccId == COMMAND_CLASS_WAKE_UP) {
-                    // Set the Wake-up interval
-                    bool success = Manager::Get()->SetValue(v, 360);
-                    printf("Set Wake-up Interval Successfully: %s", (success)?"Yes":"No");
-                }
+                //else if(nodeInfo->m_nodeId == 8 && ccId == COMMAND_CLASS_WAKE_UP) {
+                //    // Set the Wake-up interval
+                //    bool success = Manager::Get()->SetValue(v, 360);
+                //    printf("Set Wake-up Interval Successfully: %s", (success)?"Yes":"No");
+                //}
 			}
 		}
 		pthread_mutex_unlock( &g_criticalSection );
