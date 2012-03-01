@@ -1,2 +1,3 @@
 LabSenseDB
 *.pyc
+.DS_Store

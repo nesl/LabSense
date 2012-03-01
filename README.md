@@ -1,11 +1,15 @@
+LabSense
+========
+
 This project involves creating a sensing plaform that can measure many
 different characteristics about a lab (i.e. ambient temperature, 
 electricity, water, occupancy) and making the data available in a user
 intuitive interface.
 
-LabSense_Server
+LabSenseServer
+--------------
 
-  LabSense_Server contains the code running on the server, which communicates
+  LabSenseServer contains the code running on the server, which communicates
   with a plug computer (Guru plug) that is present in every laboratory that
   is equipped. Each guru plug talks to several different sensors through a
   multitude of different protocols (i.e. Zigbee, Bluetooth, Zwave).
@@ -20,5 +24,5 @@ LabSense_Server
 ------------------------------------------------------------------------------
 
 Project dependencies:
-Django 1.3.1
-  See https://www.djangoproject.com/download/ for instructions.
+
+  * [Django 1.3.1](https://www.djangoproject.com/download/
