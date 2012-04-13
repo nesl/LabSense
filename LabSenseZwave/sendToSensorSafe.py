@@ -48,11 +48,18 @@ def main():
     # socket.setsockopt(zmq.SUBSCRIBE, "Motion")
     socket.setsockopt(zmq.SUBSCRIBE, "")
 
+    sendAll(socket)
+
+def sendAll(socket):
+    ''' This function waits for all variables to be available and continuously sends them as values come in '''
     # Initialize variables
     temperature = None
     luminance = None
-    motion = None
+    motion = 0
+    motion_timeout = None   # This is the time the last motion was detected
+                            # until it sends a Z-wave OFF command
     door = 0    # Door is closed by default
+                # 0.0 means door is closed, 1.0 means door is open
 
     # Continually receive data from zwave and send data to SensorSafe
     while(1):
@@ -60,40 +67,44 @@ def main():
         string_list = string.split()
         measurement = string_list[0]
         str_value = string_list[1]
-        # measurement, str_value, end_of_string = string.split()
 
         value = float(str_value)
-        # print "%s: %f" % (measurement, float(value))
 
+        # Set values based on measurement
         if measurement == "Temperature":
             temperature =  value
         elif measurement == "Luminance":
             luminance = value
         elif measurement == "Motion":
             motion = value
+        elif measurement == "MotionTimeout":
+            motion_timeout = value
         elif measurement == "Door":
             door = value
 
-        if(temperature != None and luminance != None and motion != None):
+        # Send when variables are ready
+        if(temperature != None and luminance != None and motion_timeout != None):
             print "All variables are ready!"
             print "Temperature: ", temperature
             print "Luminance: ", luminance
             print "Motion: ", motion
+            print "Motion Timeout: ", motion_timeout
             print "Door: ", door
 
             print "Sending to SensorSafe"
             sensorData = {
-                "sampling_interval": 2,
+                "sampling_interval": 1,   # Sampling interval does not matter since we are sending one dataset at a time
                 "timestamp": int(round(time.time()*1000)),
                 "location": {"latitude": 34.068839550018311, "longitude": -118.44383955001831},
-                "data_channel": [ "Temperature", "Luminance", "Motion", "Door"],
-                "data": [[temperature, luminance, motion, door]]
+                "data_channel": [ "Temperature", "Luminance", "Motion", "Motion Timeout", "Door"],
+                "data": [[temperature, luminance, motion, motion_timeout, door]]
             }
             sendToSensorSafe(sensorData)
 
-            temperature = None
-            luminance = None
-            motion = None
+            # Reset values that will change
+            # temperature = None
+            # luminance = None
+            # motion_timeout = None
 
 if __name__ == "__main__":
     main()

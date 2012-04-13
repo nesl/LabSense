@@ -65,11 +65,11 @@
 
 using namespace OpenZWave;
 
-static uint32 g_homeId = 0;
-static uint8 AlDWSensorId = 0;
-static uint8 Hsm100SensorId = 0;
-static uint8 ZstickId = 0;
-static bool   g_initFailed = false;
+uint32 g_homeId;
+uint8 AlDWSensorId;
+uint8 Hsm100SensorId;
+uint8 ZstickId;
+bool   g_initFailed = false;
 
 typedef struct
 {
@@ -95,19 +95,10 @@ zmq::socket_t publisher(context, ZMQ_PUB);
 // This function sends the data to the python process using zeromq. 
 //-----------------------------------------------------------------------------
 void sendMessage(const char *s, float f_val) {
-
-    // char *temp_string = (char *) malloc(30);
-    // zmq::message_t message(30);
-    // snprintf( temp_string, 30, 
-    //         "%s %f", s, f_val);
-    // strncpy((char *)message.data(), temp_string, 30);
-    // publisher.send(message);
     zmq::message_t message(30);
-    sprintf((char *) message.data(), 
-            "%s %f ", s, f_val);
+    sprintf((char *) message.data(), "%s %f ", s, f_val);
     publisher.send(message);
 }
-
 
 //-----------------------------------------------------------------------------
 // <GetNodeInfo>
@@ -130,6 +121,16 @@ NodeInfo* GetNodeInfo
 	}
 
 	return NULL;
+}
+
+//-----------------------------------------------------------------------------
+// <printConfigVariable>
+// Prints the Configuration Variable
+//-----------------------------------------------------------------------------
+void printConfigVariable(uint8 index, uint8 byte_value) {
+    const char *parameter_names[] = {"Sensitivity", "On Time", "LED ON/OFF", 
+                              "Light Threshold", "Stay Awake", "On Value"};
+    printf("\"%s\" was set to %u\n", parameter_names[index-1], byte_value);
 }
 
 //-----------------------------------------------------------------------------
@@ -170,11 +171,11 @@ void parseHSM100(ValueID value_id) {
         case 0:
             // Boolean Type
             success = Manager::Get()->GetValueAsBool(value_id, &bool_value);
+            break;
         case 1:
             // Byte Type
             success = Manager::Get()->GetValueAsByte(value_id, &byte_value);
             // printf("Successfully got Value? %s\n", (success)?"Yes":"No");
-
             break;
         case 2:
             // Float Type
@@ -209,13 +210,15 @@ void parseHSM100(ValueID value_id) {
                 case 1:
                     // General
                     printf("It has been %f minutes since the last Motion Detected.\n", float_value);
-                    sendMessage("Motion", float_value);
+                    sendMessage("MotionTimeout", float_value);
                     break;
                 case 2:
+                    // Luminance
                     printf("Luminance: %f\n", float_value);
                     sendMessage("Luminance", float_value);
                     break;
                 case 3:
+                    // Temperature
                     printf("Temperature: %f\n", float_value);
                     sendMessage("Temperature", float_value);
                     break;
@@ -226,16 +229,17 @@ void parseHSM100(ValueID value_id) {
             }
             break;
         case COMMAND_CLASS_CONFIGURATION:
-            printf("Configured Value: %u\n", byte_value);
+            printConfigVariable(value_id.GetIndex(), byte_value);
             break;
         case COMMAND_CLASS_WAKE_UP:
-            printf("\nGot COMMAND_CLASS_WAKE_UP!\n");
+            // printf("\nGot COMMAND_CLASS_WAKE_UP!\n");
             printf("Wake-up interval: %d seconds\n", int_value);
+            // Manager::Get()->RefreshNodeInfo(g_homeId, Hsm100SensorId);
+            Manager::Get()->RequestNodeDynamic(g_homeId, Hsm100SensorId);
 
             break;
         case COMMAND_CLASS_BATTERY:
-            printf("Got COMMAND_CLASS_BATTERY!\n");
-            printf("\n");
+            printf("Battery: %u\n", byte_value);
             break;
         case COMMAND_CLASS_VERSION:
             printf("Got COMMAND_CLASS_VERSION!\n");
@@ -266,6 +270,7 @@ void parseDWSensor(ValueID value_id) {
         case 0:
             // Boolean Type
             success = Manager::Get()->GetValueAsBool(value_id, &bool_value);
+            break;
         case 1:
             // Byte Type
             success = Manager::Get()->GetValueAsByte(value_id, &byte_value);
@@ -387,71 +392,22 @@ void OnNotification
 			// One of the node values has changed
 			if( NodeInfo* nodeInfo = GetNodeInfo( _notification ) )
 			{
-                // printf("Got a ValueChanged!\n");
-
-                // printf("HomeId: %u\n", nodeInfo->m_homeId);
-                // printf("nodeID: %u\n", nodeInfo->m_nodeId);
-
                 // ValueID of value involved
+                uint8 nodeId = nodeInfo->m_nodeId;
                 ValueID value_id = _notification->GetValueID();
 
-                //printf("    ValueType: %d\n", (int) value_id.GetType());
-                //printf("    ValueGenre: %d\n", (int) value_id.GetGenre());
-                //printf("    Instance: %u\n", (uint8) value_id.GetInstance());
-                //printf("    ID: %u\n", (uint64) value_id.GetId());
-
-                //printf("ValueID->CommandClassID: %x\n", value_id.GetCommandClassId());
-
-
-                /*
-				for( list<ValueID>::iterator it = nodeInfo->m_values.begin(); it != nodeInfo->m_values.end(); ++it )
-				{
-					if(it->GetNodeId() == 8) 
-                    {
-                        if(it->GetCommandClassId() == COMMAND_CLASS_CONFIGURATION) 
-                        {
-
-                            if(it->GetIndex() == 6) 
-                            {
-                                printf("    ValueType: %d\n", (int) it->GetType());
-                                printf("    ValueGenre: %d\n", (int) it->GetGenre());
-                                printf("    Instance: %u\n", (uint8) it->GetInstance());
-                                printf("    ID: %u\n", (uint64) it->GetId());
-
-                                uint8 byte_value = 0;
-                                bool success = Manager::Get()->GetValueAsByte(*it, &byte_value);
-                                printf("On Value: %u\n", byte_value);
-
-                            }
-
-
-                        }
-
-					}
-				}
-                */
-
-                // Initialize values
-                //list<ValueID> valueIDList = nodeInfo->m_values;
-
+                // printf("Received Value Change for Node %u\n", nodeId);
                 // Perform different actions based on which node
-                switch(nodeInfo->m_nodeId) {
-                    case 8: 
-                        // Read the values in the node information
-                        //for( list<ValueID>::iterator it = valueIDList.begin(); it != valueIDList.end(); ++it) {
-
-                        parseHSM100(value_id);
-                        break;
-                    case 6:
-                        // printf("Got a value from Node 6!\n");
-                        parseDWSensor(value_id);
-                        break;
-                    default:
-                        printf("Unknown Node\n");
-                        break;
+                if(nodeId == Hsm100SensorId) {
+                    parseHSM100(value_id);
                 }
-                // printf("Finished ValueChanged\n");
-                // Jason Tsao Changes End
+                else if(nodeId == AlDWSensorId) {
+                    parseDWSensor(value_id);
+                }
+                else {
+                    printf("Unknown Node\n");
+                }
+                printf("\n");
             }
             break;
         }
@@ -498,93 +454,39 @@ void OnNotification
 		}
 
 		case Notification::Type_NodeEvent:
-		{
-			// We have received an event from the node, caused by a
-			// basic_set or hail message.
-			if( NodeInfo* nodeInfo = GetNodeInfo( _notification ) )
-			{
-                // Jason Tsao Changes
-                
-                // printf("Got a NodeEvent!\n");
+        {
+            // We have received an event from the node, caused by a
+            // basic_set or hail message.
+            if( NodeInfo* nodeInfo = GetNodeInfo( _notification ) )
+            {
+                // printf("Received Node Event for Node %u\n", nodeInfo->m_nodeId);
 
-                printf("nodeID: %u\n", nodeInfo->m_nodeId);
-
-                // ValueID of value involved
+                // Initialize values
                 ValueID value_id = _notification->GetValueID();
+                uint8 nodeId = nodeInfo->m_nodeId;
 
                 // Perform different actions based on which node
-                switch(nodeInfo->m_nodeId) {
-                    case 6:
-                    // Read the values in the node information
-                    //list<ValueID> valueIDList = nodeInfo->m_values;
-                    //for( list<ValueID>::iterator it = valueIDList.begin(); it != valueIDList.end(); ++it) {
-
-                    // Perform action based on CommandClassID
-                    // For Aeon Labs Door/Window Sensor, there are 3 Class to take care of:
-                    // 1. COMMAND_CLASS_BASIC (0x20)
-                    // 2. COMMAND_CLASS_SENSOR_BINARY (0x30)
-                    // 3. COMMAND_CLASS_WAKE_UP (0x84)
-                    /*
-                    printf("CommandClassID: %x\n", value_id.GetCommandClassId());
-                    switch(value_id.GetCommandClassId()) {
-                        case COMMAND_CLASS_BASIC:
-                            printf("Got COMMAND_CLASS_BASIC!\n");
-                            printf("    ValueType: %d\n", (int) value_id.GetType());
-                            printf("    ValueGenre: %d\n", (int) value_id.GetGenre());
-                            printf("    Instance: %u\n", (uint8) value_id.GetInstance());
-                            printf("    ID: %u\n", (uint64) value_id.GetId());
-
-                            // COMMAND_CLASS_BASIC gives a boolean specifying if:
-                            // 0: Door is closed
-                            // 255: Door is open
-                     */
-
-                            if(_notification->GetEvent()) {
-                                printf("Door is Open!\n");
-                                sendMessage("Door", 1.0);
-                            }
-                            else {
-                                printf("Door is Closed!\n");
-                                sendMessage("Door", 0);
-                            }
-
-                            /*
-                            break;
-                        case COMMAND_CLASS_SENSOR_BINARY:
-                            printf("Got COMMAND_CLASS_SENSOR_BINARY!\n");
-                            break;
-                        case COMMAND_CLASS_WAKE_UP:
-                            printf("Got COMMAND_CLASS_WAKE_UP!\n");
-                            break;
-                        case COMMAND_CLASS_BATTERY:
-                            printf("Got COMMAND_CLASS_BATTERY!\n");
-                            break;
-                        case COMMAND_CLASS_ALARM:
-                            printf("Got COMMAND_CLASS_ALARM!\n");
-                            break;
-                        case COMMAND_CLASS_VERSION:
-                            printf("Got COMMAND_CLASS_VERSION!\n");
-                            break;
-                        default:
-                            printf("Got an Unknown COMMAND CLASS!\n");
-                            break;
+                if(nodeId == AlDWSensorId) {
+                    // 0: Door is closed
+                    // 255: Door is open
+                    if(_notification->GetEvent()) {
+                        printf("Door is Open!\n");
+                        sendMessage("Door", 1.0);
                     }
-                    */
-                            printf("\n");
-                            break;
-                        case 8:
-                            printf("Received Node Event for Node 8\n");
-                            printf("Event value: %u\n", _notification->GetEvent());
-                            break;
-                        default:
-                            printf("Received Node Event for Unknown Node %u", nodeInfo->m_nodeId);
+                    else {
+                        printf("Door is Closed!\n");
+                        sendMessage("Door", 0);
+                    }
                 }
-
-
-                // printf("Finished NodeEvent\n");
-                // Jason Tsao Changes End
+                else if(nodeId == Hsm100SensorId) {
+                    printf("Motion: %u\n", _notification->GetEvent());
+                    sendMessage("Motion", (_notification->GetEvent())?1.0:0.0);
+                }
+                else {
+                    printf("Received Node Event for Unknown Node %u", nodeId);
+                }
+                printf("\n");
 			}
-
 			break;
 		}
 
@@ -638,10 +540,10 @@ void OnNotification
                 uint32 homeId = nodeInfo->m_homeId;
                 uint8 nodeId = nodeInfo->m_nodeId;
 
-                // printf("Finished protocol info for Node %u\n", nodeId);
-                //printf("With type: %s\n", Manager::Get()->GetNodeType(nodeInfo->m_homeId, nodeInfo->m_nodeId));
                 string name = Manager::Get()->GetNodeProductName(homeId, nodeId);
                 string manufacturer_name = Manager::Get()->GetNodeManufacturerName(homeId, nodeId);
+                // printf("Finished protocol info for Node %u\n", nodeId);
+                //printf("With type: %s\n", Manager::Get()->GetNodeType(nodeInfo->m_homeId, nodeInfo->m_nodeId));
                 //printf("    With Name: %s\n", name.c_str());
                 //printf("    and Manufacturer: %s\n", manufacturer_name.c_str());
                 
@@ -654,11 +556,6 @@ void OnNotification
                 else if(name == "Z-Stick S2" && manufacturer_name == "Aeon Labs") {
                     ZstickId = nodeId;
                 }
-
-
-                //printf("Node Type of node %u: %s\n", nodeInfo->m_nodeId, (Manager::Get()->GetNodeType(nodeInfo->m_homeId, nodeInfo->m_nodeId)));
-
-
             }
             break;
 
@@ -747,6 +644,7 @@ int main( int argc, char* argv[] )
 		Manager::Get()->WriteConfig( g_homeId );
 
         uint8 ccId = 0;
+        uint8 nodeId = 0;
 
 		// The section below demonstrates setting up polling for a variable.  In this simple
 		// example, it has been hardwired to poll COMMAND_CLASS_BASIC on the each node that 
@@ -755,9 +653,11 @@ int main( int argc, char* argv[] )
 		for( list<NodeInfo*>::iterator it = g_nodes.begin(); it != g_nodes.end(); ++it )
 		{
 			NodeInfo* nodeInfo = *it;
+            nodeId = nodeInfo->m_nodeId;
+            
 
 			// skip the controller (most likely node 1)
-			if( nodeInfo->m_nodeId == 1) continue;
+			if( nodeId == 1) continue;
 
 			for( list<ValueID>::iterator it2 = nodeInfo->m_values.begin(); it2 != nodeInfo->m_values.end(); ++it2 )
 			{
@@ -766,26 +666,35 @@ int main( int argc, char* argv[] )
 				if(ccId == COMMAND_CLASS_SENSOR_MULTILEVEL)
 				{
                     // Poll every 5 seconds
-					Manager::Get()->EnablePoll( v, 2);		// enables polling with "intensity" of 2, though this is irrelevant with only one value polled
+					// Manager::Get()->EnablePoll( v, 2);		// enables polling with "intensity" of 2, though this is irrelevant with only one value polled
 				}
-                //else if(nodeInfo->m_nodeId == 8 && ccId == COMMAND_CLASS_WAKE_UP) {
-                //    // Set the Wake-up interval
-                //    bool success = Manager::Get()->SetValue(v, 360);
-                //    printf("Set Wake-up Interval Successfully: %s", (success)?"Yes":"No");
-                //}
+                else if(nodeId == Hsm100SensorId && ccId == COMMAND_CLASS_WAKE_UP) {
+                    // Set the Wake-up interval
+                    bool success = Manager::Get()->SetValue(v, 360);
+                    printf("Set Wake-up Interval Successfully: %s\n", (success)?"Yes":"No");
+                }
 			}
 		}
 		pthread_mutex_unlock( &g_criticalSection );
 
+        /*
         // Initialize Configuration Parameters
         pthread_mutex_lock( &g_criticalSection );
-        // Request and Set the "On Time" Config Param to 1 with index 2 (See zwcfg*.xml)
+        // Request and Set the "On Time" Config Param to 20 with index 2 (See zwcfg*.xml)
         Manager::Get()->SetConfigParam(g_homeId, Hsm100SensorId, 2, 1); 
         Manager::Get()->RequestConfigParam(g_homeId, Hsm100SensorId, 2); 
 
+        // Request and Set the "On Value" Config Param to 255 with index 6 (See zwcfg*.xml)
+        // Manager::Get()->SetConfigParam(g_homeId, Hsm100SensorId, 6, 255); 
+        Manager::Get()->RequestConfigParam(g_homeId, Hsm100SensorId, 6); 
+
+        // Request "Stay Awake" Config Param
+        Manager::Get()->RequestConfigParam(g_homeId, Hsm100SensorId, 5);
+
         // Request Sensitivity
-        Manager::Get()->RequestConfigParam(g_homeId, Hsm100SensorId, 1);
+        //Manager::Get()->RequestConfigParam(g_homeId, Hsm100SensorId, 1);
         pthread_mutex_unlock( &g_criticalSection );
+        */
 
 
 		// If we want to access our NodeInfo list, that has been built from all the
@@ -802,8 +711,8 @@ int main( int argc, char* argv[] )
 			pthread_mutex_lock( &g_criticalSection );
 			// but NodeInfo list and similar data should be inside critical section
             
-            //Manager::Get()->RefreshNodeInfo(g_homeId, 8);
-            //Manager::Get()->RequestNodeDynamic(g_homeId, 8);
+            //Manager::Get()->RefreshNodeInfo(g_homeId, Hsm100SensorId);
+            //Manager::Get()->RequestNodeDynamic(g_homeId, Hsm100SensorId);
 			pthread_mutex_unlock( &g_criticalSection );
 			sleep(5);
 		}
