@@ -82,14 +82,16 @@ Installation
 7. Navigate to LabSense/LabSenseZwave/
 8. Make the code and run the executable
 
+    <pre>
     make 
     ./LabSenseZwave [serial port]
+    </pre>
 
-   To figure out what serial port, please plug the Z-stick into the Guruplug and run dmesg. A line similar to the following should specify the port:
+    To figure out what serial port, please plug the Z-stick into the Guruplug and run dmesg. A line similar to the following should specify the port:
 
    "cp210x converter now attached to [serial port]"
 
-   Unless other usb devices are plugged in, usually the serial port is /dev/ttyUSB0. 
+    Unless other usb devices are plugged in, usually the serial port is /dev/ttyUSB0. 
 
 The previous steps are used for local viewing of the data coming off the sensors. If an online graphical view of the
 sensor data is required, more code has been implemented to send the data to [SensorSafe](https://128.97.93.29/):
