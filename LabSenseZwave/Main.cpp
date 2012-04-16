@@ -47,9 +47,16 @@
 // Includes for Zeromq transport layer to make zwave notifications decoupled from updating SensorSafe over http request
 #include <zmq.hpp>
 
+// Defines for different sensors, commented out command classes are classes 
+// that are sent by the sensors, but are not needed/implemented OR are classes 
+// that are defined by previous sensors
+// (i.e. COMMAND_CLASS_BASIC is used in all sensors)
 
-// Defines
 // For Aeon Labs Door/Window Sensor, the following command classes send events
+// COMMAND_CLASS_CONFIGURATION
+// COMMAND_CLASS_MANUFACTURER_SPECIFIC
+// COMMAND_CLASS_ASSOCIATION
+// COMMAND_CLASS_SENSOR_ALARM
 #define COMMAND_CLASS_BASIC 0x20
 #define COMMAND_CLASS_SENSOR_BINARY 0x30
 #define COMMAND_CLASS_WAKE_UP 0x84
@@ -57,18 +64,40 @@
 #define COMMAND_CLASS_ALARM 0x71
 #define COMMAND_CLASS_VERSION 0x86
 
-// For HSM-100, we have COMMAND_CLASS_BASIC, COMMAND_CLASS_BATTERY, COMMAND_CLASS_WAKE_UP,
-// COMMAND_CLASS_VERSION, and the following classes:
+// For HSM-100, we have 
+// COMMAND_CLASS_BASIC
+// COMMAND_CLASS_BATTERY
+// COMMAND_CLASS_WAKE_UP,
+// COMMAND_CLASS_VERSION
+// COMMAND_CLASS_MANUFACTURER_SPECIFIC 
+// COMMAND_CLASS_NODE_NAMING
+// COMMAND_CLASS_BATTERY
+// COMMAND_CLASS_ASSOCIATION
+// and the following classes:
 #define COMMAND_CLASS_CONFIGURATION 0x70
 #define COMMAND_CLASS_SENSOR_MULTILEVEL 0x31
 #define COMMAND_CLASS_MULTI_INSTANCE 0x60
 
+// For SmartSwitch, we have 
+// COMMAND_CLASS_BASIC
+// COMMAND_CLASS_SENSOR_MULTILEVEL,
+// COMMAND_CLASS_CONFIGURATION
+// COMMAND_CLASS_VERSION
+// COMMAND_CLASS_ASSOCIATION
+// COMMAND_CLASS_MANUFACTURER_SPECIFIC 
+// and the following:
+#define COMMAND_CLASS_SWITCH_BINARY 0x25
+#define COMMAND_CLASS_SWITCH_ALL 0x27
+#define COMMAND_CLASS_METER 0x32
+#define COMMAND_CLASS_HAIL 0x82
+
 using namespace OpenZWave;
 
-uint32 g_homeId;
-uint8 AlDWSensorId;
-uint8 Hsm100SensorId;
-uint8 ZstickId;
+static uint32 g_homeId;
+static uint8 AlDwSensorId;
+static uint8 Hsm100SensorId;
+static uint8 EnergySwitchSensorId;
+static uint8 ZstickId;
 bool   g_initFailed = false;
 
 typedef struct
@@ -128,16 +157,61 @@ NodeInfo* GetNodeInfo
 // Prints the Configuration Variable
 //-----------------------------------------------------------------------------
 void printConfigVariable(uint8 index, uint8 byte_value) {
-    const char *parameter_names[] = {"Sensitivity", "On Time", "LED ON/OFF", 
+    static const char *parameter_names[] = {"Sensitivity", "On Time", "LED ON/OFF", 
                               "Light Threshold", "Stay Awake", "On Value"};
     printf("\"%s\" was set to %u\n", parameter_names[index-1], byte_value);
 }
 
 //-----------------------------------------------------------------------------
-// <parseHSM100>
+// <printSmartSwitchMeterValue>
+// Prints the Smart Switch Meter Value
+//-----------------------------------------------------------------------------
+void printSmartSwitchMeterValue(ValueID value_id) {
+    string str_value = "";
+    bool success = Manager::Get()->GetValueAsString(value_id, &str_value);
+    printf("Successfully Got Value As String: %s\n", (success)?"Yes":"No");
+
+    string measurement = "";
+
+    // Print Correct Measurement based on index
+    // See zwcfg*.xml for details
+    switch(value_id.GetIndex()) {
+        case 0:
+            measurement = "Energy";
+            break;
+        case 1:
+            measurement = "Previous Energy Reading";
+            break;
+        case 2:
+            measurement = "Energy Interval";
+            break;
+        case 8:
+            measurement = "Power";
+            break;
+        case 9:
+            measurement = "Previous Power Reading";
+            break;
+        case 10:
+            measurement = "Power Interval";
+            break;
+        case 32:
+            measurement = "Exporting";
+            break;
+        case 33:
+            measurement = "Reset";
+            break;
+        default:
+            printf("Unknown Index in Smart Switch Meter Values!\n");
+            break;
+    }
+    printf("\"%s\" is set to %s\n", measurement.c_str(), str_value.c_str());
+}
+
+//-----------------------------------------------------------------------------
+// <parseHsm100Sensor>
 // Parses the HSM100 ValueChanged for luminance, temperature, motion, etc.
 //-----------------------------------------------------------------------------
-void parseHSM100(ValueID value_id) {
+void parseHsm100Sensor(ValueID value_id) {
 
     // Initialize Variables
     bool success = false;
@@ -189,8 +263,10 @@ void parseHSM100(ValueID value_id) {
             printf("Unrecognized Type: %d\n", (int) value_id.GetType());
             break;
     }
-    if(!success)
+    if(!success) {
         printf("Unable to Get the Value\n");
+        return;
+    }
     
     // Output based on the CommandClassId
     switch(value_id.GetCommandClassId()) {
@@ -236,7 +312,6 @@ void parseHSM100(ValueID value_id) {
             printf("Wake-up interval: %d seconds\n", int_value);
             // Manager::Get()->RefreshNodeInfo(g_homeId, Hsm100SensorId);
             Manager::Get()->RequestNodeDynamic(g_homeId, Hsm100SensorId);
-
             break;
         case COMMAND_CLASS_BATTERY:
             printf("Battery: %u\n", byte_value);
@@ -252,10 +327,97 @@ void parseHSM100(ValueID value_id) {
 }
 
 //-----------------------------------------------------------------------------
-// <parseDWSensor>
+// <parseEnergySwitchSensor>
+// Parses the Aeon Labs Energy Switch Sensor for basic values.
+//-----------------------------------------------------------------------------
+void parseEnergySwitchSensor(ValueID value_id) {
+
+    // Initialize Variables
+    bool success = false;
+    bool bool_value = false;
+    uint8 byte_value = 0;
+    float float_value = 0;
+    int int_value = 0;
+    string str_value = "";
+
+    printf("Value Type: %d\n", (int) value_id.GetType());
+    // Get the Changed Value Based on the type
+    switch((int) value_id.GetType()) {
+        // See open-zwave/cpp/src/value_classes/ValueID.h for ValueType enum 
+        case 0:
+            // Boolean Type
+            success = Manager::Get()->GetValueAsBool(value_id, &bool_value);
+            break;
+        case 1:
+            // Byte Type
+            success = Manager::Get()->GetValueAsByte(value_id, &byte_value);
+            // printf("Successfully got Value? %s\n", (success)?"Yes":"No");
+            break;
+        case 2:
+            // Float Type
+            success = Manager::Get()->GetValueAsFloat(value_id, &float_value);
+            break;
+        case 3:
+            // Int Type
+            success = Manager::Get()->GetValueAsInt(value_id, &int_value);
+            break;
+        case 4:
+            //  List Type
+            success = Manager::Get()->GetValueAsString(value_id, &str_value);
+            break;
+        default:
+            printf("Unrecognized Type: %d\n", (int) value_id.GetType());
+            break;
+    }
+    if(!success) {
+        printf("Unable to Get the Value\n");
+        return;
+    }
+
+    // Perform action based on CommandClassID
+    // For Aeon Labs SmartSwitch:
+    // 1. COMMAND_CLASS_BASIC (0x20)
+    // 2. COMMAND_CLASS_SENSOR_MULTIVEL (0x31)
+    // 3. COMMAND_CLASS_SWITCH_BINARY (0x25)
+    // 4. COMMAND_CLASS_SWITCH_ALL 0x27
+    // 5. COMMAND_CLASS_METER 0x32
+    // 6. COMMAND_CLASS_HAIL 0x82
+    
+    printf("CommandClassID: 0x%x\n", value_id.GetCommandClassId());
+    switch(value_id.GetCommandClassId()) {
+        case COMMAND_CLASS_BASIC:
+            if(byte_value) {
+                printf("Switch is %s\n", (byte_value)?"on":"off");
+            }
+
+            break;
+        case COMMAND_CLASS_SENSOR_MULTILEVEL:
+            printf("Got COMMAND_CLASS_SENSOR_MULTILEVEL!\n");
+            printf("Sensor_Multilevel: %f\n", float_value);
+            break;
+        case COMMAND_CLASS_SWITCH_BINARY:
+            printf("Got COMMAND_CLASS_SWITCH_BINARY!\n");
+            printf("Binary Switch :%s\n", (bool_value)?"on":"off");
+            break;
+        case COMMAND_CLASS_SWITCH_ALL:
+            printf("Got COMMAND_CLASS_SWITCH_ALL!\n");
+            printf("Switch_all: %s\n", str_value.c_str());
+            break;
+        case COMMAND_CLASS_METER:
+            printf("Got COMMAND_CLASS_METER!\n");
+            printSmartSwitchMeterValue(value_id);
+            break;
+        default:
+            printf("Got an Unknown COMMAND CLASS!\n");
+            break;
+    }
+}
+
+//-----------------------------------------------------------------------------
+// <parseAlDwSensor>
 // Parses the Aeon Labs Door/Window Sensor for basic values (open/closed)
 //-----------------------------------------------------------------------------
-void parseDWSensor(ValueID value_id) {
+void parseAlDwSensor(ValueID value_id) {
 
     // Initialize Variables
     bool success = false;
@@ -399,10 +561,13 @@ void OnNotification
                 // printf("Received Value Change for Node %u\n", nodeId);
                 // Perform different actions based on which node
                 if(nodeId == Hsm100SensorId) {
-                    parseHSM100(value_id);
+                    parseHsm100Sensor(value_id);
                 }
-                else if(nodeId == AlDWSensorId) {
-                    parseDWSensor(value_id);
+                else if(nodeId == AlDwSensorId) {
+                    parseAlDwSensor(value_id);
+                }
+                else if(nodeId == EnergySwitchSensorId) {
+                    parseEnergySwitchSensor(value_id);
                 }
                 else {
                     printf("Unknown Node\n");
@@ -431,7 +596,7 @@ void OnNotification
 			nodeInfo->m_polled = false;		
 			g_nodes.push_back( nodeInfo );
 
-            Manager::Get()->AddAssociation(nodeInfo->m_homeId, nodeInfo->m_nodeId, 1, 1);
+            // Manager::Get()->AddAssociation(nodeInfo->m_homeId, nodeInfo->m_nodeId, 1, 1);
 			break;
 		}
 
@@ -466,7 +631,7 @@ void OnNotification
                 uint8 nodeId = nodeInfo->m_nodeId;
 
                 // Perform different actions based on which node
-                if(nodeId == AlDWSensorId) {
+                if(nodeId == AlDwSensorId) {
                     // 0: Door is closed
                     // 255: Door is open
                     if(_notification->GetEvent()) {
@@ -548,13 +713,24 @@ void OnNotification
                 //printf("    and Manufacturer: %s\n", manufacturer_name.c_str());
                 
                 if(name == "Door/Window Sensor" && manufacturer_name == "Aeon Labs") {
-                    AlDWSensorId = nodeId;
+                    AlDwSensorId = nodeId;
+                    printf("AlDwSensorID is set to: %d\n", nodeId);
                 }
                 else if(name == "HSM100 Wireless Multi-Sensor" && manufacturer_name == "Homeseer") {
                     Hsm100SensorId = nodeId;
+                    printf("Hsm100SensorId is set to: %d\n", nodeId);
                 }
                 else if(name == "Z-Stick S2" && manufacturer_name == "Aeon Labs") {
                     ZstickId = nodeId;
+                    printf("ZstickId is set to: %d\n", nodeId);
+                }
+                else if(name == "Smart Energy Switch" && manufacturer_name == "Aeon Labs") {
+                    EnergySwitchSensorId = nodeId;
+                    printf("EnergySwitchSensorId is set to: %d\n", nodeId);
+                }
+                else if(name != "" && manufacturer_name != "") {
+                    // Print unknown nodes
+                    printf("Unknown Node %u called %s, manufactured by %s\n", nodeId, name.c_str(), manufacturer_name.c_str());
                 }
             }
             break;
@@ -591,7 +767,7 @@ int main( int argc, char* argv[] )
 	// The first argument is the path to the config files (where the manufacturer_specific.xml file is located
 	// The second argument is the path for saved Z-Wave network state and the log file.  If you leave it NULL 
 	// the log file will appear in the program's working directory.
-	Options::Create( "../../../../config/", "", "" );
+	Options::Create( "../../../../../config/", "", "" );
 	Options::Get()->AddOptionInt( "SaveLogLevel", LogLevel_Detail );
 	Options::Get()->AddOptionInt( "QueueLogLevel", LogLevel_Debug );
 	Options::Get()->AddOptionInt( "DumpTrigger", LogLevel_Error );
@@ -663,7 +839,7 @@ int main( int argc, char* argv[] )
 			{
 				ValueID v = *it2;
                 ccId = v.GetCommandClassId();
-				if(ccId == COMMAND_CLASS_SENSOR_MULTILEVEL)
+				if(ccId == COMMAND_CLASS_BASIC)
 				{
                     // Poll every 5 seconds
 					// Manager::Get()->EnablePoll( v, 2);		// enables polling with "intensity" of 2, though this is irrelevant with only one value polled
@@ -677,13 +853,14 @@ int main( int argc, char* argv[] )
 		}
 		pthread_mutex_unlock( &g_criticalSection );
 
-        /*
         // Initialize Configuration Parameters
         pthread_mutex_lock( &g_criticalSection );
+
         // Request and Set the "On Time" Config Param to 20 with index 2 (See zwcfg*.xml)
         Manager::Get()->SetConfigParam(g_homeId, Hsm100SensorId, 2, 1); 
         Manager::Get()->RequestConfigParam(g_homeId, Hsm100SensorId, 2); 
 
+        /*
         // Request and Set the "On Value" Config Param to 255 with index 6 (See zwcfg*.xml)
         // Manager::Get()->SetConfigParam(g_homeId, Hsm100SensorId, 6, 255); 
         Manager::Get()->RequestConfigParam(g_homeId, Hsm100SensorId, 6); 
@@ -693,8 +870,8 @@ int main( int argc, char* argv[] )
 
         // Request Sensitivity
         //Manager::Get()->RequestConfigParam(g_homeId, Hsm100SensorId, 1);
-        pthread_mutex_unlock( &g_criticalSection );
         */
+        pthread_mutex_unlock( &g_criticalSection );
 
 
 		// If we want to access our NodeInfo list, that has been built from all the

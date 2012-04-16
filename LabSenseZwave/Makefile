@@ -23,9 +23,9 @@ DEBUG_LDFLAGS	:= -g
 CFLAGS	:= -c $(DEBUG_CFLAGS)
 LDFLAGS	:= $(DEBUG_LDFLAGS)
 
-INCLUDES	:= -I ../../../src -I ../../../src/command_classes/ -I ../../../src/value_classes/ \
-	-I ../../../src/platform/ -I ../../../h/platform/unix -I ../../../tinyxml/ -I ../../../hidapi/hidapi/
-LIBS = $(wildcard ../../../lib/linux/*.a)
+INCLUDES	:= -I ../../../../src -I ../../../src/command_classes/ -I ../../../../src/value_classes/ \
+	-I ../../../../src/platform/ -I ../../../../h/platform/unix -I ../../../../tinyxml/ -I ../../../../hidapi/hidapi/
+LIBS = $(wildcard ../../../../lib/linux/*.a)
 
 %.o : %.cpp
 	$(CXX) $(CFLAGS) $(INCLUDES) -o $@ $<
@@ -33,7 +33,7 @@ LIBS = $(wildcard ../../../lib/linux/*.a)
 all: LabSenseZwave 
 
 lib:
-	$(MAKE) -C ../../../build/linux
+	$(MAKE) -C ../../../../build/linux
 
 LabSenseZwave:	Main.o lib
 	$(LD) -o $@ $(LDFLAGS) $< $(LIBS) -pthread -ludev -lzmq
@@ -48,6 +48,6 @@ xmltest:	$(XMLLINT)
 	$(error xmllint command not found.)
 else
 xmltest:	$(XMLLINT)
-	@$(XMLLINT) --noout --schema ../../../../config/zwcfg.xsd zwcfg_*.xml
-	@$(XMLLINT) --noout --schema ../../../../config/zwscene.xsd zwscene.xml
+	@$(XMLLINT) --noout --schema ../../../../../config/zwcfg.xsd zwcfg_*.xml
+	@$(XMLLINT) --noout --schema ../../../../../config/zwscene.xsd zwscene.xml
 endif
