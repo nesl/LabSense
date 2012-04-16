@@ -77,7 +77,7 @@ Installation
 
     git clone git@github.com:jtsao22/LabSense.git
 
-   The LabSense Project should now be at open-zwave/cpp/examples/linux/LabSense.
+    The LabSense Project should now be at open-zwave/cpp/examples/linux/LabSense.
 
 7. Navigate to LabSense/LabSenseZwave/
 8. Make the code and run the executable
@@ -89,7 +89,9 @@ Installation
 
     To figure out what serial port, please plug the Z-stick into the Guruplug and run dmesg. A line similar to the following should specify the port:
 
-   "cp210x converter now attached to [serial port]"
+    <pre>
+    "cp210x converter now attached to [serial port]"
+    </pre>
 
     Unless other usb devices are plugged in, usually the serial port is /dev/ttyUSB0. 
 
