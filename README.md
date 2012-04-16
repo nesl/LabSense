@@ -78,18 +78,17 @@ Installation
     git clone git@github.com:jtsao22/LabSense.git
 
    The LabSense Project should now be at open-zwave/cpp/examples/linux/LabSense.
+
 7. Navigate to LabSense/LabSenseZwave/
-8. Make the code 
+8. Make the code and run the executable
 
     make 
-
-9. Run the executable:
-
     ./LabSenseZwave [serial port]
 
-   To figure out what serial port, please plug the Z-stick into the Guruplug and run dmesg. A line similar to the
-   following should specify the port:
+   To figure out what serial port, please plug the Z-stick into the Guruplug and run dmesg. A line similar to the following should specify the port:
+
    "cp210x converter now attached to [serial port]"
+
    Unless other usb devices are plugged in, usually the serial port is /dev/ttyUSB0. 
 
 The previous steps are used for local viewing of the data coming off the sensors. If an online graphical view of the
@@ -118,7 +117,7 @@ Upon successful upload to SensorSafe, a message similar to the following will sh
     OpenSSL/0.9.8g mod_wsgi/2.3 Python/2.6.2'), ('connection', 'close'), ('date', 'Tue, 10 Apr 2012 19:47:03 GMT'),
     ('access-control-allow-origin', '*'), ('content-type', 'text/html; charset=utf-8')]
     Upload successful (Collection name: sandbox, Requested by sandbox
-5. You can then see the data at on SensorSafe by signing in, pressing access data, selecting data channels, and pressing Show Data. 
+5. You can then see the data on SensorSafe by signing in, pressing access data, selecting data channels, and pressing Show Data. 
 
 ------------------------------------------------------------------------------
 
