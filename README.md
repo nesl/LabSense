@@ -82,8 +82,10 @@ Installation
 7. Navigate to LabSense/LabSenseZwave/
 8. Make the code and run the executable
 
+    <pre>
     make 
     ./LabSenseZwave [serial port]
+    </pre>
 
    To figure out what serial port, please plug the Z-stick into the Guruplug and run dmesg. A line similar to the following should specify the port:
 
