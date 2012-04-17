@@ -80,7 +80,10 @@ class SensorVariableTracker:
     def sendSensorData(self):
         """ Send all sensor data to SensorSafe """
         for data_entry in self.sensorData:
-            self.sendToSensorSafe(data_entry)
+            success = self.sendToSensorSafe(data_entry)
+            # If data was sent successfully, delete the data from list. If not, don't do anything.
+            if success:
+                self.sensorData.remove(data_entry)
         self.sensorData = []
 
     def sendToSensorSafe(self, json_data_to_upload):
@@ -96,11 +99,13 @@ class SensorVariableTracker:
             reply = response.read()
             print reply
             conn.close()
-        except Exception as detail:
-            print 'Error:', detail
+            return true
+        except IOError, detail:
+            print "No internet connection, will send the data when the internet becomes available"
+            return false
 
 def usage():
-    """ Prints out the usage the script """
+    """ Prints out the usage for the script """
 
     print """
     Usage: python sendToSensorSafe.py [api-key] -f [frequency]"
