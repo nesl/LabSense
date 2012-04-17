@@ -99,18 +99,25 @@ The previous steps are used for local viewing of the data coming off the sensors
 sensor data is required, more code has been implemented to send the data to [SensorSafe](https://128.97.93.29/):
 
 1. Register for a SensorSafe account and take note of the API key.
-2. The python script sendToSensorSafe.py sends the data it receives over the zeromq socket to SensorSafe, which requires
-an API key. Create a file in the same directory as sendToSensorSafe.py called api_key.py and write a single line:
-
-    key = "[SensorSafe API Key]"
-
-    where SensorSafe API Key is given to you after registering for SensorSafe.
-3. Finally, to send the data to SensorSafe, run the python script sendToSensorSafe.py while running the LabSenseZwave
+2. To send the data to SensorSafe, run the python script sendToSensorSafe.py while running the LabSenseZwave
 executable:
 
-    python sendToSensorSafe.py
+    <pre>
+    python sendToSensorSafe.py [api-key] -f [frequency]
+    </pre>
+
+    [api-key] is the API key given during SensorSafe registration.
+    [frequency] is optional and specifies how often to send data to SensorSafe.
 
     (Either run this in a separate ssh session/terminal or run one of the processes in the background).
+
+    To see more information about the inner workings of sendToSensorSafe.py, 
+    you can use pydoc (installed with python):
+
+    <pre>
+    pydoc sendToSensorSafe
+    </pre>
+
 4. The script will send to SensorSafe as soon as all variables have been initialized (temperature, luminance, and
 motion_timeout), which make take some time depending on the wake-up interval of the Homeseer Multisensor (programmed to
 be every 6 minutes).

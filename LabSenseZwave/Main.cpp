@@ -174,7 +174,21 @@ void printSmartSwitchMeterValue(ValueID value_id) {
     string measurement = "";
 
     // Print Correct Measurement based on index
+    // Note: this map is only created once. 
+    static map<uint8, string> measurement_map;
+    measurement_map[0] = "Energy";
+    measurement_map[1] = "Previous Energy Reading";
+    measurement_map[2] = "Energy Interval";
+    measurement_map[8] = "Power";
+    measurement_map[9] = "Previous Power Reading";
+    measurement_map[10] = "Power Interval";
+    measurement_map[32] = "Exporting";
+    measurement_map[33] = "Reset";
+
+    measurement = measurement_map[value_id.GetIndex()];
+
     // See zwcfg*.xml for details
+    /*
     switch(value_id.GetIndex()) {
         case 0:
             measurement = "Energy";
@@ -204,6 +218,7 @@ void printSmartSwitchMeterValue(ValueID value_id) {
             printf("Unknown Index in Smart Switch Meter Values!\n");
             break;
     }
+    */
     printf("\"%s\" is set to %s\n", measurement.c_str(), str_value.c_str());
 }
 

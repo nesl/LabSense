@@ -1,26 +1,92 @@
-#
-#   SensorSafe Data Transmitter
-#   Connects SUB socket to tcp://localhost:5556
-#   Collects data from Zwave interface using Zeromq and
-#      sends the data in JSON to SensorSafe
-#
+"""
+SensorSafe Data Transmitter
+Connects socket to tcp://localhost:5556
+Collects data from Zwave interface using Zeromq and
+   sends the data in JSON to SensorSafe
 
-import sys
-import zmq
-import httplib, urllib
-import json
-import time
-import datetime
-from api_key import key
+"""
+
+import sys              # Used for commandline arguments
+import httplib, urllib  # Used for http requests
+import json             # Used for json formatted data
+import time             # Used for timestamps
+import threading        # Used for creating separate thread for sending to SensorSafe
+import getopt           # Used for command line option handling
+
+import zmq  # Used for receiving data sent over zeromq socket
+
 SERVER_ADDRESS = "128.97.93.29"
 SERVER_PREFIX = ""
 HTTP_REQUEST_TIMEOUT = 60
-API_KEY = key
 
-def sendToSensorSafe(json_data_to_upload):
-    # Upload!
-    try:
-            params = urllib.urlencode({'apikey': API_KEY, 'data': json.dumps(json_data_to_upload)})
+class SensorVariableTracker:
+    """ This class keeps track of all variables received from LabSenseZwave
+        over the Zeromq socket and delivers the data to the
+        SensorSafe server every [frequency] seconds. """
+
+    def __init__(self, key, frequency=0):
+        """ Initialize the Zeromq socket to receive data
+            and initialize timer thread to send data at given
+            frequency. """
+        #  Socket to talk to server
+        self.context = zmq.Context()
+        self.socket = self.context.socket(zmq.SUB)
+
+        print "Collecting data from Zwave..."
+        self.socket.connect ("tcp://localhost:5556")
+
+        # Subscribe to all zeromq messages
+        self.socket.setsockopt(zmq.SUBSCRIBE, "")
+
+        # This is the frequency at which the data will be sent to SensorSafe in seconds
+        self.frequency = frequency
+
+        # sensorData keeps track of all the data entries that need to be sent to SensorSafe
+        self.sensorData = []
+
+        self.key = key
+
+        # Start separate thread that runs sendSensorData every [frequency] seconds
+        if frequency > 0:
+            threading.Timer(frequency, self.sendSensorData).start()
+
+    def registerValue(self, measurement, value):
+        """ Register a data entry to the sensorData list """
+        print "Registering " + measurement + ": " + str(value)
+        data_entry = {
+                "sampling_interval": 1,
+                "timestamp": int(round(time.time()*1000)),
+                "location": {"latitude": 34.068839550018311, "longitude": -118.44383955001831},
+                "data_channel": [ measurement],
+                "data": [[value]]
+        }
+        self.sensorData.append(data_entry)
+
+        # When Frequency is 0, this is a special mode where values are sent at
+        # the rate they are received
+        if self.frequency == 0:
+            self.sendSensorData()
+
+    def receiveFromSocket(self):
+        """ Continually receive data from zwave and send data to SensorSafe """
+        while(1):
+            string = self.socket.recv()
+            string_list = string.split()
+            measurement = string_list[0]
+            str_value = string_list[1]
+
+            self.registerValue(measurement, float(str_value))
+
+    def sendSensorData(self):
+        """ Send all sensor data to SensorSafe """
+        for data_entry in self.sensorData:
+            self.sendToSensorSafe(data_entry)
+        self.sensorData = []
+
+    def sendToSensorSafe(self, json_data_to_upload):
+        """ Send single data entry to SensorSafe """
+        try:
+            params = urllib.urlencode({'apikey': self.key, 'data': json.dumps(json_data_to_upload)})
             conn = httplib.HTTPSConnection(SERVER_ADDRESS, timeout=HTTP_REQUEST_TIMEOUT)
             conn.request('POST', SERVER_PREFIX + '/upload/', params)
             response = conn.getresponse()
@@ -30,81 +96,51 @@ def sendToSensorSafe(json_data_to_upload):
             reply = response.read()
             print reply
             conn.close()
-    except Exception as detail:
+        except Exception as detail:
             print 'Error:', detail
 
-def main():
-    #  Socket to talk to server
-    context = zmq.Context()
-    socket = context.socket(zmq.SUB)
+def usage():
+    """ Prints out the usage the script """
 
-    print "Collecting data from Zwave..."
-    socket.connect ("tcp://localhost:5556")
+    print """
+    Usage: python sendToSensorSafe.py [api-key] -f [frequency]"
 
-    # Subscribe to all zeromq messages
-    # filter = sys.argv[1] if len(sys.argv) > 1 else "10001"
-    # socket.setsockopt(zmq.SUBSCRIBE, "Luminance")
-    # socket.setsockopt(zmq.SUBSCRIBE, "Temperature")
-    # socket.setsockopt(zmq.SUBSCRIBE, "Motion")
-    socket.setsockopt(zmq.SUBSCRIBE, "")
+        [api-key] is the API key given when registering for a SensorSafe account.
 
-    sendAll(socket)
+        [frequency] is the number of seconds between each http request
+            to SensorSafe."
 
-def sendAll(socket):
-    ''' This function waits for all variables to be available and continuously sends them as values come in '''
-    # Initialize variables
-    temperature = None
-    luminance = None
-    motion = 0
-    motion_timeout = None   # This is the time the last motion was detected
-                            # until it sends a Z-wave OFF command
-    door = 0    # Door is closed by default
-                # 0.0 means door is closed, 1.0 means door is open
-
-    # Continually receive data from zwave and send data to SensorSafe
-    while(1):
-        string = socket.recv()
-        string_list = string.split()
-        measurement = string_list[0]
-        str_value = string_list[1]
-
-        value = float(str_value)
-
-        # Set values based on measurement
-        if measurement == "Temperature":
-            temperature =  value
-        elif measurement == "Luminance":
-            luminance = value
-        elif measurement == "Motion":
-            motion = value
-        elif measurement == "MotionTimeout":
-            motion_timeout = value
-        elif measurement == "Door":
-            door = value
-
-        # Send when variables are ready
-        if(temperature != None and luminance != None and motion_timeout != None):
-            print "All variables are ready!"
-            print "Temperature: ", temperature
-            print "Luminance: ", luminance
-            print "Motion: ", motion
-            print "Motion Timeout: ", motion_timeout
-            print "Door: ", door
-
-            print "Sending to SensorSafe"
-            sensorData = {
-                "sampling_interval": 1,   # Sampling interval does not matter since we are sending one dataset at a time
-                "timestamp": int(round(time.time()*1000)),
-                "location": {"latitude": 34.068839550018311, "longitude": -118.44383955001831},
-                "data_channel": [ "Temperature", "Luminance", "Motion", "Motion Timeout", "Door"],
-                "data": [[temperature, luminance, motion, motion_timeout, door]]
-            }
-            sendToSensorSafe(sensorData)
-
-            # Reset values that will change
-            # temperature = None
-            # luminance = None
-            # motion_timeout = None
+        If [frequency] is not specified or is set to 0, the requests
+            are made every time the data is received by the zeromq socket. "
+          """
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) < 2:
+        print "Not enough arguments"
+        usage()
+        sys.exit(2)
+
+    # Get the api key
+    key = sys.argv[1]
+    frequency = 0
+
+    # Get the frequency if it is given
+    try:
+        opts, args = getopt.getopt(sys.argv[2:], "hf:", ["help"])
+    except getopt.GetoptError, err:
+        print str(err)
+        usage()
+        sys.exit(2)
+
+    for option, argument in opts:
+        if option == "-f":
+            frequency = argument
+        elif option in ("-h", "--help"):
+            usage()
+
+    if frequency < 0:
+        print "The frequency must be zero or greater."
+        sys.exit(2)
+
+    svt = SensorVariableTracker(key, int(frequency))
+    svt.receiveFromSocket()
