@@ -109,7 +109,7 @@
 				<Value type="byte" genre="config" instance="1" index="2" label="On Time" units="minutes" read_only="false" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="255" value="">
 					<Help>On Time sets the number of minutes that the lights stay on when motion has not been detected. A value of 0 On Time is a special mode where the lights are constantly sent a command to turn them on whenever motion is detected. The device will NOT turn the lights off in this mode. Note that this mode will significantly shorten battery life. Recommended values: 5 min for hallways. 20 min for an office environment. 60 min for a library or other room where someone may be sitting still for a long time. This may be inaccurate, but default for Homeseer HSM100 may actually be 3 minutes, instead of 20?</Help>
 				</Value>
-				<Value type="list" genre="config" instance="1" index="3" label="LED ON/OFF" units="" read_only="false" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="0" vindex="" size="86">
+				<Value type="list" genre="config" instance="1" index="3" label="LED ON/OFF" units="" read_only="false" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="0" vindex="" size="79">
 					<Help>LED ON/OFF turns the LED on or off. A slight improvement in battery life is obtained by turning the LED off. Setting LED ON/OFF to zero will turn the LED off and 255 turns it on. Default is On (255).</Help>
 					<Item label="Off" value="0" />
 					<Item label="On" value="255" />
@@ -147,6 +147,123 @@
 				</Associations>
 			</CommandClass>
 			<CommandClass id="134" name="COMMAND_CLASS_VERSION" version="1" request_flags="5" create_vars="true">
+				<Instance index="1" />
+				<Value type="string" genre="system" instance="1" index="0" label="Library Version" units="" read_only="true" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="0" value="" />
+				<Value type="string" genre="system" instance="1" index="1" label="Protocol Version" units="" read_only="true" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="0" value="" />
+				<Value type="string" genre="system" instance="1" index="2" label="Application Version" units="" read_only="true" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="0" value="" />
+			</CommandClass>
+		</CommandClasses>
+	</Node>
+	<Node id="16" name="" location="" basic="4" generic="16" specific="1" type="Binary Power Switch" listening="true" frequentListening="false" beaming="true" routing="true" max_baud_rate="40000" version="3" query_stage="Complete">
+		<Manufacturer id="0086" name="Aeon Labs">
+			<Product type="0003" id="0006" name="Smart Energy Switch" />
+		</Manufacturer>
+		<CommandClasses>
+			<CommandClass id="32" name="COMMAND_CLASS_BASIC" version="1" request_flags="4" create_vars="true">
+				<Instance index="1" />
+				<Value type="byte" genre="all" instance="1" index="0" label="Basic" units="" read_only="false" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="255" value="255" />
+			</CommandClass>
+			<CommandClass id="37" name="COMMAND_CLASS_SWITCH_BINARY" version="1" request_flags="4" create_vars="true">
+				<Instance index="1" />
+				<Value type="bool" genre="user" instance="1" index="0" label="Switch" units="" read_only="false" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="0" value="True" />
+			</CommandClass>
+			<CommandClass id="39" name="COMMAND_CLASS_SWITCH_ALL" version="1" request_flags="4" create_vars="true">
+				<Instance index="1" />
+				<Value type="list" genre="system" instance="1" index="0" label="Switch All" units="" read_only="false" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="0" vindex="3" size="1">
+					<Item label="Disabled" value="0" />
+					<Item label="Off Enabled" value="1" />
+					<Item label="On Enabled" value="2" />
+					<Item label="On and Off Enabled" value="255" />
+				</Value>
+			</CommandClass>
+			<CommandClass id="49" name="COMMAND_CLASS_SENSOR_MULTILEVEL" version="1" request_flags="4" create_vars="true">
+				<Instance index="1" />
+				<Value type="decimal" genre="user" instance="1" index="4" label="Power" units="W" read_only="true" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="0" value="0.000" />
+			</CommandClass>
+			<CommandClass id="50" name="COMMAND_CLASS_METER" version="2" request_flags="2" create_vars="true">
+				<Instance index="1" />
+				<Value type="decimal" genre="user" instance="1" index="0" label="Energy" units="kWh" read_only="true" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="0" value="0.005" />
+				<Value type="decimal" genre="user" instance="1" index="1" label="Previous Reading" units="kWh" read_only="true" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="0" value="0.003" />
+				<Value type="int" genre="user" instance="1" index="2" label="Interval" units="seconds" read_only="true" write_only="false" verify_changes="false" poll_intensity="0" min="-2147483648" max="2147483647" value="20931" />
+				<Value type="decimal" genre="user" instance="1" index="8" label="Power" units="W" read_only="true" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="0" value="0.000" />
+				<Value type="decimal" genre="user" instance="1" index="9" label="Previous Reading" units="W" read_only="true" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="0" value="0.003" />
+				<Value type="int" genre="user" instance="1" index="10" label="Interval" units="seconds" read_only="true" write_only="false" verify_changes="false" poll_intensity="0" min="-2147483648" max="2147483647" value="20931" />
+				<Value type="bool" genre="user" instance="1" index="32" label="Exporting" units="" read_only="true" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="0" value="False" />
+				<Value type="button" genre="system" instance="1" index="33" label="Reset" units="" read_only="false" write_only="true" verify_changes="false" poll_intensity="0" min="0" max="0" />
+			</CommandClass>
+			<CommandClass id="112" name="COMMAND_CLASS_CONFIGURATION" version="1" request_flags="4" create_vars="true">
+				<Instance index="1" />
+				<Value type="list" genre="config" instance="1" index="1" label="Report type" units="" read_only="false" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="1" vindex="" size="1">
+					<Help>Defines the contents of Multilevel Sensor Report after Multilevel Sensor Get received.</Help>
+					<Item label="Power" value="0" />
+					<Item label="Voltage" value="1" />
+				</Value>
+				<Value type="short" genre="config" instance="1" index="2" label="Blinking behavior" units="" read_only="false" write_only="true" verify_changes="false" poll_intensity="0" min="0" max="65535" value="">
+					<Help>This is actually a double byte value. The LSB defines the total time the device needs to blink in seconds. The MSB defines the on/off interval of the blink in tenths of seconds.</Help>
+				</Value>
+				<Value type="list" genre="config" instance="1" index="80" label="Notification status" units="" read_only="false" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="0" vindex="" size="1">
+					<Help>Enables automatic notifications to associated devices whenever there is a state change.</Help>
+					<Item label="None" value="0" />
+					<Item label="Hail" value="1" />
+					<Item label="Basic" value="2" />
+				</Value>
+				<Value type="bool" genre="config" instance="1" index="90" label="Enable Wattage Reports" units="" read_only="false" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="0" value="">
+					<Help>Enable/disable Wattage threshold and percent.</Help>
+				</Value>
+				<Value type="short" genre="config" instance="1" index="91" label="Wattage threshold" units="watts" read_only="false" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="32000" value="">
+					<Help>The minimum change in wattage for a report to be sent.</Help>
+				</Value>
+				<Value type="byte" genre="config" instance="1" index="92" label="Wattage threshold percent" units="%" read_only="false" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="99" value="">
+					<Help>Minimum change in percent of wattage to send a report.</Help>
+				</Value>
+				<Value type="button" genre="config" instance="1" index="100" label="Default Group Reports" units="" read_only="false" write_only="true" verify_changes="false" poll_intensity="0" min="0" max="0" affects="101,102,103">
+					<Help>Set report types for groups 1, 2 and 3 to default. Reverts to 0 after set.</Help>
+				</Value>
+				<Value type="int" genre="config" instance="1" index="101" label="Report type G1" units="" read_only="false" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="0" value="">
+					<Help>Defines the type of report sent for reporting group 1. 2 is multisensor report. 4 is meter report for watts. 8 is meter report for kilowatts. Value 1 (msb) Reserved Value 2 Reserved Value 3 Reserved Value 4 (lsb) bits 7-4 reserved bit 3 MRC(KWH) bit 2 MRC(watt) bit 1 MSRC bit 0 reserved The MRC(KWH) flag signals that Report Group 1 send(1) or don&apos;t send(0) Meter Report Command(KWh) automatically. The MRC(Watt) flag signals that Report Group 1 send(1) or don&apos;t send(0) Meter Report Command(wattage) automatically. The MSRC flag signals that Report Group 1 send(1) or don&apos;t send(0) Multilevel Sensor Report Command(wattage) automatically.</Help>
+				</Value>
+				<Value type="int" genre="config" instance="1" index="102" label="Report type G2" units="" read_only="false" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="0" value="">
+					<Help>Defines the type of report sent for reporting group 2. 2 is multisensor report. 4 is meter report for watts. 8 is meter report for kilowatts. Value 1 (msb) Reserved Value 2 Reserved Value 3 Reserved Value 4 (lsb) bits 7-4 reserved bit 3 MRC(KWH) bit 2 MRC(watt) bit 1 MSRC bit 0 reserved The MRC(KWH) flag signals that Report Group 1 send(1) or don&apos;t send(0) Meter Report Command(KWh) automatically. The MRC(Watt) flag signals that Report Group 1 send(1) or don&apos;t send(0) Meter Report Command(wattage) automatically. The MSRC flag signals that Report Group 1 send(1) or don&apos;t send(0) Multilevel Sensor Report Command(wattage) automatically.</Help>
+				</Value>
+				<Value type="int" genre="config" instance="1" index="103" label="Report type G3" units="" read_only="false" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="0" value="">
+					<Help>Defines the type of report sent for reporting group 3. 2 is multisensor report. 4 is meter report for watts. 8 is meter report for kilowatts. Value 1 (msb) Reserved Value 2 Reserved Value 3 Reserved Value 4 (lsb) bits 7-4 reserved bit 3 MRC(KWH) bit 2 MRC(watt) bit 1 MSRC bit 0 reserved The MRC(KWH) flag signals that Report Group 1 send(1) or don&apos;t send(0) Meter Report Command(KWh) automatically. The MRC(Watt) flag signals that Report Group 1 send(1) or don&apos;t send(0) Meter Report Command(wattage) automatically. The MSRC flag signals that Report Group 1 send(1) or don&apos;t send(0) Multilevel Sensor Report Command(wattage) automatically.</Help>
+				</Value>
+				<Value type="button" genre="config" instance="1" index="110" label="Default Group Time" units="" read_only="false" write_only="true" verify_changes="false" poll_intensity="0" min="0" max="0" affects="111,112,113">
+					<Help>Set time interval for sending reports for groups 1, 2 and 3 to default.</Help>
+				</Value>
+				<Value type="int" genre="config" instance="1" index="111" label="Send interval G1" units="seconds" read_only="false" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="65535" value="">
+					<Help>Defines the time interval when the defined report for group 1 is sent.</Help>
+				</Value>
+				<Value type="int" genre="config" instance="1" index="112" label="Send interval G2" units="seconds" read_only="false" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="65535" value="">
+					<Help>Defines the time interval when the defined report for group 2 is sent.</Help>
+				</Value>
+				<Value type="int" genre="config" instance="1" index="113" label="Send interval G3" units="seconds" read_only="false" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="65535" value="">
+					<Help>Defines the time interval when the defined report for group 3 is sent.</Help>
+				</Value>
+				<Value type="short" genre="config" instance="1" index="254" label="Device tag" units="" read_only="false" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="65535" value="">
+					<Help>Device tag.</Help>
+				</Value>
+				<Value type="button" genre="config" instance="1" index="255" label="Reset device" units="" read_only="false" write_only="true" verify_changes="false" poll_intensity="0" min="0" max="0">
+					<Help>Reset to the default configuration.</Help>
+				</Value>
+			</CommandClass>
+			<CommandClass id="114" name="COMMAND_CLASS_MANUFACTURER_SPECIFIC" version="1" request_flags="4" create_vars="true">
+				<Instance index="1" />
+			</CommandClass>
+			<CommandClass id="130" name="COMMAND_CLASS_HAIL" version="1" request_flags="4" after_mark="true" create_vars="true">
+				<Instance index="1" />
+			</CommandClass>
+			<CommandClass id="133" name="COMMAND_CLASS_ASSOCIATION" version="1" request_flags="4" create_vars="true">
+				<Instance index="1" />
+				<Associations num_groups="1">
+					<Group index="1" max_associations="5" label="Report G1" auto="true">
+						<Node id="1" />
+					</Group>
+					<Group index="2" max_associations="5" label="Report G2" auto="true" />
+					<Group index="3" max_associations="5" label="Report G3" auto="true" />
+				</Associations>
+			</CommandClass>
+			<CommandClass id="134" name="COMMAND_CLASS_VERSION" version="1" request_flags="4" create_vars="true">
 				<Instance index="1" />
 				<Value type="string" genre="system" instance="1" index="0" label="Library Version" units="" read_only="true" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="0" value="" />
 				<Value type="string" genre="system" instance="1" index="1" label="Protocol Version" units="" read_only="true" write_only="false" verify_changes="false" poll_intensity="0" min="0" max="0" value="" />

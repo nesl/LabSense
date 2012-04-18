@@ -96,7 +96,7 @@ using namespace OpenZWave;
 static uint32 g_homeId;
 static uint8 AlDwSensorId;
 static uint8 Hsm100SensorId;
-static uint8 EnergySwitchSensorId;
+static uint8 SmartSwitchSensorId;
 static uint8 ZstickId;
 bool   g_initFailed = false;
 
@@ -150,6 +150,51 @@ NodeInfo* GetNodeInfo
 	}
 
 	return NULL;
+}
+
+//-----------------------------------------------------------------------------
+// <configureSmartSwitchParameters>
+// Configures several parameters for the SmartSwitch.
+//-----------------------------------------------------------------------------
+void configureSmartSwitchParameters() 
+{
+    pthread_mutex_lock( &g_criticalSection );
+
+    // Initialize Configuration Parameters
+    // Request and Set the "On Time" Config Param to 20 with index 2 (See zwcfg*.xml)
+    // Manager::Get()->SetConfigParam(g_homeId, SmartSwitchSensorId, 2, 1); 
+    Manager::Get()->RequestConfigParam(g_homeId, SmartSwitchSensorId, 111); 
+    Manager::Get()->RequestConfigParam(g_homeId, SmartSwitchSensorId, 112); 
+    Manager::Get()->RequestConfigParam(g_homeId, SmartSwitchSensorId, 113); 
+
+    pthread_mutex_unlock( &g_criticalSection );
+}
+
+//-----------------------------------------------------------------------------
+// <configureHsmParameters>
+// Configures several parameters for the Hsm100.
+//-----------------------------------------------------------------------------
+void configureHsmParameters() 
+{
+    // Initialize Configuration Parameters
+    pthread_mutex_lock( &g_criticalSection );
+
+    // Request and Set the "On Time" Config Param to 20 with index 2 (See zwcfg*.xml)
+    Manager::Get()->SetConfigParam(g_homeId, Hsm100SensorId, 2, 1); 
+    Manager::Get()->RequestConfigParam(g_homeId, Hsm100SensorId, 2); 
+
+    /*
+    // Request and Set the "On Value" Config Param to 255 with index 6 (See zwcfg*.xml)
+    // Manager::Get()->SetConfigParam(g_homeId, Hsm100SensorId, 6, 255); 
+    Manager::Get()->RequestConfigParam(g_homeId, Hsm100SensorId, 6); 
+
+    // Request "Stay Awake" Config Param
+    Manager::Get()->RequestConfigParam(g_homeId, Hsm100SensorId, 5);
+
+    // Request Sensitivity
+    //Manager::Get()->RequestConfigParam(g_homeId, Hsm100SensorId, 1);
+    */
+    pthread_mutex_unlock( &g_criticalSection );
 }
 
 //-----------------------------------------------------------------------------
@@ -342,10 +387,10 @@ void parseHsm100Sensor(ValueID value_id) {
 }
 
 //-----------------------------------------------------------------------------
-// <parseEnergySwitchSensor>
+// <parseSmartSwitchSensor>
 // Parses the Aeon Labs Energy Switch Sensor for basic values.
 //-----------------------------------------------------------------------------
-void parseEnergySwitchSensor(ValueID value_id) {
+void parseSmartSwitchSensor(ValueID value_id) {
 
     // Initialize Variables
     bool success = false;
@@ -377,7 +422,11 @@ void parseEnergySwitchSensor(ValueID value_id) {
             success = Manager::Get()->GetValueAsInt(value_id, &int_value);
             break;
         case 4:
-            //  List Type
+            //  List Type -> Get as a string for easier parsing
+            // success = Manager::Get()->GetValueAsString(value_id, &str_value);
+            // break;
+        case 7:
+            // String Type
             success = Manager::Get()->GetValueAsString(value_id, &str_value);
             break;
         default:
@@ -412,7 +461,7 @@ void parseEnergySwitchSensor(ValueID value_id) {
             break;
         case COMMAND_CLASS_SWITCH_BINARY:
             printf("Got COMMAND_CLASS_SWITCH_BINARY!\n");
-            printf("Binary Switch :%s\n", (bool_value)?"on":"off");
+            printf("Binary Switch: %s\n", (bool_value)?"on":"off");
             break;
         case COMMAND_CLASS_SWITCH_ALL:
             printf("Got COMMAND_CLASS_SWITCH_ALL!\n");
@@ -421,6 +470,11 @@ void parseEnergySwitchSensor(ValueID value_id) {
         case COMMAND_CLASS_METER:
             printf("Got COMMAND_CLASS_METER!\n");
             printSmartSwitchMeterValue(value_id);
+            break;
+        case COMMAND_CLASS_CONFIGURATION:
+            printf("Got COMMAND_CLASS_CONFIGURATION\n");
+            printf("Configuration: %d\n", int_value);
+
             break;
         default:
             printf("Got an Unknown COMMAND CLASS!\n");
@@ -581,8 +635,8 @@ void OnNotification
                 else if(nodeId == AlDwSensorId) {
                     parseAlDwSensor(value_id);
                 }
-                else if(nodeId == EnergySwitchSensorId) {
-                    parseEnergySwitchSensor(value_id);
+                else if(nodeId == SmartSwitchSensorId) {
+                    parseSmartSwitchSensor(value_id);
                 }
                 else {
                     printf("Unknown Node\n");
@@ -740,8 +794,8 @@ void OnNotification
                     printf("ZstickId is set to: %d\n", nodeId);
                 }
                 else if(name == "Smart Energy Switch" && manufacturer_name == "Aeon Labs") {
-                    EnergySwitchSensorId = nodeId;
-                    printf("EnergySwitchSensorId is set to: %d\n", nodeId);
+                    SmartSwitchSensorId = nodeId;
+                    printf("SmartSwitchSensorId is set to: %d\n", nodeId);
                 }
                 else if(name != "" && manufacturer_name != "") {
                     // Print unknown nodes
@@ -868,25 +922,9 @@ int main( int argc, char* argv[] )
 		}
 		pthread_mutex_unlock( &g_criticalSection );
 
-        // Initialize Configuration Parameters
-        pthread_mutex_lock( &g_criticalSection );
+        configureHsmParameters();
+        configureSmartSwitchParameters();
 
-        // Request and Set the "On Time" Config Param to 20 with index 2 (See zwcfg*.xml)
-        Manager::Get()->SetConfigParam(g_homeId, Hsm100SensorId, 2, 1); 
-        Manager::Get()->RequestConfigParam(g_homeId, Hsm100SensorId, 2); 
-
-        /*
-        // Request and Set the "On Value" Config Param to 255 with index 6 (See zwcfg*.xml)
-        // Manager::Get()->SetConfigParam(g_homeId, Hsm100SensorId, 6, 255); 
-        Manager::Get()->RequestConfigParam(g_homeId, Hsm100SensorId, 6); 
-
-        // Request "Stay Awake" Config Param
-        Manager::Get()->RequestConfigParam(g_homeId, Hsm100SensorId, 5);
-
-        // Request Sensitivity
-        //Manager::Get()->RequestConfigParam(g_homeId, Hsm100SensorId, 1);
-        */
-        pthread_mutex_unlock( &g_criticalSection );
 
 
 		// If we want to access our NodeInfo list, that has been built from all the
