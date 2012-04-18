@@ -41,7 +41,6 @@ class SensorVariableTracker:
         self.context = zmq.Context()
         self.socket = self.context.socket(zmq.SUB)
 
-        print "Collecting data from Zwave..."
         self.socket.connect ("tcp://localhost:5556")
 
         # Subscribe to all zeromq messages
@@ -57,7 +56,8 @@ class SensorVariableTracker:
 
         # Start separate thread that runs sendSensorData every [frequency] seconds
         if frequency > 0:
-            threading.Timer(frequency, self.sendSensorData).start()
+            print "Starting Timer with frequency "+ str(frequency)
+            timer_thread = threading.Timer(self.frequency, self.sendSensorData).start()
 
     def registerValue(self, measurement, value):
         """ Register a data entry to the sensorData list """
@@ -78,6 +78,8 @@ class SensorVariableTracker:
 
     def receiveFromSocket(self):
         """ Continually receive data from zwave and send data to SensorSafe """
+
+        print "Collecting data from Zwave..."
         while(1):
             string = self.socket.recv()
             string_list = string.split()
@@ -88,12 +90,17 @@ class SensorVariableTracker:
 
     def sendSensorData(self):
         """ Send all sensor data to SensorSafe """
+
+        print "IN SendSensorData"
         for data_entry in self.sensorData:
             success = self.sendToSensorSafe(data_entry)
             # If data was sent successfully, delete the data from list. If not, don't do anything.
             if success:
                 self.sensorData.remove(data_entry)
-        self.sensorData = []
+
+        # Set a thread to keep calling this function if frequency was specified
+        if self.frequency > 0:
+            timer_thread = threading.Timer(self.frequency, self.sendSensorData).start()
 
     def sendToSensorSafe(self, json_data_to_upload):
         """ Send single data entry to SensorSafe """
@@ -108,10 +115,10 @@ class SensorVariableTracker:
             reply = response.read()
             print reply
             conn.close()
-            return true
+            return True
         except IOError, detail:
             print "No internet connection, will send the data when the internet becomes available"
-            return false
+            return False
 
 def usage():
     """ Prints out the usage for the script """
@@ -142,7 +149,7 @@ if __name__ == "__main__":
         sys.exit(2)
     frequency = 0
 
-    # Get the frequency if it is given
+    # Parse command line options/arguments
     try:
         opts, args = getopt.getopt(sys.argv[2:], "hf:", ["help"])
     except getopt.GetoptError, err:
