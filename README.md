@@ -87,6 +87,13 @@ Installation
     The LabSense Project should now be at open-zwave/cpp/examples/linux/LabSense.
 
 7. Navigate to LabSense/LabSenseZwave/
+8. Pair the Z-stick with the sensors:
+
+    1. Push the button on the Z-stick. The light on the Z-stick should blink. 
+    2. Push the button on the sensor. The light on the Z-stick should stay lit for a few seconds and then start blinking again. 
+    3. The sensor has been paired and the Z-stick is ready for the next sensor. Start at step 2 for the next sensor. 
+    4. When all sensors have been paired, push the button on the Z-stick and the light should stop blinking.
+
 8. Make the code and run the executable
 
     <pre>
