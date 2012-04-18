@@ -22,7 +22,9 @@ import json             # Used for json formatted data
 import time             # Used for timestamps
 import threading        # Used for creating separate thread for sending to SensorSafe
 import getopt           # Used for command line option handling
-import zmq  # Used for receiving data sent over zeromq socket
+import zmq              # Used for receiving data sent over zeromq socket
+import signal           # Used for properly cancelling timer thread when Ctrl-c is
+                            # pressed
 
 SERVER_ADDRESS = "128.97.93.29"
 SERVER_PREFIX = ""
@@ -57,7 +59,17 @@ class SensorVariableTracker:
         # Start separate thread that runs sendSensorData every [frequency] seconds
         if frequency > 0:
             print "Starting Timer with frequency "+ str(frequency)
-            timer_thread = threading.Timer(self.frequency, self.sendSensorData).start()
+            self.timer_thread = threading.Timer(self.frequency, self.sendSensorData)
+            self.timer_thread.start()
+
+            # Set up Ctrl-C signal handler
+            def signal_handler(signal, frame):
+                print "Cancelling Timer Thread"
+                self.timer_thread.cancel()
+                sys.exit(0)
+
+            signal.signal(signal.SIGINT, signal_handler)
+
 
     def registerValue(self, measurement, value):
         """ Register a data entry to the sensorData list """
@@ -82,6 +94,7 @@ class SensorVariableTracker:
         print "Collecting data from Zwave..."
         while(1):
             string = self.socket.recv()
+
             string_list = string.split()
             measurement = string_list[0]
             str_value = string_list[1]
@@ -100,7 +113,8 @@ class SensorVariableTracker:
 
         # Set a thread to keep calling this function if frequency was specified
         if self.frequency > 0:
-            timer_thread = threading.Timer(self.frequency, self.sendSensorData).start()
+            self.timer_thread = threading.Timer(self.frequency, self.sendSensorData)
+            self.timer_thread.start()
 
     def sendToSensorSafe(self, json_data_to_upload):
         """ Send single data entry to SensorSafe """
