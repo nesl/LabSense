@@ -4,6 +4,16 @@ Connects socket to tcp://localhost:5556
 Collects data from Zwave interface using Zeromq and
    sends the data in JSON to SensorSafe
 
+Usage: python sendToSensorSafe.py [api-key] -f [frequency]"
+
+    [api-key] is the API key given when registering for a SensorSafe account.
+
+    [frequency] is the number of seconds between each http request
+        to SensorSafe."
+
+    If [frequency] is not specified or is set to 0, the requests
+        are made every time the data is received by the zeromq socket. "
+
 """
 
 import sys              # Used for commandline arguments
@@ -12,7 +22,6 @@ import json             # Used for json formatted data
 import time             # Used for timestamps
 import threading        # Used for creating separate thread for sending to SensorSafe
 import getopt           # Used for command line option handling
-
 import zmq  # Used for receiving data sent over zeromq socket
 
 SERVER_ADDRESS = "128.97.93.29"
@@ -127,6 +136,10 @@ if __name__ == "__main__":
 
     # Get the api key
     key = sys.argv[1]
+    if len(key) != 40:
+        print "Invalid key (Should be 40 characters long)"
+        usage()
+        sys.exit(2)
     frequency = 0
 
     # Get the frequency if it is given

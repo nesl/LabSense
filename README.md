@@ -15,7 +15,7 @@ is equipped. Each guru plug talks to several different sensors through a
 multitude of different protocols (i.e. Zigbee, Bluetooth, Zwave).
 
 This server will also host a website through which users can view the
-different sensor outputs in a intuitive interface. 
+different sensor outputs in an intuitive interface. 
 
 The server will also serve a public api that others can use to read the
 data from the different sensors. Other applications can then process the
@@ -62,20 +62,27 @@ The sensors that interact with the Z-stick include:
 
 Installation
 --------------
-1. Install needed development headers for open-zwave:
 
+1. Install Zeromq by following directions at http://www.zeromq.org/intro:get-the-software
+2. Install python bindings by following directions at http://www.zeromq.org/bindings:python
+3. Install needed development headers for open-zwave:
+
+    <pre>
     sudo apt-get install libudev-dev
+    </pre>
 
-2. Install Zeromq by following directions at http://www.zeromq.org/intro:get-the-software
-3. Install python bindings by following directions at http://www.zeromq.org/bindings:python
 4. Get the open-zwave source code using svn by running:
 
+    <pre>
     svn checkout http://open-zwave.googlecode.com/svn/trunk/ open-zwave/
+    </pre>
 
 5. Navigate to open-zwave/cpp/examples/linux/
 6. Get the source code for this project using git or download it:
 
+    <pre>
     git clone git@github.com:jtsao22/LabSense.git
+    </pre>
 
     The LabSense Project should now be at open-zwave/cpp/examples/linux/LabSense.
 
@@ -108,6 +115,7 @@ executable:
 
     [api-key] is the API key given during SensorSafe registration.
     [frequency] is optional and specifies how often to send data to SensorSafe.
+    The usage details can be found by using "-h" or "--help"
 
     (Either run this in a separate ssh session/terminal or run one of the processes in the background).
 
@@ -118,17 +126,20 @@ executable:
     pydoc sendToSensorSafe
     </pre>
 
-4. The script will send to SensorSafe as soon as all variables have been initialized (temperature, luminance, and
+3. The script will send to SensorSafe as soon as all variables have been initialized (temperature, luminance, and
 motion_timeout), which make take some time depending on the wake-up interval of the Homeseer Multisensor (programmed to
 be every 6 minutes).
 Upon successful upload to SensorSafe, a message similar to the following will show up:
 
+    <pre>
     200 OK
     [('transfer-encoding', 'chunked'), ('vary', 'Accept-Encoding'), ('server', 'Apache/2.2.11 (Ubuntu) mod_ssl/2.2.11
     OpenSSL/0.9.8g mod_wsgi/2.3 Python/2.6.2'), ('connection', 'close'), ('date', 'Tue, 10 Apr 2012 19:47:03 GMT'),
     ('access-control-allow-origin', '*'), ('content-type', 'text/html; charset=utf-8')]
     Upload successful (Collection name: sandbox, Requested by sandbox
-5. You can then see the data on SensorSafe by signing in, pressing access data, selecting data channels, and pressing Show Data. 
+    </pre>
+
+4. You can then see the data on SensorSafe by signing in, pressing access data, selecting data channels, and pressing Show Data. 
 
 ------------------------------------------------------------------------------
 
