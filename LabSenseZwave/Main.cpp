@@ -113,6 +113,7 @@ static pthread_mutex_t g_criticalSection;
 static pthread_cond_t  initCond  = PTHREAD_COND_INITIALIZER;
 static pthread_mutex_t initMutex = PTHREAD_MUTEX_INITIALIZER;
 
+
 // Zeromq initialization for context and publisher
 zmq::context_t context(1);
 zmq::socket_t publisher(context, ZMQ_PUB);
@@ -163,9 +164,13 @@ void configureSmartSwitchParameters()
     // Initialize Configuration Parameters
     // Request and Set the "On Time" Config Param to 20 with index 2 (See zwcfg*.xml)
     // Manager::Get()->SetConfigParam(g_homeId, SmartSwitchSensorId, 2, 1); 
+    Manager::Get()->SetConfigParam(g_homeId, SmartSwitchSensorId, 101, 2);
+    Manager::Get()->SetConfigParam(g_homeId, SmartSwitchSensorId, 102, 8);
     Manager::Get()->RequestConfigParam(g_homeId, SmartSwitchSensorId, 111); 
-    Manager::Get()->RequestConfigParam(g_homeId, SmartSwitchSensorId, 112); 
-    Manager::Get()->RequestConfigParam(g_homeId, SmartSwitchSensorId, 113); 
+    Manager::Get()->RequestConfigParam(g_homeId, SmartSwitchSensorId, 101);
+    Manager::Get()->RequestConfigParam(g_homeId, SmartSwitchSensorId, 102);
+    // Manager::Get()->RequestConfigParam(g_homeId, SmartSwitchSensorId, 103);
+
 
     pthread_mutex_unlock( &g_criticalSection );
 }
@@ -216,54 +221,18 @@ void printSmartSwitchMeterValue(ValueID value_id) {
     bool success = Manager::Get()->GetValueAsString(value_id, &str_value);
     printf("Successfully Got Value As String: %s\n", (success)?"Yes":"No");
 
-    string measurement = "";
+    // Measurement map for SmartSwitch
+    static map<uint8, string> SmartSwitchMeasurementMap;
+    SmartSwitchMeasurementMap[0] = "Energy";
+    SmartSwitchMeasurementMap[1] = "Previous_Energy_Reading";
+    SmartSwitchMeasurementMap[2] = "Energy_Interval";
+    SmartSwitchMeasurementMap[8] = "Power";
+    SmartSwitchMeasurementMap[9] = "Previous_Power_Reading";
+    SmartSwitchMeasurementMap[10] = "Power_Interval";
+    SmartSwitchMeasurementMap[32] = "Exporting";
+    SmartSwitchMeasurementMap[33] = "Reset";
 
-    // Print Correct Measurement based on index
-    // Note: this map is only created once. 
-    static map<uint8, string> measurement_map;
-    measurement_map[0] = "Energy";
-    measurement_map[1] = "Previous Energy Reading";
-    measurement_map[2] = "Energy Interval";
-    measurement_map[8] = "Power";
-    measurement_map[9] = "Previous Power Reading";
-    measurement_map[10] = "Power Interval";
-    measurement_map[32] = "Exporting";
-    measurement_map[33] = "Reset";
-
-    measurement = measurement_map[value_id.GetIndex()];
-
-    // See zwcfg*.xml for details
-    /*
-    switch(value_id.GetIndex()) {
-        case 0:
-            measurement = "Energy";
-            break;
-        case 1:
-            measurement = "Previous Energy Reading";
-            break;
-        case 2:
-            measurement = "Energy Interval";
-            break;
-        case 8:
-            measurement = "Power";
-            break;
-        case 9:
-            measurement = "Previous Power Reading";
-            break;
-        case 10:
-            measurement = "Power Interval";
-            break;
-        case 32:
-            measurement = "Exporting";
-            break;
-        case 33:
-            measurement = "Reset";
-            break;
-        default:
-            printf("Unknown Index in Smart Switch Meter Values!\n");
-            break;
-    }
-    */
+    string measurement = SmartSwitchMeasurementMap[value_id.GetIndex()];
     printf("\"%s\" is set to %s\n", measurement.c_str(), str_value.c_str());
 }
 
@@ -346,7 +315,7 @@ void parseHsm100Sensor(ValueID value_id) {
                 case 1:
                     // General
                     printf("It has been %f minutes since the last Motion Detected.\n", float_value);
-                    sendMessage("MotionTimeout", float_value);
+                    sendMessage("Motion_Timeout", float_value);
                     break;
                 case 2:
                     // Luminance
@@ -457,7 +426,8 @@ void parseSmartSwitchSensor(ValueID value_id) {
             break;
         case COMMAND_CLASS_SENSOR_MULTILEVEL:
             printf("Got COMMAND_CLASS_SENSOR_MULTILEVEL!\n");
-            printf("Sensor_Multilevel: %f\n", float_value);
+            printf("Sent Power: %f\n", float_value);
+            sendMessage("Power", float_value);
             break;
         case COMMAND_CLASS_SWITCH_BINARY:
             printf("Got COMMAND_CLASS_SWITCH_BINARY!\n");
@@ -469,6 +439,13 @@ void parseSmartSwitchSensor(ValueID value_id) {
             break;
         case COMMAND_CLASS_METER:
             printf("Got COMMAND_CLASS_METER!\n");
+            printf("Index: %d\n", value_id.GetIndex());
+            printf("Instance; %d\n", value_id.GetInstance());
+
+            if(value_id.GetIndex() == 0) {
+                sendMessage("Energy", float_value);
+                printf("Sent Energy: %f\n", float_value);
+            }
             printSmartSwitchMeterValue(value_id);
             break;
         case COMMAND_CLASS_CONFIGURATION:
