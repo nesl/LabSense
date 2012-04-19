@@ -23,6 +23,9 @@ Usage: python sendToSensorSafe.py [api-key] [Options]"
            measurements will still be governed by the frequency and are not
            affected. Currently, the event-driven measurements are Motion and Door
            Status (Open/Closed).
+
+        -v Verbose option that shows more information about the upload to
+           SensorSafe.
 """
 
 import sys              # Used for commandline arguments
@@ -50,7 +53,7 @@ class SensorVariableTracker:
         over the Zeromq socket and delivers the data to the
         SensorSafe server every [frequency] seconds. """
 
-    def __init__(self, key, event_driven, frequency=0):
+    def __init__(self, key, event_driven, verbose, frequency=0):
         """ Initialize the Zeromq socket to receive data
             and initialize timer thread to send data at given
             frequency. """
@@ -73,6 +76,10 @@ class SensorVariableTracker:
         # critical. Currently event driven measurements are Motion and Door.
         # Note: the none-event-driven variables are still controlled by the frequency
         self.event_driven = event_driven
+
+        # if verbose is true, more information about the upload process will be
+        # printed
+        self.verbose = verbose
 
         self.key = key
 
@@ -159,8 +166,9 @@ class SensorVariableTracker:
             conn.request('POST', SERVER_PREFIX + '/upload/', params)
             response = conn.getresponse()
 
-            # print response.status, response.reason
-            # print response.getheaders()
+            if self.verbose == True:
+                print response.status, response.reason
+                print response.getheaders()
             reply = response.read()
             print reply
             conn.close()
@@ -192,6 +200,9 @@ def usage():
                measurements will still be governed by the frequency and are not
                affected. Currently, the event-driven measurements are Motion and Door
                Status (Open/Closed).
+
+            -v Verbose option that shows more information about the upload to
+               SensorSafe.
            """
 
 if __name__ == "__main__":
@@ -211,19 +222,22 @@ if __name__ == "__main__":
 
     # Parse command line options/arguments
     try:
-        opts, args = getopt.getopt(sys.argv[2:], "hef:", ["help"])
+        opts, args = getopt.getopt(sys.argv[2:], "hevf:", ["help"])
     except getopt.GetoptError, err:
         print str(err)
         usage()
         sys.exit(2)
 
     event_driven = False
+    verbose = False
 
     for option, argument in opts:
         if option == "-f":
             frequency = argument
         elif option == "-e":
             event_driven = True
+        elif option == "-v":
+            verbose = True
         elif option in ("-h", "--help"):
             usage()
 
@@ -233,5 +247,5 @@ if __name__ == "__main__":
         sys.exit(2)
 
     # Track the variables and send to SensorSafe
-    svt = SensorVariableTracker(key, event_driven, int(frequency))
+    svt = SensorVariableTracker(key, event_driven, verbose, int(frequency))
     svt.receiveFromSocket()

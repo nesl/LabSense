@@ -41,7 +41,7 @@ LabSenseZwave executable to a python process that sends the data to SensorSafe.
 This is meant to decouple the Zwave data retrieval from the possible slower
 Http requests and network latency. 
 
-Dependency:
+Dependencies:
 
 * [Open-zwave](http://code.google.com/p/open-zwave/)
 * [Zeromq](http://www.zeromq.org/intro:get-the-software)
@@ -124,6 +124,7 @@ executable:
     More options are available:
         -f [frequency] is optional and specifies how often to send data to SensorSafe.
         -e send event-driven measurement immediately
+        -v verbose mode
     The usage details can be found by using "-h" or "--help"
 
     (Either run this in a separate ssh session/terminal or run one of the processes in the background).
@@ -138,7 +139,8 @@ executable:
 3. The script will send to SensorSafe as soon as all variables have been initialized (temperature, luminance, and
 motion_timeout), which make take some time depending on the wake-up interval of the Homeseer Multisensor (programmed to
 be every 6 minutes).
-Upon successful upload to SensorSafe, a message similar to the following will show up:
+Upon successful upload to SensorSafe, a message similar to the following will
+show up if verbose mode is used:
 
     <pre>
     200 OK
