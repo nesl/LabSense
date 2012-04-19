@@ -117,11 +117,13 @@ sensor data is required, more code has been implemented to send the data to [Sen
 executable:
 
     <pre>
-    python sendToSensorSafe.py [api-key] -f [frequency]
+    python sendToSensorSafe.py [api-key] 
     </pre>
 
     [api-key] is the API key given during SensorSafe registration.
-    [frequency] is optional and specifies how often to send data to SensorSafe.
+    More options are available:
+        -f [frequency] is optional and specifies how often to send data to SensorSafe.
+        -e send event-driven measurement immediately
     The usage details can be found by using "-h" or "--help"
 
     (Either run this in a separate ssh session/terminal or run one of the processes in the background).

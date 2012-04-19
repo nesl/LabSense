@@ -4,16 +4,25 @@ Connects socket to tcp://localhost:5556
 Collects data from Zwave interface using Zeromq and
    sends the data in JSON to SensorSafe
 
-Usage: python sendToSensorSafe.py [api-key] -f [frequency]"
+Usage: python sendToSensorSafe.py [api-key] [Options]"
 
     [api-key] is the API key given when registering for a SensorSafe account.
 
-    [frequency] is the number of seconds between each http request
-        to SensorSafe."
+    Options:
 
-    If [frequency] is not specified or is set to 0, the requests
-        are made every time the data is received by the zeromq socket. "
+        -f [frequency]
+            This is the number of seconds between each http request
+            to SensorSafe."
 
+            If [frequency] is not specified or is set to 0, the requests
+                are made every time the data is received by the zeromq socket.
+
+        -e This option specifies that all event-driven measurements should be sent
+           right away (usually because they are more time-critical) instead of
+           sending based on the frequency. Note that the none event-driven
+           measurements will still be governed by the frequency and are not
+           affected. Currently, the event-driven measurements are Motion and Door
+           Status (Open/Closed).
 """
 
 import sys              # Used for commandline arguments
@@ -35,7 +44,7 @@ class SensorVariableTracker:
         over the Zeromq socket and delivers the data to the
         SensorSafe server every [frequency] seconds. """
 
-    def __init__(self, key, frequency=0):
+    def __init__(self, key, event_driven, frequency=0):
         """ Initialize the Zeromq socket to receive data
             and initialize timer thread to send data at given
             frequency. """
@@ -54,6 +63,11 @@ class SensorVariableTracker:
         # sensorData keeps track of all the data entries that need to be sent to SensorSafe
         self.sensorData = []
 
+        # event_driven specifies if the event driven measurements should be sent right away because they are more time
+        # critical. Currently event driven measurements are Motion and Door.
+        # Note: the none-event-driven variables are still controlled by the frequency
+        self.event_driven = event_driven
+
         self.key = key
 
         # Start separate thread that runs sendSensorData every [frequency] seconds
@@ -64,7 +78,6 @@ class SensorVariableTracker:
 
             # Set up Ctrl-C signal handler
             def signal_handler(signal, frame):
-                print "Cancelling Timer Thread"
                 self.timer_thread.cancel()
                 sys.exit(0)
 
@@ -81,7 +94,14 @@ class SensorVariableTracker:
                 "data_channel": [ measurement],
                 "data": [[value]]
         }
-        self.sensorData.append(data_entry)
+        # If option for sending event driven measurements is specified, send the data immediately
+        if self.event_driven == True and measurement in ("Motion", "Door"):
+            success = self.sendToSensorSafe(data_entry)
+            if not success:
+                self.sensorData.append(data_entry)
+        else:
+            self.sensorData.append(data_entry)
+
 
         # When Frequency is 0, this is a special mode where values are sent at
         # the rate they are received
@@ -138,18 +158,29 @@ def usage():
     """ Prints out the usage for the script """
 
     print """
-    Usage: python sendToSensorSafe.py [api-key] -f [frequency]"
+    Usage: python sendToSensorSafe.py [api-key] [Options]"
 
         [api-key] is the API key given when registering for a SensorSafe account.
 
-        [frequency] is the number of seconds between each http request
-            to SensorSafe."
+        Options:
 
-        If [frequency] is not specified or is set to 0, the requests
-            are made every time the data is received by the zeromq socket. "
-          """
+            -f [frequency]
+                This is the number of seconds between each http request
+                to SensorSafe."
+
+                If [frequency] is not specified or is set to 0, the requests
+                    are made every time the data is received by the zeromq socket.
+
+            -e This option specifies that all event-driven measurements should be sent
+               right away (usually because they are more time-critical) instead of
+               sending based on the frequency. Note that the none event-driven
+               measurements will still be governed by the frequency and are not
+               affected. Currently, the event-driven measurements are Motion and Door
+               Status (Open/Closed).
+           """
 
 if __name__ == "__main__":
+    # Check if number of arguments is adequate
     if len(sys.argv) < 2:
         print "Not enough arguments"
         usage()
@@ -165,21 +196,27 @@ if __name__ == "__main__":
 
     # Parse command line options/arguments
     try:
-        opts, args = getopt.getopt(sys.argv[2:], "hf:", ["help"])
+        opts, args = getopt.getopt(sys.argv[2:], "hef:", ["help"])
     except getopt.GetoptError, err:
         print str(err)
         usage()
         sys.exit(2)
 
+    event_driven = False
+
     for option, argument in opts:
         if option == "-f":
             frequency = argument
+        elif option == "-e":
+            event_driven = True
         elif option in ("-h", "--help"):
             usage()
+
 
     if frequency < 0:
         print "The frequency must be zero or greater."
         sys.exit(2)
 
-    svt = SensorVariableTracker(key, int(frequency))
+    # Track the variables and send to SensorSafe
+    svt = SensorVariableTracker(key, event_driven, int(frequency))
     svt.receiveFromSocket()
