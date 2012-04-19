@@ -39,6 +39,12 @@ SERVER_ADDRESS = "128.97.93.29"
 SERVER_PREFIX = ""
 HTTP_REQUEST_TIMEOUT = 60
 
+# Colors
+BLUE = "\033[94m"
+GREEN = "\033[92m"
+PURPLE = "\033[95m"
+ENDCOLOR = "\033[0m"
+
 class SensorVariableTracker:
     """ This class keeps track of all variables received from LabSenseZwave
         over the Zeromq socket and delivers the data to the
@@ -86,7 +92,17 @@ class SensorVariableTracker:
 
     def registerValue(self, measurement, value):
         """ Register a data entry to the sensorData list """
-        print "Registering " + measurement + ": " + str(value)
+        if measurement == "Door":
+            color = BLUE
+        elif measurement in ("Motion", "MotionTimeout", "Luminance",
+                             "Temperature"):
+            color = GREEN
+        else:
+            color = PURPLE
+        print "%sRegistering %s: %s %s" % (color, measurement, value,
+                ENDCOLOR)
+
+
         data_entry = {
                 "sampling_interval": 1,
                 "timestamp": int(round(time.time()*1000)),
@@ -124,7 +140,6 @@ class SensorVariableTracker:
     def sendSensorData(self):
         """ Send all sensor data to SensorSafe """
 
-        print "IN SendSensorData"
         for data_entry in self.sensorData:
             success = self.sendToSensorSafe(data_entry)
             # If data was sent successfully, delete the data from list. If not, don't do anything.
@@ -144,8 +159,8 @@ class SensorVariableTracker:
             conn.request('POST', SERVER_PREFIX + '/upload/', params)
             response = conn.getresponse()
 
-            print response.status, response.reason
-            print response.getheaders()
+            # print response.status, response.reason
+            # print response.getheaders()
             reply = response.read()
             print reply
             conn.close()

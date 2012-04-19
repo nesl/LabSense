@@ -369,7 +369,7 @@ void parseSmartSwitchSensor(ValueID value_id) {
     int int_value = 0;
     string str_value = "";
 
-    printf("Value Type: %d\n", (int) value_id.GetType());
+    // printf("Value Type: %d\n", (int) value_id.GetType());
     // Get the Changed Value Based on the type
     switch((int) value_id.GetType()) {
         // See open-zwave/cpp/src/value_classes/ValueID.h for ValueType enum 
@@ -416,7 +416,7 @@ void parseSmartSwitchSensor(ValueID value_id) {
     // 5. COMMAND_CLASS_METER 0x32
     // 6. COMMAND_CLASS_HAIL 0x82
     
-    printf("CommandClassID: 0x%x\n", value_id.GetCommandClassId());
+    // printf("CommandClassID: 0x%x\n", value_id.GetCommandClassId());
     switch(value_id.GetCommandClassId()) {
         case COMMAND_CLASS_BASIC:
             if(byte_value) {
@@ -439,8 +439,6 @@ void parseSmartSwitchSensor(ValueID value_id) {
             break;
         case COMMAND_CLASS_METER:
             printf("Got COMMAND_CLASS_METER!\n");
-            printf("Index: %d\n", value_id.GetIndex());
-            printf("Instance; %d\n", value_id.GetInstance());
 
             if(value_id.GetIndex() == 0) {
                 sendMessage("Energy", float_value);
@@ -451,7 +449,6 @@ void parseSmartSwitchSensor(ValueID value_id) {
         case COMMAND_CLASS_CONFIGURATION:
             printf("Got COMMAND_CLASS_CONFIGURATION\n");
             printf("Configuration: %d\n", int_value);
-
             break;
         default:
             printf("Got an Unknown COMMAND CLASS!\n");
@@ -742,6 +739,9 @@ void OnNotification
 		case Notification::Type_DriverReset:
 		case Notification::Type_MsgComplete:
 		case Notification::Type_NodeNaming:
+        {
+            break;
+        }
 		case Notification::Type_NodeProtocolInfo:
         {
             if( NodeInfo* nodeInfo = GetNodeInfo(_notification)) {
@@ -901,8 +901,6 @@ int main( int argc, char* argv[] )
 
         configureHsmParameters();
         configureSmartSwitchParameters();
-
-
 
 		// If we want to access our NodeInfo list, that has been built from all the
 		// notification callbacks we received from the library, we have to do so
