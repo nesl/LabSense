@@ -99,10 +99,9 @@ class SensorVariableTracker:
 
     def registerValue(self, measurement, value):
         """ Register a data entry to the sensorData list """
-        if measurement == "Door":
+        if "Door" in measurement:
             color = BLUE
-        elif measurement in ("Motion", "MotionTimeout", "Luminance",
-                             "Temperature"):
+        elif "Energy" in measurement or "Power" in measurement:
             color = GREEN
         else:
             color = PURPLE

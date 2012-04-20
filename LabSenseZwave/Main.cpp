@@ -94,10 +94,13 @@
 using namespace OpenZWave;
 
 static uint32 g_homeId;
-static uint8 AlDwSensorId;
-static uint8 Hsm100SensorId;
-static uint8 SmartSwitchSensorId;
-static uint8 ZstickId;
+
+enum SensorType {
+    Z_STICK,
+    AL_DW_SENSOR,
+    HSM_100_SENSOR,
+    SMART_SWITCH_SENSOR
+};
 bool   g_initFailed = false;
 
 typedef struct
@@ -106,6 +109,7 @@ typedef struct
 	uint8			m_nodeId;
 	bool			m_polled;
 	list<ValueID>	m_values;
+    SensorType      m_sensorType;
 }NodeInfo;
 
 static list<NodeInfo*> g_nodes;
@@ -124,9 +128,9 @@ zmq::socket_t publisher(context, ZMQ_PUB);
 // <sendMessage>
 // This function sends the data to the python process using zeromq. 
 //-----------------------------------------------------------------------------
-void sendMessage(const char *s, float f_val) {
+void sendMessage(const char *s, float f_val, uint8 nodeId) {
     zmq::message_t message(30);
-    sprintf((char *) message.data(), "%s %f ", s, f_val);
+    sprintf((char *) message.data(), "%s_%d %f ", s, nodeId, f_val);
     publisher.send(message);
 }
 
@@ -157,49 +161,68 @@ NodeInfo* GetNodeInfo
 // <configureSmartSwitchParameters>
 // Configures several parameters for the SmartSwitch.
 //-----------------------------------------------------------------------------
-void configureSmartSwitchParameters() 
+void configureSmartSwitchParameters(uint8 nodeId) 
 {
     pthread_mutex_lock( &g_criticalSection );
 
-    // Initialize Configuration Parameters
-    // Request and Set the "On Time" Config Param to 20 with index 2 (See zwcfg*.xml)
-    // Manager::Get()->SetConfigParam(g_homeId, SmartSwitchSensorId, 2, 1); 
-    Manager::Get()->SetConfigParam(g_homeId, SmartSwitchSensorId, 101, 2);
-    Manager::Get()->SetConfigParam(g_homeId, SmartSwitchSensorId, 102, 8);
-    Manager::Get()->RequestConfigParam(g_homeId, SmartSwitchSensorId, 111); 
-    Manager::Get()->RequestConfigParam(g_homeId, SmartSwitchSensorId, 101);
-    Manager::Get()->RequestConfigParam(g_homeId, SmartSwitchSensorId, 102);
-    // Manager::Get()->RequestConfigParam(g_homeId, SmartSwitchSensorId, 103);
+    // Send a multisensor report for Group 1.
+    Manager::Get()->SetConfigParam(g_homeId, nodeId, 101, 2);
 
+    // Send a Meter Report for Kilowatts for Group 2.
+    Manager::Get()->SetConfigParam(g_homeId, nodeId, 102, 8);
+
+    // Request the Parameters to check if properly set
+    Manager::Get()->RequestConfigParam(g_homeId, nodeId, 111); 
+    Manager::Get()->RequestConfigParam(g_homeId, nodeId, 101);
+    Manager::Get()->RequestConfigParam(g_homeId, nodeId, 102);
 
     pthread_mutex_unlock( &g_criticalSection );
 }
 
 //-----------------------------------------------------------------------------
-// <configureHsmParameters>
-// Configures several parameters for the Hsm100.
+// <configureSensorParameters>
+// Configures several parameters for all the sensors.
 //-----------------------------------------------------------------------------
-void configureHsmParameters() 
+void configureSensorParameters() 
 {
-    // Initialize Configuration Parameters
-    pthread_mutex_lock( &g_criticalSection );
+    uint8 nodeId = 0;
+	for( list<NodeInfo*>::iterator it = g_nodes.begin(); it != g_nodes.end(); ++it )
+	{
+		NodeInfo* nodeInfo = *it;
+        nodeId = nodeInfo->m_nodeId;
 
-    // Request and Set the "On Time" Config Param to 20 with index 2 (See zwcfg*.xml)
-    Manager::Get()->SetConfigParam(g_homeId, Hsm100SensorId, 2, 1); 
-    Manager::Get()->RequestConfigParam(g_homeId, Hsm100SensorId, 2); 
+        // Initialize Configuration Parameters
+        switch(nodeInfo->m_sensorType) {
+            case SMART_SWITCH_SENSOR:
+                configureSmartSwitchParameters(nodeId);
+                break;
+            case HSM_100_SENSOR:
+                pthread_mutex_lock( &g_criticalSection );
+                // Request and Set the "On Time" Config Param to 20 with index 2 (See zwcfg*.xml)
+                Manager::Get()->SetConfigParam(g_homeId, nodeId, 2, 1); 
+                Manager::Get()->RequestConfigParam(g_homeId, nodeId, 2); 
 
-    /*
-    // Request and Set the "On Value" Config Param to 255 with index 6 (See zwcfg*.xml)
-    // Manager::Get()->SetConfigParam(g_homeId, Hsm100SensorId, 6, 255); 
-    Manager::Get()->RequestConfigParam(g_homeId, Hsm100SensorId, 6); 
+                /*
+                // Request and Set the "On Value" Config Param to 255 with index 6 (See zwcfg*.xml)
+                // Manager::Get()->SetConfigParam(g_homeId, Hsm100SensorId, 6, 255); 
+                Manager::Get()->RequestConfigParam(g_homeId, Hsm100SensorId, 6); 
 
-    // Request "Stay Awake" Config Param
-    Manager::Get()->RequestConfigParam(g_homeId, Hsm100SensorId, 5);
+                // Request "Stay Awake" Config Param
+                Manager::Get()->RequestConfigParam(g_homeId, Hsm100SensorId, 5);
 
-    // Request Sensitivity
-    //Manager::Get()->RequestConfigParam(g_homeId, Hsm100SensorId, 1);
-    */
-    pthread_mutex_unlock( &g_criticalSection );
+                // Request Sensitivity
+                //Manager::Get()->RequestConfigParam(g_homeId, Hsm100SensorId, 1);
+                */
+                pthread_mutex_unlock( &g_criticalSection );
+                break;
+            case AL_DW_SENSOR:
+            case Z_STICK:
+            default:
+                break;
+        }
+
+    }
+
 }
 
 //-----------------------------------------------------------------------------
@@ -208,7 +231,7 @@ void configureHsmParameters()
 //-----------------------------------------------------------------------------
 void printConfigVariable(uint8 index, uint8 byte_value) {
     static const char *parameter_names[] = {"Sensitivity", "On Time", "LED ON/OFF", 
-                              "Light Threshold", "Stay Awake", "On Value"};
+        "Light Threshold", "Stay Awake", "On Value"};
     printf("\"%s\" was set to %u\n", parameter_names[index-1], byte_value);
 }
 
@@ -219,7 +242,7 @@ void printConfigVariable(uint8 index, uint8 byte_value) {
 void printSmartSwitchMeterValue(ValueID value_id) {
     string str_value = "";
     bool success = Manager::Get()->GetValueAsString(value_id, &str_value);
-    printf("Successfully Got Value As String: %s\n", (success)?"Yes":"No");
+    // printf("Successfully Got Value As String: %s\n", (success)?"Yes":"No");
 
     // Measurement map for SmartSwitch
     static map<uint8, string> SmartSwitchMeasurementMap;
@@ -237,12 +260,46 @@ void printSmartSwitchMeterValue(ValueID value_id) {
 }
 
 //-----------------------------------------------------------------------------
-// <parseHsm100Sensor>
-// Parses the HSM100 ValueChanged for luminance, temperature, motion, etc.
+// <getSensorType>
+// Get the Sensor Type Given the homeId and NodeId
 //-----------------------------------------------------------------------------
-void parseHsm100Sensor(ValueID value_id) {
+SensorType getSensorType(uint32 homeId, uint8 nodeId) {
+    // Get the sensor information
+    string name = Manager::Get()->GetNodeProductName(homeId, nodeId);
+    string manufacturer_name = Manager::Get()->GetNodeManufacturerName(homeId, nodeId);
+    // printf("Finished protocol info for Node %u\n", nodeId);
+    //printf("With type: %s\n", Manager::Get()->GetNodeType(nodeInfo->m_homeId, nodeInfo->m_nodeId));
+    //printf("    With Name: %s\n", name.c_str());
+    //printf("    and Manufacturer: %s\n", manufacturer_name.c_str());
 
-    // Initialize Variables
+    
+    SensorType sensorType;
+
+    if(name == "Door/Window Sensor" && manufacturer_name == "Aeon Labs") {
+        sensorType = AL_DW_SENSOR;
+    }
+    else if(name == "HSM100 Wireless Multi-Sensor" && manufacturer_name == "Homeseer") {
+        sensorType = HSM_100_SENSOR;
+    }
+    else if(name == "Z-Stick S2" && manufacturer_name == "Aeon Labs") {
+        sensorType = Z_STICK;
+    }
+    else if(name == "Smart Energy Switch" && manufacturer_name == "Aeon Labs") {
+        sensorType = SMART_SWITCH_SENSOR;
+    }
+    else if(name != "" && manufacturer_name != "") {
+        // Print unknown nodes
+        printf("Unknown Node %u called %s, manufactured by %s\n", nodeId, name.c_str(), manufacturer_name.c_str());
+    }
+    return sensorType;
+}
+    //-----------------------------------------------------------------------------
+    // <parseHsm100Sensor>
+    // Parses the HSM100 ValueChanged for luminance, temperature, motion, etc.
+    //-----------------------------------------------------------------------------
+    void parseHsm100Sensor(uint8 nodeId, ValueID value_id) {
+
+        // Initialize Variables
     bool success = false;
     bool bool_value = false;
     uint8 byte_value = 0;
@@ -315,17 +372,17 @@ void parseHsm100Sensor(ValueID value_id) {
                 case 1:
                     // General
                     printf("It has been %f minutes since the last Motion Detected.\n", float_value);
-                    sendMessage("Motion_Timeout", float_value);
+                    sendMessage("Motion_Timeout", float_value, nodeId);
                     break;
                 case 2:
                     // Luminance
                     printf("Luminance: %f\n", float_value);
-                    sendMessage("Luminance", float_value);
+                    sendMessage("Luminance", float_value, nodeId);
                     break;
                 case 3:
                     // Temperature
                     printf("Temperature: %f\n", float_value);
-                    sendMessage("Temperature", float_value);
+                    sendMessage("Temperature", float_value, nodeId);
                     break;
 
                 default:
@@ -340,7 +397,7 @@ void parseHsm100Sensor(ValueID value_id) {
             // printf("\nGot COMMAND_CLASS_WAKE_UP!\n");
             printf("Wake-up interval: %d seconds\n", int_value);
             // Manager::Get()->RefreshNodeInfo(g_homeId, Hsm100SensorId);
-            Manager::Get()->RequestNodeDynamic(g_homeId, Hsm100SensorId);
+            Manager::Get()->RequestNodeDynamic(g_homeId, nodeId);
             break;
         case COMMAND_CLASS_BATTERY:
             printf("Battery: %u\n", byte_value);
@@ -352,6 +409,7 @@ void parseHsm100Sensor(ValueID value_id) {
             printf("Got an Unknown COMMAND CLASS!\n");
             break;
     }
+    printf("\n");
 
 }
 
@@ -359,7 +417,7 @@ void parseHsm100Sensor(ValueID value_id) {
 // <parseSmartSwitchSensor>
 // Parses the Aeon Labs Energy Switch Sensor for basic values.
 //-----------------------------------------------------------------------------
-void parseSmartSwitchSensor(ValueID value_id) {
+void parseSmartSwitchSensor(uint8 nodeId, ValueID value_id) {
 
     // Initialize Variables
     bool success = false;
@@ -420,35 +478,35 @@ void parseSmartSwitchSensor(ValueID value_id) {
     switch(value_id.GetCommandClassId()) {
         case COMMAND_CLASS_BASIC:
             if(byte_value) {
-                printf("Switch is %s\n", (byte_value)?"on":"off");
+                printf("Switch is %s\n\n", (byte_value)?"on":"off");
             }
 
             break;
         case COMMAND_CLASS_SENSOR_MULTILEVEL:
-            printf("Got COMMAND_CLASS_SENSOR_MULTILEVEL!\n");
-            printf("Sent Power: %f\n", float_value);
-            sendMessage("Power", float_value);
+            // printf("Got COMMAND_CLASS_SENSOR_MULTILEVEL!\n");
+            printf("Sent Power: %f\n\n", float_value);
+            sendMessage("Power", float_value, nodeId);
             break;
         case COMMAND_CLASS_SWITCH_BINARY:
-            printf("Got COMMAND_CLASS_SWITCH_BINARY!\n");
-            printf("Binary Switch: %s\n", (bool_value)?"on":"off");
+            // printf("Got COMMAND_CLASS_SWITCH_BINARY!\n");
+            printf("Binary Switch: %s\n\n", (bool_value)?"on":"off");
             break;
         case COMMAND_CLASS_SWITCH_ALL:
-            printf("Got COMMAND_CLASS_SWITCH_ALL!\n");
-            printf("Switch_all: %s\n", str_value.c_str());
+            // printf("Got COMMAND_CLASS_SWITCH_ALL!\n");
+            printf("Switch_all: %s\n\n", str_value.c_str());
             break;
         case COMMAND_CLASS_METER:
-            printf("Got COMMAND_CLASS_METER!\n");
+            // printf("Got COMMAND_CLASS_METER!\n");
 
             if(value_id.GetIndex() == 0) {
-                sendMessage("Energy", float_value);
-                printf("Sent Energy: %f\n", float_value);
+                sendMessage("Energy", float_value, nodeId);
+                printf("Sent Energy: %f\n\n", float_value);
             }
-            printSmartSwitchMeterValue(value_id);
+            // printSmartSwitchMeterValue(value_id);
             break;
         case COMMAND_CLASS_CONFIGURATION:
-            printf("Got COMMAND_CLASS_CONFIGURATION\n");
-            printf("Configuration: %d\n", int_value);
+            // printf("Got COMMAND_CLASS_CONFIGURATION\n");
+            printf("Configuration: %d\n\n", int_value);
             break;
         default:
             printf("Got an Unknown COMMAND CLASS!\n");
@@ -460,7 +518,7 @@ void parseSmartSwitchSensor(ValueID value_id) {
 // <parseAlDwSensor>
 // Parses the Aeon Labs Door/Window Sensor for basic values (open/closed)
 //-----------------------------------------------------------------------------
-void parseAlDwSensor(ValueID value_id) {
+void parseAlDwSensor(uint8 nodeId, ValueID value_id) {
 
     // Initialize Variables
     bool success = false;
@@ -518,11 +576,11 @@ void parseAlDwSensor(ValueID value_id) {
 
             if(byte_value) {
                 printf("Door is Open!\n");
-                sendMessage("Door", 1.0);
+                sendMessage("Door", 1.0, nodeId);
             }
             else {
                 printf("Door is Closed!\n");
-                sendMessage("Door", 0);
+                sendMessage("Door", 0, nodeId);
             }
 
             break;
@@ -545,6 +603,7 @@ void parseAlDwSensor(ValueID value_id) {
             printf("Got an Unknown COMMAND CLASS!\n");
             break;
     }
+    printf("\n");
 }
 
 
@@ -600,22 +659,18 @@ void OnNotification
                 // ValueID of value involved
                 uint8 nodeId = nodeInfo->m_nodeId;
                 ValueID value_id = _notification->GetValueID();
+                SensorType sensorType = nodeInfo->m_sensorType;
 
                 // printf("Received Value Change for Node %u\n", nodeId);
                 // Perform different actions based on which node
-                if(nodeId == Hsm100SensorId) {
-                    parseHsm100Sensor(value_id);
-                }
-                else if(nodeId == AlDwSensorId) {
-                    parseAlDwSensor(value_id);
-                }
-                else if(nodeId == SmartSwitchSensorId) {
-                    parseSmartSwitchSensor(value_id);
-                }
-                else {
+                if(sensorType == HSM_100_SENSOR)
+                    parseHsm100Sensor(nodeId, value_id);
+                else if(sensorType == AL_DW_SENSOR)
+                    parseAlDwSensor(nodeId, value_id);
+                else if(sensorType == SMART_SWITCH_SENSOR)
+                    parseSmartSwitchSensor(nodeId, value_id);
+                else 
                     printf("Unknown Node\n");
-                }
-                printf("\n");
             }
             break;
         }
@@ -637,31 +692,34 @@ void OnNotification
 			nodeInfo->m_homeId = _notification->GetHomeId();
 			nodeInfo->m_nodeId = _notification->GetNodeId();
 			nodeInfo->m_polled = false;		
-			g_nodes.push_back( nodeInfo );
+
+            nodeInfo->m_sensorType = getSensorType(_notification->GetHomeId(), _notification->GetNodeId());
+            
+            g_nodes.push_back( nodeInfo );
 
             // Manager::Get()->AddAssociation(nodeInfo->m_homeId, nodeInfo->m_nodeId, 1, 1);
-			break;
-		}
+            break;
+        }
 
-		case Notification::Type_NodeRemoved:
-		{
-			// Remove the node from our list
-			uint32 const homeId = _notification->GetHomeId();
-			uint8 const nodeId = _notification->GetNodeId();
-			for( list<NodeInfo*>::iterator it = g_nodes.begin(); it != g_nodes.end(); ++it )
-			{
-				NodeInfo* nodeInfo = *it;
-				if( ( nodeInfo->m_homeId == homeId ) && ( nodeInfo->m_nodeId == nodeId ) )
-				{
-					g_nodes.erase( it );
-					delete nodeInfo;
-					break;
-				}
-			}
-			break;
-		}
+        case Notification::Type_NodeRemoved:
+        {
+            // Remove the node from our list
+            uint32 const homeId = _notification->GetHomeId();
+            uint8 const nodeId = _notification->GetNodeId();
+            for( list<NodeInfo*>::iterator it = g_nodes.begin(); it != g_nodes.end(); ++it )
+            {
+                NodeInfo* nodeInfo = *it;
+                if( ( nodeInfo->m_homeId == homeId ) && ( nodeInfo->m_nodeId == nodeId ) )
+                {
+                    g_nodes.erase( it );
+                    delete nodeInfo;
+                    break;
+                }
+            }
+            break;
+        }
 
-		case Notification::Type_NodeEvent:
+        case Notification::Type_NodeEvent:
         {
             // We have received an event from the node, caused by a
             // basic_set or hail message.
@@ -672,23 +730,24 @@ void OnNotification
                 // Initialize values
                 ValueID value_id = _notification->GetValueID();
                 uint8 nodeId = nodeInfo->m_nodeId;
+                SensorType sensorType = nodeInfo->m_sensorType;
 
                 // Perform different actions based on which node
-                if(nodeId == AlDwSensorId) {
+                if(sensorType == AL_DW_SENSOR) {
                     // 0: Door is closed
                     // 255: Door is open
                     if(_notification->GetEvent()) {
                         printf("Door is Open!\n");
-                        sendMessage("Door", 1.0);
+                        sendMessage("Door", 1.0, nodeId);
                     }
                     else {
                         printf("Door is Closed!\n");
-                        sendMessage("Door", 0);
+                        sendMessage("Door", 0, nodeId);
                     }
                 }
-                else if(nodeId == Hsm100SensorId) {
+                else if(sensorType == HSM_100_SENSOR) {
                     printf("Motion: %u\n", _notification->GetEvent());
-                    sendMessage("Motion", (_notification->GetEvent())?1.0:0.0);
+                    sendMessage("Motion", (_notification->GetEvent())?1.0:0.0, nodeId);
                 }
                 else {
                     printf("Received Node Event for Unknown Node %u", nodeId);
@@ -739,48 +798,9 @@ void OnNotification
 		case Notification::Type_DriverReset:
 		case Notification::Type_MsgComplete:
 		case Notification::Type_NodeNaming:
-        {
-            break;
-        }
 		case Notification::Type_NodeProtocolInfo:
         {
-            if( NodeInfo* nodeInfo = GetNodeInfo(_notification)) {
-
-                // With all protocol info found, set the sensor ids
-                // for the zstick, door/window sensor, and hsm-100
-                uint32 homeId = nodeInfo->m_homeId;
-                uint8 nodeId = nodeInfo->m_nodeId;
-
-                string name = Manager::Get()->GetNodeProductName(homeId, nodeId);
-                string manufacturer_name = Manager::Get()->GetNodeManufacturerName(homeId, nodeId);
-                // printf("Finished protocol info for Node %u\n", nodeId);
-                //printf("With type: %s\n", Manager::Get()->GetNodeType(nodeInfo->m_homeId, nodeInfo->m_nodeId));
-                //printf("    With Name: %s\n", name.c_str());
-                //printf("    and Manufacturer: %s\n", manufacturer_name.c_str());
-                
-                if(name == "Door/Window Sensor" && manufacturer_name == "Aeon Labs") {
-                    AlDwSensorId = nodeId;
-                    printf("AlDwSensorID is set to: %d\n", nodeId);
-                }
-                else if(name == "HSM100 Wireless Multi-Sensor" && manufacturer_name == "Homeseer") {
-                    Hsm100SensorId = nodeId;
-                    printf("Hsm100SensorId is set to: %d\n", nodeId);
-                }
-                else if(name == "Z-Stick S2" && manufacturer_name == "Aeon Labs") {
-                    ZstickId = nodeId;
-                    printf("ZstickId is set to: %d\n", nodeId);
-                }
-                else if(name == "Smart Energy Switch" && manufacturer_name == "Aeon Labs") {
-                    SmartSwitchSensorId = nodeId;
-                    printf("SmartSwitchSensorId is set to: %d\n", nodeId);
-                }
-                else if(name != "" && manufacturer_name != "") {
-                    // Print unknown nodes
-                    printf("Unknown Node %u called %s, manufactured by %s\n", nodeId, name.c_str(), manufacturer_name.c_str());
-                }
-            }
             break;
-
         }
 		case Notification::Type_NodeQueriesComplete:
 		default:
@@ -890,7 +910,7 @@ int main( int argc, char* argv[] )
                     // Poll every 5 seconds
 					// Manager::Get()->EnablePoll( v, 2);		// enables polling with "intensity" of 2, though this is irrelevant with only one value polled
 				}
-                else if(nodeId == Hsm100SensorId && ccId == COMMAND_CLASS_WAKE_UP) {
+                else if(getSensorType(g_homeId, nodeId) == HSM_100_SENSOR && ccId == COMMAND_CLASS_WAKE_UP) {
                     // Set the Wake-up interval
                     bool success = Manager::Get()->SetValue(v, 360);
                     printf("Set Wake-up Interval Successfully: %s\n", (success)?"Yes":"No");
@@ -899,8 +919,7 @@ int main( int argc, char* argv[] )
 		}
 		pthread_mutex_unlock( &g_criticalSection );
 
-        configureHsmParameters();
-        configureSmartSwitchParameters();
+        configureSensorParameters();
 
 		// If we want to access our NodeInfo list, that has been built from all the
 		// notification callbacks we received from the library, we have to do so
