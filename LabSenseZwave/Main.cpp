@@ -697,7 +697,7 @@ void OnNotification
             
             g_nodes.push_back( nodeInfo );
 
-            // Manager::Get()->AddAssociation(nodeInfo->m_homeId, nodeInfo->m_nodeId, 1, 1);
+            Manager::Get()->AddAssociation(nodeInfo->m_homeId, nodeInfo->m_nodeId, 1, 1);
             break;
         }
 
