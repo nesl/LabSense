@@ -17,26 +17,28 @@ Usage: python sendToSensorSafe.py [api-key] [Options]"
             If [frequency] is not specified or is set to 0, the requests
                 are made every time the data is received by the zeromq socket.
 
-        -e This option specifies that all event-driven measurements should be sent
-           right away (usually because they are more time-critical) instead of
-           sending based on the frequency. Note that the none event-driven
-           measurements will still be governed by the frequency and are not
-           affected. Currently, the event-driven measurements are Motion and Door
-           Status (Open/Closed).
+        -e This option specifies that all event-driven measurements should be
+           sent right away (usually because they are more time-critical)
+           instead of sending based on the frequency. Note that the none
+           event-driven measurements will still be governed by the frequency
+           and are not affected. Currently, the event-driven measurements
+           are Motion and Door Status (Open/Closed).
 
         -v Verbose option that shows more information about the upload to
            SensorSafe.
 """
 
 import sys              # Used for commandline arguments
-import httplib, urllib  # Used for http requests
+import httplib          # Used for http requests
+import urllib           # Used for http requests
 import json             # Used for json formatted data
 import time             # Used for timestamps
-import threading        # Used for creating separate thread for sending to SensorSafe
+import threading        # Used for creating separate thread for sending to
+                            # SensorSafe
 import getopt           # Used for command line option handling
 import zmq              # Used for receiving data sent over zeromq socket
-import signal           # Used for properly cancelling timer thread when Ctrl-c is
-                            # pressed
+import signal           # Used for properly cancelling timer thread when Ctrl-c
+                            # is pressed
 
 SERVER_ADDRESS = "128.97.93.29"
 SERVER_PREFIX = ""
@@ -48,6 +50,7 @@ GREEN = "\033[92m"
 PURPLE = "\033[95m"
 ENDCOLOR = "\033[0m"
 
+
 class SensorVariableTracker:
     """ This class keeps track of all variables received from LabSenseZwave
         over the Zeromq socket and delivers the data to the
@@ -57,24 +60,29 @@ class SensorVariableTracker:
         """ Initialize the Zeromq socket to receive data
             and initialize timer thread to send data at given
             frequency. """
+
         #  Socket to talk to server
         self.context = zmq.Context()
         self.socket = self.context.socket(zmq.SUB)
 
-        self.socket.connect ("tcp://localhost:5556")
+        self.socket.connect("tcp://localhost:5556")
 
         # Subscribe to all zeromq messages
         self.socket.setsockopt(zmq.SUBSCRIBE, "")
 
-        # This is the frequency at which the data will be sent to SensorSafe in seconds
+        # This is the frequency at which the data will be sent to SensorSafe in
+        # seconds
         self.frequency = frequency
 
-        # sensorData keeps track of all the data entries that need to be sent to SensorSafe
+        # sensorData keeps track of all the data entries that need to be sent
+        # to SensorSafe
         self.sensorData = []
 
-        # event_driven specifies if the event driven measurements should be sent right away because they are more time
+        # event_driven specifies if the event driven measurements should be
+        # sent right away because they are more time
         # critical. Currently event driven measurements are Motion and Door.
-        # Note: the none-event-driven variables are still controlled by the frequency
+        # Note: the none-event-driven variables are still controlled by the
+        # frequency
         self.event_driven = event_driven
 
         # if verbose is true, more information about the upload process will be
@@ -83,10 +91,12 @@ class SensorVariableTracker:
 
         self.key = key
 
-        # Start separate thread that runs sendSensorData every [frequency] seconds
+        # Start separate thread that runs sendSensorData every [frequency]
+        # seconds
         if frequency > 0:
-            print "Starting Timer with frequency "+ str(frequency)
-            self.timer_thread = threading.Timer(self.frequency, self.sendSensorData)
+            print "Starting Timer with frequency " + str(frequency)
+            self.timer_thread = threading.Timer(self.frequency,
+                    self.sendSensorData)
             self.timer_thread.start()
 
             # Set up Ctrl-C signal handler
@@ -96,34 +106,36 @@ class SensorVariableTracker:
 
             signal.signal(signal.SIGINT, signal_handler)
 
-
     def registerValue(self, measurement, value):
         """ Register a data entry to the sensorData list """
+
         if "Door" in measurement:
             color = BLUE
         elif "Energy" in measurement or "Power" in measurement:
             color = GREEN
         else:
             color = PURPLE
-        print "%sRegistering %s: %s %s" % (color, measurement, value,
-                ENDCOLOR)
+        cur_time = int(round(time.time() * 1000))
 
+        print "%sRegistering %s: %s at %d %s" % (color, measurement, value,
+                cur_time, ENDCOLOR)
 
         data_entry = {
                 "sampling_interval": 1,
-                "timestamp": int(round(time.time()*1000)),
-                "location": {"latitude": 34.068839550018311, "longitude": -118.44383955001831},
-                "data_channel": [ measurement],
+                "timestamp": cur_time,
+                "location": {"latitude": 34.068839550018311,
+                             "longitude": -118.44383955001831},
+                "data_channel": [measurement],
                 "data": [[value]]
         }
-        # If option for sending event driven measurements is specified, send the data immediately
+        # If option for sending event driven measurements is specified, send
+        # the data immediately
         if self.event_driven == True and measurement in ("Motion", "Door"):
             success = self.sendToSensorSafe(data_entry)
             if not success:
                 self.sensorData.append(data_entry)
         else:
             self.sensorData.append(data_entry)
-
 
         # When Frequency is 0, this is a special mode where values are sent at
         # the rate they are received
@@ -148,20 +160,24 @@ class SensorVariableTracker:
 
         for data_entry in self.sensorData:
             success = self.sendToSensorSafe(data_entry)
-            # If data was sent successfully, delete the data from list. If not, don't do anything.
+            # If data was sent successfully, delete the data from list. If not,
+            # don't do anything.
             if success:
                 self.sensorData.remove(data_entry)
 
         # Set a thread to keep calling this function if frequency was specified
         if self.frequency > 0:
-            self.timer_thread = threading.Timer(self.frequency, self.sendSensorData)
+            self.timer_thread = threading.Timer(self.frequency,
+                                                self.sendSensorData)
             self.timer_thread.start()
 
     def sendToSensorSafe(self, json_data_to_upload):
         """ Send single data entry to SensorSafe """
         try:
-            params = urllib.urlencode({'apikey': self.key, 'data': json.dumps(json_data_to_upload)})
-            conn = httplib.HTTPSConnection(SERVER_ADDRESS, timeout=HTTP_REQUEST_TIMEOUT)
+            params = urllib.urlencode({'apikey': self.key,
+                                      'data': json.dumps(json_data_to_upload)})
+            conn = httplib.HTTPSConnection(SERVER_ADDRESS,
+                                            timeout=HTTP_REQUEST_TIMEOUT)
             conn.request('POST', SERVER_PREFIX + '/upload/', params)
             response = conn.getresponse()
 
@@ -173,36 +189,38 @@ class SensorVariableTracker:
             conn.close()
             return True
         except IOError, detail:
-            print "No internet connection, will send the data when the internet becomes available"
+            print ('No internet connection, will send the data when the'
+                  ' internet becomes available')
             return False
+
 
 def usage():
     """ Prints out the usage for the script """
 
     print """
-    Usage: python sendToSensorSafe.py [api-key] [Options]"
+Usage: python sendToSensorSafe.py [api-key] [Options]"
 
-        [api-key] is the API key given when registering for a SensorSafe account.
+    [api-key] is the API key given when registering for a SensorSafe account.
 
-        Options:
+    Options:
 
-            -f [frequency]
-                This is the number of seconds between each http request
-                to SensorSafe."
+        -f [frequency]
+            This is the number of seconds between each http request
+            to SensorSafe."
 
-                If [frequency] is not specified or is set to 0, the requests
-                    are made every time the data is received by the zeromq socket.
+            If [frequency] is not specified or is set to 0, the requests
+                are made every time the data is received by the zeromq socket.
 
-            -e This option specifies that all event-driven measurements should be sent
-               right away (usually because they are more time-critical) instead of
-               sending based on the frequency. Note that the none event-driven
-               measurements will still be governed by the frequency and are not
-               affected. Currently, the event-driven measurements are Motion and Door
-               Status (Open/Closed).
+        -e This option specifies that all event-driven measurements should be
+           sent right away (usually because they are more time-critical)
+           instead of sending based on the frequency. Note that the none
+           event-driven measurements will still be governed by the frequency
+           and are not affected. Currently, the event-driven measurements are
+           Motion and Door Status (Open/Closed).
 
-            -v Verbose option that shows more information about the upload to
-               SensorSafe.
-           """
+        -v Verbose option that shows more information about the upload to
+           SensorSafe.
+       """
 
 if __name__ == "__main__":
     # Check if number of arguments is adequate
@@ -239,7 +257,6 @@ if __name__ == "__main__":
             verbose = True
         elif option in ("-h", "--help"):
             usage()
-
 
     if frequency < 0:
         print "The frequency must be zero or greater."

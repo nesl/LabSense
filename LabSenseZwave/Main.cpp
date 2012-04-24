@@ -396,7 +396,7 @@ SensorType getSensorType(uint32 homeId, uint8 nodeId) {
         case COMMAND_CLASS_WAKE_UP:
             // printf("\nGot COMMAND_CLASS_WAKE_UP!\n");
             printf("Wake-up interval: %d seconds\n", int_value);
-            // Manager::Get()->RefreshNodeInfo(g_homeId, Hsm100SensorId);
+            // Manager::Get()->RefreshNodeInfo(g_homeId, nodeId);
             Manager::Get()->RequestNodeDynamic(g_homeId, nodeId);
             break;
         case COMMAND_CLASS_BATTERY:
@@ -748,6 +748,8 @@ void OnNotification
                 else if(sensorType == HSM_100_SENSOR) {
                     printf("Motion: %u\n", _notification->GetEvent());
                     sendMessage("Motion", (_notification->GetEvent())?1.0:0.0, nodeId);
+                    // Manager::Get()->RefreshNodeInfo(g_homeId, nodeId);
+                    Manager::Get()->RequestNodeDynamic(g_homeId, nodeId);
                 }
                 else {
                     printf("Received Node Event for Unknown Node %u", nodeId);
