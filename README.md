@@ -48,6 +48,23 @@ Dependencies:
 
 ------------------------------------------------------------------------------
 
+LabSensePowerMonitor
+--------------
+
+LabSensePowerMonitor contains the code to read the data from the Veris E30A
+Power Panel Monitor. The code is based on the Application Protocol for the Veris
+E30 Panel-board Monitoring System, which is based on accessing memory-mapped
+registers by issuing register-read or register-write request messages. The code
+is based on code written by [Jaein Jong](http://local.cs.berkeley.edu/wiki/images/5/5c/Panel_monitoring_techrpt_jeong.pdf).
+The LabSensePowerMonitor forwards power and current readings from the Vera E30
+to the sendToSensorSafe.py file over Zeromq.
+
+Dependencies:
+
+* [Zeromq](http://www.zeromq.org/intro:get-the-software)
+
+------------------------------------------------------------------------------
+
 Hardware Requirements
 ---------------------
 This software is running on a [Guruplug Server](http://www.globalscaletechnologies.com/t-guruplugdetails.aspx) with an
