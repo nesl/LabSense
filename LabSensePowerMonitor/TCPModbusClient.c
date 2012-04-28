@@ -14,6 +14,7 @@
 #define ARGS_WRITE  7
 #define ARGS_WRITEM_REGVAL_POS 7
 
+
 void print_usage_top(char *str);
 void print_usage_query(char *str);
 void print_usage_read(char *str);
@@ -37,6 +38,8 @@ int main(int argc, char *argv[])
     uint32_t txBufLen;            /* Length of string to echo */
     int bytesRcvd;                /* Bytes read in single recv() */ 
     int c;
+    int i;
+    Type read_type = Normal;      /* This type is used for zeromq_special_mode */
 
     txBufLen = 0;
 
@@ -70,35 +73,90 @@ int main(int argc, char *argv[])
           (strcmp(argv[2], "help") == 0 || strcmp(argv[2], "h") == 0)) {
         print_usage_read(argv[0]);
       }
+      else if (argc == 3 && strcmp(argv[2], "all") == 0) {
+    
+current_power_loop:
+          // Special case to read all power and current readings 
+          // and send over zeromq
+          printf("Tracking power, current, energy ,and power factor\n");
+
+          if(read_type == Normal) {
+              read_type = Power;
+          }
+          else if(read_type == Power) {
+            read_type = Current;
+          }
+          else if(read_type == Current) {
+              read_type = Power;
+          }
+          else {
+              printf("Error in read type\n");
+          }
+
+          switch(read_type) {
+              case Power:
+                  // Get Power Readings (KW)
+                  argc = 7;
+                  argv[1] = "r";
+                  argv[2] = "172.17.5.178";
+                  argv[3] = "4660";
+                  argv[4] = "1";
+                  argv[5] = "2083";
+                  argv[6] = "42";
+                  read_type = Power;
+                  break;
+              case Current:
+                  // Get Current Readings (A)
+                  argc = 7;
+                  argv[1] = "r";
+                  argv[2] = "172.17.5.178";
+                  argv[3] = "4660";
+                  argv[4] = "1";
+                  argv[5] = "2251";
+                  argv[6] = "42";
+                  read_type = Current;
+                  break;
+              default: 
+                  printf("Error in read type\n");
+                  break;
+          }
+      }
       /* Test for correct number of arguments */
       else if (argc != ARGS_READ && argc != ARGS_READ + 1) {
-        print_usage_read(argv[0]); 
+          print_usage_read(argv[0]); 
       }
 
       /* Prepare tx buffer for read command */
       txBufLen = prepare_msg_read(argc, argv, txBuf, &servAddr); 
+      printf("argc: %d\n", argc);
+      printf("argv: ");
+      for(i = 0; i < argc; i++) {
+          printf("%s, ", argv[i]);
+      }
+      printf("\n");
+
     }
     /* Check arguments for write command */
     else if (strcmp(argv[1], "write") == 0 || strcmp(argv[1], "w") == 0) {
-      if (argc >= 3 &&
-          (strcmp(argv[2], "help") == 0 || strcmp(argv[2], "h") == 0)) {
-        print_usage_write(argv[0]);
-      }
-      /* Test for correct number of arguments */
-      else if (argc != ARGS_WRITE) {
-        print_usage_write(argv[0]); 
-      }
+        if (argc >= 3 &&
+                (strcmp(argv[2], "help") == 0 || strcmp(argv[2], "h") == 0)) {
+            print_usage_write(argv[0]);
+        }
+        /* Test for correct number of arguments */
+        else if (argc != ARGS_WRITE) {
+            print_usage_write(argv[0]); 
+        }
 
-      /* Prepare tx buffer for write command */
-      txBufLen = prepare_msg_write(argc, argv, txBuf, &servAddr); 
+        /* Prepare tx buffer for write command */
+        txBufLen = prepare_msg_write(argc, argv, txBuf, &servAddr); 
     }
     /* Check arguments for writem command */
     else if (strcmp(argv[1], "writem") == 0 || strcmp(argv[1], "m") == 0) {
-      if (argc >= 3 &&
-          (strcmp(argv[2], "help") == 0 || strcmp(argv[2], "h") == 0)) {
-        print_usage_writem(argv[0]);
-      }
-      /* Test for correct number of arguments */
+        if (argc >= 3 &&
+                (strcmp(argv[2], "help") == 0 || strcmp(argv[2], "h") == 0)) {
+            print_usage_writem(argv[0]);
+        }
+        /* Test for correct number of arguments */
       else if (argc < ARGS_WRITEM_REGVAL_POS) { 
         print_usage_writem(argv[0]);
       }
@@ -121,10 +179,10 @@ int main(int argc, char *argv[])
 
     /* Print the size of message */
     fprintf(stderr, "Number of transmitting bytes: %d\n", txBufLen);
-  
+
     /* Print the echo buffer */
     fprintf(stderr, "%s\n", txBuf);
-  
+
     /* Display the received message as hex arrays */
 
     for (c = 0; c < txBufLen; c++) {
@@ -146,22 +204,27 @@ int main(int argc, char *argv[])
         rxBuf[bytesRcvd] = '\0';  /* Terminate the string! */ 
     }
 
-    print_received_msg((uint8_t *)rxBuf, bytesRcvd); 
+    print_received_msg((uint8_t *)rxBuf, bytesRcvd, read_type);
+
+    if(read_type != Normal) {
+        goto current_power_loop ;
+    }
 
     close(sock);
     exit(0);
+
 }
 
 
 void print_usage_top(char *str) {
-  fprintf(stderr,"E30 TCP Modbus Client\n");
-  fprintf(stderr,"Usage: %s {(q)uery | (r)ead | (w)rite | write(m) | (h)elp} ...\n",str);
-  fprintf(stderr,"  query  - queries the slave ID\n");
-  fprintf(stderr,"  read   - read one or multiple registers\n");
-  fprintf(stderr,"  write  - write to a register\n");
-  fprintf(stderr,"  writem - write to one or multiple registers\n");
-  fprintf(stderr,"  help   - print this message\n"); 
-  exit(1);
+fprintf(stderr,"E30 TCP Modbus Client\n");
+fprintf(stderr,"Usage: %s {(q)uery | (r)ead | (w)rite | write(m) | (h)elp} ...\n",str);
+fprintf(stderr,"  query  - queries the slave ID\n");
+fprintf(stderr,"  read   - read one or multiple registers\n");
+fprintf(stderr,"  write  - write to a register\n");
+fprintf(stderr,"  writem - write to one or multiple registers\n");
+fprintf(stderr,"  help   - print this message\n"); 
+exit(1);
 }
 
 void print_usage_query(char *str) {
@@ -359,7 +422,6 @@ int prepare_msg_writem(int argc, char* argv[], char* buf,
   req_msg->modbus_reg_addr = htons(reg_addr);
   req_msg->modbus_reg_qty  = htons(reg_qty);
   req_msg->modbus_val_bytes = (uint8_t) 2 * reg_qty;
-
   for (c = 0; c < reg_qty; c++) {
     reg_val = (uint16_t) atoi(argv[ARGS_WRITEM_REGVAL_POS + c]);
     req_msg->modbus_reg_val[c] = htons(reg_val);

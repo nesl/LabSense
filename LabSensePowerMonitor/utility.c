@@ -9,7 +9,7 @@
 char rxBuf[RCVBUFSIZE];       /* buffer for the reply message */
 int rxBufLen = 0;             /* length of reply message */
 
-void print_received_msg(uint8_t *buf, int buflen) {
+void print_received_msg(uint8_t *buf, int buflen, Type type) {
   int c;
 
   /* Print the size of message */
@@ -26,7 +26,7 @@ void print_received_msg(uint8_t *buf, int buflen) {
 
   switch (buf[BYTEPOS_MODBUS_FUNC]) {
   case MODBUS_FUNC_READ_REG:
-    print_modbus_reply_read_reg(buf, buflen);
+    print_modbus_reply_read_reg(buf, buflen, type);
     break;
 
   case MODBUS_FUNC_WRITE_REG:
@@ -46,11 +46,15 @@ void print_received_msg(uint8_t *buf, int buflen) {
   } 
 }
 
-void print_modbus_reply_read_reg(uint8_t *buf, int buflen) {
+void print_modbus_reply_read_reg(uint8_t *buf, int buflen, Type type) {
   uint8_t byte_cnt;
   int c;
+  int count = 0;
   uint32_t crc_temp;
   modbus_reply_read_reg* reply_msg = (modbus_reply_read_reg*) buf;
+
+  uint32_t register_values[NUMBER_CHANNELS];
+
 
   fprintf(stderr, "Response received:\n");
   fprintf(stderr, "  Modbus addr: %d\n", reply_msg->modbus_addr);
@@ -59,32 +63,51 @@ void print_modbus_reply_read_reg(uint8_t *buf, int buflen) {
 
   byte_cnt = reply_msg->modbus_val_bytes;
 
-  /* Display registers */
-  fprintf(stderr, "  registers (hex): \n");
-  for (c = 0; c < byte_cnt / 2; c++) {
-    fprintf(stderr, "%04X ", ntohs(reply_msg->modbus_reg_val[c]));
-  }
-  fprintf(stderr, "\n");
+  switch(type) {
+      case Normal:
+          /* Display registers */
+          fprintf(stderr, "  registers (hex): \n");
+          for (c = 0; c < byte_cnt / 2; c++) {
+            fprintf(stderr, "%04X ", ntohs(reply_msg->modbus_reg_val[c]));
+          }
+          fprintf(stderr, "\n");
 
-  fprintf(stderr, "  registers (unsigned dec): \n");
-  for (c = 0; c < byte_cnt / 2; c++) {
-    fprintf(stderr, "%u ", ntohs(reply_msg->modbus_reg_val[c]));
-  }
-  fprintf(stderr, "\n");
+          fprintf(stderr, "  registers (unsigned dec): \n");
+          for (c = 0; c < byte_cnt / 2; c++) {
+            fprintf(stderr, "%u ", ntohs(reply_msg->modbus_reg_val[c]));
+          }
+          fprintf(stderr, "\n");
 
-  fprintf(stderr, "  registers (signed dec): \n");
-  for (c = 0; c < byte_cnt / 2; c++) {
-    fprintf(stderr, "%d ", (short) ntohs(reply_msg->modbus_reg_val[c]));
-  }
-  fprintf(stderr, "\n");
+          fprintf(stderr, "  registers (signed dec): \n");
+          for (c = 0; c < byte_cnt / 2; c++) {
+            fprintf(stderr, "%d ", (short) ntohs(reply_msg->modbus_reg_val[c]));
+          }
+          fprintf(stderr, "\n");
 
-  fprintf(stderr," registers (float): \n");
-  for (c = 0; c < byte_cnt / 4; c++) {
-    uint32_t tmp = ntohl(reply_msg->modbus_reg_val32[c]);
-    fprintf(stderr, "%f ",  *(float*)(&tmp));
+          fprintf(stderr," registers (float): \n");
+          for (c = 0; c < byte_cnt / 4; c++) {
+            uint32_t tmp = ntohl(reply_msg->modbus_reg_val32[c]);
+            fprintf(stderr, "%f ",  *(float*)(&tmp));
+          }
+          fprintf(stderr, "\n");
+
+          break;
+      case Power:
+          printf("Sending Power to Zeromq");
+
+          for(c =0; c < byte_cnt / 4; c++) {
+              register_values[count] = ntohl(reply_msg->modbus_reg_val32[c]);
+              count++;
+          }
+          break;
+      case Current:
+
+          printf("Sending Current ot Zeromq");
+
+          
+
   }
-  fprintf(stderr, "\n");
-  
+
   /* Check the CRC in the packet */
 
   crc_temp = read_crc16((uint8_t*) buf,

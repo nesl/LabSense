@@ -31,6 +31,8 @@
 #define MODBUS_RUN_INDICATOR_ON       0xff  
 #define MODBUS_RUN_INDICATOR_OFF      0x00
 
+/* Zeromq Special Mode Reads 42 Channels */
+#define NUMBER_CHANNELS 42
 
 /* Align message structures within byte boundary */
 #pragma pack(push)
@@ -102,6 +104,14 @@ typedef struct modbus_reply_report_slaveid {
   uint8_t   modbus_additional[0]; 
 } modbus_reply_report_slaveid;
 
+// This enum is used specifically for the zeromq_special_mode.
+typedef enum Type {
+    Normal = 0, // This is the default type,where the zeromq_special_mode is 
+                // not used.
+    Power,      // This is for getting power in zeromq_special_mode.
+    Current     // This is for getting current in zeormq_special_mode.
+} Type;
+
 
 #pragma pack(pop)
 
@@ -117,8 +127,8 @@ uint16_t calc_crc16(uint8_t* modbusframe, uint16_t length);
 uint16_t read_crc16(uint8_t* byteArr, uint16_t byteOffset);
 
 /* Print the contents of the buffer */
-void print_received_msg(uint8_t *buf, int buflen); 
-void print_modbus_reply_read_reg(uint8_t *buf, int buflen);
+void print_received_msg(uint8_t *buf, int buflen, Type type); 
+void print_modbus_reply_read_reg(uint8_t *buf, int buflen, Type type);
 void print_modbus_reply_write_reg(uint8_t *buf, int buflen);
 void print_modbus_reply_write_multireg(uint8_t *buf, int buflen);
 void print_modbus_reply_report_slaveid(uint8_t *buf, int buflen);
