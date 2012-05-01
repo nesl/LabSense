@@ -4,19 +4,21 @@
 #include <string.h> 
 #include "E30ModbusMsg.h"
 
+#include "zhelpers.h"
+
 #define RCVBUFSIZE 1024
 
 char rxBuf[RCVBUFSIZE];       /* buffer for the reply message */
 int rxBufLen = 0;             /* length of reply message */
 
-void print_received_msg(uint8_t *buf, int buflen, Type type) {
+void print_received_msg(uint8_t *buf, int buflen, Type type, void *publisher ) {
   int c;
 
   /* Print the size of message */
   fprintf(stderr, "Number of received bytes: %d\n", buflen);
   
   /* Print the echo buffer */
-  fprintf(stderr, "%s\n", buf);
+  /*fprintf(stderr, "%s\n", buf);*/
  
   /* Display the received message as hex arrays */
   for (c = 0; c < buflen; c++) {
@@ -26,7 +28,7 @@ void print_received_msg(uint8_t *buf, int buflen, Type type) {
 
   switch (buf[BYTEPOS_MODBUS_FUNC]) {
   case MODBUS_FUNC_READ_REG:
-    print_modbus_reply_read_reg(buf, buflen, type);
+    print_modbus_reply_read_reg(buf, buflen, type, publisher);
     break;
 
   case MODBUS_FUNC_WRITE_REG:
@@ -46,7 +48,7 @@ void print_received_msg(uint8_t *buf, int buflen, Type type) {
   } 
 }
 
-void print_modbus_reply_read_reg(uint8_t *buf, int buflen, Type type) {
+void print_modbus_reply_read_reg(uint8_t *buf, int buflen, Type type, void *publisher) {
   uint8_t byte_cnt;
   int c;
   int count = 0;
@@ -93,18 +95,42 @@ void print_modbus_reply_read_reg(uint8_t *buf, int buflen, Type type) {
 
           break;
       case Power:
-          printf("Sending Power to Zeromq");
+          printf("Sending Power to Zeromq\n");
+
+          for(c =0; c < byte_cnt / 4; c++) {
+              uint32_t tmp = ntohl(reply_msg->modbus_reg_val32[c]);
+              /*register_values[count] = ntohl(reply_msg->modbus_reg_val32[c]);*/
+              count++;
+          }
+
+          printf("COUNT: %d\n", count);
+          for (c = 0; c < count; c++) {
+              char zmq_message[30];
+              sprintf(zmq_message, "%s_%d %f", "VerisPower_", c+1, (double)register_values[c]);
+              /*printf("RIGHT BEFORE SEND");*/
+              s_send(publisher, zmq_message);
+              /*printf("RIGHT AFTER SEND");*/
+          }
+
+          break;
+      case Current:
+          printf("Sending Current to Zeromq\n");
 
           for(c =0; c < byte_cnt / 4; c++) {
               register_values[count] = ntohl(reply_msg->modbus_reg_val32[c]);
               count++;
           }
+
+          printf("COUNT: %d\n", count);
+          for (c = 0; c < count; c++) {
+              char zmq_message[30];
+              sprintf(zmq_message, "%s_%d %f", "VerisCurrent_", c+1, (double) register_values[c]);
+              s_send(publisher, zmq_message);
+          }
           break;
-      case Current:
-
-          printf("Sending Current ot Zeromq");
-
-          
+      default:
+          printf("Unknown Veris Type");
+          break;
 
   }
 

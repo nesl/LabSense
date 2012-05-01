@@ -7,6 +7,9 @@
 
 #include "E30ModbusMsg.h"
 
+// Zeromq helper file
+#include <zmq.h>
+
 #define RCVBUFSIZE 1024   /* Size of receive buffer */ 
 
 #define ARGS_QUERY  5
@@ -40,6 +43,13 @@ int main(int argc, char *argv[])
     int c;
     int i;
     Type read_type = Normal;      /* This type is used for zeromq_special_mode */
+    int first_iteration_finished = 0;
+
+
+    // Zeromq context and publisher
+    void *context = zmq_init(1);
+    void *publisher = zmq_socket (context, ZMQ_PUB);
+    zmq_bind(publisher, "tcp://*:5557");
 
     txBufLen = 0;
 
@@ -127,7 +137,7 @@ current_power_loop:
       }
 
       /* Prepare tx buffer for read command */
-      txBufLen = prepare_msg_read(argc, argv, txBuf, &servAddr); 
+      txBufLen = prepare_msg_read(argc, argv, txBuf, &servAddr);
       printf("argc: %d\n", argc);
       printf("argv: ");
       for(i = 0; i < argc; i++) {
@@ -169,13 +179,15 @@ current_power_loop:
     }
 
 
-    /* Create a reliable, stream socket using TCP */
-    if ((sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
-        DieWithError("socket() failed");
+    if(first_iteration_finished == 0) {
+        /* Create a reliable, stream socket using TCP */
+        if ((sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
+            DieWithError("socket() failed");
 
-    /* Establish the connection to the echo server */
-    if (connect(sock, (struct sockaddr *) &servAddr, sizeof(servAddr)) < 0)
-        DieWithError("connect() failed");
+        /* Establish the connection to the echo server */
+        if (connect(sock, (struct sockaddr *) &servAddr, sizeof(servAddr)) < 0)
+            DieWithError("connect() failed");
+    }
 
     /* Print the size of message */
     fprintf(stderr, "Number of transmitting bytes: %d\n", txBufLen);
@@ -204,12 +216,15 @@ current_power_loop:
         rxBuf[bytesRcvd] = '\0';  /* Terminate the string! */ 
     }
 
-    print_received_msg((uint8_t *)rxBuf, bytesRcvd, read_type);
+    print_received_msg((uint8_t *)rxBuf, bytesRcvd, read_type, publisher);
 
     if(read_type != Normal) {
+        first_iteration_finished = 1;
+        sleep(5);
         goto current_power_loop ;
     }
 
+    zmq_close(publisher);
     close(sock);
     exit(0);
 
@@ -439,9 +454,4 @@ int prepare_msg_writem(int argc, char* argv[], char* buf,
 
   return bufLen; 
 }
-
-
-
-
-
 

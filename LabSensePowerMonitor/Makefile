@@ -4,15 +4,15 @@ TRG = TCPModbusServer TCPModbusClient
 CC = gcc
 DEBUG = -g
 CFLAGS = -Wall -c $(DEBUG)
-LFLAGS = -Wall $(DEBUG)
+LFLAGS = -Wall $(DEBUG) -lzmq
 
-all : $(TRG)
+all : $(TRG) 
 
 TCPModbusServer : $(OBJS1)
 	$(CC) $(LFLAGS) $(OBJS1) -o TCPModbusServer
 
 TCPModbusClient : $(OBJS6)
-	$(CC) $(LFLAGS) $(OBJS6) -o TCPModbusClient
+	$(CC) $(LFLAGS) $(OBJS6) -o TCPModbusClient 
 
 TCPModbusServer.o : TCPModbusServer.c
 	$(CC) $(CFLAGS) TCPModbusServer.c
@@ -29,7 +29,7 @@ HandleModbusTCPClient.o : HandleModbusTCPClient.c E30ModbusMsg.h
 crc16.o : crc16.c
 	$(CC) $(CFLAGS) crc16.c
 
-utility.o : utility.c
+utility.o : utility.c zhelpers.h
 	$(CC) $(CFLAGS) utility.c
 
 clean:

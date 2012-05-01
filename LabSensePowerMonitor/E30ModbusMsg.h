@@ -127,8 +127,8 @@ uint16_t calc_crc16(uint8_t* modbusframe, uint16_t length);
 uint16_t read_crc16(uint8_t* byteArr, uint16_t byteOffset);
 
 /* Print the contents of the buffer */
-void print_received_msg(uint8_t *buf, int buflen, Type type); 
-void print_modbus_reply_read_reg(uint8_t *buf, int buflen, Type type);
+void print_received_msg(uint8_t *buf, int buflen, Type type, void *publisher); 
+void print_modbus_reply_read_reg(uint8_t *buf, int buflen, Type type, void *publisher);
 void print_modbus_reply_write_reg(uint8_t *buf, int buflen);
 void print_modbus_reply_write_multireg(uint8_t *buf, int buflen);
 void print_modbus_reply_report_slaveid(uint8_t *buf, int buflen);

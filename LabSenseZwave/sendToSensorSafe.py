@@ -66,6 +66,7 @@ class SensorVariableTracker:
         self.socket = self.context.socket(zmq.SUB)
 
         self.socket.connect("tcp://localhost:5556")
+        self.socket.connect("tcp://localhost:5557")
 
         # Subscribe to all zeromq messages
         self.socket.setsockopt(zmq.SUBSCRIBE, "")
