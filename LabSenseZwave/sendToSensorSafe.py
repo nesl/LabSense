@@ -143,6 +143,26 @@ class SensorVariableTracker:
         if self.frequency == 0:
             self.sendSensorData()
 
+    def registerBatchedValues(self, measurement, value):
+        """ Register several data entries to the sensorData list """
+
+        cur_time = int(round(time.time() * 1000))
+
+        print "Registering "+ measurement + " " + str(value)
+
+        data_entry = {
+                "sampling_interval": 1,
+                "timestamp": cur_time,
+                "location": {"latitude": 34.068839550018311,
+                             "longitude": -118.44383955001831},
+                "data_channel": [measurement],
+                "data": [value]
+        }
+        # If option for sending event driven measurements is specified, send
+        # the data immediately
+
+        self.sensorData.append(data_entry)
+
     def receiveFromSocket(self):
         """ Continually receive data from zwave and send data to SensorSafe """
 
@@ -152,9 +172,14 @@ class SensorVariableTracker:
 
             string_list = string.split()
             measurement = string_list[0]
-            str_value = string_list[1]
+            if len(string_list) == 2:
+                str_value = string_list[1]
+                self.registerValue(measurement, float(str_value))
+            else:
+                self.registerBatchedValues(measurement, string_list[1:])
 
-            self.registerValue(measurement, float(str_value))
+            print "Received Measurement: ", measurement
+
 
     def sendSensorData(self):
         """ Send all sensor data to SensorSafe """

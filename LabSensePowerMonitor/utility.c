@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <netinet/in.h>
+#define _GNU_SOURCE
 #include <string.h> 
 #include "E30ModbusMsg.h"
 
@@ -10,6 +11,52 @@
 
 char rxBuf[RCVBUFSIZE];       /* buffer for the reply message */
 int rxBufLen = 0;             /* length of reply message */
+
+
+// Sends an array to the python process (sendToSensorSafe.py) given the type,
+// (Power/Current/etc), values, and the publisher to send to zeromq 
+// returns success (= 1) or fail (= 0)
+int sendBatchedMessage(void *publisher, char *type, uint32_t *values) {
+    // For efficiency reasons, specify the allocated memory for 21 uint32_t
+    // since that is what sendBatchedMessage is called with.
+    size_t count = 21;                          // 21 uint32_ts
+    char *message = (char *) malloc(count*9);   // each float is about 9 characters
+    char *complete_msg = (char *) malloc(count*9 + 12);
+
+    if(message != NULL) {
+        int i;
+        char *last_written = message;
+        /*char *resized;*/
+        for (i = 0; i < count; i++) {
+            char str_value[30];
+            sprintf(str_value, "%f ", *(float *)&values[i]);
+            // Copy the string and return the last written byte to be used as
+            // the start of the next string
+            last_written = (char *)mempcpy((void *)last_written, (void *)str_value, (size_t) strlen(str_value));
+        }
+        // Terminate the string
+        *last_written++ = '\0';
+        printf("Message: %s\n", message);
+
+        // Resize memory to the optimal size
+        /*resized = realloc(message, last_written - message);*/
+        /*if(resized != NULL)*/
+            /*message = resized;*/
+        /*else*/
+            /*return 0;*/
+
+        sprintf(complete_msg, "%s %s", type, message);
+        printf("Complete msg: %s", complete_msg);
+
+        s_send(publisher, complete_msg);
+
+        // Success
+        return 1;
+    }
+    printf("FAILED");
+    // Fail
+    return 0;
+}
 
 void print_received_msg(uint8_t *buf, int buflen, Type type, void *publisher ) {
   int c;
@@ -65,74 +112,58 @@ void print_modbus_reply_read_reg(uint8_t *buf, int buflen, Type type, void *publ
 
   byte_cnt = reply_msg->modbus_val_bytes;
 
-  switch(type) {
-      case Normal:
-          /* Display registers */
-          fprintf(stderr, "  registers (hex): \n");
-          for (c = 0; c < byte_cnt / 2; c++) {
-            fprintf(stderr, "%04X ", ntohs(reply_msg->modbus_reg_val[c]));
-          }
-          fprintf(stderr, "\n");
 
-          fprintf(stderr, "  registers (unsigned dec): \n");
-          for (c = 0; c < byte_cnt / 2; c++) {
-            fprintf(stderr, "%u ", ntohs(reply_msg->modbus_reg_val[c]));
-          }
-          fprintf(stderr, "\n");
+  if(type == Normal) {
+      /* Display registers */
+      fprintf(stderr, "  registers (hex): \n");
+      for (c = 0; c < byte_cnt / 2; c++) {
+          fprintf(stderr, "%04X ", ntohs(reply_msg->modbus_reg_val[c]));
+      }
+      fprintf(stderr, "\n");
 
-          fprintf(stderr, "  registers (signed dec): \n");
-          for (c = 0; c < byte_cnt / 2; c++) {
-            fprintf(stderr, "%d ", (short) ntohs(reply_msg->modbus_reg_val[c]));
-          }
-          fprintf(stderr, "\n");
+      fprintf(stderr, "  registers (unsigned dec): \n");
+      for (c = 0; c < byte_cnt / 2; c++) {
+          fprintf(stderr, "%u ", ntohs(reply_msg->modbus_reg_val[c]));
+      }
+      fprintf(stderr, "\n");
 
-          fprintf(stderr," registers (float): \n");
-          for (c = 0; c < byte_cnt / 4; c++) {
-            uint32_t tmp = ntohl(reply_msg->modbus_reg_val32[c]);
-            fprintf(stderr, "%f ",  *(float*)(&tmp));
-          }
-          fprintf(stderr, "\n");
+      fprintf(stderr, "  registers (signed dec): \n");
+      for (c = 0; c < byte_cnt / 2; c++) {
+          fprintf(stderr, "%d ", (short) ntohs(reply_msg->modbus_reg_val[c]));
+      }
+      fprintf(stderr, "\n");
 
-          break;
-      case Power:
-          printf("Sending Power to Zeromq\n");
-
-          for(c =0; c < byte_cnt / 4; c++) {
-              uint32_t tmp = ntohl(reply_msg->modbus_reg_val32[c]);
-              /*register_values[count] = ntohl(reply_msg->modbus_reg_val32[c]);*/
-              count++;
-          }
-
-          printf("COUNT: %d\n", count);
-          for (c = 0; c < count; c++) {
-              char zmq_message[30];
-              sprintf(zmq_message, "%s_%d %f", "VerisPower_", c+1, (double)register_values[c]);
-              /*printf("RIGHT BEFORE SEND");*/
-              s_send(publisher, zmq_message);
-              /*printf("RIGHT AFTER SEND");*/
-          }
-
-          break;
-      case Current:
-          printf("Sending Current to Zeromq\n");
-
-          for(c =0; c < byte_cnt / 4; c++) {
-              register_values[count] = ntohl(reply_msg->modbus_reg_val32[c]);
-              count++;
-          }
-
-          printf("COUNT: %d\n", count);
-          for (c = 0; c < count; c++) {
-              char zmq_message[30];
-              sprintf(zmq_message, "%s_%d %f", "VerisCurrent_", c+1, (double) register_values[c]);
-              s_send(publisher, zmq_message);
-          }
-          break;
-      default:
-          printf("Unknown Veris Type");
-          break;
+      fprintf(stderr," registers (float): \n");
+      for (c = 0; c < byte_cnt / 4; c++) {
+          uint32_t tmp = ntohl(reply_msg->modbus_reg_val32[c]);
+          fprintf(stderr, "%f ",  *(float*)(&tmp));
+      }
+      fprintf(stderr, "\n");
 
   }
+  else if(type == Power || type == Current) {
+      for(c =0; c < byte_cnt / 4; c++) {
+          uint32_t tmp = ntohl(reply_msg->modbus_reg_val32[c]);
+          register_values[count] = tmp;
+          fprintf(stderr, "%f ",  *(float*)(&tmp));
+          count++;
+      }
+
+      printf("Count: %d\n", count);
+      if(type == Power) {
+          printf("Sending Power to Zeromq\n");
+          sendBatchedMessage(publisher, "VerisPower", register_values);
+      }
+      else {
+          printf("Sending Current to Zeromq\n");
+          sendBatchedMessage(publisher, "VerisCurrent", register_values);
+      }
+      printf("\n");
+  }
+  else {
+      printf("Unknown Type!");
+  }
+
 
   /* Check the CRC in the packet */
 
