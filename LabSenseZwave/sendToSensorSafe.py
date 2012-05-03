@@ -143,20 +143,24 @@ class SensorVariableTracker:
         if self.frequency == 0:
             self.sendSensorData()
 
-    def registerBatchedValues(self, measurement, value):
+    def registerBatchedValues(self, measurement, values):
         """ Register several data entries to the sensorData list """
 
         cur_time = int(round(time.time() * 1000))
 
-        print "Registering "+ measurement + " " + str(value)
+        print "Registering "+ measurement + " " + str(values)
+        measurements = []
+        for i in range(len(values)):
+            measurements.append(measurement + "_" + str(i+1))
 
+        print measurements
         data_entry = {
                 "sampling_interval": 1,
                 "timestamp": cur_time,
                 "location": {"latitude": 34.068839550018311,
                              "longitude": -118.44383955001831},
-                "data_channel": [measurement],
-                "data": [value]
+                "data_channel": measurements,
+                "data": [values]
         }
         # If option for sending event driven measurements is specified, send
         # the data immediately
