@@ -45,7 +45,6 @@ int main(int argc, char *argv[])
     Type read_type = Normal;      /* This type is used for zeromq_special_mode */
     int first_iteration_finished = 0;
 
-
     // Zeromq context and publisher
     void *context = zmq_init(1);
     void *publisher = zmq_socket (context, ZMQ_PUB);
@@ -94,7 +93,10 @@ current_power_loop:
               read_type = Power;
           }
           else if(read_type == Power) {
-            read_type = Current;
+            read_type = PowerFactor;
+          }
+          else if(read_type == PowerFactor) {
+              read_type = Current;
           }
           else if(read_type == Current) {
               read_type = Power;
@@ -103,27 +105,31 @@ current_power_loop:
               printf("Error in read type\n");
           }
 
+          // Set the arguments according to the prepare_msg_read function
+          argc = 7;
+          argv[1] = "read";             // Read from the veris
+          argv[2] = "172.17.5.178";     // IP Address of Veris
+          argv[3] = "4660";             // Server Port
+          argv[4] ="1";                 // Modbus Address
+          argv[6] = "42";               // Reading 42 Registers
+
+          // Set the Register address
           switch(read_type) {
               case Power:
                   // Get Power Readings (KW)
-                  argc = 7;
-                  argv[1] = "r";
-                  argv[2] = "172.17.5.178";
-                  argv[3] = "4660";
-                  argv[4] = "1";
                   argv[5] = "2083";
-                  argv[6] = "42";
                   read_type = Power;
                   break;
+
+              case PowerFactor:
+                  // Get Power Readings (KW)
+                  argv[5] = "2267";
+                  read_type = PowerFactor;
+                  break;
+                  
               case Current:
                   // Get Current Readings (A)
-                  argc = 7;
-                  argv[1] = "r";
-                  argv[2] = "172.17.5.178";
-                  argv[3] = "4660";
-                  argv[4] = "1";
                   argv[5] = "2251";
-                  argv[6] = "42";
                   read_type = Current;
                   break;
               default: 

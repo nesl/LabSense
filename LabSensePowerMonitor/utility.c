@@ -141,7 +141,7 @@ void print_modbus_reply_read_reg(uint8_t *buf, int buflen, Type type, void *publ
       fprintf(stderr, "\n");
 
   }
-  else if(type == Power || type == Current) {
+  else {
       for(c =0; c < byte_cnt / 4; c++) {
           uint32_t tmp = ntohl(reply_msg->modbus_reg_val32[c]);
           register_values[count] = tmp;
@@ -154,16 +154,16 @@ void print_modbus_reply_read_reg(uint8_t *buf, int buflen, Type type, void *publ
           printf("Sending Power to Zeromq\n");
           sendBatchedMessage(publisher, "VerisPower", register_values);
       }
-      else {
+      else if(type == PowerFactor) {
+          printf("Sending Current to Zeromq\n");
+          sendBatchedMessage(publisher, "VerisPowerFactor", register_values);
+      }
+      else if(type == Current) {
           printf("Sending Current to Zeromq\n");
           sendBatchedMessage(publisher, "VerisCurrent", register_values);
       }
       printf("\n");
   }
-  else {
-      printf("Unknown Type!");
-  }
-
 
   /* Check the CRC in the packet */
 

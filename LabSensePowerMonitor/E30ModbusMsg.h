@@ -109,7 +109,8 @@ typedef enum Type {
     Normal = 0, // This is the default type,where the zeromq_special_mode is 
                 // not used.
     Power,      // This is for getting power in zeromq_special_mode.
-    Current     // This is for getting current in zeormq_special_mode.
+    PowerFactor,// This is for getting power factor in zeromq_special_mode.
+    Current     // This is for getting current in zeromq_special_mode.
 } Type;
 
 
