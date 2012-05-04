@@ -8,7 +8,8 @@ import raritan
 from waveseg import *
 import upthread
 
-RARITAN_IP_ADDRESS = '131.179.144.242'
+#RARITAN_IP_ADDRESS = '131.179.144.242'
+RARITAN_IP_ADDRESS = '172.17.5.179'
 
 SAMPLE_INTERVAL = 0.1
 MAX_NUM_VALUEBLOB = 5
@@ -116,17 +117,17 @@ def main():
     while True:
 
         # Retreive data from Raritan
-	data = raritan.Get(RARITAN_IP_ADDRESS)
+        data = raritan.Get(RARITAN_IP_ADDRESS)
         #data = [0, 0, 0, 0, 0, 0, 0, 0, 121000, 121000, 121000, 121000, 121000, 121000, 121000, 121000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         timestamp = time.time()
-
-	if len(data) != 40:
-		print 'Error from raritan: %s'%data
-		continue
+        
+        if len(data) != 40:
+	    	print 'Error from raritan: %s'%data
+	    	continue
 
         # collect data in buffer ...
         update_waveseg_buf(timestamp, data)
-        
+
         # Store waveseg_buf into local database
         if len(waveseg_buf[0].value_blob) >= MAX_NUM_VALUEBLOB:
             store_waveseg_buf()
@@ -134,7 +135,7 @@ def main():
             # empty value_blobs in waveseg_buf
             for cur_waveseg in waveseg_buf:
                 cur_waveseg.value_blob = []
-                
+
         # sleep ...
         time.sleep(SAMPLE_INTERVAL)
 
@@ -143,4 +144,4 @@ if __name__ == "__main__":
         main()
     except KeyboardInterrupt:
         clean_up()
-        
+

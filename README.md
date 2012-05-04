@@ -1,10 +1,18 @@
 LabSense
 ========
 
-This project involves creating a sensing platform that can measure many
-different characteristics about a lab (i.e. ambient temperature, 
-electricity, water, occupancy). The project also focuses on making the data 
-available with a user-intuitive interface.
+This project involves sensing many different characteristics about a lab (i.e.
+ambient temperature, electricity, water, occupancy) and making the data
+available in a user intuitive interface. There are several components to the
+project and can function on their own. Each component is assigned to its own
+directory. The components all communicate using zeromq. Each component sends
+data to a python script (sendToSensorSafe.py), which parses all the data and
+sends it to SensorSafe. SensorSafe is a platform for sharing sensory
+information online that graphs data.
+
+------------------------------------------------------------------------------
+Components 
+=========
 
 LabSenseServer
 --------------
@@ -65,8 +73,36 @@ Dependencies:
 
 ------------------------------------------------------------------------------
 
+LabSenseRaritan
+--------------
+
+LabSenseRaritan contains the code to read the data from the [Raritan PX8](http://www.raritan.com/support/dominion-px/v1.3.5/user-guides/english/DPX-0L-v1.3.5-E.pdf),
+a power distribution unit to monitor power on server racks. 
+
+Dependencies:
+
+* [Zeromq](http://www.zeromq.org/intro:get-the-software)
+* [PySNMP](http://pysnmp.sourceforge.net/quickstart.html)
+
+------------------------------------------------------------------------------
+
+LabSenseForwarder
+-----------------
+
+LabSenseForwarder contains the code that receives all zeromq messages from all
+of the components. This directory only contains one file: sendToSensorSafe.py,
+which parses all the received zeromq messages and sends the data to SensorSafe.
+
+Dependencies:
+
+* [Zeromq](http://www.zeromq.org/intro:get-the-software)
+* [PySNMP](http://pysnmp.sourceforge.net/quickstart.html)
+
+------------------------------------------------------------------------------
+
 Hardware Requirements
----------------------
+====================
+
 This software is running on a [Guruplug Server](http://www.globalscaletechnologies.com/t-guruplugdetails.aspx) with an
 [Aeon Labs Z-stick](http://www.aeon-labs.com/site/products/view/2/). 
 The sensors that interact with the Z-stick include:
@@ -74,28 +110,37 @@ The sensors that interact with the Z-stick include:
 * [Aeon Labs Door/Window Sensor](http://www.aeon-labs.com/site/products/view/1/)
 * [Homeseer MultiSensor](http://store.homeseer.com/store/HomeSeer-HSM100-S2-Z-Wave-Multi-Sensor-P1189C57.aspx)
 * [Aeon Labs SmartSwitch](http://www.aeon-labs.com/site/products/view/5/)
+* [Veris E30A](http://www.powermeterstore.com/crm_uploads/veris_e30_panelboard_monitoring_system_installation_guide.pdf)
+* [Raritan PX8](http://www.raritan.com/support/dominion-px/v1.3.5/user-guides/english/DPX-0L-v1.3.5-E.pdf),
+
 
 ------------------------------------------------------------------------------
 
 Installation
---------------
+===========
+
+General Installation (Needed by all components)
+----------------------------------------------
 
 1. Install Zeromq by following directions at http://www.zeromq.org/intro:get-the-software
-2. Install python bindings by following directions at http://www.zeromq.org/bindings:python
-3. Install needed development headers for open-zwave:
+
+LabSenseZwave Installation
+--------------------------
+
+1. Install needed development headers for open-zwave:
 
     <pre>
     sudo apt-get install libudev-dev
     </pre>
 
-4. Get the open-zwave source code using svn by running:
+2. Get the open-zwave source code using svn by running:
 
     <pre>
     svn checkout http://open-zwave.googlecode.com/svn/trunk/ open-zwave/
     </pre>
 
-5. Navigate to open-zwave/cpp/examples/linux/
-6. Get the source code for this project using git or download it:
+3. Navigate to open-zwave/cpp/examples/linux/
+4. Get the source code for this project using git or download it:
 
     <pre>
     git clone git@github.com:jtsao22/LabSense.git
@@ -103,15 +148,15 @@ Installation
 
     The LabSense Project should now be at open-zwave/cpp/examples/linux/LabSense.
 
-7. Navigate to LabSense/LabSenseZwave/
-8. Pair the Z-stick with the sensors:
+5. Navigate to LabSense/LabSenseZwave/
+6. Pair the Z-stick with the sensors:
 
     1. Push the button on the Z-stick. The light on the Z-stick should blink. 
     2. Push the button on the sensor. The light on the Z-stick should stay lit for a few seconds and then start blinking again. 
     3. The sensor has been paired and the Z-stick is ready for the next sensor. Start at step 2 for the next sensor. 
     4. When all sensors have been paired, push the button on the Z-stick and the light should stop blinking.
 
-8. Make the code and run the executable
+7. Make the code and run the executable
 
     <pre>
     make 
@@ -126,11 +171,50 @@ Installation
 
     Unless other usb devices are plugged in, usually the serial port is /dev/ttyUSB0. 
 
-The previous steps are used for local viewing of the data coming off the sensors. If an online graphical view of the
+LabSensePowerMonitor Installation
+---------------------------------
+
+1. Make the files and run the executable:
+    <pre>
+    make
+    ./TCPModbusClient r all
+    </pre>
+
+LabSenseRaritan Installation
+----------------------------
+
+1. Install py-snmp:
+
+    <pre>
+    easy_install pysnmp
+    </pre>
+
+2. Change the Raritan Server address in run.py line #11:
+
+    <pre>
+    RARITAN_IP_ADDRESS = '[Insert ip address]'
+    </pre>
+
+3. Run the python file:
+
+    <pre>
+    python run.py
+    </pre>
+
+LabSenseServer Installation
+---------------------------
+This is still in beta, please do not try installing this just yet.
+
+
+LabSenseForwarder Installation
+------------------------------
+
+The previous steps are used for local viewing of the data coming of the sensors. If an online graphical view of the
 sensor data is required, more code has been implemented to send the data to [SensorSafe](https://128.97.93.29/):
 
-1. Register for a SensorSafe account and take note of the API key.
-2. To send the data to SensorSafe, run the python script sendToSensorSafe.py while running the LabSenseZwave
+1. Install python bindings by following directions at http://www.zeromq.org/bindings:python
+2. Register for a SensorSafe account and take note of the API key.
+3. To send the data to SensorSafe, run the python script sendToSensorSafe.py while running the LabSenseZwave
 executable:
 
     <pre>
@@ -153,7 +237,7 @@ executable:
     pydoc sendToSensorSafe
     </pre>
 
-3. The script will send to SensorSafe as soon as all variables have been initialized (temperature, luminance, and
+4. The script will send to SensorSafe as soon as all variables have been initialized (temperature, luminance, and
 motion_timeout), which make take some time depending on the wake-up interval of the Homeseer Multisensor (programmed to
 be every 6 minutes).
 Upon successful upload to SensorSafe, a message similar to the following will
@@ -167,7 +251,7 @@ show up if verbose mode is used:
     Upload successful (Collection name: sandbox, Requested by sandbox
     </pre>
 
-4. You can then see the data on SensorSafe by signing in, pressing access data, selecting data channels, and pressing Show Data. 
+5. You can then see the data on SensorSafe by signing in, pressing access data, selecting data channels, and pressing Show Data. 
 
 ------------------------------------------------------------------------------
 
