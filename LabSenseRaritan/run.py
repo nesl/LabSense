@@ -121,6 +121,7 @@ def main():
         #data = [0, 0, 0, 0, 0, 0, 0, 0, 121000, 121000, 121000, 121000, 121000, 121000, 121000, 121000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         timestamp = time.time()
         
+        print data
         if len(data) != 40:
 	    	print 'Error from raritan: %s'%data
 	    	continue

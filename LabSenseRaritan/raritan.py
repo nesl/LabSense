@@ -9,10 +9,10 @@ def Get(ip):
   count=0
   errorIndication, errorStatus, errorIndex, varBinds = cmdgen.CommandGenerator().getCmd(
     # SNMP v1
-#    cmdgen.CommunityData('test-agent', 'public', 0),
+    #cmdgen.CommunityData('test-agent', 'public', 0),
     # SNMP v2
     cmdgen.CommunityData('admin', 'home3747r'), 
-    # cmdgen.CommunityData('admin', 'abcd'), # read-only
+     #cmdgen.CommunityData('admin', 'abcd'), # read-only
     #cmdgen.CommunityData('admin', 'efgh'), # write
     # SNMP v3
 #    cmdgen.UsmUserData('test-user', 'authkey1', 'privkey1'),
