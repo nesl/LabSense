@@ -189,7 +189,7 @@ LabSenseRaritan Installation
     easy_install pysnmp
     </pre>
 
-2. Change the Raritan Server address in run.py line #11:
+2. Change the Raritan Server address in raritan.py:
 
     <pre>
     RARITAN_IP_ADDRESS = '[Insert ip address]'
@@ -198,7 +198,7 @@ LabSenseRaritan Installation
 3. Run the python file:
 
     <pre>
-    python run.py
+    python raritan.py
     </pre>
 
 LabSenseServer Installation
