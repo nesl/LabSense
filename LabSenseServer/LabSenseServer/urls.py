@@ -13,5 +13,8 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     # (r'^admin/', include(admin.site.urls)),
-    (r'^$', include('LabSenseApp.urls'))
+    ("", include('django_socketio.urls')),
+    (r'^$', include('LabSenseApp.urls')),
+    (r'^raritan$', include('LabSenseRaritan.urls'))
+
 )

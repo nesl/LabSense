@@ -1,0 +1,9 @@
+<head>
+    {% load socketio_tags %}
+    {% socketio %}
+    <script>
+        var socket = new io.Socket();
+        socket.connect();
+        // etc
+    </script>
+</head>

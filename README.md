@@ -31,7 +31,7 @@ data and perform their own analysis of the streaming data.
 
 Dependency:
 
-* [Django 1.3.1](https://www.djangoproject.com/download/)
+* [Django 1.4](https://www.djangoproject.com/download/)
 
 ------------------------------------------------------------------------------
 
