@@ -13,6 +13,9 @@ MANAGERS = ADMINS
 SERVER_DIR = os.path.abspath(os.path.dirname(__file__))
 DB = os.path.join(SERVER_DIR, "LabSenseDB")
 
+SOCKETIO_HOST = "localhost"
+SOCKETIO_PORT = "8080"
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
@@ -54,7 +57,7 @@ MEDIA_ROOT = ''
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = ''
+MEDIA_URL = os.path.join(SERVER_DIR, 'static')
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -63,8 +66,8 @@ MEDIA_URL = ''
 STATIC_ROOT = os.path.join(SERVER_DIR, 'static')
 
 # URL prefix for static files.
-# Example: "http://media.lawrence.com/static/"
 STATIC_URL = os.path.join(SERVER_DIR, 'static/')
+
 
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
@@ -94,7 +97,6 @@ SECRET_KEY = '644$5qu@%%d()$)=ie2^1%$6w=u%k+csjgt^9kaofa)-f$t^sc'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -116,6 +118,7 @@ TEMPLATE_DIRS = (
 
 TEMPLATE_CONTEXT_PROCESSORS = (
         'django.core.context_processors.static',
+        'django.core.context_processors.request',
 )
 
 INSTALLED_APPS = (
@@ -127,6 +130,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'LabSenseApp',
     'django_socketio',
+    'chat',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
