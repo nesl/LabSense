@@ -4,3 +4,7 @@ from django.template import RequestContext
 def index(request):
     c = RequestContext(request, {})
     return render_to_response("index.html", c)
+
+def raritan(request):
+    c = RequestContext(request, {})
+    return render_to_response("raritan.html", c)
