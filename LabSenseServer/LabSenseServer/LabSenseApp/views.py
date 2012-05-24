@@ -7,4 +7,12 @@ def index(request):
 
 def raritan(request):
     c = RequestContext(request, {})
-    return render_to_response("raritan.html", c)
+    return render_to_response("generic_channel.html", c)
+
+def veris(request):
+    c = RequestContext(request, {})
+    return render_to_response("generic_channel.html", c)
+
+def zwave(request):
+    c = RequestContext(request, {})
+    return render_to_response("generic_channel.html", c)

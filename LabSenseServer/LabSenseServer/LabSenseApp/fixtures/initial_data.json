@@ -1,0 +1,29 @@
+[
+    {
+        "model": "LabSenseApp.Channel",
+        "pk": 1,
+        "fields": {
+            "name": "Raritan",
+            "title": "LabSenseRaritan",
+            "slug": "Raritan"
+        }
+    },
+    {
+        "model": "LabSenseApp.Channel",
+        "pk": 2,
+        "fields": {
+            "name": "Veris",
+            "title": "LabSenseVeris",
+            "slug": "Veris"
+        }
+    },
+    {
+        "model": "LabSenseApp.Channel",
+        "pk": 3,
+        "fields": {
+            "name": "Zwave",
+            "title": "LabSenseZwave",
+            "slug": "Zwave"
+        }
+    }
+]
