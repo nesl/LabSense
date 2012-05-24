@@ -8,3 +8,4 @@ LabSenseZwave/LabSenseZwave
 *.swp
 *.svn
 tags
+.Python
