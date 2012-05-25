@@ -5,7 +5,6 @@
     <div class="page-header">
         <h1> Raritan </h1>
     </div><!--/page-header-->
-
     
     <div id="chart-container-1" class="highcharts-container" style="width: 100%;
         position: relative; height: 100% margin: 0 2; clear:both"></div>
@@ -16,6 +15,12 @@
 
 {% block javascript %}
 <script src="{{ STATIC_URL }}js/highcharts.js"></script>
+
+{% load socketio_tags %}
+{% socketio %}
+<script>window.channel = "{{ channel }}";</script>
+<script src="{{ STATIC_URL }}js/labsense.js"></script>
+
 <script type = "text/javascript">
 
 var chart1; // globally available
