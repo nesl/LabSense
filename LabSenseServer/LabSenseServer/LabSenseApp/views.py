@@ -9,7 +9,7 @@ def index(request):
 def raritan(request):
     c = {'channel': 'raritan'}
     c = RequestContext(request, c)
-    return render_to_response("generic_channel.html", c)
+    return render_to_response("raritan.html", c)
 
 def veris(request):
     c = {}
