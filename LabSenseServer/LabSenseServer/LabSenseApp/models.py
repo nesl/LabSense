@@ -1,9 +1,16 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 
-# Create your models here.
+# Managers
+class ChannelManager(models.Manager):
+    def get_by_natural_key(self, name):
+        return self.get(name=name)
 
+# Models
 class Channel(models.Model):
+
+    # Channel manager
+    objects = ChannelManager()
 
     # name is Raritan, Zwave, Veris, etc..
     name = models.CharField(max_length=20)
@@ -30,10 +37,21 @@ class Measurement(models.Model):
 
     # name is current, voltage, etc
     name = models.CharField(max_length=20)
-    measurement = models.CharField(max_length=20)
-    value = models.FloatField()
+
+    # units if mA, volts, etc
+    units = models.CharField(max_length=20)
 
     channel = models.ForeignKey("Channel")
 
     def __unicode__(self):
         return self.name
+
+class SensorValue(models.Model):
+
+    value = models.FloatField()
+
+    measurement = models.ForeignKey("Measurement")
+
+    def __unicode__(self):
+        return self.value
+

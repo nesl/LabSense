@@ -110,15 +110,13 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'LabSenseServer.urls'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
     os.path.join(SERVER_DIR, 'templates'),
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
         'django.core.context_processors.static',
         'django.core.context_processors.request',
+        'django.contrib.auth.context_processors.auth',
 )
 
 INSTALLED_APPS = (
@@ -131,10 +129,8 @@ INSTALLED_APPS = (
     'LabSenseApp',
     'django_socketio',
     'chat',
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+    'django.contrib.admin',
+    'django.contrib.admindocs',
 )
 
 # A sample logging configuration. The only tangible logging
