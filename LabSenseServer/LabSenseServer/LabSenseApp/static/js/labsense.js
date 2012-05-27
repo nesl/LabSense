@@ -70,7 +70,8 @@ $(function() {
         switch (data.action) {
             case 'set':
                 //alert("Current is " + data.current);
-                chart1.series[0].addPoint([10, data.current]);
+                chart1.series[0].addPoint([data.time, data.current]);
+                socket.send({channel: window.channel, action: 'start'})
 
                 break;
             case 'in-use':

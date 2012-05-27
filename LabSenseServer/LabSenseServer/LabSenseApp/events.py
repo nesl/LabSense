@@ -1,7 +1,9 @@
-
 from django.shortcuts import get_object_or_404
 from django.utils.html import strip_tags
 from django_socketio import events
+
+import time
+import random
 
 #from chat.models import ChatRoom
 from LabSenseApp.models import Channel
@@ -14,9 +16,29 @@ def message(request, socket, context, message):
     Event handler for a room receiving a message. First validates a
     joining user's name and sends them the list of users.
     """
-    channel = get_object_or_404(Channel, id=message["channel"])
+    #channel = get_object_or_404(Channel, id=message["channel"])
     if message["action"] == "start":
-        socket.send({"action": "set", "current": 5})
+        print "HELLO"
+        time.sleep(1)
+        i = random.randint(1,5)
+        if(i == 1):
+            socket.send({"action": "set", "current": 5, "time": 1})
+        if(i == 2):
+            socket.send({"action": "set", "current": 7, "time": 2})
+        if(i == 3):
+            socket.send({"action": "set", "current": 8, "time": 3})
+        if(i == 4):
+            socket.send({"action": "set", "current": 9, "time": 4})
+        if(i == 5):
+            socket.send({"action": "set", "current": 10, "time": 5})
+        #time.sleep(1)
+        #socket.send({"action": "set", "current": 6, "time": 2})
+        #time.sleep(1)
+        #socket.send({"action": "set", "current": 7, "time": 3})
+        #time.sleep(1)
+        #socket.send({"action": "set", "current": 8, "time": 4})
+        #time.sleep(1)
+        #socket.send({"action": "set", "current": 9, "time": 5})
         #name = strip_tags(message["name"])
         #user, created = room.users.get_or_create(name=name)
         #if not created:
