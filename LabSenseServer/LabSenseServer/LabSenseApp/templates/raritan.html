@@ -5,16 +5,18 @@
     <thead>
         <tr>
             <th>Measurement</th>
-            <th>Sensor 1</th>
-            <th>Sensor 2</th>
+            {% for sensor in sensors %}
+            <th>{{ sensor }}</th>
+            {% endfor %}
         </tr>
     </thead>
     {% for measurement in current_channel.measurement_set.all %}
     <tbody>
         <tr>
             <td>{{ measurement.name }}</td>
-            <td>0.5</td>
-            <td>0.5</td>
+            {% for sensor in sensors %}
+            <td>0</td>
+            {% endfor %}
         </tr>
     </tbody>
     {% endfor %}

@@ -6,6 +6,7 @@
         "fields": {
             "name": "Raritan",
             "title": "LabSenseRaritan",
+            "num_sensors": 8,
             "slug": "Raritan"
         }
     },
@@ -62,6 +63,7 @@
         "fields": {
             "name": "Veris",
             "title": "LabSenseVeris",
+            "num_sensors": 21,
             "slug": "Veris"
         }
     },
@@ -98,9 +100,10 @@
         "model": "LabSenseApp.Channel",
         "pk": 3,
         "fields": {
-            "name": "Zwave",
-            "title": "LabSenseZwave",
-            "slug": "Zwave"
+            "name": "Zwave-HSM-100",
+            "title": "LabSenseZwave HSM-100",
+            "num_sensors": 2,
+            "slug": "ZwaveHSM"
         }
     },
     {
@@ -109,7 +112,7 @@
         "fields": {
             "name": "Motion",
             "units": "No Motion (0)/Motion (1)",
-            "channel": ["Zwave"]
+            "channel": ["ZwaveHSM"]
         }
     },
     {
@@ -118,7 +121,7 @@
         "fields": {
             "name": "Temperature",
             "units": "F",
-            "channel": ["Zwave"]
+            "channel": ["ZwaveHSM"]
         }
     },
     {
@@ -127,7 +130,67 @@
         "fields": {
             "name": "Luminance",
             "units": "%",
-            "channel": ["Zwave"]
+            "channel": ["ZwaveHSM"]
+        }
+    },
+
+
+    {
+        "model": "LabSenseApp.Channel",
+        "pk": 4,
+        "fields": {
+            "name": "Zwave-DW",
+            "title": "LabSenseZwave Door/Window Sensor",
+            "num_sensors": 2,
+            "slug": "ZwaveDW"
+        }
+    },
+    {
+        "model": "LabSenseApp.Measurement",
+        "pk": 12,
+        "fields": {
+            "name": "Open or Closed",
+            "units": "Open (1)/Closed (0)",
+            "channel": ["ZwaveDW"]
+        }
+    },
+
+
+    {
+        "model": "LabSenseApp.Channel",
+        "pk": 5,
+        "fields": {
+            "name": "Zwave-SmartSwitch",
+            "title": "LabSenseZwave SmartSwitch",
+            "num_sensors": 1,
+            "slug":  "ZwaveSmartSwitch"
+        }
+    },
+    {
+        "model": "LabSenseApp.Measurement",
+        "pk": 13,
+        "fields": {
+            "name": "Binary Switch",
+            "units": "On/Off",
+            "channel": ["ZwaveSmartSwitch"]
+        }
+    },
+    {
+        "model": "LabSenseApp.Measurement",
+        "pk": 14,
+        "fields": {
+            "name": "Power",
+            "units": "W",
+            "channel": ["ZwaveSmartSwitch"]
+        }
+    },
+    {
+        "model": "LabSenseApp.Measurement",
+        "pk": 15,
+        "fields": {
+            "name": "Energy",
+            "units": "kWh",
+            "channel": ["ZwaveSmartSwitch"]
         }
     }
 

@@ -490,6 +490,7 @@ void parseSmartSwitchSensor(uint8 nodeId, ValueID value_id) {
         case COMMAND_CLASS_SWITCH_BINARY:
             // printf("Got COMMAND_CLASS_SWITCH_BINARY!\n");
             printf("Binary Switch: %s\n\n", (bool_value)?"on":"off");
+            sendMessage("Binary_Switch", float_value, nodeId);
             break;
         case COMMAND_CLASS_SWITCH_ALL:
             // printf("Got COMMAND_CLASS_SWITCH_ALL!\n");

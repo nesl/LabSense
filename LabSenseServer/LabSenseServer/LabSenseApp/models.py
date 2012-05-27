@@ -4,7 +4,7 @@ from django.template.defaultfilters import slugify
 # Managers
 class ChannelManager(models.Manager):
     def get_by_natural_key(self, name):
-        return self.get(name=name)
+        return self.get(slug=name)
 
 # Models
 class Channel(models.Model):
@@ -21,8 +21,12 @@ class Channel(models.Model):
     # slug is url
     slug = models.SlugField(blank=True)
 
+    # Number of sensors for this measurement
+    num_sensors = models.DecimalField(max_digits=6, decimal_places=4)
+
+
     def __unicode__(self):
-        return self.name
+        return self.slug
 
     def save(self, *args, **kwargs):
         if not self.slug:

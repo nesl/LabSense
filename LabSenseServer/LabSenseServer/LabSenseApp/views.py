@@ -10,5 +10,7 @@ def index(request):
 def channel(request, channel):
     c = {}
     c['channels']= Channel.objects.all()
-    c['current_channel'] = Channel.objects.filter(name=channel)[0]
+    current_channel = Channel.objects.filter(slug=channel)[0]
+    c['current_channel'] = current_channel
+    c['sensors'] = [i + 1 for i in range(current_channel.num_sensors)]
     return render_to_response("raritan.html", c, context_instance=RequestContext(request))
