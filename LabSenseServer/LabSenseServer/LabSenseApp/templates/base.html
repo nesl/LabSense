@@ -60,20 +60,19 @@
         <div class="span3">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
-              <li class="nav-header">Raritan</li>
-              <li class="active"><a href="#">Current</a></li>
-              <li><a href="#">Voltage</a></li>
-              <li><a href="#">Active Power</a></li>
-              <li><a href="#">Apparent Power</a></li>
-              <li><a href="#">Power Factor</a></li>
-              <li class="nav-header">Veris</li>
-              <li><a href="#">Current</a></li>
-              <li><a href="#">Power</a></li>
-              <li><a href="#">PowerFactor</a></li>
-              <li class="nav-header">Zwave</li>
-              <li><a href="#">Motion</a></li>
-              <li><a href="#">Temperature</a></li>
-              <li><a href="#">Luminance</a></li>
+
+              {% for channel in channels %}
+              <li class="nav-header"><a
+                  href="../{{ channel.slug }}">{{ channel.name }}</a></li> 
+                {% for measurement in channel.measurement_set.all %}
+                <li><a href="#">{{ measurement.name }}</a></li>
+                  <!--<li class="active"><a href="#">Current</a></li>-->
+                  <!--<li><a href="#">Voltage</a></li>-->
+                  <!--<li><a href="#">Active Power</a></li>-->
+                  <!--<li><a href="#">Apparent Power</a></li>-->
+                  <!--<li><a href="#">Power Factor</a></li>-->
+                  {% endfor %}
+              {% endfor %}
             </ul>
           </div><!--/.well -->
         </div><!--/span-->

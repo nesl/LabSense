@@ -9,17 +9,14 @@
             <th>Sensor 2</th>
         </tr>
     </thead>
+    {% for measurement in current_channel.measurement_set.all %}
     <tbody>
         <tr>
-            <td>Current</td>
-            <td>0.5</td>
-            <td>0.5</td>
-        </tr>
-        <tr>
-            <td>Voltage</td>
+            <td>{{ measurement.name }}</td>
             <td>0.5</td>
             <td>0.5</td>
         </tr>
     </tbody>
+    {% endfor %}
 </table>
 {% endblock %}

@@ -24,10 +24,6 @@ class Channel(models.Model):
     def __unicode__(self):
         return self.name
 
-    @models.permalink
-    def get_absolute_url(self):
-        return ("index", (self.slug,))
-
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
@@ -42,6 +38,9 @@ class Measurement(models.Model):
     units = models.CharField(max_length=20)
 
     channel = models.ForeignKey("Channel")
+
+    # slug is url
+    #slug = models.SlugField(blank=True)
 
     def __unicode__(self):
         return self.name
