@@ -69,7 +69,9 @@ $(function() {
     var messaged = function(data) {
         switch (data.action) {
             case 'set':
-                alert("Current is " + data.current);
+                //alert("Current is " + data.current);
+                chart1.series[0].addPoint([10, data.current]);
+
                 break;
             case 'in-use':
                 alert('Name is in use, please choose another');

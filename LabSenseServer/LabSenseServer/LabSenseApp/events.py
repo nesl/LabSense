@@ -3,7 +3,8 @@ from django.shortcuts import get_object_or_404
 from django.utils.html import strip_tags
 from django_socketio import events
 
-from chat.models import ChatRoom
+#from chat.models import ChatRoom
+from LabSenseApp.models import Channel
 
 
 #@events.on_message(channel="^room-")
@@ -13,7 +14,7 @@ def message(request, socket, context, message):
     Event handler for a room receiving a message. First validates a
     joining user's name and sends them the list of users.
     """
-    channel = get_object_or_404(ChatRoom, id=message["channel"])
+    channel = get_object_or_404(Channel, id=message["channel"])
     if message["action"] == "start":
         socket.send({"action": "set", "current": 5})
         #name = strip_tags(message["name"])

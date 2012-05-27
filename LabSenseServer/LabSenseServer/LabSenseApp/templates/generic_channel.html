@@ -17,10 +17,6 @@
 {% block javascript %}
 <script src="{{ STATIC_URL }}js/highcharts.js"></script>
 
-{% load socketio_tags %}
-{% socketio %}
-<script>window.channel = "{{ channel }}";</script>
-<script src="{{ STATIC_URL }}js/labsense.js"></script>
 
 <script type = "text/javascript">
 
@@ -92,4 +88,10 @@ $(document).ready(function() {
     })
 
 </script>
+
+{% load socketio_tags %}
+{% socketio %}
+<script>window.channel = "{{ channel }}";</script>
+<script src="{{ STATIC_URL }}js/labsense.js"></script>
+
 {% endblock %}
