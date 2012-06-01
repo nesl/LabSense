@@ -2,10 +2,14 @@ LabSenseDB
 *.pyc
 .DS_Store
 *.o
-LabSenseZwave/OZW_Log.txt
-LabSenseZwave/api_key.py
-LabSenseZwave/LabSenseZwave
 *.swp
 *.svn
 tags
 .Python
+
+LabSenseZwave/OZW_Log.txt
+LabSenseZwave/api_key.py
+LabSenseZwave/LabSenseZwave
+
+LabSenseSupervisor/OZW_Log.txt
+LabSenseSupervisor/logs/
