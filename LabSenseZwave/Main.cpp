@@ -129,8 +129,16 @@ zmq::socket_t publisher(context, ZMQ_PUB);
 // This function sends the data to the python process using zeromq. 
 //-----------------------------------------------------------------------------
 void sendMessage(const char *s, float f_val, uint8 nodeId) {
-    zmq::message_t message(30);
-    sprintf((char *) message.data(), "%s_%d %f ", s, nodeId, f_val);
+    char buffer[30];
+    //zmq::message_t message(30);
+    sprintf((char *) buffer, "%s_%d %f ", s, nodeId, f_val);
+
+    zmq::message_t message(strlen(buffer));
+
+    memcpy((char *) message.data(), buffer, strlen(buffer));
+    
+    //sprintf((char *) message.data(), "%s_%d %f ", s, nodeId, f_val);
+
     publisher.send(message);
 }
 
