@@ -109,11 +109,11 @@ def main():
 	    	print 'Error from raritan: %s'%data
 	    	continue
 
-        socket.send("RaritanCurrent " + " ".join(map(str, data[0:8])))
-        socket.send("RaritanVoltage " + " ".join(map(str, data[8:16])))
-        socket.send("RaritanActivePower " + " ".join(map(str, data[16:24])))
-        socket.send("RaritanApparentPower " + " ".join(map(str, data[24:32])))
-        socket.send("RaritanPowerFactor " + " ".join(map(str, data[32:40])))
+        socket.send("Raritan_Current " + " ".join(map(str, data[0:8])))
+        socket.send("Raritan_Voltage " + " ".join(map(str, data[8:16])))
+        socket.send("Raritan_ActivePower " + " ".join(map(str, data[16:24])))
+        socket.send("Raritan_ApparentPower " + " ".join(map(str, data[24:32])))
+        socket.send("Raritan_PowerFactor " + " ".join(map(str, data[32:40])))
 
         # sleep ...
         time.sleep(SAMPLE_INTERVAL)

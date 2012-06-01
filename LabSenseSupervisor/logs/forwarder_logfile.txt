@@ -3405,4 +3405,190 @@ Received Measurement:  SmartSwitch_Energy_16
 [92mRegistering SmartSwitch_Power_16: 0.0 at 1338517718789 [0m
 Received Measurement:  SmartSwitch_Power_16
 [90mRegistering VerisPowerFactor: ['0.000000', '1.194488', '1.722998', '0.187411', '6.977758', '0.113302', '6.654627', '0.000000', '2.173815', '0.064008', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.00000\x01\x01'] at 1338517720153 [0m
-['Veri
+['VerisPowerFactor_1', 'VerisPowerFactor_2', 'VerisPowerFactor_3', 'VerisPowerFactor_4', 'VerisPowerFactor_5', 'VerisPowerFactor_6', 'VerisPowerFactor_7', 'VerisPowerFactor_8', 'VerisPowerFactor_9', 'VerisPowerFactor_10', 'VerisPowerFactor_11', 'VerisPowerFactor_12', 'VerisPowerFactor_13', 'VerisPowerFactor_14', 'VerisPowerFactor_15', 'VerisPowerFactor_16', 'VerisPowerFactor_17', 'VerisPowerFactor_18', 'VerisPowerFactor_19', 'VerisPowerFactor_20', 'VerisPowerFactor_21']
+Received Measurement:  VerisPowerFactor
+Upload successful (Collection name: nesl, Requested by nesl
+Upload successful (Collection name: nesl, Requested by nesl
+Upload successful (Collection name: nesl, Requested by nesl
+[90mRegistering VerisCurrent: ['0.000000', '1.316070', '1.208421', '0.967196', '0.249191', '0.583382', '0.555784', '3.165111', '0.000000', '1.196158', '1.727434', '0.188526', '6.670189', '0.112273', '6.636809', '0.000000', '2.173176', '0.064029', '0.000000', '0.000000', '0.000000'] at 1338517725220 [0m
+['VerisCurrent_1', 'VerisCurrent_2', 'VerisCurrent_3', 'VerisCurrent_4', 'VerisCurrent_5', 'VerisCurrent_6', 'VerisCurrent_7', 'VerisCurrent_8', 'VerisCurrent_9', 'VerisCurrent_10', 'VerisCurrent_11', 'VerisCurrent_12', 'VerisCurrent_13', 'VerisCurrent_14', 'VerisCurrent_15', 'VerisCurrent_16', 'VerisCurrent_17', 'VerisCurrent_18', 'VerisCurrent_19', 'VerisCurrent_20', 'VerisCurrent_21']
+Received Measurement:  VerisCurrent
+Upload successful (Collection name: nesl, Requested by nesl
+[92mRegistering SmartSwitch_Energy_16: 8.406 at 1338517728718 [0m
+Received Measurement:  SmartSwitch_Energy_16
+[92mRegistering SmartSwitch_Power_16: 0.0 at 1338517728799 [0m
+Received Measurement:  SmartSwitch_Power_16
+Upload successful (Collection name: nesl, Requested by nesl
+[90mRegistering VerisPower: ['0.001857', '0.140305', '0.118600', '0.065910', '0.011429', '0.047292', '0.033095', '0.358465', '0.000000', '0.105020', '0.192768', '0.002664', '0.817516', '0.002746', '0.742220', '0.000000', '0.103214', '0.003510', '0.000000', '0.000000', '0.000000'] at 1338517730284 [0m
+['VerisPower_1', 'VerisPower_2', 'VerisPower_3', 'VerisPower_4', 'VerisPower_5', 'VerisPower_6', 'VerisPower_7', 'VerisPower_8', 'VerisPower_9', 'VerisPower_10', 'VerisPower_11', 'VerisPower_12', 'VerisPower_13', 'VerisPower_14', 'VerisPower_15', 'VerisPower_16', 'VerisPower_17', 'VerisPower_18', 'VerisPower_19', 'VerisPower_20', 'VerisPower_21']
+Received Measurement:  VerisPower
+Upload successful (Collection name: nesl, Requested by nesl
+Upload successful (Collection name: nesl, Requested by nesl
+[93mRegistering RaritanCurrent: ['296', '881', '1389', '254', '153', '903', '0', '0'] at 1338517734757 [0m
+['RaritanCurrent_1', 'RaritanCurrent_2', 'RaritanCurrent_3', 'RaritanCurrent_4', 'RaritanCurrent_5', 'RaritanCurrent_6', 'RaritanCurrent_7', 'RaritanCurrent_8']
+Received Measurement:  RaritanCurrent
+[93mRegistering RaritanVoltage: ['122000', '122000', '122000', '122000', '122000', '121000', '121000', '121000'] at 1338517734758 [0m
+['RaritanVoltage_1', 'RaritanVoltage_2', 'RaritanVoltage_3', 'RaritanVoltage_4', 'RaritanVoltage_5', 'RaritanVoltage_6', 'RaritanVoltage_7', 'RaritanVoltage_8']
+Received Measurement:  RaritanVoltage
+[93mRegistering RaritanActivePower: ['20', '98', '152', '18', '7', '107', '0', '0'] at 1338517734759 [0m
+['RaritanActivePower_1', 'RaritanActivePower_2', 'RaritanActivePower_3', 'RaritanActivePower_4', 'RaritanActivePower_5', 'RaritanActivePower_6', 'RaritanActivePower_7', 'RaritanActivePower_8']
+Received Measurement:  RaritanActivePower
+[93mRegistering RaritanApparentPower: ['36', '107', '167', '30', '18', '107', '0', '0'] at 1338517734760 [0m
+['RaritanApparentPower_1', 'RaritanApparentPower_2', 'RaritanApparentPower_3', 'RaritanApparentPower_4', 'RaritanApparentPower_5', 'RaritanApparentPower_6', 'RaritanApparentPower_7', 'RaritanApparentPower_8']
+Received Measurement:  RaritanApparentPower
+[93mRegistering RaritanPowerFactor: ['58', '90', '89', '60', '42', '98', '0', '0'] at 1338517734761 [0m
+['RaritanPowerFactor_1', 'RaritanPowerFactor_2', 'RaritanPowerFactor_3', 'RaritanPowerFactor_4', 'RaritanPowerFactor_5', 'RaritanPowerFactor_6', 'RaritanPowerFactor_7', 'RaritanPowerFactor_8']
+Received Measurement:  RaritanPowerFactor
+[90mRegistering VerisPowerFactor: ['0.000000', '1.195173', '1.725624', '0.187563', '6.734198', '0.111847', '6.669497', '0.000000', '2.172054', '0.064094', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.00000\x01\x01'] at 1338517735350 [0m
+['VerisPowerFactor_1', 'VerisPowerFactor_2', 'VerisPowerFactor_3', 'VerisPowerFactor_4', 'VerisPowerFactor_5', 'VerisPowerFactor_6', 'VerisPowerFactor_7', 'VerisPowerFactor_8', 'VerisPowerFactor_9', 'VerisPowerFactor_10', 'VerisPowerFactor_11', 'VerisPowerFactor_12', 'VerisPowerFactor_13', 'VerisPowerFactor_14', 'VerisPowerFactor_15', 'VerisPowerFactor_16', 'VerisPowerFactor_17', 'VerisPowerFactor_18', 'VerisPowerFactor_19', 'VerisPowerFactor_20', 'VerisPowerFactor_21']
+Received Measurement:  VerisPowerFactor
+Upload successful (Collection name: nesl, Requested by nesl
+Upload successful (Collection name: nesl, Requested by nesl
+Upload successful (Collection name: nesl, Requested by nesl
+Upload successful (Collection name: nesl, Requested by nesl
+Upload successful (Collection name: nesl, Requested by nesl
+[92mRegistering SmartSwitch_Energy_16: 8.406 at 1338517738718 [0m
+Received Measurement:  SmartSwitch_Energy_16
+[92mRegistering SmartSwitch_Power_16: 0.0 at 1338517738799 [0m
+Received Measurement:  SmartSwitch_Power_16
+Upload successful (Collection name: nesl, Requested by nesl
+[90mRegistering VerisCurrent: ['0.000000', '1.284787', '1.211232', '0.965876', '0.246971', '0.591578', '0.545596', '3.163541', '0.000000', '1.194387', '1.726620', '0.187558', '2.363124', '0.112263', '6.647439', '0.000000', '2.174289', '0.063966', '0.000000', '0.000000', '0.000000'] at 1338517740419 [0m
+['VerisCurrent_1', 'VerisCurrent_2', 'VerisCurrent_3', 'VerisCurrent_4', 'VerisCurrent_5', 'VerisCurrent_6', 'VerisCurrent_7', 'VerisCurrent_8', 'VerisCurrent_9', 'VerisCurrent_10', 'VerisCurrent_11', 'VerisCurrent_12', 'VerisCurrent_13', 'VerisCurrent_14', 'VerisCurrent_15', 'VerisCurrent_16', 'VerisCurrent_17', 'VerisCurrent_18', 'VerisCurrent_19', 'VerisCurrent_20', 'VerisCurrent_21']
+Received Measurement:  VerisCurrent
+Upload successful (Collection name: nesl, Requested by nesl
+Upload successful (Collection name: nesl, Requested by nesl
+Upload successful (Collection name: nesl, Requested by nesl
+[90mRegistering VerisPower: ['0.001701', '0.140966', '0.118087', '0.065640', '0.011239', '0.054712', '0.032551', '0.363166', '0.000000', '0.105315', '0.197646', '0.002601', '0.250342', '0.002865', '0.748682', '0.000000', '0.102967', '0.003511', '0.000000', '0.000000', '0.000000'] at 1338517745487 [0m
+['VerisPower_1', 'VerisPower_2', 'VerisPower_3', 'VerisPower_4', 'VerisPower_5', 'VerisPower_6', 'VerisPower_7', 'VerisPower_8', 'VerisPower_9', 'VerisPower_10', 'VerisPower_11', 'VerisPower_12', 'VerisPower_13', 'VerisPower_14', 'VerisPower_15', 'VerisPower_16', 'VerisPower_17', 'VerisPower_18', 'VerisPower_19', 'VerisPower_20', 'VerisPower_21']
+Received Measurement:  VerisPower
+Upload successful (Collection name: nesl, Requested by nesl
+[92mRegistering SmartSwitch_Energy_16: 8.406 at 1338517748718 [0m
+Received Measurement:  SmartSwitch_Energy_16
+[92mRegistering SmartSwitch_Power_16: 0.0 at 1338517748799 [0m
+Received Measurement:  SmartSwitch_Power_16
+Upload successful (Collection name: nesl, Requested by nesl
+[90mRegistering VerisPowerFactor: ['0.000000', '1.194962', '1.725900', '0.187815', '2.411331', '0.110615', '6.693989', '0.000000', '2.173789', '0.064235', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.00000\x01\x01'] at 1338517750554 [0m
+['VerisPowerFactor_1', 'VerisPowerFactor_2', 'VerisPowerFactor_3', 'VerisPowerFactor_4', 'VerisPowerFactor_5', 'VerisPowerFactor_6', 'VerisPowerFactor_7', 'VerisPowerFactor_8', 'VerisPowerFactor_9', 'VerisPowerFactor_10', 'VerisPowerFactor_11', 'VerisPowerFactor_12', 'VerisPowerFactor_13', 'VerisPowerFactor_14', 'VerisPowerFactor_15', 'VerisPowerFactor_16', 'VerisPowerFactor_17', 'VerisPowerFactor_18', 'VerisPowerFactor_19', 'VerisPowerFactor_20', 'VerisPowerFactor_21']
+Received Measurement:  VerisPowerFactor
+Upload successful (Collection name: nesl, Requested by nesl
+Upload successful (Collection name: nesl, Requested by nesl
+[90mRegistering VerisCurrent: ['0.000000', '1.297901', '1.211467', '0.964784', '0.247117', '0.581170', '0.548790', '3.197681', '0.000000', '1.195075', '1.716228', '0.187761', '2.354223', '0.110433', '6.661560', '0.000000', '2.175971', '0.063800', '0.000000', '0.000000', '0.000000'] at 1338517755625 [0m
+['VerisCurrent_1', 'VerisCurrent_2', 'VerisCurrent_3', 'VerisCurrent_4', 'VerisCurrent_5', 'VerisCurrent_6', 'VerisCurrent_7', 'VerisCurrent_8', 'VerisCurrent_9', 'VerisCurrent_10', 'VerisCurrent_11', 'VerisCurrent_12', 'VerisCurrent_13', 'VerisCurrent_14', 'VerisCurrent_15', 'VerisCurrent_16', 'VerisCurrent_17', 'VerisCurrent_18', 'VerisCurrent_19', 'VerisCurrent_20', 'VerisCurrent_21']
+Received Measurement:  VerisCurrent
+Upload successful (Collection name: nesl, Requested by nesl
+[92mRegistering SmartSwitch_Energy_16: 8.406 at 1338517758688 [0m
+Received Measurement:  SmartSwitch_Energy_16
+[92mRegistering SmartSwitch_Power_16: 0.0 at 1338517758779 [0m
+Received Measurement:  SmartSwitch_Power_16
+Upload successful (Collection name: nesl, Requested by nesl
+[90mRegistering VerisPower: ['0.001736', '0.140611', '0.118293', '0.065831', '0.011098', '0.051306', '0.033469', '0.363206', '0.000000', '0.105284', '0.193483', '0.002609', '0.248400', '0.002787', '0.752822', '0.000000', '0.102986', '0.003498', '0.000000', '0.000000', '0.000000'] at 1338517760692 [0m
+['VerisPower_1', 'VerisPower_2', 'VerisPower_3', 'VerisPower_4', 'VerisPower_5', 'VerisPower_6', 'VerisPower_7', 'VerisPower_8', 'VerisPower_9', 'VerisPower_10', 'VerisPower_11', 'VerisPower_12', 'VerisPower_13', 'VerisPower_14', 'VerisPower_15', 'VerisPower_16', 'VerisPower_17', 'VerisPower_18', 'VerisPower_19', 'VerisPower_20', 'VerisPower_21']
+Received Measurement:  VerisPower
+Upload successful (Collection name: nesl, Requested by nesl
+Upload successful (Collection name: nesl, Requested by nesl
+[90mRegistering VerisPowerFactor: ['0.000000', '1.193519', '1.724600', '0.187396', '2.421766', '0.110950', '6.700198', '0.000000', '2.153198', '0.064257', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.00000\x01\x01'] at 1338517765757 [0m
+['VerisPowerFactor_1', 'VerisPowerFactor_2', 'VerisPowerFactor_3', 'VerisPowerFactor_4', 'VerisPowerFactor_5', 'VerisPowerFactor_6', 'VerisPowerFactor_7', 'VerisPowerFactor_8', 'VerisPowerFactor_9', 'VerisPowerFactor_10', 'VerisPowerFactor_11', 'VerisPowerFactor_12', 'VerisPowerFactor_13', 'VerisPowerFactor_14', 'VerisPowerFactor_15', 'VerisPowerFactor_16', 'VerisPowerFactor_17', 'VerisPowerFactor_18', 'VerisPowerFactor_19', 'VerisPowerFactor_20', 'VerisPowerFactor_21']
+Received Measurement:  VerisPowerFactor
+Upload successful (Collection name: nesl, Requested by nesl
+[92mRegistering SmartSwitch_Energy_16: 8.406 at 1338517768698 [0m
+Received Measurement:  SmartSwitch_Energy_16
+[92mRegistering SmartSwitch_Power_16: 0.0 at 1338517768779 [0m
+Received Measurement:  SmartSwitch_Power_16
+Upload successful (Collection name: nesl, Requested by nesl
+[90mRegistering VerisCurrent: ['0.000000', '1.288056', '1.213229', '0.965157', '0.245476', '0.629502', '0.550797', '3.135227', '0.000000', '1.193810', '1.720697', '0.188234', '2.407969', '0.110610', '6.709574', '0.000000', '2.152934', '0.063868', '0.000000', '0.000000', '0.000000'] at 1338517770824 [0m
+['VerisCurrent_1', 'VerisCurrent_2', 'VerisCurrent_3', 'VerisCurrent_4', 'VerisCurrent_5', 'VerisCurrent_6', 'VerisCurrent_7', 'VerisCurrent_8', 'VerisCurrent_9', 'VerisCurrent_10', 'VerisCurrent_11', 'VerisCurrent_12', 'VerisCurrent_13', 'VerisCurrent_14', 'VerisCurrent_15', 'VerisCurrent_16', 'VerisCurrent_17', 'VerisCurrent_18', 'VerisCurrent_19', 'VerisCurrent_20', 'VerisCurrent_21']
+Received Measurement:  VerisCurrent
+Upload successful (Collection name: nesl, Requested by nesl
+Upload successful (Collection name: nesl, Requested by nesl
+[90mRegistering VerisPower: ['0.001765', '0.142486', '0.118293', '0.066115', '0.011186', '0.064280', '0.032674', '0.357568', '0.000000', '0.105324', '0.190669', '0.002568', '0.252020', '0.002843', '0.800869', '0.000000', '0.101686', '0.003521', '0.000000', '0.000000', '0.000000'] at 1338517775890 [0m
+['VerisPower_1', 'VerisPower_2', 'VerisPower_3', 'VerisPower_4', 'VerisPower_5', 'VerisPower_6', 'VerisPower_7', 'VerisPower_8', 'VerisPower_9', 'VerisPower_10', 'VerisPower_11', 'VerisPower_12', 'VerisPower_13', 'VerisPower_14', 'VerisPower_15', 'VerisPower_16', 'VerisPower_17', 'VerisPower_18', 'VerisPower_19', 'VerisPower_20', 'VerisPower_21']
+Received Measurement:  VerisPower
+Upload successful (Collection name: nesl, Requested by nesl
+[92mRegistering SmartSwitch_Energy_16: 8.406 at 1338517778698 [0m
+Received Measurement:  SmartSwitch_Energy_16
+[92mRegistering SmartSwitch_Power_16: 0.0 at 1338517778779 [0m
+Received Measurement:  SmartSwitch_Power_16
+Upload successful (Collection name: nesl, Requested by nesl
+[90mRegistering VerisPowerFactor: ['0.000000', '1.194304', '1.730932', '0.187214', '2.332060', '0.111096', '6.811652', '0.000000', '2.155919', '0.064239', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.00000\x01\x01'] at 1338517780957 [0m
+['VerisPowerFactor_1', 'VerisPowerFactor_2', 'VerisPowerFactor_3', 'VerisPowerFactor_4', 'VerisPowerFactor_5', 'VerisPowerFactor_6', 'VerisPowerFactor_7', 'VerisPowerFactor_8', 'VerisPowerFactor_9', 'VerisPowerFactor_10', 'VerisPowerFactor_11', 'VerisPowerFactor_12', 'VerisPowerFactor_13', 'VerisPowerFactor_14', 'VerisPowerFactor_15', 'VerisPowerFactor_16', 'VerisPowerFactor_17', 'VerisPowerFactor_18', 'VerisPowerFactor_19', 'VerisPowerFactor_20', 'VerisPowerFactor_21']
+Received Measurement:  VerisPowerFactor
+Upload successful (Collection name: nesl, Requested by nesl
+Upload successful (Collection name: nesl, Requested by nesl
+[90mRegistering VerisCurrent: ['0.000000', '1.290723', '1.214248', '0.969377', '0.247769', '0.609129', '0.543568', '3.148108', '0.000000', '1.194836', '1.749108', '0.174720', '2.497119', '0.112213', '6.993264', '0.000000', '2.175691', '0.063923', '0.000000', '0.000000', '0.000000'] at 1338517786025 [0m
+['VerisCurrent_1', 'VerisCurrent_2', 'VerisCurrent_3', 'VerisCurrent_4', 'VerisCurrent_5', 'VerisCurrent_6', 'VerisCurrent_7', 'VerisCurrent_8', 'VerisCurrent_9', 'VerisCurrent_10', 'VerisCurrent_11', 'VerisCurrent_12', 'VerisCurrent_13', 'VerisCurrent_14', 'VerisCurrent_15', 'VerisCurrent_16', 'VerisCurrent_17', 'VerisCurrent_18', 'VerisCurrent_19', 'VerisCurrent_20', 'VerisCurrent_21']
+Received Measurement:  VerisCurrent
+Upload successful (Collection name: nesl, Requested by nesl
+[92mRegistering SmartSwitch_Energy_16: 8.406 at 1338517788698 [0m
+Received Measurement:  SmartSwitch_Energy_16
+[92mRegistering SmartSwitch_Power_16: 0.0 at 1338517788779 [0m
+Received Measurement:  SmartSwitch_Power_16
+Upload successful (Collection name: nesl, Requested by nesl
+[90mRegistering VerisPower: ['0.001684', '0.139741', '0.118143', '0.066375', '0.011183', '0.063174', '0.032315', '0.360678', '0.000000', '0.105554', '0.193815', '0.001701', '0.249028', '0.002762', '0.761583', '0.000000', '0.101859', '0.003513', '0.000000', '0.000000', '0.000000'] at 1338517791089 [0m
+['VerisPower_1', 'VerisPower_2', 'VerisPower_3', 'VerisPower_4', 'VerisPower_5', 'VerisPower_6', 'VerisPower_7', 'VerisPower_8', 'VerisPower_9', 'VerisPower_10', 'VerisPower_11', 'VerisPower_12', 'VerisPower_13', 'VerisPower_14', 'VerisPower_15', 'VerisPower_16', 'VerisPower_17', 'VerisPower_18', 'VerisPower_19', 'VerisPower_20', 'VerisPower_21']
+Received Measurement:  VerisPower
+Upload successful (Collection name: nesl, Requested by nesl
+Upload successful (Collection name: nesl, Requested by nesl
+[93mRegistering RaritanCurrent: ['296', '881', '1355', '254', '153', '903', '0', '0'] at 1338517795655 [0m
+['RaritanCurrent_1', 'RaritanCurrent_2', 'RaritanCurrent_3', 'RaritanCurrent_4', 'RaritanCurrent_5', 'RaritanCurrent_6', 'RaritanCurrent_7', 'RaritanCurrent_8']
+Received Measurement:  RaritanCurrent
+[93mRegistering RaritanVoltage: ['121000', '121000', '121000', '121000', '121000', '121000', '121000', '121000'] at 1338517795658 [0m
+['RaritanVoltage_1', 'RaritanVoltage_2', 'RaritanVoltage_3', 'RaritanVoltage_4', 'RaritanVoltage_5', 'RaritanVoltage_6', 'RaritanVoltage_7', 'RaritanVoltage_8']
+Received Measurement:  RaritanVoltage
+[93mRegistering RaritanActivePower: ['20', '98', '146', '18', '8', '107', '0', '0'] at 1338517795659 [0m
+['RaritanActivePower_1', 'RaritanActivePower_2', 'RaritanActivePower_3', 'RaritanActivePower_4', 'RaritanActivePower_5', 'RaritanActivePower_6', 'RaritanActivePower_7', 'RaritanActivePower_8']
+Received Measurement:  RaritanActivePower
+[93mRegistering RaritanApparentPower: ['35', '107', '167', '30', '18', '107', '0', '0'] at 1338517795660 [0m
+['RaritanApparentPower_1', 'RaritanApparentPower_2', 'RaritanApparentPower_3', 'RaritanApparentPower_4', 'RaritanApparentPower_5', 'RaritanApparentPower_6', 'RaritanApparentPower_7', 'RaritanApparentPower_8']
+Received Measurement:  RaritanApparentPower
+[93mRegistering RaritanPowerFactor: ['58', '91', '89', '60', '44', '98', '0', '0'] at 1338517795661 [0m
+['RaritanPowerFactor_1', 'RaritanPowerFactor_2', 'RaritanPowerFactor_3', 'RaritanPowerFactor_4', 'RaritanPowerFactor_5', 'RaritanPowerFactor_6', 'RaritanPowerFactor_7', 'RaritanPowerFactor_8']
+Received Measurement:  RaritanPowerFactor
+Upload successful (Collection name: nesl, Requested by nesl
+[90mRegistering VerisPowerFactor: ['0.000000', '1.194799', '1.732810', '0.174199', '2.409684', '0.110972', '6.740272', '0.000000', '2.169695', '0.064147', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.00000\x01\x01'] at 1338517796157 [0m
+['VerisPowerFactor_1', 'VerisPowerFactor_2', 'VerisPowerFactor_3', 'VerisPowerFactor_4', 'VerisPowerFactor_5', 'VerisPowerFactor_6', 'VerisPowerFactor_7', 'VerisPowerFactor_8', 'VerisPowerFactor_9', 'VerisPowerFactor_10', 'VerisPowerFactor_11', 'VerisPowerFactor_12', 'VerisPowerFactor_13', 'VerisPowerFactor_14', 'VerisPowerFactor_15', 'VerisPowerFactor_16', 'VerisPowerFactor_17', 'VerisPowerFactor_18', 'VerisPowerFactor_19', 'VerisPowerFactor_20', 'VerisPowerFactor_21']
+Received Measurement:  VerisPowerFactor
+Upload successful (Collection name: nesl, Requested by nesl
+Upload successful (Collection name: nesl, Requested by nesl
+Upload successful (Collection name: nesl, Requested by nesl
+Upload successful (Collection name: nesl, Requested by nesl
+[92mRegistering SmartSwitch_Energy_16: 8.406 at 1338517798698 [0m
+Received Measurement:  SmartSwitch_Energy_16
+[92mRegistering SmartSwitch_Power_16: 0.0 at 1338517798779 [0m
+Received Measurement:  SmartSwitch_Power_16
+Upload successful (Collection name: nesl, Requested by nesl
+Upload successful (Collection name: nesl, Requested by nesl
+[90mRegistering VerisCurrent: ['0.000000', '1.292497', '1.209754', '0.969842', '0.247489', '0.598694', '0.553278', '3.152249', '0.000000', '1.194226', '1.735517', '0.174322', '2.415918', '0.111280', '6.667055', '0.000000', '2.155560', '0.064097', '0.000000', '0.000000', '0.000000'] at 1338517801228 [0m
+['VerisCurrent_1', 'VerisCurrent_2', 'VerisCurrent_3', 'VerisCurrent_4', 'VerisCurrent_5', 'VerisCurrent_6', 'VerisCurrent_7', 'VerisCurrent_8', 'VerisCurrent_9', 'VerisCurrent_10', 'VerisCurrent_11', 'VerisCurrent_12', 'VerisCurrent_13', 'VerisCurrent_14', 'VerisCurrent_15', 'VerisCurrent_16', 'VerisCurrent_17', 'VerisCurrent_18', 'VerisCurrent_19', 'VerisCurrent_20', 'VerisCurrent_21']
+Received Measurement:  VerisCurrent
+Upload successful (Collection name: nesl, Requested by nesl
+Upload successful (Collection name: nesl, Requested by nesl
+[90mRegistering VerisPower: ['0.001740', '0.140572', '0.118345', '0.066349', '0.011206', '0.063591', '0.033508', '0.359608', '0.000000', '0.105660', '0.192886', '0.001717', '0.267681', '0.002785', '0.751658', '0.000000', '0.102837', '0.003528', '0.000000', '0.000000', '0.000000'] at 1338517806297 [0m
+['VerisPower_1', 'VerisPower_2', 'VerisPower_3', 'VerisPower_4', 'VerisPower_5', 'VerisPower_6', 'VerisPower_7', 'VerisPower_8', 'VerisPower_9', 'VerisPower_10', 'VerisPower_11', 'VerisPower_12', 'VerisPower_13', 'VerisPower_14', 'VerisPower_15', 'VerisPower_16', 'VerisPower_17', 'VerisPower_18', 'VerisPower_19', 'VerisPower_20', 'VerisPower_21']
+Received Measurement:  VerisPower
+Upload successful (Collection name: nesl, Requested by nesl
+[92mRegistering SmartSwitch_Energy_16: 8.406 at 1338517808698 [0m
+Received Measurement:  SmartSwitch_Energy_16
+[92mRegistering SmartSwitch_Power_16: 0.0 at 1338517808779 [0m
+Received Measurement:  SmartSwitch_Power_16
+Upload successful (Collection name: nesl, Requested by nesl
+[90mRegistering VerisPowerFactor: ['0.000000', '1.185574', '1.783188', '0.174373', '2.572636', '0.111698', '6.658466', '0.000000', '2.184858', '0.064527', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.00000\x01\x01'] at 1338517811362 [0m
+['VerisPowerFactor_1', 'VerisPowerFactor_2', 'VerisPowerFactor_3', 'VerisPowerFactor_4', 'VerisPowerFactor_5', 'VerisPowerFactor_6', 'VerisPowerFactor_7', 'VerisPowerFactor_8', 'VerisPowerFactor_9', 'VerisPowerFactor_10', 'VerisPowerFactor_11', 'VerisPowerFactor_12', 'VerisPowerFactor_13', 'VerisPowerFactor_14', 'VerisPowerFactor_15', 'VerisPowerFactor_16', 'VerisPowerFactor_17', 'VerisPowerFactor_18', 'VerisPowerFactor_19', 'VerisPowerFactor_20', 'VerisPowerFactor_21']
+Received Measurement:  VerisPowerFactor
+Upload successful (Collection name: nesl, Requested by nesl
+Upload successful (Collection name: nesl, Requested by nesl
+[90mRegistering VerisCurrent: ['0.000000', '1.286417', '1.213572', '0.969428', '0.246986', '0.599675', '0.551108', '3.210468', '0.000000', '1.186436', '1.719333', '0.174080', '2.680875', '0.112031', '6.680418', '0.000000', '2.168338', '0.064016', '0.000000', '0.000000', '0.000000'] at 1338517816429 [0m
+['VerisCurrent_1', 'VerisCurrent_2', 'VerisCurrent_3', 'VerisCurrent_4', 'VerisCurrent_5', 'VerisCurrent_6', 'VerisCurrent_7', 'VerisCurrent_8', 'VerisCurrent_9', 'VerisCurrent_10', 'VerisCurrent_11', 'VerisCurrent_12', 'VerisCurrent_13', 'VerisCurrent_14', 'VerisCurrent_15', 'VerisCurrent_16', 'VerisCurrent_17', 'VerisCurrent_18', 'VerisCurrent_19', 'VerisCurrent_20', 'VerisCurrent_21']
+Received Measurement:  VerisCurrent
+Upload successful (Collection name: nesl, Requested by nesl
+[92mRegistering SmartSwitch_Energy_16: 8.406 at 1338517818688 [0m
+Received Measurement:  SmartSwitch_Energy_16
+[92mRegistering SmartSwitch_Power_16: 0.0 at 1338517818779 [0m
+Received Measurement:  SmartSwitch_Power_16
+Upload successful (Collection name: nesl, Requested by nesl
+[90mRegistering VerisPower: ['0.001660', '0.140451', '0.118151', '0.066421', '0.011266', '0.052681', '0.033354', '0.355443', '0.000000', '0.103765', '0.190020', '0.001700', '0.259160', '0.002866', '0.750327', '0.000000', '0.101772', '0.003520', '0.000000', '0.000000', '0.000000'] at 1338517821495 [0m
+['VerisPower_1', 'VerisPower_2', 'VerisPower_3', 'VerisPower_4', 'VerisPower_5', 'VerisPower_6', 'VerisPower_7', 'VerisPower_8', 'VerisPower_9', 'VerisPower_10', 'VerisPower_11', 'VerisPower_12', 'VerisPower_13', 'VerisPower_14', 'VerisPower_15', 'VerisPower_16', 'VerisPower_17', 'VerisPower_18', 'VerisPower_19', 'VerisPower_20', 'VerisPower_21']
+Received Measurement:  VerisPower
+Upload successful (Collection name: nesl, Requested by nesl
+Upload successful (Collection name: nesl, Requested by nesl
+[90mRegistering VerisPowerFactor: ['0.000000', '1.185977', '1.731026', '0.174112', '2.584960', '0.112924', '6.659032', '0.000000', '2.169182', '0.064472', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.00000\x01\x01'] at 1338517826559 [0m
+['VerisPowerFactor_1', 'VerisPowerFact
