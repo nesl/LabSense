@@ -13,3 +13,5 @@ LabSenseZwave/LabSenseZwave
 
 LabSenseSupervisor/OZW_Log.txt
 LabSenseSupervisor/logs/
+
+LabSenseSupervisor/supervisord.conf

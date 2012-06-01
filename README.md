@@ -268,15 +268,16 @@ LabSenseSupervisor Installation
 ---------------------------------
 LabSenseSupervisor requires that everything else is installed correctly. To use
 this, you must install supervisor by using easy_install:
-    <pre>
+
     easy_install supervisor
-    </pre>
+
+Then, modify the supervisord.conf file on line 26 with your API-KEY:
+
+    command=python ../LabSenseForwarder/sendToSensorSafe.py [API-KEY] -f 2
 
 Then, run supervisor and all the processes will be run:
 
-    <pre>
     supervisord -c supervisord.conf
-    </pre>
 
 To check if the processes are being run, you can look at the website hosted
 locally at 0.0.0.0:9001 by using any web browser. You can also look in the logs
