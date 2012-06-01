@@ -100,6 +100,16 @@ Dependencies:
 
 ------------------------------------------------------------------------------
 
+LabSenseSupervisor
+------------------
+
+LabSenseSupervisor contains a supervisord.conf file that is meant to be used
+with [SuperVisor](http://supervisord.org/). Supervisor allows users LabSense to
+monitor and control all the processes that are running (LabSenseZwave,
+LabSensePowerMonitor, LabSenseRaritan, LabSenseServer, LabSenseForwarder).
+
+------------------------------------------------------------------------------
+
 Hardware Requirements
 ====================
 
@@ -252,6 +262,25 @@ show up if verbose mode is used:
     </pre>
 
 5. You can then see the data on SensorSafe by signing in, pressing access data, selecting data channels, and pressing Show Data. 
+
+
+LabSenseSupervisor Installation
+---------------------------------
+LabSenseSupervisor requires that everything else is installed correctly. To use
+this, you must install supervisor by using easy_install:
+    <pre>
+    easy_install supervisor
+    </pre>
+
+Then, run supervisor and all the processes will be run:
+
+    <pre>
+    supervisord -c supervisord.conf
+    </pre>
+
+To check if the processes are being run, you can look at the website hosted
+locally at 0.0.0.0:9001 by using any web browser. You can also look in the logs
+folder where you will find logs for each of the different components of LabSense.
 
 ------------------------------------------------------------------------------
 
