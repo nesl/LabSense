@@ -181,7 +181,7 @@ class SensorVariableTracker:
     def receiveFromSocket(self):
         """ Continually receive data from zwave and send data to SensorSafe """
 
-        print "Collecting data from Zwave..."
+        print "Collecting data..."
         while(1):
             string = self.socket.recv()
 

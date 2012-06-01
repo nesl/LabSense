@@ -128,17 +128,15 @@ zmq::socket_t publisher(context, ZMQ_PUB);
 // <sendMessage>
 // This function sends the data to the python process using zeromq. 
 //-----------------------------------------------------------------------------
-void sendMessage(const char *s, float f_val, uint8 nodeId) {
-    char buffer[30];
+void sendMessage(const char *sensor, const char *measurement, float f_val, uint8 nodeId) {
+    char buffer[40];
     //zmq::message_t message(30);
-    sprintf((char *) buffer, "%s_%d %f ", s, nodeId, f_val);
+    sprintf((char *) buffer, "%s_%s_%d %f", sensor, measurement, nodeId, f_val);
 
     zmq::message_t message(strlen(buffer));
 
     memcpy((char *) message.data(), buffer, strlen(buffer));
     
-    //sprintf((char *) message.data(), "%s_%d %f ", s, nodeId, f_val);
-
     publisher.send(message);
 }
 
@@ -380,17 +378,17 @@ SensorType getSensorType(uint32 homeId, uint8 nodeId) {
                 case 1:
                     // General
                     printf("It has been %f minutes since the last Motion Detected.\n", float_value);
-                    sendMessage("Motion_Timeout", float_value, nodeId);
+                    sendMessage("HSM100", "Motion_Timeout", float_value, nodeId);
                     break;
                 case 2:
                     // Luminance
                     printf("Luminance: %f\n", float_value);
-                    sendMessage("Luminance", float_value, nodeId);
+                    sendMessage("HSM100", "Luminance", float_value, nodeId);
                     break;
                 case 3:
                     // Temperature
                     printf("Temperature: %f\n", float_value);
-                    sendMessage("Temperature", float_value, nodeId);
+                    sendMessage("HSM100", "Temperature", float_value, nodeId);
                     break;
 
                 default:
@@ -493,12 +491,12 @@ void parseSmartSwitchSensor(uint8 nodeId, ValueID value_id) {
         case COMMAND_CLASS_SENSOR_MULTILEVEL:
             // printf("Got COMMAND_CLASS_SENSOR_MULTILEVEL!\n");
             printf("Sent Power: %f\n\n", float_value);
-            sendMessage("Power", float_value, nodeId);
+            sendMessage("SmartSwitch", "Power", float_value, nodeId);
             break;
         case COMMAND_CLASS_SWITCH_BINARY:
             // printf("Got COMMAND_CLASS_SWITCH_BINARY!\n");
             printf("Binary Switch: %s\n\n", (bool_value)?"on":"off");
-            sendMessage("Binary_Switch", float_value, nodeId);
+            sendMessage("SmartSwitch", "Binary_Switch", float_value, nodeId);
             break;
         case COMMAND_CLASS_SWITCH_ALL:
             // printf("Got COMMAND_CLASS_SWITCH_ALL!\n");
@@ -508,7 +506,7 @@ void parseSmartSwitchSensor(uint8 nodeId, ValueID value_id) {
             // printf("Got COMMAND_CLASS_METER!\n");
 
             if(value_id.GetIndex() == 0) {
-                sendMessage("Energy", float_value, nodeId);
+                sendMessage("SmartSwitch", "Energy", float_value, nodeId);
                 printf("Sent Energy: %f\n\n", float_value);
             }
             // printSmartSwitchMeterValue(value_id);
@@ -585,11 +583,11 @@ void parseAlDwSensor(uint8 nodeId, ValueID value_id) {
 
             if(byte_value) {
                 printf("Door is Open!\n");
-                sendMessage("Door", 1.0, nodeId);
+                sendMessage("ALDWSENSOR", "Door", 1.0, nodeId);
             }
             else {
                 printf("Door is Closed!\n");
-                sendMessage("Door", 0, nodeId);
+                sendMessage("ALDWSENSOR", "Door", 0, nodeId);
             }
 
             break;
@@ -747,16 +745,16 @@ void OnNotification
                     // 255: Door is open
                     if(_notification->GetEvent()) {
                         printf("Door is Open!\n");
-                        sendMessage("Door", 1.0, nodeId);
+                        sendMessage("ALDWSENSOR", "Door", 1.0, nodeId);
                     }
                     else {
                         printf("Door is Closed!\n");
-                        sendMessage("Door", 0, nodeId);
+                        sendMessage("ALDWSENSOR", "Door", 0, nodeId);
                     }
                 }
                 else if(sensorType == HSM_100_SENSOR) {
                     printf("Motion: %u\n", _notification->GetEvent());
-                    sendMessage("Motion", (_notification->GetEvent())?1.0:0.0, nodeId);
+                    sendMessage("HSM100", "Motion", (_notification->GetEvent())?1.0:0.0, nodeId);
                     // Manager::Get()->RefreshNodeInfo(g_homeId, nodeId);
                     Manager::Get()->RequestNodeDynamic(g_homeId, nodeId);
                 }
