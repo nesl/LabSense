@@ -21,7 +21,7 @@ int sendBatchedMessage(void *publisher, char *type, uint32_t *values) {
     // since that is what sendBatchedMessage is called with.
     size_t count = 21;                          // 21 uint32_ts
     char *message = (char *) malloc(count*9);   // each float is about 9 characters
-    char *complete_msg = (char *) malloc(count*9 + 12);
+    char complete_msg[count*9+12];
 
     if(message != NULL) {
         int i;
