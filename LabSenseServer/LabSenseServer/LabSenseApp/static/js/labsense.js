@@ -69,7 +69,7 @@ $(function() {
     var messaged = function(data) {
         switch (data.action) {
             case 'set':
-                //alert("Current is " + data.current);
+                alert("Current is " + (data.current));
                 chart1.series[0].addPoint([data.time, data.current]);
                 socket.send({channel: window.channel, action: 'start'})
 

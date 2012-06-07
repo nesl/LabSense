@@ -247,7 +247,7 @@ void printConfigVariable(uint8 index, uint8 byte_value) {
 //-----------------------------------------------------------------------------
 void printSmartSwitchMeterValue(ValueID value_id) {
     string str_value = "";
-    bool success = Manager::Get()->GetValueAsString(value_id, &str_value);
+    Manager::Get()->GetValueAsString(value_id, &str_value);
     // printf("Successfully Got Value As String: %s\n", (success)?"Yes":"No");
 
     // Measurement map for SmartSwitch
@@ -852,6 +852,7 @@ int main( int argc, char* argv[] )
 
     // Turn off Console Logging
     Options::Get()->AddOptionBool("ConsoleOutput", false);
+    Options::Get()->AddOptionBool("Logging", false);
 	Options::Get()->Lock();
 
 	Manager::Create();

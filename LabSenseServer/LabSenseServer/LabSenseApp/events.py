@@ -1,15 +1,24 @@
+# Django
 from django.shortcuts import get_object_or_404
 from django.utils.html import strip_tags
 from django_socketio import events
 
+# Sys
 import time
 import random
 
+# LabSense
 #from chat.models import ChatRoom
 from LabSenseApp.models import Channel
 
+# Zmq
+import zmq
 
-#@events.on_message(channel="^room-")
+from gevent import monkey
+monkey.patch_all()
+
+import gevent
+
 @events.on_message(channel="^labsense")
 def message(request, socket, context, message):
     """
@@ -19,18 +28,39 @@ def message(request, socket, context, message):
     #channel = get_object_or_404(Channel, id=message["channel"])
     if message["action"] == "start":
         print "HELLO"
-        time.sleep(1)
-        i = random.randint(1,5)
-        if(i == 1):
-            socket.send({"action": "set", "current": 5, "time": 1})
-        if(i == 2):
-            socket.send({"action": "set", "current": 7, "time": 2})
-        if(i == 3):
-            socket.send({"action": "set", "current": 8, "time": 3})
-        if(i == 4):
-            socket.send({"action": "set", "current": 9, "time": 4})
-        if(i == 5):
-            socket.send({"action": "set", "current": 10, "time": 5})
+
+        try:
+            recv_msg = zmq_socket.recv()
+            recv_list = recv_msg.split()
+
+        except zmq.ZMQError:
+            print "No data"
+            gevent.sleep(1)
+            message(request, socket, context, message)
+            return
+
+            #socket.send({"action": "set", "current": "none", "time": 1})
+            #return
+
+        socket.send({"action": "set", "current": recv_list[0], "time": 1})
+
+        #time.sleep(1)
+        #i = random.randint(1,5)
+        #if(i == 1):
+            #socket.send({"action": "set", "current": 5, "time": 1})
+        #if(i == 2):
+            #socket.send({"action": "set", "current": 7, "time": 2})
+        #if(i == 3):
+            #socket.send({"action": "set", "current": 8, "time": 3})
+        #if(i == 4):
+            #socket.send({"action": "set", "current": 9, "time": 4})
+        #if(i == 5):
+            #socket.send({"action": "set", "current": 10, "time": 5})
+
+
+
+
+
         #time.sleep(1)
         #socket.send({"action": "set", "current": 6, "time": 2})
         #time.sleep(1)
@@ -63,9 +93,17 @@ def message(request, socket, context, message):
             #socket.send_and_broadcast_channel(message)
 
 
+@events.on_subscribe(channel="^labsense")
+def subscribe(request, socket, context, channel):
+    # initialize zmq
+    global zmq_context
+    global zmq_socket
+    zmq_context = zmq.Context()
+    zmq_socket = zmq_context.socket(zmq.SUB)
+    zmq_socket.connect("tcp://localhost:5558")
 
-
-
+    # Subscribe to all zeromq messages
+    zmq_socket.setsockopt(zmq.SUBSCRIBE, "")
 
 #@events.on_finish(channel="^room-")
 @events.on_finish(channel="^labsense")
