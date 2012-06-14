@@ -22,48 +22,12 @@
 
 var chart1; // globally available
 
-<!--function load_data()-->
-<!--{-->
-    <!--setInterval(function() {-->
-        <!--$.get('../{{data_list.field}}/{{data_list.field_val}}/livedata',-->
-            <!--function(data, XMLHttpRequest) {-->
-                <!--data = JSON.parse(data);-->
-                <!--total_power = 0;-->
-                <!--if(data.length <= 0)-->
-                <!--{-->
-                    <!--alert("No data was found for {{data_list.field}} \-->
-    <!--{{data_list.field_val}}.\n");-->
-                    <!--return; -->
-                <!--}-->
-                <!--console.log("Received data: " + data[0].power);-->
-
-                <!--//chart1.series[0].setData(power_array,true);-->
-                <!--// Set Energy: -->
-                <!--// Total power * # measurements/(sampling rate/# channels)-->
-                <!--//chart1.series[0] = [{'time': data.time, 'power': data.power}];-->
-                <!--chart1.series[0].addPoint([data[0].time, data[0].power]);//, true, true);-->
-                <!--/*-->
-                <!--document.getElementById("text-container").textContent = "Average\-->
-                    <!--Power: " + total_power/data.length;-->
-                <!--document.getElementById("text-container2").textContent ="Energy: \-->
-                <!--"+ total_power/(frequency/num_channels);-->
-                <!--*/-->
-                
-        
-            <!--}-->
-        <!--);-->
-    <!--},500);-->
-<!--}-->
-
 $(document).ready(function() {
         chart1 = new Highcharts.Chart({
          chart: {
             renderTo: 'chart-container-1',
             zoomType: 'x',
-            defaultSeriesType: 'spline',
-            <!--events: {-->
-                <!--load: load_data-->
-            <!--}-->
+            <!--defaultSeriesType: 'spline',-->
          },
          title: {
             text: 'Power Measurements for {{data_list.field}} {{data_list.field_val}} '
