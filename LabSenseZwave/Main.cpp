@@ -583,11 +583,11 @@ void parseAlDwSensor(uint8 nodeId, ValueID value_id) {
 
             if(byte_value) {
                 printf("Door is Open!\n");
-                sendMessage("ALDWSENSOR", "Door", 1.0, nodeId);
+                sendMessage("DoorSensor", "Door", 1.0, nodeId);
             }
             else {
                 printf("Door is Closed!\n");
-                sendMessage("ALDWSENSOR", "Door", 0, nodeId);
+                sendMessage("DoorSensor", "Door", 0, nodeId);
             }
 
             break;
@@ -745,11 +745,11 @@ void OnNotification
                     // 255: Door is open
                     if(_notification->GetEvent()) {
                         printf("Door is Open!\n");
-                        sendMessage("ALDWSENSOR", "Door", 1.0, nodeId);
+                        sendMessage("DoorSensor", "Door", 1.0, nodeId);
                     }
                     else {
                         printf("Door is Closed!\n");
-                        sendMessage("ALDWSENSOR", "Door", 0, nodeId);
+                        sendMessage("DoorSensor", "Door", 0, nodeId);
                     }
                 }
                 else if(sensorType == HSM_100_SENSOR) {

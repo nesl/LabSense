@@ -103,7 +103,7 @@
             "name": "Zwave-HSM-100",
             "title": "LabSenseZwave HSM-100",
             "num_sensors": 2,
-            "slug": "ZwaveHSM"
+            "slug": "HSM"
         }
     },
     {
@@ -112,7 +112,7 @@
         "fields": {
             "name": "Motion",
             "units": "No Motion (0)/Motion (1)",
-            "channel": ["ZwaveHSM"]
+            "channel": ["HSM"]
         }
     },
     {
@@ -121,7 +121,7 @@
         "fields": {
             "name": "Temperature",
             "units": "F",
-            "channel": ["ZwaveHSM"]
+            "channel": ["HSM"]
         }
     },
     {
@@ -130,7 +130,7 @@
         "fields": {
             "name": "Luminance",
             "units": "%",
-            "channel": ["ZwaveHSM"]
+            "channel": ["HSM"]
         }
     },
 
@@ -142,7 +142,7 @@
             "name": "Zwave-DW",
             "title": "LabSenseZwave Door/Window Sensor",
             "num_sensors": 2,
-            "slug": "ZwaveDW"
+            "slug": "DoorSensor"
         }
     },
     {
@@ -151,7 +151,7 @@
         "fields": {
             "name": "Open or Closed",
             "units": "Open (1)/Closed (0)",
-            "channel": ["ZwaveDW"]
+            "channel": ["DoorSensor"]
         }
     },
 
@@ -163,7 +163,7 @@
             "name": "Zwave-SmartSwitch",
             "title": "LabSenseZwave SmartSwitch",
             "num_sensors": 1,
-            "slug":  "ZwaveSmartSwitch"
+            "slug":  "SmartSwitch"
         }
     },
     {
@@ -172,7 +172,7 @@
         "fields": {
             "name": "Binary Switch",
             "units": "On/Off",
-            "channel": ["ZwaveSmartSwitch"]
+            "channel": ["SmartSwitch"]
         }
     },
     {
@@ -181,7 +181,7 @@
         "fields": {
             "name": "Power",
             "units": "W",
-            "channel": ["ZwaveSmartSwitch"]
+            "channel": ["SmartSwitch"]
         }
     },
     {
@@ -190,7 +190,7 @@
         "fields": {
             "name": "Energy",
             "units": "kWh",
-            "channel": ["ZwaveSmartSwitch"]
+            "channel": ["SmartSwitch"]
         }
     }
 

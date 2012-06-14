@@ -15,7 +15,7 @@
         <tr>
             <td>{{ measurement.name }}</td>
             {% for sensor in sensors %}
-            <td>0</td>
+            <td id="sensor-{{ sensor }}"">0</td>
             {% endfor %}
         </tr>
     </tbody>

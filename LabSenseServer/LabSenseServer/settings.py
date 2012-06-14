@@ -13,8 +13,8 @@ MANAGERS = ADMINS
 SERVER_DIR = os.path.abspath(os.path.dirname(__file__))
 DB = os.path.join(SERVER_DIR, "LabSenseDB")
 
-SOCKETIO_HOST = "localhost"
-SOCKETIO_PORT = "8080"
+#SOCKETIO_HOST = "localhost"
+#SOCKETIO_PORT = "8080"
 
 DATABASES = {
     'default': {
@@ -27,7 +27,8 @@ DATABASES = {
     }
 }
 
-TIME_ZONE = 'America/Chicago'
+#TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'America/Los_Angeles'
 
 LANGUAGE_CODE = 'en-us'
 
@@ -87,8 +88,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'LabSenseApp',
-    'django_socketio',
-    'chat',
+    #'django_socketio',
+    #'chat',
     'django.contrib.admin',
     'django.contrib.admindocs',
 )

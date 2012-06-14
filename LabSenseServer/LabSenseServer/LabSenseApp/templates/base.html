@@ -57,7 +57,7 @@
 
     <div class="container-fluid">
       <div class="row-fluid">
-        <div class="span3">
+        <div class="span2">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
 
@@ -66,11 +66,6 @@
                   href="../{{ channel.slug }}">{{ channel.name }}</a></li> 
                 {% for measurement in channel.measurement_set.all %}
                 <li><a href="#">{{ measurement.name }}</a></li>
-                  <!--<li class="active"><a href="#">Current</a></li>-->
-                  <!--<li><a href="#">Voltage</a></li>-->
-                  <!--<li><a href="#">Active Power</a></li>-->
-                  <!--<li><a href="#">Apparent Power</a></li>-->
-                  <!--<li><a href="#">Power Factor</a></li>-->
                   {% endfor %}
               {% endfor %}
             </ul>

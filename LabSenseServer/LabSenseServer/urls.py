@@ -11,7 +11,7 @@ urlpatterns = patterns('',
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/', include(admin.site.urls)),
 
-    url("", include('django_socketio.urls')),
+    #url("", include('django_socketio.urls')),
     url("", include('LabSenseApp.urls')),
     #url("", include('chat.urls')),
 
