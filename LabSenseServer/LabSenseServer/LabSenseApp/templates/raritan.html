@@ -12,10 +12,10 @@
     </thead>
     {% for measurement in current_channel.measurement_set.all %}
     <tbody>
-        <tr>
-            <td>{{ measurement.name }}</td>
+        <tr id="{{ measurement.name }}-table">
+            <td class="sensor_table_class">{{ measurement.name }}</td>
             {% for sensor in sensors %}
-            <td id="sensor-{{ sensor }}"">0</td>
+            <td class="sensor_table_class">0</td>
             {% endfor %}
         </tr>
     </tbody>
