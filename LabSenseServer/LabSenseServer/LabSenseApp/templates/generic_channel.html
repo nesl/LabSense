@@ -59,7 +59,7 @@ function changeChart(channel, measurement, sensor_number) {
     chart1.yAxis[0].axisTitle.attr({
             text:measurement 
     });
-    chart1.name =  measurement;
+    chart1.series[0].name =  measurement;
 
     chart_channel = channel;
     chart_measurement = measurement;
@@ -88,7 +88,7 @@ $(document).ready(function() {
             }
          },
          series: [{
-            name: 'Power',
+            <!--name: 'Power',-->
             data: [] 
          }
          ]
