@@ -110,8 +110,8 @@
         "fields": {
             "name": "Zwave-HSM-100",
             "title": "LabSenseZwave HSM-100",
-            "num_sensors": 2,
-            "slug": "HSM"
+            "num_sensors": 6,
+            "slug": "HSM100"
         }
     },
     {
@@ -121,7 +121,7 @@
             "name": "Motion",
             "slug": "Motion",
             "units": "No Motion (0)/Motion (1)",
-            "channel": ["HSM"]
+            "channel": ["HSM100"]
         }
     },
     {
@@ -131,7 +131,7 @@
             "name": "Temperature",
             "slug": "Temperature",
             "units": "F",
-            "channel": ["HSM"]
+            "channel": ["HSM100"]
         }
     },
     {
@@ -141,7 +141,7 @@
             "name": "Luminance",
             "slug": "Luminance",
             "units": "%",
-            "channel": ["HSM"]
+            "channel": ["HSM100"]
         }
     },
 

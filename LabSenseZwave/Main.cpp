@@ -130,7 +130,45 @@ zmq::socket_t publisher(context, ZMQ_PUB);
 //-----------------------------------------------------------------------------
 void sendMessage(const char *sensor, const char *measurement, float f_val, uint8 nodeId) {
     char buffer[40];
-    //zmq::message_t message(30);
+
+    // Note the following mapping is implementation specific!
+    // Choose nodeId (1 to number of nodes) based on given nodeIds
+    if(strcmp(sensor, "HSM100") == 0) {
+        switch(nodeId) {
+            case 35: 
+                nodeId = 1;
+                break;
+            case 37:
+                nodeId = 3;
+            case 27:
+                nodeId = 4;
+                break;
+            case 38:
+                nodeId = 5;
+                break;
+            case 39:
+                nodeId = 6;
+                break;
+            default:
+                nodeId = 2;
+        }
+    }
+    else if(strcmp(sensor, "DoorSensor") == 0) {
+        switch(nodeId) {
+            case 43:
+                nodeId = 1;
+                break;
+            case 42:
+                nodeId = 2;
+                break;
+        }
+
+    }
+    else {
+        // One SmartSensor
+        nodeId = 1;
+    }
+
     sprintf((char *) buffer, "%s_%s_%d %f", sensor, measurement, nodeId, f_val);
 
     zmq::message_t message(strlen(buffer));
