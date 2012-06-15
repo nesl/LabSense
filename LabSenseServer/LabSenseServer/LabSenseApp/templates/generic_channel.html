@@ -51,6 +51,16 @@ var chart_sensor_number = 1;
 
 function changeChart(series, sensor_number) {
     chart1.series[0].setData([]);
+
+    var title = series.replace("_", " ");
+
+    title = title + " for Sensor #" + sensor_number
+
+    chart1.setTitle({text: title});
+    chart1.yAxis[0].axisTitle.attr({
+            text: title.split(" ")[1]
+    });
+    chart1.name = title.split(" ")[1];
     chart_series = series;
     chart_sensor_number = sensor_number;
 };
@@ -68,7 +78,7 @@ $(document).ready(function() {
          xAxis: {
             type: "datetime",
             title: {
-                text: 'Time (seconds)',
+                text: 'Time',
                 tickPixelInterval: 75
             }
          },

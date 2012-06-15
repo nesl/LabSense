@@ -72,6 +72,6 @@ if __name__ == "__main__":
     socket.connect("tcp://localhost:5558")
     socket.setsockopt(zmq.SUBSCRIBE, '')
     stream = zmqstream.ZMQStream(socket, tornado.ioloop.IOLoop.instance())
-    stream.on_recv(ChatConnection.dispatch_message)
+    stream.on_recv(LabSenseConnection.dispatch_message)
 
     tornadio.server.SocketServer(application)

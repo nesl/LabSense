@@ -38,6 +38,7 @@
                 if(chart_series == "") {
                     chart_series = name;
                     chart_sensor_number = 1;
+                    changeChart(name, chart_sensor_number);
 
                     // Matches graph name, so graph
                     timestamp = new Date(parseFloat(values["timestamp"])) 
