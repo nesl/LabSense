@@ -108,7 +108,8 @@ current_power_loop:
           // Set the arguments according to the prepare_msg_read function
           argc = 7;
           argv[1] = "read";             // Read from the veris
-          argv[2] = "172.17.5.178";     // IP Address of Veris
+          /*argv[2] = "172.17.5.178";     // IP Address of Veris*/
+          argv[2] = "128.97.93.201";     // IP Address of Veris
           argv[3] = "4660";             // Server Port
           argv[4] ="1";                 // Modbus Address
           argv[6] = "42";               // Reading 42 Registers

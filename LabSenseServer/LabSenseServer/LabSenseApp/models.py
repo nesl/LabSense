@@ -38,6 +38,9 @@ class Measurement(models.Model):
     # name is current, voltage, etc
     name = models.CharField(max_length=20)
 
+    # slug if url version
+    slug = models.SlugField(blank=True)
+
     # units if mA, volts, etc
     units = models.CharField(max_length=20)
 
@@ -47,7 +50,7 @@ class Measurement(models.Model):
     #slug = models.SlugField(blank=True)
 
     def __unicode__(self):
-        return self.name
+        return self.slug
 
 class SensorValue(models.Model):
 

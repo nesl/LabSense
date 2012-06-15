@@ -378,7 +378,7 @@ SensorType getSensorType(uint32 homeId, uint8 nodeId) {
                 case 1:
                     // General
                     printf("It has been %f minutes since the last Motion Detected.\n", float_value);
-                    sendMessage("HSM100", "Motion_Timeout", float_value, nodeId);
+                    sendMessage("HSM100", "MotionTimeout", float_value, nodeId);
                     break;
                 case 2:
                     // Luminance

@@ -8,7 +8,27 @@
     
     <div id="chart-container-1" class="highcharts-container" style="width: 100%;
         position: relative; height: 100% margin: 0 2; clear:both"></div>
-    {% block table %}{% endblock %}
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Measurement</th>
+                {% for sensor in sensors %}
+                <th>{{ sensor }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        {% for measurement in current_channel.measurement_set.all %}
+        <tbody>
+            <tr id="{{ measurement.slug }}-table">
+                <td class="sensor_table_class">{{ measurement.name }}</td>
+                {% for sensor in sensors %}
+                <td class="sensor_table_class" onclick="changeChart('{{ current_channel.name }}_{{ measurement.name }}', {{ sensor }})">0</td>
+                {% endfor %}
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
 
 </div><!--/span9-->
     
@@ -16,11 +36,24 @@
 
 {% block javascript %}
 <script src="{{ STATIC_URL }}js/highcharts.js"></script>
+<script src="{{ STATIC_URL }}js/socket.io.js"></script>
+<script src="{{ STATIC_URL }}js/underscore-min.js"></script>
+<script src="{{ STATIC_URL }}js/backbone-min.js"></script>
+<script>window.channel = "{{ current_channel }}";</script>
 
 
 <script type = "text/javascript">
 
 var chart1; // globally available
+
+var chart_series = "";
+var chart_sensor_number = 1;
+
+function changeChart(series, sensor_number) {
+    chart1.series[0].setData([]);
+    chart_series = series;
+    chart_sensor_number = sensor_number;
+};
 
 $(document).ready(function() {
         chart1 = new Highcharts.Chart({
@@ -50,14 +83,12 @@ $(document).ready(function() {
          }
          ]
       });
-    })
+
+      {% block socketio %}{% endblock %}
+});
 
 </script>
 
-<script src="{{ STATIC_URL }}js/socket.io.js"></script>
-<script src="{{ STATIC_URL }}js/underscore-min.js"></script>
-<script src="{{ STATIC_URL }}js/backbone-min.js"></script>
-<script>window.channel = "{{ current_channel }}";</script>
-<script src="{{ STATIC_URL }}js/labsense.js"></script>
+<!--<script src="{{ STATIC_URL }}js/labsense.js"></script>-->
 
 {% endblock %}

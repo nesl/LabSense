@@ -15,6 +15,7 @@
         "model": "LabSenseApp.Measurement",
         "fields": {
             "name": "Current",
+            "slug": "Current",
             "units": "mA",
             "channel": ["Raritan"]
         }
@@ -24,6 +25,7 @@
         "model": "LabSenseApp.Measurement",
         "fields": {
             "name": "Voltage",
+            "slug": "Voltage",
             "units": "mV",
             "channel": ["Raritan"]
         }
@@ -33,6 +35,7 @@
         "model": "LabSenseApp.Measurement",
         "fields": {
             "name": "Active Power",
+            "slug": "ActivePower",
             "units": "W",
             "channel": ["Raritan"]
         }
@@ -42,6 +45,7 @@
         "model": "LabSenseApp.Measurement",
         "fields": {
             "name": "Apparent Power",
+            "slug": "ApparentPower",
             "units": "Volt-amps",
             "channel": ["Raritan"]
         }
@@ -51,6 +55,7 @@
         "model": "LabSenseApp.Measurement",
         "fields": {
             "name": "Power Factor",
+            "slug": "PowerFactor",
             "units": "%",
             "channel": ["Raritan"]
         }
@@ -72,6 +77,7 @@
         "pk": 6,
         "fields": {
             "name": "Current",
+            "slug": "Current",
             "units": "A",
             "channel": ["Veris"]
         }
@@ -81,6 +87,7 @@
         "pk": 7,
         "fields": {
             "name": "Power",
+            "slug": "Power",
             "units": "kW",
             "channel": ["Veris"]
         }
@@ -90,6 +97,7 @@
         "pk": 8,
         "fields": {
             "name": "Power Factor",
+            "slug": "PowerFactor",
             "units": "%",
             "channel": ["Veris"]
         }
@@ -111,6 +119,7 @@
         "pk": 9,
         "fields": {
             "name": "Motion",
+            "slug": "Motion",
             "units": "No Motion (0)/Motion (1)",
             "channel": ["HSM"]
         }
@@ -120,6 +129,7 @@
         "pk": 10,
         "fields": {
             "name": "Temperature",
+            "slug": "Temperature",
             "units": "F",
             "channel": ["HSM"]
         }
@@ -129,6 +139,7 @@
         "pk": 11,
         "fields": {
             "name": "Luminance",
+            "slug": "Luminance",
             "units": "%",
             "channel": ["HSM"]
         }
@@ -150,6 +161,7 @@
         "pk": 12,
         "fields": {
             "name": "Open or Closed",
+            "slug": "Door",
             "units": "Open (1)/Closed (0)",
             "channel": ["DoorSensor"]
         }
@@ -171,6 +183,7 @@
         "pk": 13,
         "fields": {
             "name": "Binary Switch",
+            "slug": "BinarySwitch",
             "units": "On/Off",
             "channel": ["SmartSwitch"]
         }
@@ -180,6 +193,7 @@
         "pk": 14,
         "fields": {
             "name": "Power",
+            "slug": "Power",
             "units": "W",
             "channel": ["SmartSwitch"]
         }
@@ -189,6 +203,7 @@
         "pk": 15,
         "fields": {
             "name": "Energy",
+            "slug": "Energy",
             "units": "kWh",
             "channel": ["SmartSwitch"]
         }
