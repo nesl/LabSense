@@ -182,16 +182,6 @@
         "model": "LabSenseApp.Measurement",
         "pk": 13,
         "fields": {
-            "name": "Binary Switch",
-            "slug": "BinarySwitch",
-            "units": "On/Off",
-            "channel": ["SmartSwitch"]
-        }
-    },
-    {
-        "model": "LabSenseApp.Measurement",
-        "pk": 14,
-        "fields": {
             "name": "Power",
             "slug": "Power",
             "units": "W",
@@ -200,7 +190,7 @@
     },
     {
         "model": "LabSenseApp.Measurement",
-        "pk": 15,
+        "pk": 14,
         "fields": {
             "name": "Energy",
             "slug": "Energy",

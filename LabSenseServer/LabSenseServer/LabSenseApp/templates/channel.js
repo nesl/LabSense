@@ -68,6 +68,11 @@
                 name = values.name;
                 timestamp = values.timestamp;
                 multiple = values.multiple;
+                
+                if(values.name == undefined) {
+                    console.log("RETURNED");
+                    return;
+                }
 
                 console.log("Names: "+  name);
                 console.log("Timestamp: " + timestamp)

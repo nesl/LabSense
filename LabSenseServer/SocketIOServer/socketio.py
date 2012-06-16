@@ -35,7 +35,7 @@ class LabSenseConnection(tornadio.SocketConnection):
                 data = msg_list[1:]
                 timestamp = int(time.time())*1000
 
-                if participant.channel in message and participant.ready == True:
+                if participant.channel in message:
 
                     if participant.channel == "Raritan" or participant.channel == "Veris":
                             json_msg["multiple"] = 1

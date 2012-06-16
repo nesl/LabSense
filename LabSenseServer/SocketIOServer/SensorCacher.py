@@ -5,7 +5,7 @@ class SensorCacher:
     def __init__(self):
         self.conn = sqlite3.connect('cache.db')
         self.cursor = self.conn.cursor()
-        self.max_entries = 2
+        self.max_entries = 10
 
     def createTable(self, channel):
         if not self.checkTableExists(channel):
@@ -36,7 +36,7 @@ class SensorCacher:
         if len(results) > self.max_entries:
             print "DELETING"
             self.cursor.execute("DELETE FROM %s WHERE rowid = (SELECT rowid FROM %s\
-                    order by rowid limit 5)" % (channel, channel))
+                    order by rowid limit 10)" % (channel, channel))
 
         return results
 
