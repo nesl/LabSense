@@ -152,15 +152,15 @@ void print_modbus_reply_read_reg(uint8_t *buf, int buflen, Type type, void *publ
       printf("Count: %d\n", count);
       if(type == Power) {
           printf("Sending Power to Zeromq\n");
-          sendBatchedMessage(publisher, "Veris_Power", register_values);
+          sendBatchedMessage(publisher, "Veris_Power_1", register_values);
       }
       else if(type == PowerFactor) {
           printf("Sending Current to Zeromq\n");
-          sendBatchedMessage(publisher, "Veris_PowerFactor", register_values);
+          sendBatchedMessage(publisher, "Veris_PowerFactor_1", register_values);
       }
       else if(type == Current) {
           printf("Sending Current to Zeromq\n");
-          sendBatchedMessage(publisher, "Veris_Current", register_values);
+          sendBatchedMessage(publisher, "Veris_Current_1", register_values);
       }
       printf("\n");
   }

@@ -46,12 +46,16 @@
 
 var chart1; // globally available
 
-var chart_channel = "";
-var chart_measurement = "";
+var chart_channel = "{{ current_channel.slug }}";
+var chart_measurement = "{{ default_measurement }}";
 var chart_sensor_number = 1;
+{% block socketio %}{% endblock %}
 
 function changeChart(channel, measurement, sensor_number) {
     chart1.series[0].setData([]);
+
+    chart_name = channel + "_" + measurement + "_" + sensor_number;
+    socket.send({channel: channel, init: 1, name: chart_name });
 
     title = channel + " " + measurement + " for Sensor #" + sensor_number;
 
@@ -67,6 +71,7 @@ function changeChart(channel, measurement, sensor_number) {
 };
 
 $(document).ready(function() {
+
         chart1 = new Highcharts.Chart({
          chart: {
             renderTo: 'chart-container-1',
@@ -94,7 +99,8 @@ $(document).ready(function() {
          ]
       });
 
-      {% block socketio %}{% endblock %}
+      changeChart(chart_channel, chart_measurement, chart_sensor_number);
+
 });
 
 </script>

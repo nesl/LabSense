@@ -10,7 +10,11 @@ import tornadio
 import tornadio.router
 import tornadio.server
 
+from SensorCacher import SensorCacher
+
 ROOT = op.normpath(op.dirname(__file__))
+
+cache = SensorCacher()
 
 class LabSenseConnection(tornadio.SocketConnection):
     # Class level variable
@@ -25,20 +29,59 @@ class LabSenseConnection(tornadio.SocketConnection):
                 print "CHANNEL: " + participant.channel
                 print "Message: " + message
                 json_msg = {}
+                msg_list = message.split(" ")
+                name = msg_list[0]
+                data = msg_list[1:]
+                timestamp = int(time.time())*1000
                 if participant.channel in message:
-                    msg_list = message.split(" ")
-                    json_msg["name"] = msg_list[0]
-                    json_msg['data'] = msg_list[1:]
-                    json_msg['timestamp'] = int(time.time())*1000
+
+                    if participant.channel == "Raritan" or participant.channel == "Veris":
+                            json_msg["multiple"] = 1
+                    else:
+                        json_msg["multiple"] = 0
+                    json_msg["bulk"] = 0
+                    json_msg["name"] = name
+                    json_msg['data'] = data
+                    json_msg['timestamp'] = timestamp
                     participant.send(json_msg)
+
+                storing_channel = message.split("_")[0]
+                cache.createTable(storing_channel)
+                cache.insertRow(storing_channel,name, data,
+                        timestamp)
 
     def on_open(self, *args, **kwargs):
         pass
 
     def on_message(self, message):
-        self.channel = message["channel"]
-        print self.channel
-        self.participants.add(self)
+
+        if message["init"] == 1:
+            self.channel = message["channel"]
+            name = message["name"]
+
+            print "INITIALIZING " + str(self.channel)
+            print "Name: " + str(name)
+
+            results = cache.getChannelData(self.channel,name )
+
+            data_list = []
+            timestamp_list = []
+            name_list = []
+            for name, data, timestamp_str, timestamp in results:
+
+                json_msg = {}
+                if self.channel == "Raritan" or self.channel == "Veris":
+                    json_msg["multiple"] = 1
+                else:
+                    json_msg["multiple"] = 0
+                json_msg["bulk"] = 0
+                json_msg["name"] = name
+                json_msg["data"] = data
+                json_msg["timestamp"] = timestamp
+
+                self.send(json_msg)
+
+            self.participants.add(self)
 
     def on_close(self):
         self.participants.remove(self);
