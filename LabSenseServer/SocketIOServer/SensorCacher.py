@@ -34,11 +34,9 @@ class SensorCacher:
             return []
 
         if len(results) > self.max_entries:
-            try:
-                self.cursor.execute("DELETE FROM %s WHERE name = '%s' and rowid = (SELECT rowid FROM %s\
-                        order by rowid limit 5)" % (channel, name, channel))
-            except e:
-                pass
+            print "DELETING"
+            self.cursor.execute("DELETE FROM %s WHERE rowid = (SELECT rowid FROM %s\
+                    order by rowid limit 5)" % (channel, channel))
 
         return results
 

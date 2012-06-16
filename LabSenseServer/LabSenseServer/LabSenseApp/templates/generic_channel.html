@@ -55,7 +55,7 @@ function changeChart(channel, measurement, sensor_number) {
     chart1.series[0].setData([]);
 
     chart_name = channel + "_" + measurement + "_" + sensor_number;
-    socket.send({channel: channel, init: 1, name: chart_name });
+    socket.send({action: "init", channel: channel, name: chart_name });
 
     title = channel + " " + measurement + " for Sensor #" + sensor_number;
 

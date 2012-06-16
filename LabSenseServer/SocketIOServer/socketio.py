@@ -20,6 +20,7 @@ class LabSenseConnection(tornadio.SocketConnection):
     # Class level variable
     participants = set()
     channel = ""
+    ready = False
 
     @classmethod
     def dispatch_message(cls, messages):
@@ -33,7 +34,8 @@ class LabSenseConnection(tornadio.SocketConnection):
                 name = msg_list[0]
                 data = msg_list[1:]
                 timestamp = int(time.time())*1000
-                if participant.channel in message:
+
+                if participant.channel in message and participant.ready == True:
 
                     if participant.channel == "Raritan" or participant.channel == "Veris":
                             json_msg["multiple"] = 1
@@ -55,7 +57,7 @@ class LabSenseConnection(tornadio.SocketConnection):
 
     def on_message(self, message):
 
-        if message["init"] == 1:
+        if message["action"] == "init":
             self.channel = message["channel"]
             name = message["name"]
 
@@ -68,12 +70,12 @@ class LabSenseConnection(tornadio.SocketConnection):
             timestamp_list = []
             name_list = []
             for name, data, timestamp_str, timestamp in results:
-
                 json_msg = {}
                 if self.channel == "Raritan" or self.channel == "Veris":
                     json_msg["multiple"] = 1
                 else:
                     json_msg["multiple"] = 0
+
                 json_msg["bulk"] = 0
                 json_msg["name"] = name
                 json_msg["data"] = data
@@ -82,6 +84,8 @@ class LabSenseConnection(tornadio.SocketConnection):
                 self.send(json_msg)
 
             self.participants.add(self)
+        elif message["action"] == "done":
+            self.ready = True
 
     def on_close(self):
         self.participants.remove(self);

@@ -7,7 +7,7 @@
     var Sensor = Backbone.Model.extend({
         set: function(values) {
 
-            if(values.bulk == 0) {
+            if(values.multiple == "0") {
                 if(JSON.stringify(values) === "{}")
                     return;
                 data = values.data;
@@ -20,46 +20,42 @@
 
                 channel_measurement_id = name.split("_");
 
-                //console.log("Channel: "+ channel_measurement_id[0]);
-                //console.log("Measurement: " + channel_measurement_id[1]);
-                //console.log("Id: "+ channel_measurement_id[2]);
+                console.log("Channel: "+ channel_measurement_id[0]);
+                console.log("Measurement: " + channel_measurement_id[1]);
+                console.log("Id: "+ channel_measurement_id[2]);
+
                 channel = channel_measurement_id[0];
                 measurement = channel_measurement_id[1];
-                sensor_number = channel_measurement_id[2];
+                sensor_number = parseInt(channel_measurement_id[2]);
 
                 if(channel_measurement_id.length == 3) {
 
                     if(typeof(data) == "string") {
                         data = eval(data);
                     }
-                    counter = 1;
-                    for(value in data) {
-                        if(chart_channel == "") {
-                            console.log("Chart channel is null");
-                            changeChart(channel, measurement, counter);
 
-                            // Matches graph name, so graph
-                            timestamp = new Date(parseFloat(values["timestamp"])) 
-                            utc = Date.UTC(timestamp.getFullYear(), timestamp.getMonth(), 
-                                           timestamp.getDay(), timestamp.getHours(), timestamp.getMinutes(), 
-                                           timestamp.getSeconds());
-                            chart1.series[0].addPoint([utc,  parseFloat(data[0])]);
-                        }
-                        else if(chart_channel == channel && chart_measurement == measurement && counter == chart_sensor_number) {
+                    console.log("DATA: " + data);
 
-                            // Matches graph name and number, so graph
-                            timestamp = new Date(parseFloat(values["timestamp"])) 
-                            utc = Date.UTC(timestamp.getFullYear(), timestamp.getMonth(), 
-                                           timestamp.getDay(), timestamp.getHours(), timestamp.getMinutes(), 
-                                           timestamp.getSeconds());
-                            chart1.series[0].addPoint([utc,  parseFloat(data[counter-1])]);
+                    if(chart_channel == channel && chart_measurement == measurement && sensor_number == chart_sensor_number) {
 
-                        }
+                        console.log("CHART CHANNEL: " + chart_channel);
+                        console.log("CHART MEASURMENT: " + chart_measurement);
+                        console.log("CHART_SENSOR_NUMBER: " + chart_sensor_number);
 
-                        //console.log(value + ": " + data[value]);
-                        $("#" + measurement + "-table > td.sensor_table_class").eq((counter)).html(data[value]);
-                        counter += 1;
-                    };
+                        // Matches graph name and number, so graph
+                        timestamp = new Date(parseFloat(values["timestamp"])) 
+                        utc = Date.UTC(timestamp.getFullYear(), timestamp.getMonth(), 
+                                       timestamp.getDay(), timestamp.getHours(), timestamp.getMinutes(), 
+                                       timestamp.getSeconds());
+                        chart1.series[0].addPoint([utc,  parseFloat(data[0])]);
+
+                    }
+
+                    //console.log(value + ": " + data[value]);
+                    console.log("#" + measurement + "-table");
+                    $("#" + measurement + "-table > td.sensor_table_class").eq(sensor_number).html(data[0]);
+                    //counter += 1;
+                    //};
                 }
                 else {
                     console.log("Length: " + channel_measurement_id.length);
@@ -69,21 +65,29 @@
             }
             else {
                 console.log("RECEIVED BULK MSG");
-                name_list = values.name;
-                timestamps = values.timestamp;
+                name = values.name;
+                timestamp = values.timestamp;
                 multiple = values.multiple;
 
-                console.log("Names: "+  name_list);
-                console.log("Timestamps; " + timestamps)
-                data_counter = 0;
+                console.log("Names: "+  name);
+                console.log("Timestamp: " + timestamp)
+                console.log("DATA: " + values.data);
+
+                console.log("TYPE: " + typeof(values.data));
+                if(typeof(values.data) == "string") {
+                    values.data = eval(values.data);
+                }
+
+                console.log("VALUES DATA: " + values.data);
+
+                data_counter = 1;
                 for(data_val in values.data) {
                     data = values.data[data_val]
 
-                    msg_timestamp = timestamps[data_counter];
-                    name = name_list[data_counter]
+                    console.log("DATA : " + data);
+
                     if(JSON.stringify(values) === "{}")
                         return;
-                    //data = values.data;
 
                     if(name == undefined){
                         console.log("UNDEFINED");
@@ -93,78 +97,32 @@
 
                     channel_measurement_id = name.split("_");
 
-                    console.log("name: "+ name);
-                    console.log("Channel: "+ channel_measurement_id[0]);
-                    console.log("Measurement: " + channel_measurement_id[1]);
-                    console.log("Id: "+ channel_measurement_id[2]);
-                    console.log("Multiple: " + multiple)
+                    //console.log("name: "+ name);
+                    //console.log("Channel: "+ channel_measurement_id[0]);
+                    //console.log("Measurement: " + channel_measurement_id[1]);
+                    //console.log("Id: "+ channel_measurement_id[2]);
+                    //console.log("Multiple: " + multiple)
 
                     channel = channel_measurement_id[0];
                     measurement = channel_measurement_id[1];
                     sensor_number = channel_measurement_id[2];
 
-                    //if(channel_measurement_id.length == 2) {
-                    if(multiple == 1) {
-
-                        counter = 1;
-                        for(value in data) {
-                            if(chart_channel == "") {
-                                console.log("Chart channel is null");
-                                changeChart(channel, measurement, counter);
-
-                                // Matches graph name, so graph
-                                timestamp = new Date(parseFloat(msg_timestamp));
-                                utc = Date.UTC(timestamp.getFullYear(), timestamp.getMonth(), 
-                                               timestamp.getDay(), timestamp.getHours(), timestamp.getMinutes(), 
-                                               timestamp.getSeconds());
-                                chart1.series[0].addPoint([utc,  parseFloat(data[0])]);
-                            }
-                            else if(chart_channel == channel && chart_measurement == measurement && counter == chart_sensor_number) {
-                                console.log("Chart_ChanneL: " + chart_channel);
-                                console.log("measurement: " + measurement);
-                                // Matches graph name and number, so graph
-                                timestamp = new Date(parseFloat(msg_timestamp));
-                                utc = Date.UTC(timestamp.getFullYear(), timestamp.getMonth(), 
-                                               timestamp.getDay(), timestamp.getHours(), timestamp.getMinutes(), 
-                                               timestamp.getSeconds());
-                                chart1.series[0].addPoint([utc,  parseFloat(data[counter-1])]);
-
-                            }
-
-                            //console.log(value + ": " + data[value]);
-                            $("#" + measurement + "-table > td.sensor_table_class").eq((counter)).html(data[value]);
-                            counter += 1;
-                        };
-                    }
-                    else {
-
-                        if(chart_channel == "") {
-                            chart_channel = channel;
-                            chart_sensor_number = sensor_number;
-                            changeChart(channel, measurement, sensor_number);
-
-                            // Matches graph name, so graph
-                            timestamp = new Date(parseFloat(msg_timestamp)) 
-                            utc = Date.UTC(timestamp.getFullYear(), timestamp.getMonth(), 
-                                           timestamp.getDay(), timestamp.getHours(), timestamp.getMinutes(), 
-                                           timestamp.getSeconds());
-                            chart1.series[0].addPoint([utc,  parseFloat(data[0])]);
-                        }
-                        else if(chart_channel == channel && chart_measurement == measurement && chart_sensor_number == sensor_number) {
+                    if(chart_channel == channel && chart_measurement == measurement && data_counter == chart_sensor_number) {
+                            console.log("Chart_ChanneL: " + chart_channel);
+                            console.log("measurement: " + measurement);
                             // Matches graph name and number, so graph
-                            timestamp = new Date(parseFloat(msg_timestamp)) 
+                            timestamp = new Date(parseFloat(timestamp));
                             utc = Date.UTC(timestamp.getFullYear(), timestamp.getMonth(), 
                                            timestamp.getDay(), timestamp.getHours(), timestamp.getMinutes(), 
                                            timestamp.getSeconds());
-                            chart1.series[0].addPoint([utc,  parseFloat(data[0])]);
+                            chart1.series[0].addPoint([utc,  parseFloat(data)]);
 
                         }
 
-                        $("#" + measurement + "-table > td.sensor_table_class").eq((sensor_number)).html(data[0]);
-                    }
-
+                        //console.log(value + ": " + data[value]);
+                        $("#" + measurement + "-table > td.sensor_table_class").eq((data_counter)).html(data);
                     data_counter += 1;
-                }
+                };
             }
 
         }
@@ -175,7 +133,7 @@
     var connected = function() {
         chart_name = chart_channel + "_" + chart_measurement + "_" + chart_sensor_number;
         console.log("Connected");
-        socket.send({channel: window.channel, init: 1, name: chart_name });
+        socket.send({action: "init", channel: window.channel, name: chart_name });
     };
 
     var disconnected = function() {
@@ -184,6 +142,7 @@
 
     var messaged = function(data) {
         Sensors.set(data);
+        socket.send({action: "done"});
     };
 
     var start = function() {
