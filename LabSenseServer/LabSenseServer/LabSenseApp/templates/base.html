@@ -42,14 +42,19 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="../">LabSense</a>
+          <a class="brand" href="/">LabSense</a>
           <div class="nav-collapse">
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <!--<li><a href="#about">About</a></li>-->
+              <!--<li><a href="#contact">Contact</a></li>-->
             </ul>
-            <p class="navbar-text pull-right">Logged in as <a href="#">username</a></p>
+            {% if not user.is_authenticated %}
+            <p class="navbar-text pull-right"><a href="/accounts/login/">Log in</a></p>
+            {% endif %}
+            {% if user.is_authenticated %}
+            <p class="navbar-text pull-right"><a href="/accounts/logout/">Logout</a></p>
+            {% endif %}
           </div><!--/.nav-collapse -->
         </div>
       </div>
@@ -57,20 +62,7 @@
 
     <div class="container-fluid">
       <div class="row-fluid">
-        <div class="span2">
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list">
-
-              {% for channel in channels %}
-              <li class="nav-header"><a
-                  href="../{{ channel.slug }}">{{ channel.name }}</a></li> 
-                {% for measurement in channel.measurement_set.all %}
-                <li><a href="#">{{ measurement.name }}</a></li>
-                  {% endfor %}
-              {% endfor %}
-            </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
+        {% block sidebar %}{% endblock %}
         {% block content %}{% endblock %}
       </div><!--/row-->
 

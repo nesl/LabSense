@@ -9,6 +9,7 @@ if __name__ == "__main__":
     sys.path.append(os.path.join(PROJECT_ROOT, "LabSenseServer"))
     sys.path.append(os.path.join(PROJECT_ROOT, "LabSenseServer/chat"))
     sys.path.append(os.path.join(PROJECT_ROOT, "LabSenseServer/LabSenseApp"))
+    sys.path.append(os.path.join(PROJECT_ROOT, "LabSenseServer/LabSenseApp/accounts"))
 
     from django.core.management import execute_from_command_line
 

@@ -40,6 +40,8 @@ USE_L10N = True
 
 MEDIA_ROOT = ''
 
+LOGIN_REDIRECT_URL = "/"
+
 STATIC_ROOT = os.path.join(SERVER_DIR, 'static')
 
 STATIC_URL = os.path.join(SERVER_DIR, 'static/')
@@ -72,6 +74,7 @@ ROOT_URLCONF = 'LabSenseServer.urls'
 
 TEMPLATE_DIRS = (
     os.path.join(SERVER_DIR, 'templates'),
+    os.path.join(SERVER_DIR, 'accounts/templates')
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -88,8 +91,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'LabSenseApp',
-    #'django_socketio',
-    #'chat',
+    'django.contrib.admin',
     'django.contrib.admin',
     'django.contrib.admindocs',
 )

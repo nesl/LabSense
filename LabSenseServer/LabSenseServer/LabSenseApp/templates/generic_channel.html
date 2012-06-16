@@ -1,5 +1,23 @@
 {% extends "base.html" %}
 
+{% block sidebar %}
+    <div class="span2">
+      <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+
+          {% for channel in channels %}
+          <li class="nav-header"><a
+              href="../{{ channel.slug }}">{{ channel.name }}</a></li> 
+            {% for measurement in channel.measurement_set.all %}
+            <li><a href="../{{ channel.slug }}/{{measurement.slug}}">{{ measurement.name }}</a></li>
+              {% endfor %}
+          {% endfor %}
+        </ul>
+      </div><!--/.well -->
+    </div><!--/span-->
+
+{% endblock %}
+
 {% block content %}
 <div class="span10">
     <div class="page-header">
@@ -21,7 +39,7 @@
         {% for measurement in current_channel.measurement_set.all %}
         <tbody>
             <tr id="{{ measurement.slug }}-table">
-                <td class="sensor_table_class">{{ measurement.name }}</td>
+                <td class="sensor_table_class">{{ measurement.name }} ({{ measurement.units }})</td>
                 {% for sensor in sensors %}
                 <td class="sensor_table_class" onclick="changeChart('{{ current_channel.slug}}', '{{ measurement.slug}}', {{ sensor }})">0</td>
                 {% endfor %}
@@ -108,3 +126,4 @@ $(document).ready(function() {
 <!--<script src="{{ STATIC_URL }}js/labsense.js"></script>-->
 
 {% endblock %}
+
