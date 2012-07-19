@@ -137,10 +137,24 @@ General Installation (Needed by all components)
 LabSenseZwave Installation
 --------------------------
 
-1. Install needed development headers for open-zwave:
+1. Install gcc, g++, ntp, reconfigure, development headers for open-zwave, and python essentials:
 
     <pre>
+    sudo apt-get update
+    sudo apt-get upgrade
+    sudo apt-get install gcc-4.4
+    sudo apt-get install gcc
+    sudo apt-get install g++
+    sudo apt-get install make
+
+    sudo apt-get install ntp
+    sudo dpkg-reconfigure tzdata
     sudo apt-get install libudev-dev
+    
+    sudo apt-get install python2.6
+    sudo apt-get install python2.6-dev
+    sudo apt-get install python-setuptools
+    
     </pre>
 
 2. Get the open-zwave source code using svn by running:
@@ -179,7 +193,8 @@ LabSenseZwave Installation
     "cp210x converter now attached to [serial port]"
     </pre>
 
-    Unless other usb devices are plugged in, usually the serial port is /dev/ttyUSB0. 
+    Unless other usb devices are plugged in, usually the serial port is /dev/ttyUSB0. Also, if there are problems, 
+    you may want to run the ./LabSenseZwave executable as root and reset the pairing by deleting the xml files.
 
 LabSensePowerMonitor Installation
 ---------------------------------
