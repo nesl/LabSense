@@ -215,6 +215,11 @@ LabSenseServer Installation
 ---------------------------
 This is still in beta, please do not try installing this just yet.
 
+sudo apt-get install python-tornado
+git clone https://github.com/mrjoes/tornadio.git
+cd tornadio
+python setup.py install
+
 
 LabSenseForwarder Installation
 ------------------------------
@@ -269,7 +274,7 @@ LabSenseSupervisor Installation
 LabSenseSupervisor requires that everything else is installed correctly. To use
 this, you must install supervisor by using easy_install:
 
-    easy_install supervisor
+    sudo apt-get install supervisor
 
 Then, modify the supervisord.conf file on line 26 with your API-KEY:
 

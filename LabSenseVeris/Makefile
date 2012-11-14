@@ -3,8 +3,8 @@ OBJS6 = TCPModbusClient.o DieWithError.o crc16.o utility.o
 TRG = TCPModbusServer TCPModbusClient
 CC = gcc
 DEBUG = -g
-CFLAGS = -Wall -c $(DEBUG)
-LFLAGS = -Wall $(DEBUG) -lzmq
+CFLAGS = -Wall -c $(DEBUG) 
+LFLAGS = -Wall $(DEBUG)
 
 all : $(TRG) 
 
@@ -18,7 +18,7 @@ TCPModbusServer.o : TCPModbusServer.c
 	$(CC) $(CFLAGS) TCPModbusServer.c
 
 TCPModbusClient.o : TCPModbusClient.c
-	$(CC) $(CFLAGS) TCPModbusClient.c
+	$(CC) $(CFLAGS) TCPModbusClient.c -lzmq
 
 DieWithError.o : DieWithError.c
 	$(CC) $(CFLAGS) DieWithError.c
@@ -30,7 +30,7 @@ crc16.o : crc16.c
 	$(CC) $(CFLAGS) crc16.c
 
 utility.o : utility.c zhelpers.h
-	$(CC) $(CFLAGS) utility.c
+	$(CC) $(CFLAGS) utility.c -lzmq
 
 clean:
 	rm *.o $(TRG)

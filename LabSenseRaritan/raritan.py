@@ -20,7 +20,6 @@ def Get(ip):
     cmdgen.CommunityData('admin', 'abcd'), # read-only
     #cmdgen.CommunityData('admin', 'efgh'), # write
     # SNMP v3
-#    cmdgen.UsmUserData('test-user', 'authkey1', 'privkey1'),
     cmdgen.UdpTransportTarget((ip, 161)),
 
     # Current for 8 outlets (milliamps)

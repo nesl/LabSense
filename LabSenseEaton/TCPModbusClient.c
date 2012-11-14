@@ -8,7 +8,7 @@
 #include "E30ModbusMsg.h"
 
 // Zeromq helper file
-/*#include <zmq.h>*/
+#include <zmq.h>
 
 #define RCVBUFSIZE 1024   /* Size of receive buffer */ 
 
@@ -32,6 +32,36 @@ int prepare_msg_write(int argc, char* argv[], char* buf,
 int prepare_msg_writem(int argc, char* argv[], char* buf,
                       struct sockaddr_in *pServAddr);
 
+struct EatonReading {
+    float VoltageAN;
+    float VoltageBN;
+    float VoltageCN;
+    float VoltageAB;
+    float VoltageBC;
+    float VoltageCA;
+    float CurrentA;
+    float CurrentB;
+    float CurrentC;
+    float PowerTotal;
+    float VARSTotal;
+    float VASTotal;
+    float PowerFactorTotal;
+    float Frequency;
+    float NeutralCurrent;
+    float PowerA;
+    float PowerB;
+    float PowerC;
+    float VARSA;
+    float VARSB;
+    float VARSC;
+    float VASA;
+    float VASB;
+    float VASC;
+    float PowerFactorA;
+    float PowerFactorB;
+    float PowerFactorC;
+};
+
 int main(int argc, char *argv[])
 {
     int sock;                     /* Socket descriptor */
@@ -46,9 +76,9 @@ int main(int argc, char *argv[])
     int first_iteration_finished = 0;
 
     // Zeromq context and publisher
-    /*void *context = zmq_init(1);*/
-    /*void *publisher = zmq_socket (context, ZMQ_PUB);*/
-    /*zmq_bind(publisher, "tcp://*:5557");*/
+    void *context = zmq_init(1);
+    void *publisher = zmq_socket (context, ZMQ_PUB);
+    zmq_bind(publisher, "tcp://*:5557");
 
     txBufLen = 0;
 
@@ -89,55 +119,17 @@ current_power_loop:
           // and send over zeromq
           printf("Tracking power, current, energy ,and power factor\n");
 
-          if(read_type == Normal) {
-              read_type = Power;
-          }
-          else if(read_type == Power) {
-            read_type = PowerFactor;
-          }
-          else if(read_type == PowerFactor) {
-              read_type = Current;
-          }
-          else if(read_type == Current) {
-              read_type = Power;
-          }
-          else {
-              printf("Error in read type\n");
-          }
-
           // Set the arguments according to the prepare_msg_read function
           argc = 7;
           argv[1] = "read";             // Read from the veris
-          argv[2] = "172.17.5.178";     // IP Address of Veris
-          /*argv[2] = "128.97.93.201";     // IP Address of Veris*/
+          argv[2] = "128.97.11.100";
           argv[3] = "4660";             // Server Port
           argv[4] ="1";                 // Modbus Address
-          argv[6] = "42";               // Reading 42 Registers
+          argv[5] = "999";              // Modbus Register Address
+          argv[6] = "54";               // Reading 54 Registers
 
-          // Set the Register address
-          switch(read_type) {
-              case Power:
-                  // Get Power Readings (KW)
-                  argv[5] = "2083";
-                  read_type = Power;
-                  break;
-
-              case PowerFactor:
-                  // Get Power Readings (KW)
-                  argv[5] = "2267";
-                  read_type = PowerFactor;
-                  break;
-                  
-              case Current:
-                  // Get Current Readings (A)
-                  argv[5] = "2251";
-                  read_type = Current;
-                  break;
-              default: 
-                  printf("Error in read type\n");
-                  break;
-          }
       }
+
       /* Test for correct number of arguments */
       else if (argc != ARGS_READ && argc != ARGS_READ + 1) {
           print_usage_read(argv[0]); 
@@ -223,7 +215,6 @@ current_power_loop:
         rxBuf[bytesRcvd] = '\0';  /* Terminate the string! */ 
     }
 
-    void *publisher = NULL;
     print_received_msg((uint8_t *)rxBuf, bytesRcvd, read_type, publisher);
 
     if(read_type != Normal) {
@@ -232,7 +223,7 @@ current_power_loop:
         goto current_power_loop ;
     }
 
-    /*zmq_close(publisher);*/
+    zmq_close(publisher);
     close(sock);
     exit(0);
 

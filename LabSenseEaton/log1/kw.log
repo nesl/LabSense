@@ -1,0 +1,2770 @@
+0.092805 0.076556 0.026590 0.001738 0.011516 0.002662 0.017831 0.489495 0.007939 0.022560 0.352786 0.005213 0.193351 0.129501 0.612790 0.000000 0.077126 0.005983 0.000000 0.000000 0.000000 
+0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
+0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
+0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 6753883941690977722499247590342656.000000 0.000000 0.000000 0.000000 0.000000 0.000000 6753883941690977722499247590342656.000000 0.000000 6753883941690977722499247590342656.000000 0.000000 -647759553196310941122616144953344.000000 
+0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
+0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
+0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
+Number of transmitting bytes: 8
+#
+01 03 08 23 00 2A 37 BF 
+Number of received bytes: 89
+01 03 54 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 99 95 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 84
+  registers (hex): 
+0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 9599
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 2083, 42, 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+Number of transmitting bytes: 8
+#
+01 03 08 23 00 2A 37 BF 
+Number of received bytes: 89
+01 03 54 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 99 95 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 84
+  registers (hex): 
+0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 9599
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 2083, 42, 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+Number of transmitting bytes: 8
+
+01 03 00 01 00 2A 95 D5 
+Number of received bytes: 32
+01 03 54 34 39 20 52 75 6E 20 20 20 20 20 20 20 20 30 30 38 33 36 32 30 31 32 30 20 20 20 20 20 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 84
+  registers (hex): 
+3439 2052 756E 2020 2020 2020 2020 3030 3833 3632 3031 3230 2020 2020 2000 997E 0D16 7F00 0010 64B9 0D16 7F00 0000 0000 0001 0000 0082 0800 0001 0000 0040 EBB8 0D16 7F00 0020 A6DB 0D16 7F00 0090 1EE0 2BFF 7F00 
+  registers (unsigned dec): 
+13369 8274 30062 8224 8224 8224 8224 12336 14387 13874 12337 12848 8224 8224 8192 39294 3350 32512 16 25785 3350 32512 0 0 1 0 130 2048 1 0 64 60344 3350 32512 32 42715 3350 32512 144 7904 11263 32512 
+  registers (signed dec): 
+13369 8274 30062 8224 8224 8224 8224 12336 14387 13874 12337 12848 8224 8224 8192 -26242 3350 32512 16 25785 3350 32512 0 0 1 0 130 2048 1 0 64 -5192 3350 32512 32 -22821 3350 32512 144 7904 11263 32512 
+ registers (float): 
+0.000000 301859918149366768921539900342272.000000 0.000000 0.000000 0.000043 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 8700
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1, 42, 
+13369 8274 30062 8224 8224 8224 8224 12336 14387 13874 12337 12848 8224 8224 8192 -26242 3350 32512 16 25785 3350 32512 0 0 1 0 130 2048 1 0 64 -5192 3350 32512 32 -22821 3350 32512 144 7904 11263 32512 
+Number of transmitting bytes: 8
+
+01 03 00 01 00 01 D5 CA 
+Number of received bytes: 7
+01 03 02 34 39 6E 96 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 2
+  registers (hex): 
+3439 
+  registers (unsigned dec): 
+13369 
+  registers (signed dec): 
+13369 
+ registers (float): 
+
+  CRC (hex): 966E
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1, 1, 
+13369 
+Number of transmitting bytes: 8
+
+01 03 00 01 00 01 D5 CA 
+Number of received bytes: 4
+01 03 02 34 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 2
+  registers (hex): 
+3400 
+  registers (unsigned dec): 
+13312 
+  registers (signed dec): 
+13312 
+ registers (float): 
+
+  CRC (hex): 00
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1, 1, 
+13312 
+Number of transmitting bytes: 8
+
+01 03 00 00 00 10 44 06 
+Number of received bytes: 37
+01 03 20 45 31 34 39 20 52 75 6E 20 20 20 20 20 20 20 20 30 30 38 33 36 32 30 31 32 30 20 20 20 20 20 20 BA 1B 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+4531 3439 2052 756E 2020 2020 2020 2020 3030 3833 3632 3031 3230 2020 2020 2020 
+  registers (unsigned dec): 
+17713 13369 8274 30062 8224 8224 8224 8224 12336 14387 13874 12337 12848 8224 8224 8224 
+  registers (signed dec): 
+17713 13369 8274 30062 8224 8224 8224 8224 12336 14387 13874 12337 12848 8224 8224 8224 
+ registers (float): 
+2835.263916 0.000000 0.000000 0.000000 0.000000 0.000003 0.000000 0.000000 
+  CRC (hex): 1BBA
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 0xC757, 16, 
+17713 13369 8274 30062 8224 8224 8224 8224 12336 14387 13874 12337 12848 8224 8224 8224 
+Number of transmitting bytes: 8
+ÇW
+01 03 C7 57 00 10 C8 A2 
+Number of received bytes: 6
+01 03 20 00 00 00 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 00D8 ACB9 C577 7F00 00C0 A4B9 C577 7F00 003C 9797 C577 7F00 00F8 C95C 
+  registers (unsigned dec): 
+0 0 216 44217 50551 32512 192 42169 50551 32512 60 38807 50551 32512 248 51548 
+  registers (signed dec): 
+0 0 216 -21319 -14985 32512 192 -23367 -14985 32512 60 -26729 -14985 32512 248 -13988 
+ registers (float): 
+0.000000 0.000000 -3959.937500 0.000000 -3959.937500 0.000000 -3959.937500 0.000000 
+  CRC (hex): 77C5
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51031, 16, 
+0 0 216 -21319 -14985 32512 192 -23367 -14985 32512 60 -26729 -14985 32512 248 -13988 
+Number of transmitting bytes: 8
+¢
+01 03 0F A2 00 02 66 FD 
+Number of received bytes: 9
+01 03 04 00 00 00 00 FA 33 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+0000 0000 
+  registers (unsigned dec): 
+0 0 
+  registers (signed dec): 
+0 0 
+ registers (float): 
+0.000000 
+  CRC (hex): 33FA
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 4002, 2, 
+0 0 
+Number of transmitting bytes: 8
+¢
+01 03 0F A2 00 02 66 FD 
+Number of received bytes: 9
+01 03 04 00 00 00 00 FA 33 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+0000 0000 
+  registers (unsigned dec): 
+0 0 
+  registers (signed dec): 
+0 0 
+ registers (float): 
+0.000000 
+  CRC (hex): 33FA
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 4002, 2, 
+0 0 
+Number of transmitting bytes: 8
+‡
+01 03 10 87 00 02 70 E2 
+Number of received bytes: 9
+01 03 04 00 00 00 00 FA 33 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+0000 0000 
+  registers (unsigned dec): 
+0 0 
+  registers (signed dec): 
+0 0 
+ registers (float): 
+0.000000 
+  CRC (hex): 33FA
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 4231, 2, 
+0 0 
+Number of transmitting bytes: 8
+‡
+01 03 10 87 00 02 70 E2 
+Number of received bytes: 9
+01 03 04 00 00 00 00 FA 33 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+0000 0000 
+  registers (unsigned dec): 
+0 0 
+  registers (signed dec): 
+0 0 
+ registers (float): 
+0.000000 
+  CRC (hex): 33FA
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 4231, 2, 
+0 0 
+Number of transmitting bytes: 8
+Ê
+01 03 10 CA 00 02 E0 F5 
+Number of received bytes: 9
+01 03 04 00 00 00 00 FA 33 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+0000 0000 
+  registers (unsigned dec): 
+0 0 
+  registers (signed dec): 
+0 0 
+ registers (float): 
+0.000000 
+  CRC (hex): 33FA
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 4298, 2, 
+0 0 
+./eaton.sh: line 23: 40009: command not found
+connect() failed: Connection refused
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 460, 1, 40009, 8, 
+Number of transmitting bytes: 8
+œI
+01 03 9C 49 00 08 BB 8A 
+Number of received bytes: 21
+01 03 10 08 01 07 D1 08 00 0D A1 0D 9F 0D A0 00 05 00 01 62 AF 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 16
+  registers (hex): 
+0801 07D1 0800 0DA1 0D9F 0DA0 0005 0001 
+  registers (unsigned dec): 
+2049 2001 2048 3489 3487 3488 5 1 
+  registers (signed dec): 
+2049 2001 2048 3489 3487 3488 5 1 
+ registers (float): 
+0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): AF62
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 40009, 8, 
+2049 2001 2048 3489 3487 3488 5 1 
+Number of transmitting bytes: 8
+œI
+01 03 9C 49 00 08 BB 8A 
+Number of received bytes: 5
+01 03 10 08 01 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 16
+  registers (hex): 
+0801 0000 00D8 8CCB D18B 7F00 00C0 84CB 
+  registers (unsigned dec): 
+2049 0 216 36043 53643 32512 192 33995 
+  registers (signed dec): 
+2049 0 216 -29493 -11893 32512 192 -31541 
+ registers (float): 
+0.000000 0.000000 -74891395072.000000 0.000000 
+  CRC (hex): 8BD1
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 40009, 8, 
+2049 0 216 -29493 -11893 32512 192 -31541 
+Number of transmitting bytes: 8
+œ@
+01 03 9C 40 00 01 AB 8E 
+Number of received bytes: 7
+01 03 02 00 00 B8 44 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 2
+  registers (hex): 
+0000 
+  registers (unsigned dec): 
+0 
+  registers (signed dec): 
+0 
+ registers (float): 
+
+  CRC (hex): 44B8
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 40000, 192, 
+0 
+Number of transmitting bytes: 8
+œ@
+01 03 9C 40 00 01 AB 8E 
+Number of received bytes: 5
+01 03 02 00 00 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 2
+  registers (hex): 
+0000 
+  registers (unsigned dec): 
+0 
+  registers (signed dec): 
+0 
+ registers (float): 
+
+  CRC (hex): 00
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 40000, 192, 
+0 
+Number of transmitting bytes: 8
+ÃO
+01 03 C3 4F 00 01 89 99 
+Number of received bytes: 7
+01 03 02 FF FF B9 F4 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 2
+  registers (hex): 
+FFFF 
+  registers (unsigned dec): 
+65535 
+  registers (signed dec): 
+-1 
+ registers (float): 
+
+  CRC (hex): F4B9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 49999, 192, 
+-1 
+Number of transmitting bytes: 8
+ÃO
+01 03 C3 4F 00 01 89 99 
+Number of received bytes: 7
+01 03 02 FF FF B9 F4 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 2
+  registers (hex): 
+FFFF 
+  registers (unsigned dec): 
+65535 
+  registers (signed dec): 
+-1 
+ registers (float): 
+
+  CRC (hex): F4B9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 49999, 1, 
+-1 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 27
+01 03 20 00 00 00 00 00 00 00 0A FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 000A FFFF 0000 0000 0000 0000 0000 0000 0000 006C 7F00 00F8 D9CC 
+  registers (unsigned dec): 
+0 0 0 10 65535 0 0 0 0 0 0 0 108 32512 248 55756 
+  registers (signed dec): 
+0 0 0 10 -1 0 0 0 0 0 0 0 108 32512 248 -9780 
+ registers (float): 
+0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 6C40
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 0 10 -1 0 0 0 0 0 0 0 108 32512 248 -9780 
+Number of transmitting bytes: 8
+y
+01 03 79 18 00 01 1D 51 
+Number of received bytes: 7
+01 03 02 00 10 B9 88 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 2
+  registers (hex): 
+0010 
+  registers (unsigned dec): 
+16 
+  registers (signed dec): 
+16 
+ registers (float): 
+
+  CRC (hex): 88B9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 31000, 192, 
+16 
+Number of transmitting bytes: 8
+y
+01 03 79 18 00 02 5D 50 
+Number of received bytes: 9
+01 03 04 00 10 03 E7 BB 4C 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+0010 03E7 
+  registers (unsigned dec): 
+16 999 
+  registers (signed dec): 
+16 999 
+ registers (float): 
+0.000000 
+  CRC (hex): 4CBB
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 31000, 2, 
+16 999 
+Number of transmitting bytes: 8
+y
+01 03 79 18 00 02 5D 50 
+Number of received bytes: 9
+01 03 04 00 10 03 E7 BB 4C 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+0010 03E7 
+  registers (unsigned dec): 
+16 999 
+  registers (signed dec): 
+16 999 
+ registers (float): 
+0.000000 
+  CRC (hex): 4CBB
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 31000, 2, 
+16 999 
+Number of transmitting bytes: 8
+y
+01 03 79 18 00 02 5D 50 
+Number of received bytes: 3
+01 03 04 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+0000 0000 
+  registers (unsigned dec): 
+0 0 
+  registers (signed dec): 
+0 0 
+ registers (float): 
+0.000000 
+  CRC (hex): D800
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 31000, 2, 
+0 0 
+Number of transmitting bytes: 8
+y
+01 03 79 18 00 02 5D 50 
+Number of received bytes: 9
+01 03 04 00 10 03 E7 BB 4C 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+0010 03E7 
+  registers (unsigned dec): 
+16 999 
+  registers (signed dec): 
+16 999 
+ registers (float): 
+0.000000 
+  CRC (hex): 4CBB
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 31000, 2, 
+16 999 
+Number of transmitting bytes: 8
+y
+01 03 79 18 00 02 5D 50 
+Number of received bytes: 9
+01 03 04 00 10 03 E7 BB 4C 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+0010 03E7 
+  registers (unsigned dec): 
+16 999 
+  registers (signed dec): 
+16 999 
+ registers (float): 
+0.000000 
+  CRC (hex): 4CBB
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 31000, 2, 
+16 999 
+Number of transmitting bytes: 8
+ÃO
+01 03 C3 4F 00 01 89 99 
+Number of received bytes: 7
+01 03 02 FF FF B9 F4 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 2
+  registers (hex): 
+FFFF 
+  registers (unsigned dec): 
+65535 
+  registers (signed dec): 
+-1 
+ registers (float): 
+
+  CRC (hex): F4B9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 49999, 1, 
+-1 
+Number of transmitting bytes: 8
+ÃO
+01 03 C3 4F 00 01 89 99 
+Number of received bytes: 7
+01 03 02 FF FF B9 F4 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 2
+  registers (hex): 
+FFFF 
+  registers (unsigned dec): 
+65535 
+  registers (signed dec): 
+-1 
+ registers (float): 
+
+  CRC (hex): F4B9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 49999, 1, 
+-1 
+Number of transmitting bytes: 8
+ÃO
+01 03 C3 4F 00 01 89 99 
+Number of received bytes: 7
+01 03 02 FF FF B9 F4 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 2
+  registers (hex): 
+FFFF 
+  registers (unsigned dec): 
+65535 
+  registers (signed dec): 
+-1 
+ registers (float): 
+
+  CRC (hex): F4B9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 49999, 1, 
+-1 
+Number of transmitting bytes: 8
+ÇX
+01 03 C7 58 00 20 F8 B5 
+Number of received bytes: 69
+01 03 40 00 00 00 00 00 00 00 1E FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 06 FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 07 A4 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 64
+  registers (hex): 
+0000 0000 0000 001E FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0006 FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 30 65535 0 0 0 0 0 0 0 0 0 0 0 0 0 0 6 65535 0 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 30 -1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 6 -1 0 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): A407
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51032, 32, 
+0 0 0 30 -1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 6 -1 0 0 0 0 0 0 0 0 0 0 0 
+Number of transmitting bytes: 8
+ÇX
+01 03 C7 58 00 10 F8 A1 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 1E FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E8 C5 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 001E FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 30 65535 0 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 30 -1 0 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): C5E8
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51032, 16, 
+0 0 0 30 -1 0 0 0 0 0 0 0 0 0 0 0 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 0A FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E9 75 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 000A FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 10 65535 0 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 75E9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+Number of transmitting bytes: 8
+¢
+01 03 0F A2 00 02 66 FD 
+Number of received bytes: 9
+01 03 04 00 00 00 00 FA 33 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+0000 0000 
+  registers (unsigned dec): 
+0 0 
+  registers (signed dec): 
+0 0 
+ registers (float): 
+0.000000 
+  CRC (hex): 33FA
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 4002, 2, 
+0 0 
+Number of transmitting bytes: 8
+¢
+01 03 0F A2 00 02 66 FD 
+Number of received bytes: 9
+01 03 04 00 00 00 00 FA 33 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+0000 0000 
+  registers (unsigned dec): 
+0 0 
+  registers (signed dec): 
+0 0 
+ registers (float): 
+0.000000 
+  CRC (hex): 33FA
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 4002, 2, 
+0 0 
+Number of transmitting bytes: 8
+ª
+01 03 0F AA 00 02 E7 3F 
+Number of received bytes: 9
+01 03 04 00 00 00 00 FA 33 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+0000 0000 
+  registers (unsigned dec): 
+0 0 
+  registers (signed dec): 
+0 0 
+ registers (float): 
+0.000000 
+  CRC (hex): 33FA
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 4010, 2, 
+0 0 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 2
+01 03 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 0
+  registers (hex): 
+
+  registers (unsigned dec): 
+
+  registers (signed dec): 
+
+ registers (float): 
+
+  CRC (hex): 00
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 3
+01 03 20 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 00D8 2CEC 9FDC 7F00 00C0 24EC 9FDC 7F00 003C 17CA 9FDC 7F00 00F8 498F 
+  registers (unsigned dec): 
+0 0 216 11500 40924 32512 192 9452 40924 32512 60 6090 40924 32512 248 18831 
+  registers (signed dec): 
+0 0 216 11500 -24612 32512 192 9452 -24612 32512 60 6090 -24612 32512 248 18831 
+ registers (float): 
+0.000000 0.000000 -0.000000 0.000000 -0.000000 0.000000 -0.000000 0.000000 
+  CRC (hex): DC9F
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 216 11500 -24612 32512 192 9452 -24612 32512 60 6090 -24612 32512 248 18831 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 0A FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E9 75 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 000A FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 10 65535 0 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 75E9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 0A FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E9 75 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 000A FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 10 65535 0 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 75E9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 0A FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E9 75 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 000A FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 10 65535 0 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 75E9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 0A FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E9 75 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 000A FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 10 65535 0 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 75E9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 6
+01 03 20 00 00 00 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 00D8 0C83 AA95 7F00 00C0 0483 AA95 7F00 003C F760 AA95 7F00 00F8 2926 
+  registers (unsigned dec): 
+0 0 216 3203 43669 32512 192 1155 43669 32512 60 63328 43669 32512 248 10534 
+  registers (signed dec): 
+0 0 216 3203 -21867 32512 192 1155 -21867 32512 60 -2208 -21867 32512 248 10534 
+ registers (float): 
+0.000000 0.000000 -0.000000 0.000000 -0.000000 0.000000 -0.000000 0.000000 
+  CRC (hex): 95AA
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 216 3203 -21867 32512 192 1155 -21867 32512 60 -2208 -21867 32512 248 10534 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 0A FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E9 75 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 000A FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 10 65535 0 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 75E9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 0A FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E9 75 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 000A FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 10 65535 0 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 75E9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 0A FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E9 75 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 000A FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 10 65535 0 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 75E9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 0A FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E9 75 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 000A FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 10 65535 0 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 75E9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 0A FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E9 75 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 000A FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 10 65535 0 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 75E9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 0A FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E9 75 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 000A FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 10 65535 0 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 75E9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 0A FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E9 75 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 000A FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 10 65535 0 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 75E9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+connect() failed: Connection refused
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+connect() failed: Connection refused
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 4
+01 03 20 00 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 00D8 3C63 EE6F 7F00 00C0 3463 EE6F 7F00 003C 2741 EE6F 7F00 00F8 5906 
+  registers (unsigned dec): 
+0 0 216 15459 61039 32512 192 13411 61039 32512 60 10049 61039 32512 248 22790 
+  registers (signed dec): 
+0 0 216 15459 -4497 32512 192 13411 -4497 32512 60 10049 -4497 32512 248 22790 
+ registers (float): 
+0.000000 0.000000 -18530112731598132332602589184.000000 0.000000 -18530112731598132332602589184.000000 0.000000 -18530112731598132332602589184.000000 0.000000 
+  CRC (hex): 6FEE
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 216 15459 -4497 32512 192 13411 -4497 32512 60 10049 -4497 32512 248 22790 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 1
+01 
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 19
+01 03 20 00 00 00 00 00 00 00 0A FF FF 00 00 00 00 00 00 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 000A FFFF 0000 0000 0000 0023 7F00 003C 6769 2523 7F00 00F8 992E 
+  registers (unsigned dec): 
+0 0 0 10 65535 0 0 0 35 32512 60 26473 9507 32512 248 39214 
+  registers (signed dec): 
+0 0 0 10 -1 0 0 0 35 32512 60 26473 9507 32512 248 -26322 
+ registers (float): 
+0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 2325
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 0 10 -1 0 0 0 35 32512 60 26473 9507 32512 248 -26322 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 0A FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E9 75 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 000A FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 10 65535 0 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 75E9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 0A FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E9 75 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 000A FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 10 65535 0 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 75E9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 0A FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E9 75 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 000A FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 10 65535 0 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 75E9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 0A FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E9 75 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 000A FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 10 65535 0 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 75E9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 0A FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E9 75 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 000A FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 10 65535 0 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 75E9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 0A FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E9 75 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 000A FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 10 65535 0 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 75E9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 0A FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E9 75 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 000A FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 10 65535 0 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 75E9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 6
+01 03 20 00 00 00 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 00D8 DC98 17E6 7F00 00C0 D498 17E6 7F00 003C C776 17E6 7F00 00F8 F93B 
+  registers (unsigned dec): 
+0 0 216 56472 6118 32512 192 54424 6118 32512 60 51062 6118 32512 248 63803 
+  registers (signed dec): 
+0 0 216 -9064 6118 32512 192 -11112 6118 32512 60 -14474 6118 32512 248 -1733 
+ registers (float): 
+0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): E617
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 216 -9064 6118 32512 192 -11112 6118 32512 60 -14474 6118 32512 248 -1733 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 0A FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E9 75 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 000A FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 10 65535 0 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 75E9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 0A FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E9 75 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 000A FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 10 65535 0 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 75E9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 0A FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E9 75 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 000A FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 10 65535 0 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 75E9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 0A FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E9 75 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 000A FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 10 65535 0 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 75E9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 0A FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E9 75 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 000A FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 10 65535 0 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 75E9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 2
+01 03 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 0
+  registers (hex): 
+
+  registers (unsigned dec): 
+
+  registers (signed dec): 
+
+ registers (float): 
+
+  CRC (hex): 00
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+Reading Historical Log Header Block
+Number of transmitting bytes: 8
+Ç8
+01 03 C7 38 00 10 F8 BF 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 0A FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E9 75 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 000A FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 10 65535 0 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 75E9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51000, 16, 
+0 0 0 10 -1 0 0 0 0 0 0 0 0 0 0 0 
+Reading Historical Log Header Block
+Number of transmitting bytes: 8
+ÇW
+01 03 C7 57 00 10 C8 A2 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 00 00 1E FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 C8 51 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 0000 001E FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 0 30 65535 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 0 30 -1 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 51C8
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51031, 16, 
+0 0 0 0 30 -1 0 0 0 0 0 0 0 0 0 0 
+Reading Historical Log Header Block
+Number of transmitting bytes: 8
+ÇW
+01 03 C7 57 00 10 C8 A2 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 00 00 1E FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 C8 51 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 0000 001E FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 0 30 65535 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 0 30 -1 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 51C8
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51031, 16, 
+0 0 0 0 30 -1 0 0 0 0 0 0 0 0 0 0 
+Reading Historical Log Header Block
+connect() failed: Connection refused
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51031, 16, 
+Reading Historical Log Header Block
+Number of transmitting bytes: 8
+ÇW
+01 03 C7 57 00 10 C8 A2 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 00 00 1E FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 C8 51 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 0000 001E FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 0 30 65535 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 0 30 -1 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 51C8
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51031, 16, 
+0 0 0 0 30 -1 0 0 0 0 0 0 0 0 0 0 
+Reading Historical Log Header Block
+Number of transmitting bytes: 8
+ÇW
+01 03 C7 57 00 10 C8 A2 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 00 00 1E FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 C8 51 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 0000 001E FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 0 30 65535 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 0 30 -1 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 51C8
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51031, 16, 
+0 0 0 0 30 -1 0 0 0 0 0 0 0 0 0 0 
+Querying port
+Number of transmitting bytes: 8
+“
+01 03 11 93 00 01 71 1B 
+Number of received bytes: 7
+01 03 02 00 02 39 85 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 2
+  registers (hex): 
+0002 
+  registers (unsigned dec): 
+2 
+  registers (signed dec): 
+2 
+ registers (float): 
+
+  CRC (hex): 8539
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 4499, 1, 
+2 
+Reading Historical Log Header Block
+Number of transmitting bytes: 8
+ÇW
+01 03 C7 57 00 10 C8 A2 
+Number of received bytes: 3
+01 03 20 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 00D8 3C9E CC1F 7F00 00C0 349E CC1F 7F00 003C 277C CC1F 7F00 00F8 5941 
+  registers (unsigned dec): 
+0 0 216 15518 52255 32512 192 13470 52255 32512 60 10108 52255 32512 248 22849 
+  registers (signed dec): 
+0 0 216 15518 -13281 32512 192 13470 -13281 32512 60 10108 -13281 32512 248 22849 
+ registers (float): 
+0.000000 0.000000 -41810944.000000 0.000000 -41810944.000000 0.000000 -41810944.000000 0.000000 
+  CRC (hex): 1FCC
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51031, 16, 
+0 0 216 15518 -13281 32512 192 13470 -13281 32512 60 10108 -13281 32512 248 22849 
+Querying port
+Number of transmitting bytes: 8
+“
+01 03 11 93 00 01 71 1B 
+Number of received bytes: 7
+01 03 02 00 02 39 85 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 2
+  registers (hex): 
+0002 
+  registers (unsigned dec): 
+2 
+  registers (signed dec): 
+2 
+ registers (float): 
+
+  CRC (hex): 8539
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 4499, 1, 
+2 
+Reading Historical Log Header Block
+Number of transmitting bytes: 8
+ÇW
+01 03 C7 57 00 10 C8 A2 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 00 00 1E FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 C8 51 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 0000 001E FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 0 30 65535 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 0 30 -1 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 51C8
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51031, 16, 
+0 0 0 0 30 -1 0 0 0 0 0 0 0 0 0 0 
+Querying port
+Number of transmitting bytes: 8
+“
+01 03 11 93 00 01 71 1B 
+Number of received bytes: 7
+01 03 02 00 02 39 85 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 2
+  registers (hex): 
+0002 
+  registers (unsigned dec): 
+2 
+  registers (signed dec): 
+2 
+ registers (float): 
+
+  CRC (hex): 8539
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 4499, 1, 
+2 
+Reading Historical Log Header Block
+Number of transmitting bytes: 8
+ÇW
+01 03 C7 57 00 10 C8 A2 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 00 00 1E FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 C8 51 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 0000 001E FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 0 30 65535 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 0 30 -1 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 51C8
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51031, 16, 
+0 0 0 0 30 -1 0 0 0 0 0 0 0 0 0 0 
+Querying port
+Number of transmitting bytes: 8
+“
+01 03 11 93 00 01 71 1B 
+Number of received bytes: 7
+01 03 02 00 02 39 85 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 2
+  registers (hex): 
+0002 
+  registers (unsigned dec): 
+2 
+  registers (signed dec): 
+2 
+ registers (float): 
+
+  CRC (hex): 8539
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 4499, 1, 
+2 
+Reading Historical Log Header Block
+Number of transmitting bytes: 8
+ÇW
+01 03 C7 57 00 10 C8 A2 
+Number of received bytes: 37
+01 03 20 00 00 00 00 00 00 00 00 00 1E FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 C8 51 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 32
+  registers (hex): 
+0000 0000 0000 0000 001E FFFF 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+  registers (unsigned dec): 
+0 0 0 0 30 65535 0 0 0 0 0 0 0 0 0 0 
+  registers (signed dec): 
+0 0 0 0 30 -1 0 0 0 0 0 0 0 0 0 0 
+ registers (float): 
+0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
+  CRC (hex): 51C8
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 51031, 16, 
+0 0 0 0 30 -1 0 0 0 0 0 0 0 0 0 0 
+
+
+
+
+Reading User Settings Flags
+Number of transmitting bytes: 8
+u>
+01 03 75 3E 00 01 FF CA 
+Number of received bytes: 7
+01 03 02 03 80 B9 14 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 2
+  registers (hex): 
+0380 
+  registers (unsigned dec): 
+896 
+  registers (signed dec): 
+896 
+ registers (float): 
+
+  CRC (hex): 14B9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 30014, 1, 
+896 
+Reading User Settings Flags
+Number of transmitting bytes: 8
+u>
+01 03 75 3E 00 01 FF CA 
+Number of received bytes: 5
+01 03 02 03 80 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 2
+  registers (hex): 
+0380 
+  registers (unsigned dec): 
+896 
+  registers (signed dec): 
+896 
+ registers (float): 
+
+  CRC (hex): 00
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 30014, 1, 
+896 
+Reading User Settings Flags
+Number of transmitting bytes: 8
+u>
+01 03 75 3E 00 01 FF CA 
+Number of received bytes: 7
+01 03 02 03 80 B9 14 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 2
+  registers (hex): 
+0380 
+  registers (unsigned dec): 
+896 
+  registers (signed dec): 
+896 
+ registers (float): 
+
+  CRC (hex): 14B9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 30014, 1, 
+896 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+
+01 03 00 09 00 08 94 0E 
+Number of received bytes: 21
+01 03 10 38 33 36 32 30 31 32 30 20 20 20 20 20 20 00 29 D4 3B 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 16
+  registers (hex): 
+3833 3632 3031 3230 2020 2020 2020 0029 
+  registers (unsigned dec): 
+14387 13874 12337 12848 8224 8224 8224 41 
+  registers (signed dec): 
+14387 13874 12337 12848 8224 8224 8224 41 
+ registers (float): 
+0.000043 0.000000 0.000000 0.000000 
+  CRC (hex): 3BD4
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 9+40000, 8, 
+14387 13874 12337 12848 8224 8224 8224 41 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+
+01 03 00 09 00 08 94 0E 
+Number of received bytes: 21
+01 03 10 38 33 36 32 30 31 32 30 20 20 20 20 20 20 00 29 D4 3B 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 16
+  registers (hex): 
+3833 3632 3031 3230 2020 2020 2020 0029 
+  registers (unsigned dec): 
+14387 13874 12337 12848 8224 8224 8224 41 
+  registers (signed dec): 
+14387 13874 12337 12848 8224 8224 8224 41 
+ registers (float): 
+0.000043 0.000000 0.000000 0.000000 
+  CRC (hex): 3BD4
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 9, 8, 
+14387 13874 12337 12848 8224 8224 8224 41 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+
+01 03 00 09 00 04 94 0B 
+Number of received bytes: 13
+01 03 08 38 33 36 32 30 31 32 30 E3 8F 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 8
+  registers (hex): 
+3833 3632 3031 3230 
+  registers (unsigned dec): 
+14387 13874 12337 12848 
+  registers (signed dec): 
+14387 13874 12337 12848 
+ registers (float): 
+0.000043 0.000000 
+  CRC (hex): 8FE3
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 9, 4, 
+14387 13874 12337 12848 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+u?
+01 03 75 3F 00 01 AE 0A 
+Number of received bytes: 4
+01 03 02 00 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 2
+  registers (hex): 
+0000 
+  registers (unsigned dec): 
+0 
+  registers (signed dec): 
+0 
+ registers (float): 
+
+  CRC (hex): 00
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 30015+0, 1, 
+0 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+u?
+01 03 75 3F 00 01 AE 0A 
+Number of received bytes: 7
+01 03 02 00 00 B8 44 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 2
+  registers (hex): 
+0000 
+  registers (unsigned dec): 
+0 
+  registers (signed dec): 
+0 
+ registers (float): 
+
+  CRC (hex): 44B8
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 30015, 1, 
+0 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+
+01 03 00 1B 00 03 75 CC 
+Number of received bytes: 11
+01 03 06 32 36 30 20 20 20 FB B1 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 6
+  registers (hex): 
+3236 3020 2020 
+  registers (unsigned dec): 
+12854 12320 8224 
+  registers (signed dec): 
+12854 12320 8224 
+ registers (float): 
+0.000000 
+  CRC (hex): B1FB
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 27, 3, 
+12854 12320 8224 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+
+01 03 00 09 00 08 94 0E 
+Number of received bytes: 21
+01 03 10 38 33 36 32 30 31 32 30 20 20 20 20 20 20 00 29 D4 3B 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 16
+  registers (hex): 
+3833 3632 3031 3230 2020 2020 2020 0029 
+  registers (unsigned dec): 
+14387 13874 12337 12848 8224 8224 8224 41 
+  registers (signed dec): 
+14387 13874 12337 12848 8224 8224 8224 41 
+ registers (float): 
+0.000043 0.000000 0.000000 0.000000 
+  CRC (hex): 3BD4
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 9, 8, 
+14387 13874 12337 12848 8224 8224 8224 41 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+
+01 03 01 17 00 01 35 F2 
+Number of received bytes: 7
+01 03 02 27 10 A2 78 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 2
+  registers (hex): 
+2710 
+  registers (unsigned dec): 
+10000 
+  registers (signed dec): 
+10000 
+ registers (float): 
+
+  CRC (hex): 78A2
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 279, 1, 
+10000 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+
+01 03 01 17 00 1B B4 39 
+Number of received bytes: 59
+01 03 36 27 10 27 10 27 10 27 10 27 10 27 10 27 10 27 10 00 00 27 10 27 10 27 10 FF EB 17 6F 27 10 27 10 27 10 27 10 27 10 27 10 27 10 27 10 27 10 00 D0 FC E2 01 F8 00 00 61 A8 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 54
+  registers (hex): 
+2710 2710 2710 2710 2710 2710 2710 2710 0000 2710 2710 2710 FFEB 176F 2710 2710 2710 2710 2710 2710 2710 2710 2710 00D0 FCE2 01F8 0000 
+  registers (unsigned dec): 
+10000 10000 10000 10000 10000 10000 10000 10000 0 10000 10000 10000 65515 5999 10000 10000 10000 10000 10000 10000 10000 10000 10000 208 64738 504 0 
+  registers (signed dec): 
+10000 10000 10000 10000 10000 10000 10000 10000 0 10000 10000 10000 -21 5999 10000 10000 10000 10000 10000 10000 10000 10000 10000 208 -798 504 0 
+ registers (float): 
+0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 -nan 0.000000 0.000000 0.000000 0.000000 0.000000 -9387992168182225866192314532437688320.000000 
+  CRC (hex): A861
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 279, 27, 
+10000 10000 10000 10000 10000 10000 10000 10000 0 10000 10000 10000 -21 5999 10000 10000 10000 10000 10000 10000 10000 10000 10000 208 -798 504 0 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 1B 85 B1 
+Number of received bytes: 59
+01 03 36 36 9A 42 F4 D2 FE 42 F4 BE C2 43 54 2A 2F 43 53 F6 8F 43 54 23 0D 3B B9 15 87 3B E2 14 38 3B CD F0 FB BE 8D BE 3C 3F 06 D3 00 40 13 7C D1 BD F4 2E DF 42 70 07 9D FD 3D 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 54
+  registers (hex): 
+369A 42F4 D2FE 42F4 BEC2 4354 2A2F 4353 F68F 4354 230D 3BB9 1587 3BE2 1438 3BCD F0FB BE8D BE3C 3F06 D300 4013 7CD1 BDF4 2EDF 4270 079D 
+  registers (unsigned dec): 
+13978 17140 54014 17140 48834 17236 10799 17235 63119 17236 8973 15289 5511 15330 5176 15309 61691 48781 48700 16134 54016 16403 31953 48628 11999 17008 1949 
+  registers (signed dec): 
+13978 17140 -11522 17140 -16702 17236 10799 17235 -2417 17236 8973 15289 5511 15330 5176 15309 -3845 -16755 -16836 16134 -11520 16403 31953 -16908 11999 17008 1949 
+ registers (float): 
+0.000005 -546022490112.000000 -0.379420 0.000000 -1452859428475734787114498630090752.000000 0.000000 0.000000 0.000000 -623288793796467811304714797056.000000 -0.183834 -550830800896.000000 8712342004164180964570980704191512576.000000 0.000000 
+  CRC (hex): 3DFD
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 27, 
+13978 17140 -11522 17140 -16702 17236 10799 17235 -2417 17236 8973 15289 5511 15330 5176 15309 -3845 -16755 -16836 16134 -11520 16403 31953 -16908 11999 17008 1949 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 02 44 7B 
+Number of received bytes: 9
+01 03 04 1F 4B 42 F4 BC D6 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+1F4B 42F4 
+  registers (unsigned dec): 
+8011 17140 
+  registers (signed dec): 
+8011 17140 
+ registers (float): 
+0.000000 
+  CRC (hex): D6BC
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+8011 17140 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 04 C4 79 
+Number of received bytes: 8
+01 03 08 F4 64 42 F4 D1 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 8
+  registers (hex): 
+F464 42F4 D100 4C47 
+  registers (unsigned dec): 
+62564 17140 53504 19527 
+  registers (signed dec): 
+-2972 17140 -12032 19527 
+ registers (float): 
+-72338968167201854861529938132992.000000 -34439720960.000000 
+  CRC (hex): 37E1
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 4, 
+-2972 17140 -12032 19527 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 02 44 7B 
+Number of received bytes: 9
+01 03 04 F3 61 42 F4 A9 8E 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+F361 42F4 
+  registers (unsigned dec): 
+62305 17140 
+  registers (signed dec): 
+-3231 17140 
+ registers (float): 
+-17847057554257670702601852682240.000000 
+  CRC (hex): 8EA9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+-3231 17140 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 01 04 7A 
+Number of received bytes: 7
+01 03 02 ED 38 F4 C6 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 2
+  registers (hex): 
+ED38 
+  registers (unsigned dec): 
+60728 
+  registers (signed dec): 
+-4808 
+ registers (float): 
+
+  CRC (hex): C6F4
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 1, 
+-4808 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 02 44 7B 
+Number of received bytes: 9
+01 03 04 F3 E3 42 F4 09 A6 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+F3E3 42F4 
+  registers (unsigned dec): 
+62435 17140 
+  registers (signed dec): 
+-3101 17140 
+ registers (float): 
+-36011027758572398755577881165824.000000 
+  CRC (hex): A609
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+-3101 17140 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 02 44 7B 
+Number of received bytes: 9
+01 03 04 E5 AE 42 F3 DC 3B 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+E5AE 42F3 
+  registers (unsigned dec): 
+58798 17139 
+  registers (signed dec): 
+-6738 17139 
+ registers (float): 
+-102865845390441789259776.000000 
+  CRC (hex): 3BDC
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+-6738 17139 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 01 04 7A 
+Number of received bytes: 7
+01 03 02 E4 32 72 91 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 2
+  registers (hex): 
+E432 
+  registers (unsigned dec): 
+58418 
+  registers (signed dec): 
+-7118 
+ registers (float): 
+
+  CRC (hex): 9172
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 1, 
+-7118 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 02 44 7B 
+Number of received bytes: 9
+01 03 04 F4 73 42 F3 49 3D 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+F473 42F3 
+  registers (unsigned dec): 
+62579 17139 
+  registers (signed dec): 
+-2957 17139 
+ registers (float): 
+-77092653082354436658625876328448.000000 
+  CRC (hex): 3D49
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+-2957 17139 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 02 44 7B 
+Number of received bytes: 9
+01 03 04 F0 A0 42 F3 B9 F4 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+F0A0 42F3 
+  registers (unsigned dec): 
+61600 17139 
+  registers (signed dec): 
+-3936 17139 
+ registers (float): 
+-396788305684520910762260037632.000000 
+  CRC (hex): F4B9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+-3936 17139 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 02 44 7B 
+Number of received bytes: 9
+01 03 04 09 1E 42 F3 E9 4C 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+091E 42F3 
+  registers (unsigned dec): 
+2334 17139 
+  registers (signed dec): 
+2334 17139 
+ registers (float): 
+0.000000 
+  CRC (hex): 4CE9
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+2334 17139 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 02 44 7B 
+Number of received bytes: 9
+01 03 04 EA 6D 42 F3 2F 13 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+EA6D 42F3 
+  registers (unsigned dec): 
+60013 17139 
+  registers (signed dec): 
+-5523 17139 
+ registers (float): 
+-71707894498836605602627584.000000 
+  CRC (hex): 132F
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+-5523 17139 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+ê
+01 03 03 EA 00 02 E5 BB 
+Number of received bytes: 9
+01 03 04 C1 B6 42 F3 56 CC 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+C1B6 42F3 
+  registers (unsigned dec): 
+49590 17139 
+  registers (signed dec): 
+-15946 17139 
+ registers (float): 
+-22.782690 
+  CRC (hex): CC56
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1002, 2, 
+-15946 17139 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+ê
+01 03 03 EA 00 02 E5 BB 
+Number of received bytes: 9
+01 03 04 82 98 42 F4 62 83 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+8298 42F4 
+  registers (unsigned dec): 
+33432 17140 
+  registers (signed dec): 
+-32104 17140 
+ registers (float): 
+-0.000000 
+  CRC (hex): 8362
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1002, 2, 
+-32104 17140 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+ê
+01 03 03 EA 00 02 E5 BB 
+Number of received bytes: 9
+01 03 04 AB DC 42 F4 2A CA 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+ABDC 42F4 
+  registers (unsigned dec): 
+43996 17140 
+  registers (signed dec): 
+-21540 17140 
+ registers (float): 
+-0.000000 
+  CRC (hex): CA2A
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1002, 2, 
+-21540 17140 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+
+01 03 00 11 00 01 D4 0F 
+Number of received bytes: 7
+01 03 02 30 30 AC 50 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 2
+  registers (hex): 
+3030 
+  registers (unsigned dec): 
+12336 
+  registers (signed dec): 
+12336 
+ registers (float): 
+
+  CRC (hex): 50AC
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 17, 1, 
+12336 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+
+01 03 00 11 00 01 D4 0F 
+Number of received bytes: 7
+01 03 02 30 30 AC 50 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 2
+  registers (hex): 
+3030 
+  registers (unsigned dec): 
+12336 
+  registers (signed dec): 
+12336 
+ registers (float): 
+
+  CRC (hex): 50AC
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 17, 1, 
+12336 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 02 44 7B 
+Number of received bytes: 5
+01 03 04 A0 DB 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+A0DB 0000 
+  registers (unsigned dec): 
+41179 0 
+  registers (signed dec): 
+-24357 0 
+ registers (float): 
+-0.000000 
+  CRC (hex): D800
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+-24357 0 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 02 44 7B 
+Number of received bytes: 5
+01 03 04 B6 DE 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+B6DE 0000 
+  registers (unsigned dec): 
+46814 0 
+  registers (signed dec): 
+-18722 0 
+ registers (float): 
+-0.000007 
+  CRC (hex): D800
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+-18722 0 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 02 44 7B 
+Number of received bytes: 9
+01 03 04 A3 74 42 F5 68 8A 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+A374 42F5 
+  registers (unsigned dec): 
+41844 17141 
+  registers (signed dec): 
+-23692 17141 
+ registers (float): 
+-0.000000 
+  CRC (hex): 8A68
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+-23692 17141 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 02 44 7B 
+Number of received bytes: 5
+01 03 04 AC C9 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+ACC9 0000 
+  registers (unsigned dec): 
+44233 0 
+  registers (signed dec): 
+-21303 0 
+ registers (float): 
+-0.000000 
+  CRC (hex): D800
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+-21303 0 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 02 44 7B 
+Number of received bytes: 9
+01 03 04 DB FB 42 F5 41 C1 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+DBFB 42F5 
+  registers (unsigned dec): 
+56315 17141 
+  registers (signed dec): 
+-9221 17141 
+ registers (float): 
+-141447678377590784.000000 
+  CRC (hex): C141
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+-9221 17141 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 02 44 7B 
+Number of received bytes: 9
+01 03 04 F4 C7 42 F5 89 19 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+F4C7 42F5 
+  registers (unsigned dec): 
+62663 17141 
+  registers (signed dec): 
+-2873 17141 
+ registers (float): 
+-126297012302500940318391077437440.000000 
+  CRC (hex): 1989
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+-2873 17141 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 02 44 7B 
+Number of received bytes: 7
+01 03 04 EC C9 42 F5 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+ECC9 42F5 
+  registers (unsigned dec): 
+60617 17141 
+  registers (signed dec): 
+-4919 17141 
+ registers (float): 
+-1946482283061663356321529856.000000 
+  CRC (hex): D800
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+-4919 17141 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 02 44 7B 
+Number of received bytes: 9
+01 03 04 E3 FB 42 F5 4C A1 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+E3FB 42F5 
+  registers (unsigned dec): 
+58363 17141 
+  registers (signed dec): 
+-7173 17141 
+ registers (float): 
+-9269915050153789620224.000000 
+  CRC (hex): A14C
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+-7173 17141 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 02 44 7B 
+Number of received bytes: 9
+01 03 04 CF 51 42 F5 64 11 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+CF51 42F5 
+  registers (unsigned dec): 
+53073 17141 
+  registers (signed dec): 
+-12463 17141 
+ registers (float): 
+-3510826240.000000 
+  CRC (hex): 1164
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+-12463 17141 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 02 44 7B 
+Number of received bytes: 9
+01 03 04 19 E2 42 F5 AD BE 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+19E2 42F5 
+  registers (unsigned dec): 
+6626 17141 
+  registers (signed dec): 
+6626 17141 
+ registers (float): 
+0.000000 
+  CRC (hex): BEAD
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+6626 17141 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 02 44 7B 
+Number of received bytes: 4
+01 03 04 D5 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+D500 0000 
+  registers (unsigned dec): 
+54528 0 
+  registers (signed dec): 
+-11008 0 
+ registers (float): 
+-8796093022208.000000 
+  CRC (hex): D800
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+-11008 0 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 02 44 7B 
+Number of received bytes: 5
+01 03 04 91 ED 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+91ED 0000 
+  registers (unsigned dec): 
+37357 0 
+  registers (signed dec): 
+-28179 0 
+ registers (float): 
+-0.000000 
+  CRC (hex): D800
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+-28179 0 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 02 44 7B 
+Number of received bytes: 9
+01 03 04 2A 1C 42 F6 83 0B 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+2A1C 42F6 
+  registers (unsigned dec): 
+10780 17142 
+  registers (signed dec): 
+10780 17142 
+ registers (float): 
+0.000000 
+  CRC (hex): B83
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+10780 17142 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 02 44 7B 
+Number of received bytes: 9
+01 03 04 54 3E 42 F6 3B 29 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+543E 42F6 
+  registers (unsigned dec): 
+21566 17142 
+  registers (signed dec): 
+21566 17142 
+ registers (float): 
+-984931401481283361040584839004160.000000 
+  CRC (hex): 293B
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+21566 17142 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 02 44 7B 
+Number of received bytes: 5
+01 03 04 56 2D 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+562D 0000 
+  registers (unsigned dec): 
+22061 0 
+  registers (signed dec): 
+22061 0 
+ registers (float): 
+0.000000 
+  CRC (hex): D800
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+22061 0 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 02 44 7B 
+Number of received bytes: 9
+01 03 04 5E 89 42 F6 88 D7 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+5E89 42F6 
+  registers (unsigned dec): 
+24201 17142 
+  registers (signed dec): 
+24201 17142 
+ registers (float): 
+-986417703240950370733135600025600.000000 
+  CRC (hex): D788
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+24201 17142 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 02 44 7B 
+Number of received bytes: 4
+01 03 04 52 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+5200 0000 
+  registers (unsigned dec): 
+20992 0 
+  registers (signed dec): 
+20992 0 
+ registers (float): 
+0.000000 
+  CRC (hex): D800
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+20992 0 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 02 44 7B 
+Number of received bytes: 3
+01 03 04 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+0000 0000 
+  registers (unsigned dec): 
+0 0 
+  registers (signed dec): 
+0 0 
+ registers (float): 
+0.000000 
+  CRC (hex): D800
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+0 0 
+Reading Meter Serial Number
+argc: 6
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 
+28251 
+Reading Meter Serial Number
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+30354 17142 
+Reading Meter Serial Number
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+31487 17142 
+Reading Meter Serial Number
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+31578 17142 
+Reading Meter Serial Number
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+-30913 17142 
+Reading Meter Serial Number
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+27062 17142 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 02 44 7B 
+Number of received bytes: 9
+01 03 04 66 15 42 F6 45 99 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+6615 42F6 
+  registers (unsigned dec): 
+26133 17142 
+  registers (signed dec): 
+26133 17142 
+ registers (float): 
+-984120705498056347633060275027968.000000 
+  CRC (hex): 9945
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+26133 17142 
+Reading Meter Serial Number
+Number of transmitting bytes: 8
+è
+01 03 03 E8 00 02 44 7B 
+Number of received bytes: 4
+01 03 04 7A 
+Response received:
+  Modbus addr: 1
+  Modbus function: 3
+  Modbus value bytes: 4
+  registers (hex): 
+7A00 0000 
+  registers (unsigned dec): 
+31232 0 
+  registers (signed dec): 
+31232 0 
+ registers (float): 
+0.000000 
+  CRC (hex): D800
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+31232 0 
+Reading Meter Serial Number
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+-25604 17142 
+Reading Meter Serial Number
+argc: 7
+argv: ./TCPModbusClient, r, 128.97.11.100, 4660, 1, 1000, 2, 
+-31598 17142 

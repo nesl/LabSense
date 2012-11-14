@@ -1,0 +1,8 @@
+WAN port:
+
+    Any packet that hits WAN 
+
+    From outside of lab, it first hits WAN b/c WAN is connected to outside.
+
+    
+
