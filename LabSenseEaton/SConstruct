@@ -1,8 +1,0 @@
-env = Environment()
-src = ["TCPModbusClient.c", "utility.c", "zhelpers.h", "HandleModbusTCPClient.c", "E30ModbusMsg.h", "crc16.c", "DieWithError.c"]
-src2 = ["TCPModbusServer.c", "utility.c", "zhelpers.h", "HandleModbusTCPClient.c", "E30ModbusMsg.h", "crc16.c", "DieWithError.c"]
-libpath = "/usr/lib/"
-libs = ["zmq"]
-
-env.Program(target = 'TCPModbusClient', source = src, LIBPATH=libpath, LIBS=libs) 
-# env.Program(target = 'TCPModbusServer', source = src2, LIBPATH=libpath, LIBS=libs) 

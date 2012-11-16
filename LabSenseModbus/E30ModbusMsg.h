@@ -108,6 +108,7 @@ typedef struct modbus_reply_report_slaveid {
 typedef enum Type {
     Normal = 0, // This is the default type,where the zeromq_special_mode is 
                 // not used.
+    Eaton,
     Power,      // This is for getting power in zeromq_special_mode.
     PowerFactor,// This is for getting power factor in zeromq_special_mode.
     Current     // This is for getting current in zeromq_special_mode.

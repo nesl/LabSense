@@ -8,7 +8,7 @@
 #include "E30ModbusMsg.h"
 
 // Zeromq helper file
-/*#include <zmq.h>*/
+#include <zmq.h>
 
 #define RCVBUFSIZE 1024   /* Size of receive buffer */ 
 
@@ -16,6 +16,8 @@
 #define ARGS_READ   6
 #define ARGS_WRITE  7
 #define ARGS_WRITEM_REGVAL_POS 7
+
+#define SAMPLING_RATE 5
 
 
 void print_usage_top(char *str);
@@ -46,9 +48,9 @@ int main(int argc, char *argv[])
     int first_iteration_finished = 0;
 
     // Zeromq context and publisher
-    /*void *context = zmq_init(1);*/
-    /*void *publisher = zmq_socket (context, ZMQ_PUB);*/
-    /*zmq_bind(publisher, "tcp://*:5557");*/
+    void *context = zmq_init(1);
+    void *publisher = zmq_socket (context, ZMQ_PUB);
+    zmq_bind(publisher, "tcp://*:5557");
 
     txBufLen = 0;
 
@@ -82,9 +84,28 @@ int main(int argc, char *argv[])
           (strcmp(argv[2], "help") == 0 || strcmp(argv[2], "h") == 0)) {
         print_usage_read(argv[0]);
       }
-      else if (argc == 3 && strcmp(argv[2], "all") == 0) {
+      else if (argc == 3 && strcmp(argv[2], "eaton") == 0) {
+
+eaton_loop:
+          read_type = Eaton;
+
+          // Special case to read all power and current readings 
+          // and send over zeromq
+          printf("Tracking Voltages, Currents, Power, VARS, VAS, Power Factor\n");
+
+          // Set the arguments according to the prepare_msg_read function
+          argc = 7;
+          argv[1] = "read";             // Read from the eaton
+          argv[2] = "128.97.11.100";    // IP address of eaton
+          argv[3] = "4660";             // Server Port
+          argv[4] ="1";                 // Modbus Address
+          argv[5] = "999";              // Modbus Register Address
+          argv[6] = "54";               // Reading 54 Registers
+
+      }
+      else if (argc == 3 && strcmp(argv[2], "veris") == 0) {
     
-current_power_loop:
+veris_loop:
           // Special case to read all power and current readings 
           // and send over zeromq
           printf("Tracking power, current, energy ,and power factor\n");
@@ -223,16 +244,18 @@ current_power_loop:
         rxBuf[bytesRcvd] = '\0';  /* Terminate the string! */ 
     }
 
-    void *publisher = NULL;
     print_received_msg((uint8_t *)rxBuf, bytesRcvd, read_type, publisher);
 
     if(read_type != Normal) {
         first_iteration_finished = 1;
-        sleep(5);
-        goto current_power_loop ;
+        sleep(SAMPLING_RATE);
+        if(read_type == Eaton)
+            goto eaton_loop;
+        else
+            goto veris_loop;
     }
 
-    /*zmq_close(publisher);*/
+    zmq_close(publisher);
     close(sock);
     exit(0);
 

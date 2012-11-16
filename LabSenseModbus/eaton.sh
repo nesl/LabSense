@@ -34,7 +34,8 @@ fi
   ## Reading Historical Log Block Again
   #DATA2=`echo "Reading Historical Log Block Again" && ./TCPModbusClient r $IP $MODBUS_PORT $MODBUS_ADDR $MODBUS_REG $MODBUS_NREGS 2>&1`
   
-  DATA3=`echo "Reading Meter Type" && ./TCPModbusClient r $IP $MODBUS_PORT 1 30014 1 2>&1` 
+  #DATA3=`echo "Reading Meter Type" && ./TCPModbusClient r $IP $MODBUS_PORT 1 30014 1 2>&1` 
+  DATA3=`echo "Reading Meter Type" && ./TCPModbusClient r eaton` 
   #if [ -n "$DATA3" ]; then
     #echo "$TIME" | tee -a $LOGPATH/time.log
     #echo "$QUERY1" | tee -a $LOGPATH/kw.log

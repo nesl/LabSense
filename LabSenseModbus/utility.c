@@ -6,7 +6,7 @@
 #include <string.h> 
 #include "E30ModbusMsg.h"
 
-#include "zhelpers.h"
+/*#include "zhelpers.h"*/
 
 #define RCVBUFSIZE 1024
 
@@ -49,7 +49,7 @@ int sendBatchedMessage(void *publisher, char *type, uint32_t *values) {
         sprintf(complete_msg, "%s %s", type, message);
         printf("Complete msg: %s", complete_msg);
 
-        s_send(publisher, complete_msg);
+        /*s_send(publisher, complete_msg);*/
 
         // Success
         return 1;
@@ -142,26 +142,65 @@ void print_modbus_reply_read_reg(uint8_t *buf, int buflen, Type type, void *publ
 
   }
   else {
-      for(c =0; c < byte_cnt / 4; c++) {
-          uint32_t tmp = ntohl(reply_msg->modbus_reg_val32[c]);
-          register_values[count] = tmp;
-          fprintf(stderr, "%f ",  *(float*)(&tmp));
-          count++;
+
+      if(type == Eaton)
+      {
+          /* Eaton: all values are read at a time */
+          for(c =0; c < byte_cnt / 4; c++) {
+              if(c == 0) {
+                  printf("VoltageAN, VoltageBN, VoltageCN, VoltageAB, VoltageBC, VoltageCA\n");
+              }
+              else if(c == 6) {
+                  printf("\nCurrentA, CurrentB, CurrentC\n");
+              }
+              else if(c == 9) {
+                  printf("\nPowerTotal, VARSTotal, VAsTotal, Power Factor Total");
+              }
+              else if(c == 13) {
+                  printf("\nFrequency, Neutral Current\n");
+              }
+              else if(c == 15) {
+                  printf("\nPowerA, PowerB, PowerC\n");
+              }
+              else if(c == 18) {
+                  printf("\nVARSA, VARSB, VARSC\n");
+              }
+              else if(c == 21) {
+                  printf("\nVASA, VASB, VASC\n");
+              }
+              else if(c == 24) {
+                  printf("\nPowerFactorA, PowerFactorB, PowerFactorC\n");
+              }
+              uint32_t tmp = ntohl(reply_msg->modbus_reg_val32[c]);
+              register_values[count] = tmp;
+              fprintf(stderr, "%f ",  *(float*)(&tmp));
+              count++;
+          }
+      }
+      else {
+          /* Veris: Values are read in separate runs */
+          for(c =0; c < byte_cnt / 4; c++) {
+              uint32_t tmp = ntohl(reply_msg->modbus_reg_val32[c]);
+              register_values[count] = tmp;
+              fprintf(stderr, "%f ",  *(float*)(&tmp));
+              count++;
+          }
+
+          printf("Count: %d\n", count);
+          if(type == Power) {
+              printf("Sending Power to Zeromq\n");
+              sendBatchedMessage(publisher, "Veris_Power_1", register_values);
+          }
+          else if(type == PowerFactor) {
+              printf("Sending Power Factor to Zeromq\n");
+              sendBatchedMessage(publisher, "Veris_PowerFactor_1", register_values);
+          }
+          else if(type == Current) {
+              printf("Sending Current to Zeromq\n");
+              sendBatchedMessage(publisher, "Veris_Current_1", register_values);
+          }
       }
 
-      printf("Count: %d\n", count);
-      if(type == Power) {
-          printf("Sending Power to Zeromq\n");
-          sendBatchedMessage(publisher, "Veris_Power_1", register_values);
-      }
-      else if(type == PowerFactor) {
-          printf("Sending Power Factor to Zeromq\n");
-          sendBatchedMessage(publisher, "Veris_PowerFactor_1", register_values);
-      }
-      else if(type == Current) {
-          printf("Sending Current to Zeromq\n");
-          sendBatchedMessage(publisher, "Veris_Current_1", register_values);
-      }
       printf("\n");
   }
 
@@ -172,10 +211,10 @@ void print_modbus_reply_read_reg(uint8_t *buf, int buflen, Type type, void *publ
                         reply_msg->modbus_val_bytes);
   fprintf(stderr, "  CRC (hex): %02X\n", crc_temp);
 
-  for (c = 0; c < byte_cnt / 2; c++) {
-    printf("%d ", (short) ntohs(reply_msg->modbus_reg_val[c]));
-  }
-  printf("\n"); 
+  /*for (c = 0; c < byte_cnt / 2; c++) {*/
+    /*printf("%d ", (short) ntohs(reply_msg->modbus_reg_val[c]));*/
+  /*}*/
+  /*printf("\n"); */
 
 }
 
