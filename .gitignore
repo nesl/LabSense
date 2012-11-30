@@ -4,6 +4,7 @@ LabSenseDB
 *.o
 *.swp
 *.svn
+*.dblite
 tags
 .Python
 
@@ -19,3 +20,7 @@ LabSenseSupervisor/supervisord.conf
 LabSenseServer/SocketIOServer/cache.db
 LabSenseSupervisor/zwcfg_0x014d08e6.xml
 LabSenseSupervisor/zwscene.xml
+
+LabSenseModbus/.sconsign.dblite
+LabSenseModbus/TCPModbusClient
+LabSenseModbus/log1/*

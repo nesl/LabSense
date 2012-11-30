@@ -89,8 +89,6 @@ int main(int argc, char *argv[])
 eaton_loop:
           read_type = Eaton;
 
-          // Special case to read all power and current readings 
-          // and send over zeromq
           printf("Tracking Voltages, Currents, Power, VARS, VAS, Power Factor\n");
 
           // Set the arguments according to the prepare_msg_read function
