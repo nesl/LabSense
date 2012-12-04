@@ -17,7 +17,7 @@
 #define ARGS_WRITE  7
 #define ARGS_WRITEM_REGVAL_POS 7
 
-#define SAMPLING_RATE 5
+#define SAMPLING_RATE 1
 
 
 void print_usage_top(char *str);
@@ -127,7 +127,7 @@ veris_loop:
           // Set the arguments according to the prepare_msg_read function
           argc = 7;
           argv[1] = "read";             // Read from the veris
-          argv[2] = "172.17.5.178";     // IP Address of Veris
+          argv[2] = "172.17.5.177";     // IP Address of Veris
           /*argv[2] = "128.97.93.201";     // IP Address of Veris*/
           argv[3] = "4660";             // Server Port
           argv[4] ="1";                 // Modbus Address

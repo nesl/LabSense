@@ -1,6 +1,6 @@
 env = Environment()
 src = ["TCPModbusClient.c", "utility.c", "zhelpers.h",
-"HandleModbusTCPClient.c", "E30ModbusMsg.h", "crc16.c", "DieWithError.c", "eaton.h"]
+"HandleModbusTCPClient.c", "E30ModbusMsg.h", "crc16.c", "DieWithError.c"]
 src2 = ["TCPModbusServer.c", "utility.c", "zhelpers.h", "HandleModbusTCPClient.c", "E30ModbusMsg.h", "crc16.c", "DieWithError.c"]
 libpath = "/usr/lib/"
 libs = ["zmq"]

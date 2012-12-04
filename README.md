@@ -56,20 +56,22 @@ Dependencies:
 
 ------------------------------------------------------------------------------
 
-LabSensePowerMonitor
+LabSenseModbus
 --------------
 
-LabSensePowerMonitor contains the code to read the data from the Veris E30A
-Power Panel Monitor. The code is based on the Application Protocol for the Veris
-E30 Panel-board Monitoring System, which is based on accessing memory-mapped
-registers by issuing register-read or register-write request messages. The code
-is based on code written by [Jaein Jong](http://local.cs.berkeley.edu/wiki/images/5/5c/Panel_monitoring_techrpt_jeong.pdf).
-The LabSensePowerMonitor forwards power and current readings from the Vera E30
-to the sendToSensorSafe.py file over Zeromq.
+LabSenseModbus contains the code to read the data from the Veris E30A Power
+Panel Monitor and the Eaton Power Monitor. The code is based on the Modbus
+Protocol, which is based on accessing memory-mapped registers by issuing
+register-read or register-write request messages. The code is based on code
+written by [Jaein Jong](http://local.cs.berkeley.edu/wiki/images/5/5c/Panel_monitoring_techrpt_jeong.pdf).
+The LabSenseModbus forwards power, current, energy, and current readings from
+the Vera E30 to SensorAct and forwards voltage, current, power, VARS, VAS, and
+power factor from the Eaton meter.
 
 Dependencies:
 
 * [Zeromq](http://www.zeromq.org/intro:get-the-software)
+* [Libcurl](http://curl.haxx.se/libcurl/)
 
 ------------------------------------------------------------------------------
 
@@ -106,7 +108,7 @@ LabSenseSupervisor
 LabSenseSupervisor contains a supervisord.conf file that is meant to be used
 with [SuperVisor](http://supervisord.org/). Supervisor allows users LabSense to
 monitor and control all the processes that are running (LabSenseZwave,
-LabSensePowerMonitor, LabSenseRaritan, LabSenseServer, LabSenseForwarder).
+LabSenseModbus, LabSenseRaritan, LabSenseServer, LabSenseForwarder).
 
 ------------------------------------------------------------------------------
 
@@ -181,14 +183,29 @@ LabSenseZwave Installation
 
     Unless other usb devices are plugged in, usually the serial port is /dev/ttyUSB0. 
 
-LabSensePowerMonitor Installation
+LabSenseModbus Installation
 ---------------------------------
 
-1. Make the files and run the executable:
+1. Install Libcurl:
+
+    <pre>
+    sudo apt-get install libcurl4-gnutls-development
+    </pre>
+
+2. Make the files and run the executable with eaton or veris depending on which
+   meter is required
     <pre>
     make
-    ./TCPModbusClient r all
+    ./TCPModbusClient r eaton
     </pre>
+
+    or 
+   
+   <pre>
+   make
+   ./TCPModbusClient r veris
+    </pre>
+
 
 LabSenseRaritan Installation
 ----------------------------
