@@ -6,7 +6,6 @@
 #include <string.h> 
 #include "E30ModbusMsg.h"
 
-/*#include "zhelpers.h"*/
 
 #define RCVBUFSIZE 1024
 
@@ -59,7 +58,7 @@ int sendBatchedMessage(void *publisher, char *type, uint32_t *values) {
     return 0;
 }
 
-void print_received_msg(uint8_t *buf, int buflen, Type type, void *publisher ) {
+void print_received_msg(uint8_t *buf, int buflen, Type type, time_t timestamp) {
   int c;
 
   /* Print the size of message */
@@ -76,7 +75,7 @@ void print_received_msg(uint8_t *buf, int buflen, Type type, void *publisher ) {
 
   switch (buf[BYTEPOS_MODBUS_FUNC]) {
   case MODBUS_FUNC_READ_REG:
-    print_modbus_reply_read_reg(buf, buflen, type, publisher);
+    print_modbus_reply_read_reg(buf, buflen, type, timestamp);
     break;
 
   case MODBUS_FUNC_WRITE_REG:
@@ -96,7 +95,7 @@ void print_received_msg(uint8_t *buf, int buflen, Type type, void *publisher ) {
   } 
 }
 
-void print_modbus_reply_read_reg(uint8_t *buf, int buflen, Type type, void *publisher) {
+void print_modbus_reply_read_reg(uint8_t *buf, int buflen, Type type, time_t timestamp) {
   uint8_t byte_cnt;
   int c;
   int count = 0;
@@ -104,7 +103,6 @@ void print_modbus_reply_read_reg(uint8_t *buf, int buflen, Type type, void *publ
   modbus_reply_read_reg* reply_msg = (modbus_reply_read_reg*) buf;
 
   uint32_t register_values[NUMBER_CHANNELS];
-
 
   fprintf(stderr, "Response received:\n");
   fprintf(stderr, "  Modbus addr: %d\n", reply_msg->modbus_addr);
@@ -179,6 +177,7 @@ void print_modbus_reply_read_reg(uint8_t *buf, int buflen, Type type, void *publ
       }
       else {
           /* Veris: Values are read in separate runs */
+          printf("byte_cnt/4: %d", byte_cnt/4);
           for(c =0; c < byte_cnt / 4; c++) {
               uint32_t tmp = ntohl(reply_msg->modbus_reg_val32[c]);
               register_values[count] = tmp;
@@ -186,19 +185,21 @@ void print_modbus_reply_read_reg(uint8_t *buf, int buflen, Type type, void *publ
               count++;
           }
 
-          printf("Count: %d\n", count);
-          if(type == Power) {
-              printf("Sending Power to Zeromq\n");
-              sendBatchedMessage(publisher, "Veris_Power_1", register_values);
-          }
-          else if(type == PowerFactor) {
-              printf("Sending Power Factor to Zeromq\n");
-              sendBatchedMessage(publisher, "Veris_PowerFactor_1", register_values);
-          }
-          else if(type == Current) {
-              printf("Sending Current to Zeromq\n");
-              sendBatchedMessage(publisher, "Veris_Current_1", register_values);
-          }
+          sendVerisToSensorAct(register_values, byte_cnt/4, type, timestamp);
+
+          /*printf("Count: %d\n", count);*/
+          /*if(type == Power) {*/
+              /*printf("Sending Power to Zeromq\n");*/
+              /*sendBatchedMessage(publisher, "Veris_Power_1", register_values);*/
+          /*}*/
+          /*else if(type == PowerFactor) {*/
+              /*printf("Sending Power Factor to Zeromq\n");*/
+              /*sendBatchedMessage(publisher, "Veris_PowerFactor_1", register_values);*/
+          /*}*/
+          /*else if(type == Current) {*/
+              /*printf("Sending Current to Zeromq\n");*/
+              /*sendBatchedMessage(publisher, "Veris_Current_1", register_values);*/
+          /*}*/
       }
 
       printf("\n");

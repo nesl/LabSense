@@ -8,7 +8,7 @@
 #include "E30ModbusMsg.h"
 
 // Zeromq helper file
-#include <zmq.h>
+/*#include <zmq.h>*/
 
 #define RCVBUFSIZE 1024   /* Size of receive buffer */ 
 
@@ -48,9 +48,9 @@ int main(int argc, char *argv[])
     int first_iteration_finished = 0;
 
     // Zeromq context and publisher
-    void *context = zmq_init(1);
-    void *publisher = zmq_socket (context, ZMQ_PUB);
-    zmq_bind(publisher, "tcp://*:5557");
+    /*void *context = zmq_init(1);*/
+    /*void *publisher = zmq_socket (context, ZMQ_PUB);*/
+    /*zmq_bind(publisher, "tcp://*:5557");*/
 
     txBufLen = 0;
 
@@ -109,16 +109,16 @@ veris_loop:
           printf("Tracking power, current, energy ,and power factor\n");
 
           if(read_type == Normal) {
-              read_type = Power;
+              read_type = VerisPower;
           }
-          else if(read_type == Power) {
-            read_type = PowerFactor;
+          else if(read_type == VerisPower) {
+            read_type = VerisPowerFactor;
           }
-          else if(read_type == PowerFactor) {
-              read_type = Current;
+          else if(read_type == VerisPowerFactor) {
+              read_type = VerisCurrent;
           }
-          else if(read_type == Current) {
-              read_type = Power;
+          else if(read_type == VerisCurrent) {
+              read_type = VerisPower;
           }
           else {
               printf("Error in read type\n");
@@ -135,22 +135,22 @@ veris_loop:
 
           // Set the Register address
           switch(read_type) {
-              case Power:
+              case VerisPower:
                   // Get Power Readings (KW)
                   argv[5] = "2083";
-                  read_type = Power;
+                  read_type = VerisPower;
                   break;
 
-              case PowerFactor:
+              case VerisPowerFactor:
                   // Get Power Readings (KW)
                   argv[5] = "2267";
-                  read_type = PowerFactor;
+                  read_type = VerisPowerFactor;
                   break;
                   
-              case Current:
+              case VerisCurrent:
                   // Get Current Readings (A)
                   argv[5] = "2251";
-                  read_type = Current;
+                  read_type = VerisCurrent;
                   break;
               default: 
                   printf("Error in read type\n");
@@ -242,7 +242,8 @@ veris_loop:
         rxBuf[bytesRcvd] = '\0';  /* Terminate the string! */ 
     }
 
-    print_received_msg((uint8_t *)rxBuf, bytesRcvd, read_type, publisher);
+    time_t timestamp = time(NULL);
+    print_received_msg((uint8_t *)rxBuf, bytesRcvd, read_type, timestamp);
 
     if(read_type != Normal) {
         first_iteration_finished = 1;
@@ -253,7 +254,7 @@ veris_loop:
             goto veris_loop;
     }
 
-    zmq_close(publisher);
+    /*zmq_close(publisher);*/
     close(sock);
     exit(0);
 
@@ -483,4 +484,3 @@ int prepare_msg_writem(int argc, char* argv[], char* buf,
 
   return bufLen; 
 }
-
