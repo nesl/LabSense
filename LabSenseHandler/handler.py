@@ -55,6 +55,13 @@ class LabSenseHandler:
         for device in devices:
             self.addDevice(device)
 
+    def deleteDevices(self):
+        print "Deleting all devices"
+
+        devices = ["Raritan", "Veris", "ZwaveDoorWindow", "ZwaveHsm"]
+        for device in devices:
+            self.deleteDevice(device)
+
 
     """ Single Device level Calls """
     def addDevice(self, name):
@@ -123,5 +130,9 @@ if __name__ == "__main__":
     #labSenseHandler.deleteDevice("NESL_Raritan")
 
     #labSenseHandler.listDevices()
+
+    #labSenseHandler.addDevices()
+
+    labSenseHandler.deleteDevices()
 
     labSenseHandler.closeConnection()

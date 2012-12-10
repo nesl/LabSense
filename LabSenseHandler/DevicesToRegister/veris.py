@@ -6,15 +6,13 @@ body = """
         "IP": "128.97.93.90", 
         "latitude": 34.069, 
         "longitude": -118.443, 
-        "actuators": [ 
-        ], 
         "sensors": [ 
             { "name": "Outlet1", 
                 "sid": "1", 
                 "channels": [ 
                     { "name": "Current", 
                         "type": "Float", 
-                        "unit": "A", 
+                        "unit": "Amps", 
                         "samplingperiod": 5
                     },
                     { "name": "Power", 
@@ -24,7 +22,7 @@ body = """
                     },
                     { "name": "Power Factor", 
                         "type": "Float", 
-                        "unit": "%", 
+                        "unit": "Percent", 
                         "samplingperiod": 5 
                     }
                 ] 
@@ -34,7 +32,7 @@ body = """
                 "channels": [ 
                     { "name": "Current", 
                         "type": "Float", 
-                        "unit": "A", 
+                        "unit": "Amps", 
                         "samplingperiod": 5
                     },
                     { "name": "Power", 
@@ -44,7 +42,7 @@ body = """
                     },
                     { "name": "Power Factor", 
                         "type": "Float", 
-                        "unit": "%", 
+                        "unit": "Percent", 
                         "samplingperiod": 5 
                     }
                 ] 
@@ -54,7 +52,7 @@ body = """
                 "channels": [ 
                     { "name": "Current", 
                         "type": "Float", 
-                        "unit": "A", 
+                        "unit": "Amps", 
                         "samplingperiod": 5
                     },
                     { "name": "Power", 
@@ -64,7 +62,7 @@ body = """
                     },
                     { "name": "Power Factor", 
                         "type": "Float", 
-                        "unit": "%", 
+                        "unit": "Percent", 
                         "samplingperiod": 5 
                     }
                 ] 
@@ -74,7 +72,7 @@ body = """
                 "channels": [ 
                     { "name": "Current", 
                         "type": "Float", 
-                        "unit": "A", 
+                        "unit": "Amps", 
                         "samplingperiod": 5
                     },
                     { "name": "Power", 
@@ -84,7 +82,7 @@ body = """
                     },
                     { "name": "Power Factor", 
                         "type": "Float", 
-                        "unit": "%", 
+                        "unit": "Percent", 
                         "samplingperiod": 5 
                     }
                 ] 
@@ -94,7 +92,7 @@ body = """
                 "channels": [ 
                     { "name": "Current", 
                         "type": "Float", 
-                        "unit": "A", 
+                        "unit": "Amps", 
                         "samplingperiod": 5
                     },
                     { "name": "Power", 
@@ -104,7 +102,7 @@ body = """
                     },
                     { "name": "Power Factor", 
                         "type": "Float", 
-                        "unit": "%", 
+                        "unit": "Percent", 
                         "samplingperiod": 5 
                     }
                 ] 
@@ -114,7 +112,7 @@ body = """
                 "channels": [ 
                     { "name": "Current", 
                         "type": "Float", 
-                        "unit": "A", 
+                        "unit": "Amps", 
                         "samplingperiod": 5
                     },
                     { "name": "Power", 
@@ -124,7 +122,7 @@ body = """
                     },
                     { "name": "Power Factor", 
                         "type": "Float", 
-                        "unit": "%", 
+                        "unit": "Percent", 
                         "samplingperiod": 5 
                     }
                 ] 
@@ -134,7 +132,7 @@ body = """
                 "channels": [ 
                     { "name": "Current", 
                         "type": "Float", 
-                        "unit": "A", 
+                        "unit": "Amps", 
                         "samplingperiod": 5
                     },
                     { "name": "Power", 
@@ -144,7 +142,7 @@ body = """
                     },
                     { "name": "Power Factor", 
                         "type": "Float", 
-                        "unit": "%", 
+                        "unit": "Percent", 
                         "samplingperiod": 5 
                     }
                 ] 
@@ -154,7 +152,7 @@ body = """
                 "channels": [ 
                     { "name": "Current", 
                         "type": "Float", 
-                        "unit": "A", 
+                        "unit": "Amps", 
                         "samplingperiod": 5
                     },
                     { "name": "Power", 
@@ -164,7 +162,7 @@ body = """
                     },
                     { "name": "Power Factor", 
                         "type": "Float", 
-                        "unit": "%", 
+                        "unit": "Percent", 
                         "samplingperiod": 5 
                     }
                 ] 
@@ -174,7 +172,7 @@ body = """
                 "channels": [ 
                     { "name": "Current", 
                         "type": "Float", 
-                        "unit": "A", 
+                        "unit": "Amps", 
                         "samplingperiod": 5
                     },
                     { "name": "Power", 
@@ -184,7 +182,7 @@ body = """
                     },
                     { "name": "Power Factor", 
                         "type": "Float", 
-                        "unit": "%", 
+                        "unit": "Percent", 
                         "samplingperiod": 5 
                     }
                 ] 
@@ -194,7 +192,7 @@ body = """
                 "channels": [ 
                     { "name": "Current", 
                         "type": "Float", 
-                        "unit": "A", 
+                        "unit": "Amps", 
                         "samplingperiod": 5
                     },
                     { "name": "Power", 
@@ -204,7 +202,7 @@ body = """
                     },
                     { "name": "Power Factor", 
                         "type": "Float", 
-                        "unit": "%", 
+                        "unit": "Percent", 
                         "samplingperiod": 5 
                     }
                 ] 
@@ -214,7 +212,7 @@ body = """
                 "channels": [ 
                     { "name": "Current", 
                         "type": "Float", 
-                        "unit": "A", 
+                        "unit": "Amps", 
                         "samplingperiod": 5
                     },
                     { "name": "Power", 
@@ -224,7 +222,7 @@ body = """
                     },
                     { "name": "Power Factor", 
                         "type": "Float", 
-                        "unit": "%", 
+                        "unit": "Percent", 
                         "samplingperiod": 5 
                     }
                 ] 
@@ -234,7 +232,7 @@ body = """
                 "channels": [ 
                     { "name": "Current", 
                         "type": "Float", 
-                        "unit": "A", 
+                        "unit": "Amps", 
                         "samplingperiod": 5
                     },
                     { "name": "Power", 
@@ -244,7 +242,7 @@ body = """
                     },
                     { "name": "Power Factor", 
                         "type": "Float", 
-                        "unit": "%", 
+                        "unit": "Percent", 
                         "samplingperiod": 5 
                     }
                 ] 
@@ -254,7 +252,7 @@ body = """
                 "channels": [ 
                     { "name": "Current", 
                         "type": "Float", 
-                        "unit": "A", 
+                        "unit": "Amps", 
                         "samplingperiod": 5
                     },
                     { "name": "Power", 
@@ -264,7 +262,7 @@ body = """
                     },
                     { "name": "Power Factor", 
                         "type": "Float", 
-                        "unit": "%", 
+                        "unit": "Percent", 
                         "samplingperiod": 5 
                     }
                 ] 
@@ -274,7 +272,7 @@ body = """
                 "channels": [ 
                     { "name": "Current", 
                         "type": "Float", 
-                        "unit": "A", 
+                        "unit": "Amps", 
                         "samplingperiod": 5
                     },
                     { "name": "Power", 
@@ -284,7 +282,7 @@ body = """
                     },
                     { "name": "Power Factor", 
                         "type": "Float", 
-                        "unit": "%", 
+                        "unit": "Percent", 
                         "samplingperiod": 5 
                     }
                 ] 
@@ -294,7 +292,7 @@ body = """
                 "channels": [ 
                     { "name": "Current", 
                         "type": "Float", 
-                        "unit": "A", 
+                        "unit": "Amps", 
                         "samplingperiod": 5
                     },
                     { "name": "Power", 
@@ -304,7 +302,7 @@ body = """
                     },
                     { "name": "Power Factor", 
                         "type": "Float", 
-                        "unit": "%", 
+                        "unit": "Percent", 
                         "samplingperiod": 5 
                     }
                 ] 
@@ -314,7 +312,7 @@ body = """
                 "channels": [ 
                     { "name": "Current", 
                         "type": "Float", 
-                        "unit": "A", 
+                        "unit": "Amps", 
                         "samplingperiod": 5
                     },
                     { "name": "Power", 
@@ -324,7 +322,7 @@ body = """
                     },
                     { "name": "Power Factor", 
                         "type": "Float", 
-                        "unit": "%", 
+                        "unit": "Percent", 
                         "samplingperiod": 5 
                     }
                 ] 
@@ -334,7 +332,7 @@ body = """
                 "channels": [ 
                     { "name": "Current", 
                         "type": "Float", 
-                        "unit": "A", 
+                        "unit": "Amps", 
                         "samplingperiod": 5
                     },
                     { "name": "Power", 
@@ -344,7 +342,7 @@ body = """
                     },
                     { "name": "Power Factor", 
                         "type": "Float", 
-                        "unit": "%", 
+                        "unit": "Percent", 
                         "samplingperiod": 5 
                     }
                 ] 
@@ -354,7 +352,7 @@ body = """
                 "channels": [ 
                     { "name": "Current", 
                         "type": "Float", 
-                        "unit": "A", 
+                        "unit": "Amps", 
                         "samplingperiod": 5
                     },
                     { "name": "Power", 
@@ -364,7 +362,7 @@ body = """
                     },
                     { "name": "Power Factor", 
                         "type": "Float", 
-                        "unit": "%", 
+                        "unit": "Percent", 
                         "samplingperiod": 5 
                     }
                 ] 
@@ -374,7 +372,7 @@ body = """
                 "channels": [ 
                     { "name": "Current", 
                         "type": "Float", 
-                        "unit": "A", 
+                        "unit": "Amps", 
                         "samplingperiod": 5
                     },
                     { "name": "Power", 
@@ -384,7 +382,7 @@ body = """
                     },
                     { "name": "Power Factor", 
                         "type": "Float", 
-                        "unit": "%", 
+                        "unit": "Percent", 
                         "samplingperiod": 5 
                     }
                 ] 
@@ -394,7 +392,7 @@ body = """
                 "channels": [ 
                     { "name": "Current", 
                         "type": "Float", 
-                        "unit": "A", 
+                        "unit": "Amps", 
                         "samplingperiod": 5
                     },
                     { "name": "Power", 
@@ -404,7 +402,7 @@ body = """
                     },
                     { "name": "Power Factor", 
                         "type": "Float", 
-                        "unit": "%", 
+                        "unit": "Percent", 
                         "samplingperiod": 5 
                     }
                 ] 
@@ -414,7 +412,7 @@ body = """
                 "channels": [ 
                     { "name": "Current", 
                         "type": "Float", 
-                        "unit": "A", 
+                        "unit": "Amps", 
                         "samplingperiod": 5
                     },
                     { "name": "Power", 
@@ -424,11 +422,10 @@ body = """
                     },
                     { "name": "Power Factor", 
                         "type": "Float", 
-                        "unit": "%", 
+                        "unit": "Percent", 
                         "samplingperiod": 5 
                     }
                 ] 
             }
         ] 
-    } 
-} """
+    }"""
