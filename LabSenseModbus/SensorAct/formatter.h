@@ -4,7 +4,7 @@
 
 // Converts the register values into SensorAct format
 // Returns array of strings to send to SensorAct
-int sensorActFormatter(char ***sa_buf, uint32_t *reg_vals, int count, Type type, time_t timestamp)
+int sensorActFormatter(char ***sa_buf, uint32_t *reg_vals, int count, Type type, time_t timestamp, char *api_key)
 {
     // Use large buffer to store JSON
     char buffer[SENSORACT_BUFFER_SIZE];
@@ -57,11 +57,9 @@ int sensorActFormatter(char ***sa_buf, uint32_t *reg_vals, int count, Type type,
         }
 
         for (i = 0; i < count; i++) {
-            sprintf(buffer, in_buf, "2bb5d6b943fc44f0bb6b467450e07ce7", dname, i+1, i+1, timestamp, cname, unit, *(float*)(&reg_vals[i]));
+            sprintf(buffer, in_buf, api_key, dname, i+1, i+1, timestamp, cname, unit, *(float*)(&reg_vals[i]));
             (*sa_buf)[i] = malloc(SENSORACT_BUFFER_SIZE);
             strcpy((*sa_buf)[i], buffer);
-            //printf("\nOUTPUT STRING: %s\n", buffer);
-            //printf("\nOUTPUT STRING: %s\n", (*sa_buf)[i]);
         }
 
         retVal = 1;

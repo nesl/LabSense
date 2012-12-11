@@ -164,13 +164,6 @@ veris_loop:
 
       /* Prepare tx buffer for read command */
       txBufLen = prepare_msg_read(argc, argv, txBuf, &servAddr);
-      printf("argc: %d\n", argc);
-      printf("argv: ");
-      for(i = 0; i < argc; i++) {
-          printf("%s, ", argv[i]);
-      }
-      printf("\n");
-
     }
     /* Check arguments for write command */
     else if (strcmp(argv[1], "write") == 0 || strcmp(argv[1], "w") == 0) {

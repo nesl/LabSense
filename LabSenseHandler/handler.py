@@ -7,6 +7,7 @@ import DevicesToRegister.raritan as Raritan
 import DevicesToRegister.veris as Veris
 import DevicesToRegister.zwaveDoorWindow as ZwaveDoorWindow
 import DevicesToRegister.zwaveHsm as ZwaveHsm
+import DevicesToRegister.eaton as Eaton
 
 class LabSenseHandler:
 
@@ -51,14 +52,14 @@ class LabSenseHandler:
     def addDevices(self):
         print "Adding all devices"
 
-        devices = ["Raritan", "Veris", "ZwaveDoorWindow", "ZwaveHsm"]
+        devices = ["Raritan", "Veris", "ZwaveDoorWindow", "ZwaveHsm", "Eaton"]
         for device in devices:
             self.addDevice(device)
 
     def deleteDevices(self):
         print "Deleting all devices"
 
-        devices = ["Raritan", "Veris", "ZwaveDoorWindow", "ZwaveHsm"]
+        devices = ["NESL_Raritan", "NESL_Veris", "NESL_ZwaveDoorWindow", "NESL_ZwaveHsm", "NESL_Eaton"]
         for device in devices:
             self.deleteDevice(device)
 
@@ -78,6 +79,9 @@ class LabSenseHandler:
 
         elif name == "ZwaveHsm":
             deviceprofile = ZwaveHsm.body
+
+        elif name == "Eaton":
+            deviceprofile = Eaton.body
 
         else:
             return False

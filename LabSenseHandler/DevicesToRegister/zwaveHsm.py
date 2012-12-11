@@ -6,8 +6,6 @@ body = """
         "IP": "128.97.93.90", 
         "latitude": 34.069, 
         "longitude": -118.443, 
-        "actuators": [ 
-        ], 
         "sensors": [ 
             { "name": "Readings", 
                 "sid": "1", 
@@ -19,16 +17,15 @@ body = """
                     },
                     { "name": "Temperature", 
                         "type": "Integer", 
-                        "unit": "F", 
+                        "unit": "Fahrenheit", 
                         "samplingperiod": 60
                     },
                     { "name": "Luminance", 
                         "type": "Integer", 
-                        "unit": "%", 
+                        "unit": "Perecent", 
                         "samplingperiod": 60
                     }
                 ] 
-            },
+            }
         ] 
-    } 
-} """
+    }"""

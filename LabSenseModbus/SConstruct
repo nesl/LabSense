@@ -4,9 +4,7 @@ env.Append(LINKCOM=" -Wl,--allow-multiple-definition")
 src = ["TCPModbusClient.c", "utility.c", "zhelpers.h", "SensorAct/SensorActUploader.h", "HandleModbusTCPClient.c", "E30ModbusMsg.h", "crc16.c", "DieWithError.c", "SensorAct/formatter.h"]
 src2 = ["TCPModbusServer.c", "utility.c", "zhelpers.h", "SensorAct/SensorActUploader.h", "HandleModbusTCPClient.c", "E30ModbusMsg.h", "crc16.c", "DieWithError.c", "SensorAct/formatter.h"]
 libpath = "/usr/lib/"
-libs = ["curl"]
-#libpath = "/usr/lib/"
-#libs = ["zmq"]
+libs = ["curl", "jansson"]
 
 env.Program(target = 'TCPModbusClient', source = src, LIBPATH=libpath, LIBS=libs) 
 #env.Program(target = 'TCPModbusClient', source = src) 

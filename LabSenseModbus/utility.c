@@ -177,7 +177,6 @@ void print_modbus_reply_read_reg(uint8_t *buf, int buflen, Type type, time_t tim
       }
       else {
           /* Veris: Values are read in separate runs */
-          printf("byte_cnt/4: %d", byte_cnt/4);
           for(c =0; c < byte_cnt / 4; c++) {
               uint32_t tmp = ntohl(reply_msg->modbus_reg_val32[c]);
               register_values[count] = tmp;
@@ -210,7 +209,7 @@ void print_modbus_reply_read_reg(uint8_t *buf, int buflen, Type type, time_t tim
   crc_temp = read_crc16((uint8_t*) buf,
                         sizeof(modbus_reply_read_reg) +
                         reply_msg->modbus_val_bytes);
-  fprintf(stderr, "  CRC (hex): %02X\n", crc_temp);
+  /*fprintf(stderr, "  CRC (hex): %02X\n", crc_temp);*/
 
   /*for (c = 0; c < byte_cnt / 2; c++) {*/
     /*printf("%d ", (short) ntohs(reply_msg->modbus_reg_val[c]));*/
@@ -236,7 +235,7 @@ void print_modbus_reply_write_reg(uint8_t *buf, int buflen) {
 
   /* Check the CRC in the packet */
   crc_temp = read_crc16((uint8_t*) buf, sizeof(modbus_reply_write_reg));
-  fprintf(stderr, "  CRC (hex): %02X\n", crc_temp);
+  /*fprintf(stderr, "  CRC (hex): %02X\n", crc_temp);*/
 }
 
 void print_modbus_reply_write_multireg(uint8_t *buf, int buflen) {
@@ -251,7 +250,7 @@ void print_modbus_reply_write_multireg(uint8_t *buf, int buflen) {
 
   /* Check the CRC in the packet */
   crc_temp = read_crc16((uint8_t*) buf, sizeof(modbus_reply_write_multireg));
-  fprintf(stderr, "  CRC (hex): %02X\n", crc_temp);
+  /*fprintf(stderr, "  CRC (hex): %02X\n", crc_temp);*/
 }
 
 
@@ -276,7 +275,7 @@ void print_modbus_reply_report_slaveid(uint8_t *buf, int buflen) {
   crc_temp = read_crc16((uint8_t*) buf,
                         sizeof(modbus_reply_report_slaveid) +
                         reply_msg->modbus_val_bytes - 2);
-  fprintf(stderr, "  CRC (hex): %02X\n", crc_temp); 
+  /*fprintf(stderr, "  CRC (hex): %02X\n", crc_temp); */
 }
 
 

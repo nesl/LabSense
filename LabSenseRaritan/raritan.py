@@ -15,10 +15,10 @@ class RaritanReader(object):
     def readLabSenseConfig(self):
         json_config = open("../LabSenseConfig/config.json")
         config = json.load(json_config)
-        sensorActConfig = config["SensorAct"]
-        self.SensorActIP = sensorActConfig["IP"]
-        self.SensorActPORT = int(sensorActConfig["PORT"])
-        self.SensorActKey = sensorActConfig["API_KEY"]
+        #sensorActConfig = config["SensorAct"]
+        self.SensorActIP = config["IP"]
+        self.SensorActPORT = int(config["PORT"])
+        self.SensorActKey = config["API_KEY"]
 
     # getData Command Generator;
     # Format: Current (8, milliamps), Voltage (8, millivolts), Active Power (Watts),

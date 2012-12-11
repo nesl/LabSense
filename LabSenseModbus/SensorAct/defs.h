@@ -3,8 +3,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define SENSORACT_BUFFER_SIZE 1024
+#define URL_LENGTH 128
 
 // This enum is used specifically for the zeromq_special_mode.
 typedef enum Type {
@@ -19,9 +21,15 @@ typedef enum Type {
 
 int SensorActError(char *str)
 {
-    printf("%s", str);
-    printf("Exiting...");
+    fprintf(stderr, "%s", str);
+    fprintf(stderr, "%s", "Exiting...");
     exit(1);
 }
+
+typedef struct SensorActConfig {
+    char *Ip;
+    int Port;
+    char *Api_key;
+} SensorActConfig;
 
 #endif

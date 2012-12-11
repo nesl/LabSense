@@ -72,6 +72,7 @@ Dependencies:
 
 * [Zeromq](http://www.zeromq.org/intro:get-the-software)
 * [Libcurl](http://curl.haxx.se/libcurl/)
+* [Jansson](http://www.digip.org/jansson/)
 
 ------------------------------------------------------------------------------
 
@@ -186,10 +187,11 @@ LabSenseZwave Installation
 LabSenseModbus Installation
 ---------------------------------
 
-1. Install Libcurl:
+1. Install Libcurl and Jansson:
 
     <pre>
     sudo apt-get install libcurl4-gnutls-development
+    sudo apt-get install libjansson-dev
     </pre>
 
 2. Make the files and run the executable with eaton or veris depending on which

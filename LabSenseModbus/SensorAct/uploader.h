@@ -1,4 +1,5 @@
 #include <curl/curl.h>
+#include "defs.h"
 
 // Create headers for sending JSON to SensorAct
 struct curl_slist *createJsonHeaders()
@@ -10,18 +11,23 @@ struct curl_slist *createJsonHeaders()
 }
 
 // Sends formatted data to SensorAct
-int sendToSensorAct(char ***data, int count, const char *ip)
+int sendToSensorAct(char ***data, int count, SensorActConfig *config)
 {
     CURL *curl;
     CURLcode res;
+    char url[URL_LENGTH];
     int i;
 
-    printf("BEGIN SENDING TO SENSORACT\n");
-    printf("________________________________________________________________\n\n");
+    //printf("BEGIN SENDING TO SENSORACT\n");
+    //printf("________________________________________________________________\n\n");
 
     curl = curl_easy_init();
     if(curl) {
-        curl_easy_setopt(curl, CURLOPT_URL, ip);
+
+        // Format URL
+        sprintf(url, "http://%s:%d/data/upload/wavesegment", config->Ip, config->Port);
+        
+        curl_easy_setopt(curl, CURLOPT_URL, url);
         curl_easy_setopt(curl, CURLOPT_POST, 1);
         char *body;
 
@@ -38,6 +44,7 @@ int sendToSensorAct(char ***data, int count, const char *ip)
 
             /* Perform the request, res will get the return code */ 
             res = curl_easy_perform(curl);
+
             /* Check for errors */ 
             if(res != CURLE_OK)
                 fprintf(stderr, "curl_easy_perform() failed: %s\n",
@@ -51,10 +58,8 @@ int sendToSensorAct(char ***data, int count, const char *ip)
         curl_slist_free_all(headers);
         curl_easy_cleanup(curl);
 
-
-
-        printf("\n\n________________________________________________________________\n");
-        printf("DONE SENDING TO SENSORACT\n");
+        //printf("\n\n________________________________________________________________\n");
+        //printf("DONE SENDING TO SENSORACT\n");
 
         return 1;
     }
