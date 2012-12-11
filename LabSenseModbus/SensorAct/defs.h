@@ -35,4 +35,10 @@ typedef struct SensorActConfig {
     char *Api_key;
 } SensorActConfig;
 
+void freeSensorActConfig(SensorActConfig *config) {
+    free(config->Ip);
+    free(config->Api_key);
+    free(config);
+}
+
 #endif

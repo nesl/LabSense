@@ -37,6 +37,10 @@ int sendToSensorAct(uint32_t *reg_vals, int count, Type type, time_t timestamp)
         printf("\nSuccessfully Sent Data to SensorAct!\n\n");
     }
 
+    // Free memory
+    freeSensorActConfig(config);
+    free(sa_buf);
+
     return 1;
 
 }

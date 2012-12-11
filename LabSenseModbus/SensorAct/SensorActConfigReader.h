@@ -31,11 +31,17 @@ SensorActConfig *readSensorActConfig()
     strcpy(IP_CHAR, json_string_value(ip));
     strcpy(API_KEY_CHAR, json_string_value(api_key));
 
+    // Free json objects
+    free(root);
+    free(ip);
+    free(api_key);
+
     // Allocate memory for config
     SensorActConfig *config = malloc(sizeof(SensorActConfig*));
 
     ip_length = strlen(IP_CHAR);
     api_key_length = strlen(API_KEY_CHAR);
+
 
     // IP length + 1 for NULL
     config->Ip = (char *) malloc(ip_length + 1);
