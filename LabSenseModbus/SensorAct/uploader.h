@@ -11,7 +11,7 @@ struct curl_slist *createJsonHeaders()
 }
 
 // Sends formatted data to SensorAct
-int sendToSensorAct(char ***data, int count, SensorActConfig *config)
+int uploadToSensorAct(char ***data, int count, SensorActConfig *config)
 {
     CURL *curl;
     CURLcode res;

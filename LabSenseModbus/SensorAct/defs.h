@@ -5,7 +5,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define SENSORACT_BUFFER_SIZE 1024
+#define SENSORACT_BUFFER_SIZE 2048
+#define SENSORACT_CHANNEL_BUF_SIZE 256
+#define EATON_NUM_CHANNELS 6
+#define EATON_NUM_PHASES 3
 #define URL_LENGTH 128
 
 // This enum is used specifically for the zeromq_special_mode.
@@ -21,8 +24,8 @@ typedef enum Type {
 
 int SensorActError(char *str)
 {
-    fprintf(stderr, "%s", str);
-    fprintf(stderr, "%s", "Exiting...");
+    fprintf(stderr, "%s\n", str);
+    fprintf(stderr, "%s\n", "Exiting...");
     exit(1);
 }
 

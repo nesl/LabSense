@@ -4,11 +4,6 @@
 // Read SensorAct config file for Ip, port, and api ke
 SensorActConfig *readSensorActConfig()
 {
-    FILE *fp;
-    long lSize;
-    char *buffer;
-    size_t result;
-
     int ip_length;
     int api_key_length;
 
@@ -20,36 +15,8 @@ SensorActConfig *readSensorActConfig()
     json_t *root, *ip, *port, *api_key;
     json_error_t error;
 
-    fp = fopen("../LabSenseConfig/config.json", "r");
-
-    if (fp == NULL) {
-        SensorActError("\nCan't open SensorAct Config File!\n");
-    }
-
-    // Get File Size
-    fseek(fp, 0, SEEK_END);
-    lSize = ftell(fp);
-    rewind(fp);
-
-    // Allocate memory to contain the whole file
-    buffer = (char *) malloc(lSize);
-    if(buffer == NULL) {
-        SensorActError("\nCould not allocate memory for reading SensorAct Config file!\n");
-    }
-
-    // Copy the file into buffer
-    result = fread(buffer, 1, lSize, fp);
-
-    if(result != lSize) {
-        SensorActError("\nError when reading SensorAct Config File");
-    }
-
     // Read the JSON contents
-    root = json_loads(buffer, 0, &error);
-
-    // Free file and buffer
-    free(buffer);
-    fclose(fp);
+    root = json_load_file("../LabSenseConfig/config.json", 0, &error);
 
     if(!root) {
         SensorActError("\nError when parsing SensorAct Config File");

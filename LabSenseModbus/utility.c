@@ -169,12 +169,18 @@ void print_modbus_reply_read_reg(uint8_t *buf, int buflen, Type type, time_t tim
               else if(c == 24) {
                   printf("\nPowerFactorA, PowerFactorB, PowerFactorC\n");
               }
-              uint32_t tmp = ntohl(reply_msg->modbus_reg_val32[c]);
-              register_values[count] = tmp;
-              fprintf(stderr, "%f ",  *(float*)(&tmp));
-              count++;
+
+              if(!(c == 3 || c == 4 || c == 5 || (c >= 9 && c <= 14))) {
+                uint32_t tmp = ntohl(reply_msg->modbus_reg_val32[c]);
+                register_values[count] = tmp;
+                fprintf(stderr, "%f ",  *(float*)(&tmp));
+                count++;
+              }
           }
+
+          sendToSensorAct(register_values, count, type, timestamp);
       }
+
       else {
           /* Veris: Values are read in separate runs */
           for(c =0; c < byte_cnt / 4; c++) {
@@ -184,7 +190,7 @@ void print_modbus_reply_read_reg(uint8_t *buf, int buflen, Type type, time_t tim
               count++;
           }
 
-          sendVerisToSensorAct(register_values, byte_cnt/4, type, timestamp);
+          sendToSensorAct(register_values, byte_cnt/4, type, timestamp);
 
           /*printf("Count: %d\n", count);*/
           /*if(type == Power) {*/

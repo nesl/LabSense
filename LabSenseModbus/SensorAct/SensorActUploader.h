@@ -13,8 +13,8 @@
 #include "SensorActConfigReader.h"
 
 
-
-int sendVerisToSensorAct(uint32_t *reg_vals, int count, Type type, time_t timestamp)
+// Send Veris data to SensorAct
+int sendToSensorAct(uint32_t *reg_vals, int count, Type type, time_t timestamp)
 {
     char **sa_buf; 
     int i;
@@ -23,13 +23,13 @@ int sendVerisToSensorAct(uint32_t *reg_vals, int count, Type type, time_t timest
     config = readSensorActConfig();
 
     // Format data for SensorAct
-    if(!sensorActFormatter(&sa_buf, reg_vals, count, type, timestamp, config->Api_key))
+    if(!sensorActFormatter(&sa_buf, reg_vals, &count, type, timestamp, config->Api_key))
     {
         SensorActError("Error when formatting data for SensorAct!");
     }
 
     // Send formatted data to SensorAct
-    if(!sendToSensorAct(&sa_buf, count, config))
+    if(!uploadToSensorAct(&sa_buf, count, config))
     {
         SensorActError("Error when sending data to SensorAct!");
     }
