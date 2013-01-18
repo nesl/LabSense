@@ -59,7 +59,3 @@ if __name__ == "__main__":
         for message in formatted_data:
             uploader[1].send(message)
             uploader[1].receive()
-
-
-        
-

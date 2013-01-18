@@ -36,6 +36,10 @@ class TCPModbusClient(object):
 
         self.sock.sendall(packed_data)
     
+        response = self.getResponse(reg_qty)
+        return response
+
+    def getResponse(self, reg_qty):
         # Response size is:
         #   Modbus Address 1 byte
         #   Function Code  1 byte
@@ -43,22 +47,24 @@ class TCPModbusClient(object):
         #   Register contents reg_qty * 2 b/c they are 16 bit values
         #   CRC 2 bytes
         response_size = 5 + 2*reg_qty
-        response = self.getResponse(response_size)
-        return response
+        response = self.sock.recv(response_size)
 
-    def getResponse(self, size):
-        response = self.sock.recv(size)
+        struct_format = "!BBB" + "f" * (reg_qty/2) + "H"
 
-        struct_format = "!" + "B" * size
-        data = struct.unpack(struct_format, response)
+        try:
+            data = struct.unpack(struct_format, response)
+        except struct.error:
+            print "Received bad data. Skipping..."
+            return []
 
         print "Response length: " + str(len(response))
         sys.stdout.write("Response: ")
         for num in data:
-            sys.stdout.write(hex(num) + " " )
+            sys.stdout.write(str(num) + " " )
 
-        return data
-
+        # Remove first 3 bytes and last two bytes (See
+        # above)
+        return data[3:3+2*reg_qty]
 
 if __name__ == "__main__":
 

@@ -1,7 +1,6 @@
 import argparse                         # For parsing command line arguments
 import sys                              # For importing from parent directory
 import os                               # For importing from parent directory
-from sets import Set                    # For unordered subset checking
 
 # Import from common directory
 sys.path.insert(0, os.path.abspath(".."))
@@ -18,7 +17,7 @@ class EatonClient(TCPModbusClient):
 
         super(EatonClient, self).__init__(IP, PORT)
 
-        Valid_fields = Set(["VoltageAN", "VoltageBN", "VoltageCN", 
+        self.Valid_fields = ["VoltageAN", "VoltageBN", "VoltageCN", 
                            "VoltageAB", "VoltageBC", "VoltageCA",
                            "CurrentA", "CurrentB", "CurrentC",
                            "PowerTotal", "VARSTotal", "VAsTotal",
@@ -26,9 +25,9 @@ class EatonClient(TCPModbusClient):
                            "PowerA", "PowerB", "PowerC",
                            "VARSA", "VARSB", "VARSC",
                            "VAsA", "VAsB", "VAsC",
-                           "PowerFactorA", "PowerFactorB", "PowerFactorC"])
+                           "PowerFactorA", "PowerFactorB", "PowerFactorC"]
 
-        if not fields.issubset(Valid_fields):
+        if not all(field in self.Valid_fields for field in fields):
             raise KeyError("Eaton fields given were not recognized")
 
     # Gets data from the EatonMeter
@@ -37,6 +36,13 @@ class EatonClient(TCPModbusClient):
         # Modbus address = 1, Function Code = Read (3), Starting register = 999,
         # Number of registers = 54
         data = self.modbusReadReg(1, 3, 999, 54)
+
+        if data:
+
+            key_value_data = dict(zip(self.Valid_fields, data))
+
+            return key_value_data
+        
         return data
 
 
@@ -46,7 +52,7 @@ if __name__ == "__main__":
     parser.add_argument("PORT", help="Port for Eaton")
     args = parser.parse_args()
 
-    fields_to_read = Set(["CurrentA", "CurrentB", "CurrentC"])
+    fields_to_read = ["CurrentA", "CurrentB", "CurrentC"]
     client = EatonClient(args.IP, args.PORT, fields_to_read)
     client.connect()
     client.getData()

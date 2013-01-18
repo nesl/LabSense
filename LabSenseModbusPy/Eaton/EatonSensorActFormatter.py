@@ -79,7 +79,7 @@ class EatonSensorActFormatter():
             data = {}
             data["cname"] = channel
             data["unit"] = self.units[channel]
-            data["readings"] = data_values[sid + iterator*self.num_phases]
+            data["readings"] = [data_values[channel]]
             channel_data.append(data)
 
         return channel_data
