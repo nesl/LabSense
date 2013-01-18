@@ -10,6 +10,8 @@
 #define EATON_NUM_CHANNELS 6
 #define EATON_NUM_PHASES 3
 #define URL_LENGTH 128
+#define IP_LENGTH 15        // XXX.XXX.XXX.XXX is 15 characters
+#define API_KEY_LENGTH 32
 
 // This enum is used specifically for the zeromq_special_mode.
 typedef enum Type {

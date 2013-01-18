@@ -46,6 +46,7 @@ int main(int argc, char *argv[])
     int i;
     Type read_type = Normal;      /* This type is used for zeromq_special_mode */
     int first_iteration_finished = 0;
+    SensorActConfig *Sconfig = malloc(sizeof(SensorActConfig));
 
     // Zeromq context and publisher
     /*void *context = zmq_init(1);*/
@@ -67,7 +68,7 @@ int main(int argc, char *argv[])
     /* Check arguments for query command */
     else if (strcmp(argv[1], "query") == 0 || strcmp(argv[1], "q") == 0) {
       if (argc >= 3 && 
-          (strcmp(argv[2], "help") == 0 || strcmp(argv[2], "h") == 0)) {
+          (strcmp(argv[2], "help") == 0 || strcmp(argv[3], "h") == 0)) {
         print_usage_query(argv[0]);
       }
       /* Test for correct number of arguments */
@@ -80,8 +81,9 @@ int main(int argc, char *argv[])
     } 
     /* Check arguments for read command */
     else if (strcmp(argv[1], "read") == 0 || strcmp(argv[1], "r") == 0) {
-      if (argc >= 3 &&
-          (strcmp(argv[2], "help") == 0 || strcmp(argv[2], "h") == 0)) {
+      if (argc >= 5 &&
+          (strcmp(argv[2], "help") == 0 || strcmp(argv[3], "h") == 0 ||
+           strcmp(argv[4], "help") == 0)) {
         print_usage_read(argv[0]);
       }
       else if (argc == 3 && strcmp(argv[2], "eaton") == 0) {
@@ -99,6 +101,12 @@ eaton_loop:
           argv[4] ="1";                 // Modbus Address
           argv[5] = "999";              // Modbus Register Address
           argv[6] = "54";               // Reading 54 Registers
+
+          Sconfig->Ip = malloc(IP_LENGTH);
+          strcpy(Sconfig->Ip, "128.97.11.100");
+          Sconfig->Port = 4660;
+          Sconfig->Api_key = malloc(API_KEY_LENGTH);
+          strcpy(Sconfig->Api_key, "2bb5d6b943fc44f0bb6b467450e07ce7");
 
       }
       else if (argc == 3 && strcmp(argv[2], "veris") == 0) {
@@ -142,7 +150,7 @@ veris_loop:
                   break;
 
               case VerisPowerFactor:
-                  // Get Power Readings (KW)
+                  // Get Power Factor Readings (KW)
                   argv[5] = "2267";
                   read_type = VerisPowerFactor;
                   break;
@@ -236,7 +244,7 @@ veris_loop:
     }
 
     time_t timestamp = time(NULL);
-    print_received_msg((uint8_t *)rxBuf, bytesRcvd, read_type, timestamp);
+    print_received_msg((uint8_t *)rxBuf, bytesRcvd, read_type, timestamp, Sconfig);
 
     if(read_type != Normal) {
         first_iteration_finished = 1;

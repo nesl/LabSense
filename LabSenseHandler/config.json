@@ -1,0 +1,23 @@
+{
+    "SensorAct": {
+        "IP": "128.97.93.51",
+        "PORT": 9000,
+        "API_KEY": "2bb5d6b943fc44f0bb6b467450e07ce7"
+    },
+
+    "Cosm": {
+        "URL": "http://api.cosm.com/v2/feeds/",
+        "API_KEY": "6h8z-vpjKTBYjnt62cRh-f8yZ96SAKxoOTJjWWJkUm9uYz0g"
+    },
+
+    "Eaton": {
+        "Operation": "read",
+        "IP": "128.97.11.100",
+        "PORT": "4660",
+        "Modbus_Address": "1",
+        "Modbus_Register_Address": "999",
+        "Number_Registers": "54",
+        "SensorAct": "1",
+        "Cosm": "1"
+    }
+}

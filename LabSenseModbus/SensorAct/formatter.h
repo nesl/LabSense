@@ -115,8 +115,7 @@ int sensorActFormatter(char ***sa_buf, uint32_t *reg_vals, int *count, Type type
 
             (*sa_buf)[i] = malloc(SENSORACT_BUFFER_SIZE);
             strcpy((*sa_buf)[i], buffer);
-
-            printf("OUTPUT %d: %s\n\n", i, (*sa_buf)[i]);
+            printf("Buffer: %s", buffer);
         }
 
         // Change the count to 3 because there are three total messages that

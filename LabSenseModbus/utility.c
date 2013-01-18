@@ -5,7 +5,7 @@
 #include <netinet/in.h>
 #include <string.h> 
 #include "E30ModbusMsg.h"
-
+#include "Cosm/CosmUploader.h"
 
 #define RCVBUFSIZE 1024
 
@@ -58,7 +58,7 @@ int sendBatchedMessage(void *publisher, char *type, uint32_t *values) {
     return 0;
 }
 
-void print_received_msg(uint8_t *buf, int buflen, Type type, time_t timestamp) {
+void print_received_msg(uint8_t *buf, int buflen, Type type, time_t timestamp, SensorActConfig *Sconfig) {
   int c;
 
   /* Print the size of message */
@@ -75,7 +75,7 @@ void print_received_msg(uint8_t *buf, int buflen, Type type, time_t timestamp) {
 
   switch (buf[BYTEPOS_MODBUS_FUNC]) {
   case MODBUS_FUNC_READ_REG:
-    print_modbus_reply_read_reg(buf, buflen, type, timestamp);
+    print_modbus_reply_read_reg(buf, buflen, type, timestamp, Sconfig);
     break;
 
   case MODBUS_FUNC_WRITE_REG:
@@ -95,7 +95,7 @@ void print_received_msg(uint8_t *buf, int buflen, Type type, time_t timestamp) {
   } 
 }
 
-void print_modbus_reply_read_reg(uint8_t *buf, int buflen, Type type, time_t timestamp) {
+void print_modbus_reply_read_reg(uint8_t *buf, int buflen, Type type, time_t timestamp, SensorActConfig *config) {
   uint8_t byte_cnt;
   int c;
   int count = 0;
@@ -145,40 +145,41 @@ void print_modbus_reply_read_reg(uint8_t *buf, int buflen, Type type, time_t tim
       {
           /* Eaton: all values are read at a time */
           for(c =0; c < byte_cnt / 4; c++) {
-              if(c == 0) {
-                  printf("VoltageAN, VoltageBN, VoltageCN, VoltageAB, VoltageBC, VoltageCA\n");
-              }
-              else if(c == 6) {
-                  printf("\nCurrentA, CurrentB, CurrentC\n");
-              }
-              else if(c == 9) {
-                  printf("\nPowerTotal, VARSTotal, VAsTotal, Power Factor Total");
-              }
-              else if(c == 13) {
-                  printf("\nFrequency, Neutral Current\n");
-              }
-              else if(c == 15) {
-                  printf("\nPowerA, PowerB, PowerC\n");
-              }
-              else if(c == 18) {
-                  printf("\nVARSA, VARSB, VARSC\n");
-              }
-              else if(c == 21) {
-                  printf("\nVASA, VASB, VASC\n");
-              }
-              else if(c == 24) {
-                  printf("\nPowerFactorA, PowerFactorB, PowerFactorC\n");
-              }
+              /*if(c == 0) {*/
+                  /*printf("VoltageAN, VoltageBN, VoltageCN, VoltageAB, VoltageBC, VoltageCA\n");*/
+              /*}*/
+              /*else if(c == 6) {*/
+                  /*printf("\nCurrentA, CurrentB, CurrentC\n");*/
+              /*}*/
+              /*else if(c == 9) {*/
+                  /*printf("\nPowerTotal, VARSTotal, VAsTotal, Power Factor Total");*/
+              /*}*/
+              /*else if(c == 13) {*/
+                  /*printf("\nFrequency, Neutral Current\n");*/
+              /*}*/
+              /*else if(c == 15) {*/
+                  /*printf("\nPowerA, PowerB, PowerC\n");*/
+              /*}*/
+              /*else if(c == 18) {*/
+                  /*printf("\nVARSA, VARSB, VARSC\n");*/
+              /*}*/
+              /*else if(c == 21) {*/
+                  /*printf("\nVASA, VASB, VASC\n");*/
+              /*}*/
+              /*else if(c == 24) {*/
+                  /*printf("\nPowerFactorA, PowerFactorB, PowerFactorC\n");*/
+              /*}*/
 
               if(!(c == 3 || c == 4 || c == 5 || (c >= 9 && c <= 14))) {
                 uint32_t tmp = ntohl(reply_msg->modbus_reg_val32[c]);
                 register_values[count] = tmp;
-                fprintf(stderr, "%f ",  *(float*)(&tmp));
+                printf("%f ",  *(float*)(&tmp));
                 count++;
               }
           }
 
-          sendToSensorAct(register_values, count, type, timestamp);
+          sendToSensorAct(register_values, count, type, timestamp, config);
+          sendToCosm(register_values, count, type);
       }
 
       else {
@@ -190,7 +191,7 @@ void print_modbus_reply_read_reg(uint8_t *buf, int buflen, Type type, time_t tim
               count++;
           }
 
-          sendToSensorAct(register_values, byte_cnt/4, type, timestamp);
+          sendToSensorAct(register_values, byte_cnt/4, type, timestamp, config);
 
           /*printf("Count: %d\n", count);*/
           /*if(type == Power) {*/

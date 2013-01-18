@@ -14,13 +14,13 @@
 
 
 // Send Veris data to SensorAct
-int sendToSensorAct(uint32_t *reg_vals, int count, Type type, time_t timestamp)
+int sendToSensorAct(uint32_t *reg_vals, int count, Type type, time_t timestamp, SensorActConfig *config)
 {
     char **sa_buf; 
     int i;
 
-    SensorActConfig *config;
-    config = readSensorActConfig();
+    //SensorActConfig *config;
+    //config = readSensorActConfig();
 
     // Format data for SensorAct
     if(!sensorActFormatter(&sa_buf, reg_vals, &count, type, timestamp, config->Api_key))
@@ -34,7 +34,7 @@ int sendToSensorAct(uint32_t *reg_vals, int count, Type type, time_t timestamp)
         SensorActError("Error when sending data to SensorAct!");
     }
     else {
-        printf("\nSuccessfully Sent Data to SensorAct!\n\n");
+        printf("\nSuccessfully Sent Data to SensorAct!\n");
     }
 
     // Free memory
