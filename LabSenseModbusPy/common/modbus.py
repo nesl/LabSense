@@ -58,13 +58,15 @@ class TCPModbusClient(object):
             return []
 
         print "Response length: " + str(len(response))
+        # Remove first 3 bytes and last two bytes (See
+        # above)
+        data = data[3:3+2*reg_qty]
+
         sys.stdout.write("Response: ")
         for num in data:
             sys.stdout.write(str(num) + " " )
 
-        # Remove first 3 bytes and last two bytes (See
-        # above)
-        return data[3:3+2*reg_qty]
+        return data
 
 if __name__ == "__main__":
 

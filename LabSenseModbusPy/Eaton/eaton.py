@@ -1,7 +1,6 @@
 import argparse                         # For parsing command line arguments
 from EatonClient import EatonClient
 from EatonSensorActFormatter import EatonSensorActFormatter 
-from sets import Set                    # For unordered subset checking
 import time                             # For getting the timestamp
 import sys                              # For importing from parent directory
 import os                               # For importing from parent directory
@@ -26,8 +25,18 @@ if __name__ == "__main__":
     parser.add_argument("-CosmApiKey", help="SensorAct Api Key")
     args = parser.parse_args()
 
-    channels = ["CurrentA", "CurrentB", "CurrentC"]
-    client = EatonClient(args.IP, args.PORT, Set(channels))
+    #channels = ["VoltageAB", "CurrentA", "CurrentB", "CurrentC", "PowerFactorA",
+            #"PowerFactorTotal", "PowerA", "PowerB", "PowerTotal"]
+    channels = ["VoltageAN", "VoltageBN", "VoltageCN", 
+                       "VoltageAB", "VoltageBC", "VoltageCA",
+                       "CurrentA", "CurrentB", "CurrentC",
+                       "PowerTotal", "VARsTotal", "VAsTotal",
+                       "PowerFactorTotal", "Frequency", "NeutralCurrent",
+                       "PowerA", "PowerB", "PowerC",
+                       "VARsA", "VARsB", "VARsC",
+                       "VAsA", "VAsB", "VAsC",
+                       "PowerFactorA", "PowerFactorB", "PowerFactorC"]
+    client = EatonClient(args.IP, args.PORT, channels)
     client.connect()
     data = client.getData()
 

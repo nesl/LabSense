@@ -20,14 +20,14 @@ class EatonClient(TCPModbusClient):
         self.Valid_fields = ["VoltageAN", "VoltageBN", "VoltageCN", 
                            "VoltageAB", "VoltageBC", "VoltageCA",
                            "CurrentA", "CurrentB", "CurrentC",
-                           "PowerTotal", "VARSTotal", "VAsTotal",
+                           "PowerTotal", "VARsTotal", "VAsTotal",
                            "PowerFactorTotal", "Frequency", "NeutralCurrent",
                            "PowerA", "PowerB", "PowerC",
-                           "VARSA", "VARSB", "VARSC",
+                           "VARsA", "VARsB", "VARsC",
                            "VAsA", "VAsB", "VAsC",
                            "PowerFactorA", "PowerFactorB", "PowerFactorC"]
 
-        if not all(field in self.Valid_fields for field in fields):
+        if not all([field in self.Valid_fields for field in fields]):
             raise KeyError("Eaton fields given were not recognized")
 
     # Gets data from the EatonMeter
