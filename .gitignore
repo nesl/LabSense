@@ -20,6 +20,7 @@ LabSenseSupervisor/supervisord.conf
 LabSenseServer/SocketIOServer/cache.db
 LabSenseSupervisor/zwcfg_0x014d08e6.xml
 LabSenseSupervisor/zwscene.xml
+LabSenseSupervisor/cache.db
 
 LabSenseModbus/.sconsign.dblite
 LabSenseModbus/TCPModbusClient

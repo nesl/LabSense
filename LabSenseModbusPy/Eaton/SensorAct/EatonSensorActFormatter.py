@@ -54,7 +54,7 @@ class EatonSensorActFormatter():
     """
     def parseChannels(self):
         
-        if not all(field in self.units.keys() for field in self.channels):
+        if not all([field in self.units.keys() for field in self.channels]):
             raise NotImplementedError("Unrecognized fields given for Eaton Meter.")
 
         self.channels_dict = {}
