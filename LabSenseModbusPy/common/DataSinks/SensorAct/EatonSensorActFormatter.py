@@ -118,4 +118,3 @@ class EatonSensorActFormatter():
             channel_data.append(data)
 
         return channel_data
-

@@ -1,6 +1,6 @@
-#import json;
+import json;
 
-#class EatonCosmFormatter():
+class EatonCosmFormatter(Formatter):
 
 
 

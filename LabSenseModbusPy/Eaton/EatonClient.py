@@ -8,16 +8,16 @@ sys.path.insert(0, os.path.abspath(".."))
 from common.modbus import TCPModbusClient
 
 """ EatonClient inherits from the TCPModbusClient, which can read data from any
-modbus device. EatonClient adds a level on top to specify what fields should
+modbus device. EatonClient adds a level on top to specify what channels should
 be read from the Eaton meter, instead of needing to look up the registers that
-correspond to fields. """
+correspond to channels. """
 class EatonClient(TCPModbusClient):
 
-    # Initializes EatonClient and verifies fields are valid
-    def __init__(self, name, IP, PORT, fields):
+    # Initializes EatonClient and verifies channels are valid
+    def __init__(self, name, IP, PORT):
         self.name = name
         super(EatonClient, self).__init__(IP, PORT)
-        self.Valid_fields = ["VoltageAN", "VoltageBN", "VoltageCN", 
+        self.Valid_channels = ["VoltageAN", "VoltageBN", "VoltageCN", 
                            "VoltageAB", "VoltageBC", "VoltageCA",
                            "CurrentA", "CurrentB", "CurrentC",
                            "PowerTotal", "VARsTotal", "VAsTotal",
@@ -27,11 +27,17 @@ class EatonClient(TCPModbusClient):
                            "VAsA", "VAsB", "VAsC",
                            "PowerFactorA", "PowerFactorB", "PowerFactorC"]
 
-        if not all([field in self.Valid_fields for field in fields]):
-            raise KeyError("Eaton fields given were not recognized")
+
+    def checkValidChannel(self, channels):
+        print "channels : " + str(channels)
+        if not all([channel in self.Valid_channels for channel in channels]):
+            raise KeyError("Eaton channels given were not recognized")
+        return True
 
     # Gets data from the EatonMeter
-    def getData(self):  
+    def getData(self, channels_to_record):  
+        self.checkValidChannel(channels_to_record)
+
         # Eaton configuration: 
         # Modbus address = 1, Function Code = Read (3), Starting register = 999,
         # Number of registers = 54
@@ -41,7 +47,26 @@ class EatonClient(TCPModbusClient):
         device_data = {}
         if data:
             channel_data = {}
-            channel_data = dict(zip(self.Valid_fields, data))
+            channel_data_pairs = dict(zip(self.Valid_channels, data))
+
+            sensor_names = ["Voltage", "Current", "PowerFactor", "VARs", "VAs",
+                    "Power", "Frequency"]
+            for sensor_name in sensor_names:
+                channel_data[sensor_name] = []
+
+            used_channels = []
+
+            for chan in self.Valid_channels:
+                for sensor_name in sensor_names:
+                    if sensor_name in chan and chan not in used_channels and chan in channels_to_record:
+                        key_val_pair = (chan, channel_data_pairs[chan])
+                        #key_val_pair = {}
+                        #key_val_pair = {chan: channel_data_pairs[chan]}
+                        channel_data[sensor_name].append(key_val_pair)
+                        used_channels.append(chan)
+
+            print "Channel data: " + str(channel_data)
+
             device_data = {"devicename": self.name,
                            "device": "Eaton",
                            "timestamp": current_time,
@@ -56,7 +81,7 @@ if __name__ == "__main__":
     parser.add_argument("PORT", help="Port for Eaton")
     args = parser.parse_args()
 
-    fields_to_read = ["CurrentA", "CurrentB", "CurrentC"]
-    client = EatonClient(args.IP, args.PORT, fields_to_read)
+    channels = ["CurrentA", "CurrentB", "CurrentC"]
+    client = EatonClient(args.IP, args.PORT, channels)
     client.connect()
     client.getData()

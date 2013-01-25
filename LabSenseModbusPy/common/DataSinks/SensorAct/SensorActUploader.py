@@ -1,6 +1,6 @@
 import httplib, urllib
 
-class SensorActForwarder(object):
+class SensorActUploader(object):
     def __init__(self, IP, PORT):
         self.IP = IP
         self.PORT = PORT
