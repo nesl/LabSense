@@ -1,19 +1,18 @@
+import sys, os                              # For importing from project directory
 import json
 import copy
 
+# Import from project directory
+sys.path.insert(0, os.path.abspath("../.."))
+import LabSenseHandler.configReader as config
+
 class EatonSensorActFormatter():
 
-    def __init__(self, name, secretkey, sinterval, location, channels):
-        self.name = name
-        self.secretkey = secretkey
-        self.sinterval = sinterval
-        self.location = location
-        self.channels = channels
+    #def __init__(self, name, apikey, sinterval, location, channels):
+    def __init__(self):
+        self.config = config.config["Eaton"]
         self.initializeUnitsDictionary()
         self.parseChannels()
-        self.num_phases = 3
-
-        print "Parsed Channels: " + str(self.channels_dict)
 
     def initializeUnitsDictionary(self):
         self.units = {}
@@ -53,8 +52,8 @@ class EatonSensorActFormatter():
         channels_dict["Voltage"] = ["VoltageAN", "VoltageBN"...]
     """
     def parseChannels(self):
-        
-        if not all([field in self.units.keys() for field in self.channels]):
+        channels = self.config["channels"]
+        if not all([field in self.units.keys() for field in channels]):
             raise NotImplementedError("Unrecognized fields given for Eaton Meter.")
 
         self.channels_dict = {}
@@ -73,37 +72,34 @@ class EatonSensorActFormatter():
         # (VARs and VA's too)
         used_channels = []
 
-        for chan in self.channels:
+        for chan in self.config["channels"]:
             for sensor_name in self.sensor_names:
                 if sensor_name in chan and chan not in used_channels:
                     self.channels_dict[sensor_name].append(chan)
                     used_channels.append(chan)
 
-    def format(self, data_values, timestamp):
+    def format(self, apikey, data_values):
         messages = []
 
-        print "Sensor names: " + str(self.sensor_names)
-        print "Channels: " + str(self.channels)
+        timestamp = data_values["timestamp"]
 
         for sensor_name in self.sensor_names:
 
             if self.channels_dict[sensor_name]:
                 message = {}
-                message["secretkey"] = self.secretkey
-                message["data"] = self.generateData(sensor_name, timestamp, data_values) 
+                message["secretkey"] = apikey
+                message["data"] = self.generateData(sensor_name, timestamp, data_values["channels"]) 
                 messages.append(json.dumps(message))
 
         return messages
 
     def generateData(self, sensor_name, timestamp, data_values):
-
-        data = {}
-        data["dname"] = self.name
-        data["sname"] = sensor_name
-        # Keep sensor number 1-based (thus add 1)
-        data["sinterval"] = self.sinterval
-        data["timestamp"] = timestamp
-        data["loc"] = self.location
+        data = {"dname": self.config["name"],
+                "sname": sensor_name,
+                "sinterval": self.config["sinterval"],
+                "timestamp": timestamp,
+                "loc": self.config["location"]
+               }
         data["channels"] = self.generateChannels(sensor_name, data_values)
 
         return data

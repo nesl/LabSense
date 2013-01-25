@@ -13,12 +13,13 @@ class CosmUploader(object):
     def createFeed(self, params):
         self.connection.request("POST", "/v2/feeds", params, self.headers)
 
-    def updateDatastream(self, data_stream, params):
+    def updateDatastream(self, data_stream, body):
         url = "/v2/feeds/datastreams/" + data_stream        
-        self.connection.request("PUT", url, params, self.headers)
+        print "URL: " + url
+        self.connection.request("PUT", url, body, self.headers)
 
     def send(self, data_stream, params):
-        #self.updateDatastream(data_stream, params)
+        self.updateDatastream(data_stream, params)
         pass
 
     def receive(self):

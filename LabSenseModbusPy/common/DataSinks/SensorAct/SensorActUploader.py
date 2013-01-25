@@ -1,18 +1,6 @@
 import httplib, urllib
 
 class SensorActForwarder(object):
-
-    def connect(self):
-        raise NotImplementedError
-
-    def receive(self):
-        raise NotImplementedError
-
-    def send(self):
-        raise NotImplementedError
-
-class SensorActRemoteForwarder(SensorActForwarder):
-
     def __init__(self, IP, PORT):
         self.IP = IP
         self.PORT = PORT
@@ -21,7 +9,6 @@ class SensorActRemoteForwarder(SensorActForwarder):
         print "PORT: " + str(PORT)
         self.headers = { "Content-type": "application/json",
                       "Accept": "text/plain" }
-        super(SensorActRemoteForwarder, self).__init__()
         self.connect()
 
     def connect(self):
@@ -45,17 +32,7 @@ class SensorActRemoteForwarder(SensorActForwarder):
         print "Sending remotely: \n" + data
 
         self.connection.request("POST", "/data/upload/wavesegment", data, self.headers)
-
-class SensorActLocalForwarder(SensorActForwarder):
-
-    def __init__(self):
-        super(SensorActLocalForwarder, self).__init__()
-
-    def receive(self):
-        print "Receiving"
-
-    def send(self,data ):
-        print "Sending locally: \n" + data
+        self.receive()
 
 
 if __name__ == "__main__":

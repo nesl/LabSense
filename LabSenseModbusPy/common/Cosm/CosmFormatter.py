@@ -1,4 +1,5 @@
 import httplib, urllib
+import json
 
 class CosmFormatter(object):
 
@@ -8,6 +9,7 @@ class CosmFormatter(object):
         self.location = location
         self.channels = channels
 
+
     def format(self, data_values):
         #return createFeed("NESL_Eaton", ["VoltageAN"])
         return self.updateDatastream("VoltageAB", "123.333")
@@ -16,9 +18,7 @@ class CosmFormatter(object):
         pass
 
     def createFeed(self, feed_title, data_streams):
-        feed_data = {}
-        feed_data["title"] = feed_title
-        feed_data["version"] = "1.0.0"
+        feed_data = { "title": feed_title, "version": "1.0.0"}
 
         id_datastreams = []
         for datastream in data_streams:
@@ -31,10 +31,8 @@ class CosmFormatter(object):
         return json.dumps(feed_data)
 
     def updateDatastream(self, data_stream, current_value):
-        update_data = {}
-        update_data["id"] = data_stream
-        update_data["current_value"] = current_value
-        return update_data
+        update_data = {"id": data_stream, "current_value": current_value}
+        return json.dumps(update_data)
 
     def close(self):
         self.connection.close()

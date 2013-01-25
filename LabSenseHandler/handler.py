@@ -42,31 +42,6 @@ class LabSenseHandler:
         self.headers = { "Content-type": "application/json",
                       "Accept": "text/plain" }
 
-    def readConfiguration(self):
-        with open(self.config_file) as config:
-            config = json.load(config)
-
-        #self.SensorAct = config["SensorAct"]
-        #self.Cosm = config["Cosm"]
-        #self.Eaton = config["Eaton"]
-
-        recognized_keys = ["SensorAct", "Cosm", "Eaton"]
-
-        for key in config:
-            if key in recognized_keys:
-                if key == "SensorAct":
-                    for innerKey, value in config["SensorAct"].iteritems():
-                        self.SensorAct[innerKey] = str(value)
-                elif key == "Cosm":
-                    for innerKey, value in config["Cosm"].iteritems():
-                        self.Cosm[innerKey] = str(value)
-                else:
-                    self.devices.append(key)
-                    if key == "Eaton":
-                        self.Eaton = config["Eaton"]
-
-            else:
-                raise KeyError(key + " is not a recognized key.")
 
     """ Connection functions """
 

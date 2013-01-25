@@ -1,6 +1,7 @@
 import argparse                         # For parsing command line arguments
 import sys                              # For importing from parent directory
 import os                               # For importing from parent directory
+import time                             # For recording timestamp when getting data
 
 # Import from common directory
 sys.path.insert(0, os.path.abspath(".."))
@@ -13,10 +14,9 @@ correspond to fields. """
 class EatonClient(TCPModbusClient):
 
     # Initializes EatonClient and verifies fields are valid
-    def __init__(self, IP, PORT, fields):
-
+    def __init__(self, name, IP, PORT, fields):
+        self.name = name
         super(EatonClient, self).__init__(IP, PORT)
-
         self.Valid_fields = ["VoltageAN", "VoltageBN", "VoltageCN", 
                            "VoltageAB", "VoltageBC", "VoltageCA",
                            "CurrentA", "CurrentB", "CurrentC",
@@ -35,16 +35,20 @@ class EatonClient(TCPModbusClient):
         # Eaton configuration: 
         # Modbus address = 1, Function Code = Read (3), Starting register = 999,
         # Number of registers = 54
+        current_time = time.time()
         data = self.modbusReadReg(1, 3, 999, 54)
 
+        device_data = {}
         if data:
-
-            key_value_data = dict(zip(self.Valid_fields, data))
-
-            return key_value_data
+            channel_data = {}
+            channel_data = dict(zip(self.Valid_fields, data))
+            device_data = {"devicename": self.name,
+                           "device": "Eaton",
+                           "timestamp": current_time,
+                           "channels": channel_data
+                          }
         
-        return data
-
+        return device_data
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

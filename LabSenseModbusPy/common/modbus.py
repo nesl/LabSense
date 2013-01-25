@@ -11,6 +11,7 @@ class TCPModbusClient(object):
         self.IP = IP
         self.PORT = PORT
         self.server_addr = (str(IP), int(PORT))
+        self.connect()
 
     def connect(self):
         self.sock = socket.create_connection(self.server_addr)
@@ -32,7 +33,7 @@ class TCPModbusClient(object):
         struct_format = ("!BBHHH")
         packed_data = struct.pack(struct_format, addr, modbus_func, reg_addr, reg_qty, crc)
 
-        print "Packed data: " + repr(packed_data)
+        #print "Packed data: " + repr(packed_data)
 
         self.sock.sendall(packed_data)
     
@@ -57,14 +58,14 @@ class TCPModbusClient(object):
             print "Received bad data. Skipping..."
             return []
 
-        print "Response length: " + str(len(response))
+        #print "Response length: " + str(len(response))
         # Remove first 3 bytes and last two bytes (See
         # above)
         data = data[3:3+2*reg_qty]
 
-        sys.stdout.write("Response: ")
-        for num in data:
-            sys.stdout.write(str(num) + " " )
+        #sys.stdout.write("Response: ")
+        #for num in data:
+            #sys.stdout.write(str(num) + " " )
 
         return data
 

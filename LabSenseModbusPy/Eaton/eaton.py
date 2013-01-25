@@ -40,36 +40,42 @@ if __name__ == "__main__":
     client.connect()
     data = client.getData()
 
+    print "DATA: " + str(data)
+
     uploaders = []
 
     timestamp = time.time()
-    #if args.SensorActIP and args.SensorActPort and args.SensorActApiKey and\
-        #args.SensorActSInterval:
-        #sensorActformatter = EatonSensorActFormatter(args.Name, 
-                                            #args.SensorActApiKey,  
-                                            #args.SensorActSInterval,
-                                            #args.Location,
-                                            #channels)
+    if args.SensorActIP and args.SensorActPort and args.SensorActApiKey and\
+        args.SensorActSInterval:
+        sensorActformatter = EatonSensorActFormatter(args.Name, 
+                                            args.SensorActApiKey,  
+                                            args.SensorActSInterval,
+                                            args.Location,
+                                            channels)
                                             
-        #saForwarder = SensorActRemoteForwarder(args.SensorActIP, args.SensorActPort)
-        #uploaders.append((sensorActformatter, saForwarder))
+        saForwarder = SensorActRemoteForwarder(args.SensorActIP, args.SensorActPort)
+        uploaders.append((sensorActformatter, saForwarder))
 
-    if args.CosmApiKey:
-        cosmformatter = CosmFormatter(args.Name,
-                                      args.CosmApiKey,
-                                      args.Location,
-                                      channels)
-        #cosmForwarder = SensorActRemoteForwarder(args.CosmIP, args.CosmPort)
-        cosmForwarder = CosmUploader(args.CosmApiKey)
-        uploaders.append((cosmformatter, cosmForwarder))
+    #if args.CosmApiKey:
+        #cosmformatter = CosmFormatter(args.Name,
+                                      #args.CosmApiKey,
+                                      #args.Location,
+                                      #channels)
+        ##cosmForwarder = SensorActRemoteForwarder(args.CosmIP, args.CosmPort)
+        #cosmForwarder = CosmUploader(args.CosmApiKey)
+        #uploaders.append((cosmformatter, cosmForwarder))
 
     for uploader in uploaders:
         # Format the data
-        #formatted_data = uploader[0].format(data, timestamp)
-        formatted_data = uploader[0].format(data)
+        formatted_data = uploader[0].format(data, timestamp)
+        #formatted_data = uploader[0].format(data)
         print "Formatted Data: " + str(formatted_data)
 
         # Forward the formatted data
         for message in formatted_data:
-            uploader[1].send("VoltageAB", message)
+            #uploader[1].send("VoltageAB", message)
+            uploader[1].send(message)
             uploader[1].receive()
+
+        #uploader[1].send("VoltageAB", formatted_data)
+        #uploader[1].receive()
