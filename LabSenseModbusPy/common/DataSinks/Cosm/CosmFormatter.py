@@ -3,8 +3,7 @@ import json
 
 class CosmFormatter(object):
 
-    def __init__(self, name, secretkey, location, channels):
-        self.name = name
+    def __init__(self, secretkey, location, channels):
         self.secretkey = secretkey
         self.location = location
         self.channels = channels
@@ -17,16 +16,16 @@ class CosmFormatter(object):
     def listFeeds(self):
         pass
 
-    def createFeed(self, feed_title, data_streams):
+    def createFeed(self, feed_title):
         feed_data = { "title": feed_title, "version": "1.0.0"}
 
-        id_datastreams = []
-        for datastream in data_streams:
-            id_dict = {}
-            id_dict["id"] = datastream
-            id_datastreams.append(id_dict)
+        #id_datastreams = []
+        #for datastream in data_streams:
+            #id_dict = {}
+            #id_dict["id"] = datastream
+            #id_datastreams.append(id_dict)
 
-        feed_data["datastreams"] = id_datastreams
+        #feed_data["datastreams"] = id_datastreams
 
         return json.dumps(feed_data)
 

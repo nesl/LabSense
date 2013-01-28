@@ -2,12 +2,13 @@
 different loggers to each device. """
 class Device(object):
 
-    def __init__(self):
+    def __init__(self, name):
         self.observers = []
 
     def attach(self, observer):
         if not observer in self.observers:
             self.observers.append(observer)
+            observer.registerDevice(self.devicename, self.name)
 
     def detach(self, observer):
         try:

@@ -51,8 +51,8 @@ class EatonClient(TCPModbusClient):
 
             sensor_names = ["Voltage", "Current", "PowerFactor", "VARs", "VAs",
                     "Power", "Frequency"]
-            for sensor_name in sensor_names:
-                channel_data[sensor_name] = []
+            #for sensor_name in sensor_names:
+                #channel_data[sensor_name] = []
 
             used_channels = []
 
@@ -62,6 +62,10 @@ class EatonClient(TCPModbusClient):
                         key_val_pair = (chan, channel_data_pairs[chan])
                         #key_val_pair = {}
                         #key_val_pair = {chan: channel_data_pairs[chan]}
+
+                        if sensor_name not in channel_data.keys():
+                            channel_data[sensor_name] = []
+
                         channel_data[sensor_name].append(key_val_pair)
                         used_channels.append(chan)
 

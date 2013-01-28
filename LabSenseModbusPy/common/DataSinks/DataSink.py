@@ -1,7 +1,7 @@
 class DataSink(object):
     
     def __init__(self):
-        pass
+        self.devices = []
 
     def update(self, data):
         raise NotImplementedError("DataSink is an abstract class. sendData must\

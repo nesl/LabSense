@@ -17,6 +17,14 @@ class SensorActSink(DataSink):
         self.config = config.config["SensorAct"]
         self.sensorActUploader = SensorActUploader(self.config["IP"], self.config["PORT"])
 
+    def registerDevice(self, device_name, name):
+        if device_name not in self.devices:
+            self.devices.append(device_name)
+
+        ####### TODO: ADD REGISTER DEVICE
+        ####### CODE
+
+
     def getSensorNameUnit(self, sensor_name):
         units = ""
         if sensor_name == "Voltage":
@@ -75,28 +83,27 @@ class SensorActSink(DataSink):
 
         formatted_data_messages = []
         for sensor_name, channels in data["channels"].iteritems():
-            if channels:
-                message = {}
-                formatted_data = {}
-                formatted_data = {"dname": device_config["name"], 
-                                  "sname": sensor_name,
-                                  "sinterval": device_config["sinterval"],
-                                  "timestamp": data["timestamp"],
-                                  "loc": device_config["location"],
-                                 }
-                channel_list = []
-                for channel in channels:
-                    channel_data = {"cname": channel[0],
-                                    "unit": self.getSensorNameUnit(sensor_name),
-                                    "readings": [channel[1]]
-                                   }
-                    channel_list.append(channel_data)
+            message = {}
+            formatted_data = {}
+            formatted_data = {"dname": device_config["name"], 
+                              "sname": sensor_name,
+                              "sinterval": device_config["sinterval"],
+                              "timestamp": data["timestamp"],
+                              "loc": device_config["location"],
+                             }
+            channel_list = []
+            for channel in channels:
+                channel_data = {"cname": channel[0],
+                                "unit": self.getSensorNameUnit(sensor_name),
+                                "readings": [channel[1]]
+                               }
+                channel_list.append(channel_data)
 
-                formatted_data["channels"] = channel_list
-                message = {"secretkey": self.config["API_KEY"],
-                           "data": formatted_data }
+            formatted_data["channels"] = channel_list
+            message = {"secretkey": self.config["API_KEY"],
+                       "data": formatted_data }
 
-                formatted_data_messages.append(json.dumps(message))
+            formatted_data_messages.append(json.dumps(message))
 
         for message in formatted_data_messages:
             self.sensorActUploader.send(message)

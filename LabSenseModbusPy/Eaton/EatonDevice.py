@@ -13,8 +13,10 @@ import LabSenseHandler.configReader as configReader
 class EatonDevice(Device):
 
     def __init__(self, name, IP, PORT, channels):
+        self.devicename = "Eaton"
+        self.name = name
         self.channels = channels
-        super(EatonDevice, self).__init__()
+        super(EatonDevice, self).__init__(name)
         self.eatonClient = EatonClient(name, IP, PORT)
 
     def getData(self):
@@ -35,9 +37,9 @@ if __name__ == "__main__":
 
     stdoutSink = StdoutSink()
     sensorActSink = SensorActSink()
-    #cosmSink = CosmSink()
+    cosmSink = CosmSink()
 
     device.attach(stdoutSink)
     device.attach(sensorActSink)
-    #device.attach(cosmSink)
+    device.attach(cosmSink)
     data = device.getData()

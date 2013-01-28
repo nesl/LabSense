@@ -7,7 +7,8 @@
 
     "Cosm": {
         "URL": "http://api.cosm.com/v2/feeds/",
-        "API_KEY": "6h8z-vpjKTBYjnt62cRh-f8yZ96SAKxoOTJjWWJkUm9uYz0g"
+        "API_KEY": "6h8z-vpjKTBYjnt62cRh-f8yZ96SAKxoOTJjWWJkUm9uYz0g",
+        "user_name": "jtsao22"
     },
 
     "Eaton": {
