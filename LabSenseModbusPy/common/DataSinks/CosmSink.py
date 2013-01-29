@@ -58,12 +58,3 @@ class CosmSink(DataSink):
                   }
 
         self.cosmUploader.update(json.dumps(message), feed_id)
-
-        #if device == "Eaton":
-            ##formatter = EatonCosmFormatter()
-            ##update_data = {"id": device,
-                           ##"current_value": 
-                          ##}
-
-        #elif device == "Raritan":
-            #pass

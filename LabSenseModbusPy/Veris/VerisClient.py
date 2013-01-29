@@ -28,6 +28,17 @@ class VerisClient(TCPModbusClient):
 
     """ Functions that must be implemented by child
     classes of TCPModbusClient """
+    def getDeviceData(self, channels_to_record):
+        device_data = {}
+        channel_data = {}
+        for channel in channels_to_record:
+            address = self.getModbusAddressForChannel(channel)
+            data = self.modbusReadReg(self.modbus_addr, self.modbus_func, address, self.reg_qty)
+            parsed_data = self.parseData(data, address, channels_to_record)
+            channel_data.update(parsed_data)
+
+        return channel_data
+
     def parseData(self, data, modbus_address, channels_to_record):
         """ Maps the data received to the channels """
         if modbus_address == 2083:
@@ -46,3 +57,16 @@ class VerisClient(TCPModbusClient):
 
         channel_data[channel] = channel_list
         return channel_data
+
+    """ Helper functions """
+
+    def getModbusAddressForChannel(self, channel):
+        if channel == "Power":
+            address = 2083
+        elif channel == "PowerFactor":
+            address = 2267
+        elif channel == "Current":
+            address = 2251
+        return address
+
+

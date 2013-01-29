@@ -40,6 +40,16 @@ class EatonClient(TCPModbusClient):
 
     """ Functions that must be implemented by child
     classes of TCPModbusClient """
+    def getDeviceData(self, channels_to_record):
+        device_data = {}
+        channel_data = {}
+        for address in self.reg_addresses:
+            data = self.modbusReadReg(self.modbus_addr, self.modbus_func, address, self.reg_qty)
+            parsed_data = self.parseData(data, address, channels_to_record)
+            channel_data.update(parsed_data)
+
+        return channel_data
+
     def parseData(self, data, modbus_address, channels_to_record):
         channel_data = {}
         if data:

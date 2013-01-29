@@ -89,27 +89,22 @@ class TCPModbusClient(object):
 
         current_time = time.time()
         device_data = {}
-        channel_data = {}
-        for address in self.reg_addresses:
-            data = self.modbusReadReg(self.modbus_addr, self.modbus_func, address, self.reg_qty)
-            parsed_data = self.parseData(data, address, channels_to_record)
-            channel_data.update(parsed_data)
-
+        channel_data = self.getDeviceData(channels_to_record)
         if channel_data:
             device_data = {"devicename": self.name,
                            "device": self.devicename,
                            "timestamp": current_time,
                            "channels": channel_data
                           }
+
         return device_data
 
     """ Functions that must be implemented by child classes. """
+    def getDeviceData(self, channels_to_record):
+        raise NotImplementedError("getDeviceData must be implemented by all child classes of TCPModbusClient.")
 
     def parseData(self, data, modbus_address):
         raise NotImplementedError("ParseData must be implemented by all child classes of TCPModbusClient.")
-
-    def mapChannels(self, modbus_reg_addr, data):
-        raise NotImplementedError("Map channels function must implemented in all TCPModbusClient children classes")
 
 if __name__ == "__main__":
 
