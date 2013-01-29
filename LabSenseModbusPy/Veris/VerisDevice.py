@@ -32,14 +32,15 @@ if __name__ == "__main__":
     parser.add_argument("time", help="Time (in seconds) between each retrieval of data from Veris.")
     args = parser.parse_args()
 
+    config = configReader.config
     # Initialize the Veris Device
     device = VerisDevice(args.name, args.IP, args.PORT,
-            configReader.config["Veris"]["channels"])
+            config["Veris"]["channels"])
 
     # Create DataSinks
     stdoutSink = StdoutSink()
-    sensorActSink = SensorActSink()
-    cosmSink = CosmSink()
+    sensorActSink = SensorActSink(config)
+    cosmSink = CosmSink(config)
 
     # Attach DatSinks
     device.attach(stdoutSink)

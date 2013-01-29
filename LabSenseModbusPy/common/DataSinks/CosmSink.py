@@ -7,25 +7,22 @@ import LabSenseHandler.configReader as config
 from SensorAct.EatonSensorActFormatter import EatonSensorActFormatter
 from Cosm.CosmFormatter import CosmFormatter
 
-
-# Import from project directory
-sys.path.insert(0, os.path.abspath("../.."))
-import LabSenseHandler.configReader as config
-
 class CosmSink(DataSink):
 
-    def __init__(self):
+    def __init__(self, config):
         super(CosmSink, self).__init__()
-        self.config = config.config["Cosm"]
-        self.cosmUploader = CosmUploader(self.config["API_KEY"], self.config["user_name"])
+        self.config = config
+
+        cosmConfig = config["Cosm"]
+        self.cosmUploader = CosmUploader(cosmConfig["API_KEY"], cosmConfig["user_name"])
         self.formatters = {}
         self.feedids = {}
 
     """ Registers a device to the service """
     def registerDevice(self, device_name, name):
-        device_config = config.config[device_name]
+        device_config = self.config[device_name]
         
-        formatter = CosmFormatter(self.config["API_KEY"],
+        formatter = CosmFormatter(self.config["Cosm"]["API_KEY"],
                                   device_config["location"], 
                                   device_config["channels"])
         self.formatters[device_name] = formatter

@@ -30,14 +30,15 @@ if __name__ == "__main__":
     parser.add_argument("time", help="Time (in seconds) between each retrieval of data from Eaton.")
     args = parser.parse_args()
 
+    config = configReader.config
     # Initialize the Eaton Device
     device = EatonDevice(args.name, args.IP, args.PORT,
-            configReader.config["Eaton"]["channels"])
+            config["Eaton"]["channels"])
 
     # Create DataSinks
     stdoutSink = StdoutSink()
-    sensorActSink = SensorActSink()
-    cosmSink = CosmSink()
+    sensorActSink = SensorActSink(config)
+    cosmSink = CosmSink(config)
 
     # Attach DatSinks
     device.attach(stdoutSink)

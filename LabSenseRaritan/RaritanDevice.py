@@ -30,14 +30,15 @@ if __name__ == "__main__":
     parser.add_argument("time", help="Time (in seconds) between each retrieval of data from Raritan.")
     args = parser.parse_args()
 
+    config = configReader.config
     # Initialize the Raritan Device
     device = RaritanDevice(args.name, args.IP, args.PORT,
-            configReader.config["Raritan"]["channels"])
+            config["Raritan"]["channels"])
 
     # Create DataSinks
     #stdoutSink = StdoutSink()
-    sensorActSink = SensorActSink()
-    cosmSink = CosmSink()
+    sensorActSink = SensorActSink(config)
+    cosmSink = CosmSink(config)
 
     # Attach DatSinks
     #device.attach(stdoutSink)

@@ -6,16 +6,18 @@ from SensorAct.SensorActUploader import SensorActUploader
 
 import json 
 
-# Import from project directory
-sys.path.insert(0, os.path.abspath("../.."))
-import LabSenseHandler.configReader as config
-
 class SensorActSink(DataSink):
 
-    def __init__(self):
+    """ Initializes SensorActSink with config, which is a
+    dictionary constructed from config.json and contains
+    info about SensorAct and the rest of the
+    sensors/sinks. """
+    def __init__(self, config):
         super(SensorActSink, self).__init__()
-        self.config = config.config["SensorAct"]
-        self.sensorActUploader = SensorActUploader(self.config["IP"], self.config["PORT"])
+        self.config = config
+
+        sensorActConfig = config["SensorAct"]
+        self.sensorActUploader = SensorActUploader(sensorActConfig["IP"], sensorActConfig["PORT"])
 
     def registerDevice(self, device_name, name):
         if device_name not in self.devices:
@@ -48,7 +50,7 @@ class SensorActSink(DataSink):
 
         device = data["device"]
 
-        device_config = config.config[device]
+        device_config = self.config[device]
 
         print "Device config: " + str(device_config["channels"])
         print "Data channels: " + str(data["channels"])
@@ -72,8 +74,7 @@ class SensorActSink(DataSink):
                 channel_list.append(channel_data)
 
             formatted_data["channels"] = channel_list
-            message = {"secretkey": self.config["API_KEY"],
-                       "data": formatted_data }
+            message = {"secretkey": self.config["SensorAct"]["API_KEY"], "data": formatted_data }
 
             formatted_data_messages.append(json.dumps(message))
 
