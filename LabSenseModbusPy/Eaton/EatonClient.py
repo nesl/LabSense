@@ -63,12 +63,35 @@ class EatonClient(TCPModbusClient):
                         key_val_pair = (chan, channel_data_pairs[chan])
 
                         if sensor_name not in channel_data.keys():
-                            channel_data[sensor_name] = []
+                            channel_data[sensor_name] = {}
+                            channel_data[sensor_name]["measurements"] = []
+                            channel_data[sensor_name]["units"] = self.getUnitsForChannel(sensor_name)
 
-                        channel_data[sensor_name].append(key_val_pair)
+                        channel_data[sensor_name]["measurements"].append(key_val_pair)
                         used_channels.append(chan)
 
         return channel_data
+
+    """ Helper functions """
+    def getUnitsForChannel(self, channel):
+        units = ""
+        if channel == "Voltage":
+            units = "Volts"
+        elif channel == "Current":
+            units = "Amps"
+        elif channel == "Power":
+            units = "Watts"
+        elif channel == "VARs":
+            units = "VARs"
+        elif channel == "VAs":
+            units = "VAs"
+        elif channel == "PowerFactor":
+            units = "None"
+        else:
+            raise NotImplementedError("No such channel name")
+
+        return units
+
 
 
 

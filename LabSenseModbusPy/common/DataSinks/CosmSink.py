@@ -49,7 +49,7 @@ class CosmSink(DataSink):
 
         datastreams = []
         for sensor_name, channels in data["channels"].iteritems():
-            for channel in channels:
+            for channel in channels["measurements"]:
                 datastream = {"id": channel[0], "current_value": channel[1]}
                 datastreams.append(datastream)
 

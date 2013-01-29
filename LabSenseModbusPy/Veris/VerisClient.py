@@ -55,7 +55,9 @@ class VerisClient(TCPModbusClient):
             channel_value_pair = (channel_name, value)
             channel_list.append(channel_value_pair)
 
-        channel_data[channel] = channel_list
+        channel_data[channel] = {}
+        channel_data[channel]["measurements"] = channel_list
+        channel_data[channel]["units"] = self.getUnitsForChannel(channel)
         return channel_data
 
     """ Helper functions """
@@ -68,5 +70,18 @@ class VerisClient(TCPModbusClient):
         elif channel == "Current":
             address = 2251
         return address
+
+    def getUnitsForChannel(self, channel):
+        units = ""
+        if channel == "Current":
+            units = "Amps"
+        elif channel == "Power":
+            units = "kW"
+        elif channel == "PowerFactor":
+            units = "None"
+        else:
+            raise NotImplementedError("No such channel name")
+
+        return units
 
 

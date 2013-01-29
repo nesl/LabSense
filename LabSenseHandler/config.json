@@ -16,18 +16,31 @@
         "Operation": "read",
         "IP": "128.97.11.100",
         "PORT": "4660",
-        "channels": ["VoltageAN", "VoltageBN", "VoltageCN", "CurrentA", "CurrentB", "CurrentC"],
+        "channels": ["VoltageAN", "VoltageBN", "VoltageCN", "CurrentA", "CurrentB", "CurrentC", "PowerA", "PowerB", "PowerC", "VARsA", "VARsB", "VARsC", "VAsA", "VAsB", "VAsC", "PowerFactorA", "PowerFactorB", "PowerFactorC"],
         "sinterval": "60",
         "location": "Boelter",
         "SensorAct": "1",
         "Cosm": "1"
     },
+
     "Veris": {
         "name": "NESL_Veris",
         "Operation": "read",
         "IP": "172.17.5.177",
         "PORT": "4660",
         "channels": ["Power", "PowerFactor", "Current"],
+        "sinterval": "60",
+        "location": "Boelter",
+        "SensorAct": 1,
+        "Cosm": 1
+    },
+
+    "Raritan": {
+        "name": "NESL_Raritan",
+        "Operation": "read",
+        "IP": "172.17.5.179",
+        "PORT": "161",
+        "channels": ["Current", "Voltage", "ActivePower", "ApparentPower", "PowerFactor"],
         "sinterval": "60",
         "location": "Boelter",
         "SensorAct": 1,

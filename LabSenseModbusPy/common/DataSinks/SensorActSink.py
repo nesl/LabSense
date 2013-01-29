@@ -24,27 +24,6 @@ class SensorActSink(DataSink):
         ####### TODO: ADD REGISTER DEVICE
         ####### CODE
 
-
-    def getSensorNameUnit(self, sensor_name):
-        units = ""
-        if sensor_name == "Voltage":
-            units = "Volts"
-        elif sensor_name == "Current":
-            units = "Amps"
-        elif sensor_name == "Power":
-            units = "Watts"
-        elif sensor_name == "VARs":
-            units = "VARs"
-        elif sensor_name == "VAs":
-            units = "VAs"
-        elif sensor_name == "PowerFactor":
-            units = "None"
-        else:
-            raise NotImplementedError("No such sensor name")
-
-        return units
-
-
     def getSensorName(self, channel_name):
         sensor_name = ""
         if "Voltage" in channel_name:
@@ -68,13 +47,6 @@ class SensorActSink(DataSink):
         messages = []
 
         device = data["device"]
-        #if device == "Eaton":
-            #formatter = EatonSensorActFormatter()
-            #formatted_data = formatter.format(self.config["API_KEY"], data)
-
-        #elif device == "Raritan":
-            #raise NotImplementedError("Haven't\
-                    #implemented Raritan SensorAct Sink")
 
         device_config = config.config[device]
 
@@ -92,9 +64,9 @@ class SensorActSink(DataSink):
                               "loc": device_config["location"],
                              }
             channel_list = []
-            for channel in channels:
+            for channel in channels["measurements"]:
                 channel_data = {"cname": channel[0],
-                                "unit": self.getSensorNameUnit(sensor_name),
+                                "unit": channels["units"],
                                 "readings": [channel[1]]
                                }
                 channel_list.append(channel_data)
