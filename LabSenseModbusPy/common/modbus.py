@@ -4,6 +4,7 @@ import struct           # For reading/writing binary data
 import crc16            # For calculating crc-16 for modbus msgs
 import logging          # For logging events
 import sys              # For printing out response bytes
+import time             # For timestamping data retrieval
 
 class TCPModbusClient(object):
 
@@ -61,13 +62,54 @@ class TCPModbusClient(object):
         #print "Response length: " + str(len(response))
         # Remove first 3 bytes and last two bytes (See
         # above)
-        data = data[3:3+2*reg_qty]
+        start = 3
+        end = start + (reg_qty/2)
+        data = data[start:end]
 
-        #sys.stdout.write("Response: ")
-        #for num in data:
-            #sys.stdout.write(str(num) + " " )
+        sys.stdout.write("Response: ")
+        for num in data:
+            sys.stdout.write(str(num) + " " )
 
+        print "\n"
         return data
+
+
+    """ Channel-level calls for getting
+    data from meters """
+
+    # Checks if channels given are valid
+    def checkValidChannel(self, channels):
+        if not all([channel in self.Valid_channels for channel in channels]):
+            raise KeyError("Channels given were not recognized")
+        return True
+
+    # Gets data from the meter
+    def getData(self, channels_to_record):  
+        self.checkValidChannel(channels_to_record)
+
+        current_time = time.time()
+        device_data = {}
+        channel_data = {}
+        for address in self.reg_addresses:
+            data = self.modbusReadReg(self.modbus_addr, self.modbus_func, address, self.reg_qty)
+            parsed_data = self.parseData(data, address, channels_to_record)
+            channel_data.update(parsed_data)
+
+        if channel_data:
+            device_data = {"devicename": self.name,
+                           "device": self.devicename,
+                           "timestamp": current_time,
+                           "channels": channel_data
+                          }
+        return device_data
+
+    """ Functions that must be implemented by child classes. """
+
+    def parseData(self, data, modbus_address):
+        raise NotImplementedError("ParseData must be implemented by all child classes of TCPModbusClient.")
+
+    def mapChannels(self, modbus_reg_addr, data):
+        raise NotImplementedError("Map channels function must implemented in all TCPModbusClient children classes")
 
 if __name__ == "__main__":
 

@@ -44,7 +44,6 @@ class CosmUploader(object):
 
         location = response.getheader("location")
         feedid = self.extractFeedId(location)
-        print response.status, response.reason
 
         return feedid
 
@@ -52,6 +51,8 @@ class CosmUploader(object):
         url = "http://api.cosm.com/v2/feeds/" + str(feedid)
         print "URL: " + url
         self.connection.request("PUT", url, body, self.headers)
+        response = self.receive()
+        response.read()
 
     def send(self, data_stream, params):
         self.updateDatastream(data_stream, params)
@@ -59,6 +60,7 @@ class CosmUploader(object):
 
     def receive(self):
         response = self.connection.getresponse()
+        print response.status, response.reason
 
         return response
 

@@ -15,8 +15,17 @@ class EatonClient(TCPModbusClient):
 
     # Initializes EatonClient and verifies channels are valid
     def __init__(self, name, IP, PORT):
-        self.name = name
         super(EatonClient, self).__init__(IP, PORT)
+        self.devicename = "Eaton"
+        self.name = name
+
+        # Eaton configuration: 
+        # Modbus address = 1, Function Code = Read (3), Starting register = 999,
+        # Number of registers = 54
+        self.modbus_addr = 1
+        self.modbus_func = 3
+        self.reg_addresses = [999]
+        self.reg_qty = 54
         self.Valid_channels = ["VoltageAN", "VoltageBN", "VoltageCN", 
                            "VoltageAB", "VoltageBC", "VoltageCA",
                            "CurrentA", "CurrentB", "CurrentC",
@@ -26,42 +35,22 @@ class EatonClient(TCPModbusClient):
                            "VARsA", "VARsB", "VARsC",
                            "VAsA", "VAsB", "VAsC",
                            "PowerFactorA", "PowerFactorB", "PowerFactorC"]
-
-
-    def checkValidChannel(self, channels):
-        print "channels : " + str(channels)
-        if not all([channel in self.Valid_channels for channel in channels]):
-            raise KeyError("Eaton channels given were not recognized")
-        return True
-
-    # Gets data from the EatonMeter
-    def getData(self, channels_to_record):  
-        self.checkValidChannel(channels_to_record)
-
-        # Eaton configuration: 
-        # Modbus address = 1, Function Code = Read (3), Starting register = 999,
-        # Number of registers = 54
-        current_time = time.time()
-        data = self.modbusReadReg(1, 3, 999, 54)
-
-        device_data = {}
-        if data:
-            channel_data = {}
-            channel_data_pairs = dict(zip(self.Valid_channels, data))
-
-            sensor_names = ["Voltage", "Current", "PowerFactor", "VARs", "VAs",
+        self.sensor_names = ["Voltage", "Current", "PowerFactor", "VARs", "VAs",
                     "Power", "Frequency"]
-            #for sensor_name in sensor_names:
-                #channel_data[sensor_name] = []
+
+    """ Functions that must be implemented by child
+    classes of TCPModbusClient """
+    def parseData(self, data, modbus_address, channels_to_record):
+        channel_data = {}
+        if data:
+            channel_data_pairs = dict(zip(self.Valid_channels, data))
 
             used_channels = []
 
             for chan in self.Valid_channels:
-                for sensor_name in sensor_names:
+                for sensor_name in self.sensor_names:
                     if sensor_name in chan and chan not in used_channels and chan in channels_to_record:
                         key_val_pair = (chan, channel_data_pairs[chan])
-                        #key_val_pair = {}
-                        #key_val_pair = {chan: channel_data_pairs[chan]}
 
                         if sensor_name not in channel_data.keys():
                             channel_data[sensor_name] = []
@@ -69,15 +58,9 @@ class EatonClient(TCPModbusClient):
                         channel_data[sensor_name].append(key_val_pair)
                         used_channels.append(chan)
 
-            print "Channel data: " + str(channel_data)
+        return channel_data
 
-            device_data = {"devicename": self.name,
-                           "device": "Eaton",
-                           "timestamp": current_time,
-                           "channels": channel_data
-                          }
-        
-        return device_data
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

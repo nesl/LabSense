@@ -2,7 +2,7 @@
 different loggers to each device. """
 class Device(object):
 
-    def __init__(self, name):
+    def __init__(self):
         self.observers = []
 
     def attach(self, observer):
@@ -17,8 +17,14 @@ class Device(object):
             pass
 
     def notify(self, data):
-        for observer in self.observers:
-            observer.update(data)
+        if data:
+            for observer in self.observers:
+                observer.update(data)
+
+    #def getData(self):
+        #raise NotImplementedError("Device class is an abstract class.")
 
     def getData(self):
-        raise NotImplementedError("Device class is an abstract class.")
+        data = self.client.getData(self.channels)
+        self.notify(data)
+        return data

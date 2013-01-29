@@ -31,8 +31,6 @@ class CosmSink(DataSink):
         self.formatters[device_name] = formatter
         feedid = self.cosmUploader.checkFeedPresent(name)
 
-        print "FEEEEEEEEED: " + str(feedid)
-
         # If the feed was not found,
         # create it.
         if feedid == -1:

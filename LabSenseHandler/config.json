@@ -16,15 +16,21 @@
         "Operation": "read",
         "IP": "128.97.11.100",
         "PORT": "4660",
-        "Modbus_Address": "1",
-        "Modbus_Register_Address": "999",
-        "Number_Registers": "54",
         "channels": ["VoltageAN", "VoltageBN", "VoltageCN", "CurrentA", "CurrentB", "CurrentC"],
-        "SensorAct": "1",
         "sinterval": "60",
         "location": "Boelter",
-
-
+        "SensorAct": "1",
         "Cosm": "1"
+    },
+    "Veris": {
+        "name": "NESL_Veris",
+        "Operation": "read",
+        "IP": "172.17.5.177",
+        "PORT": "4660",
+        "channels": ["Power", "PowerFactor", "Current"],
+        "sinterval": "60",
+        "location": "Boelter",
+        "SensorAct": 1,
+        "Cosm": 1
     }
 }
