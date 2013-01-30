@@ -88,6 +88,8 @@ class TCPModbusClient(object):
         self.checkValidChannel(channels_to_record)
 
         current_time = time.time()
+        print "CURRENT TIME: " + str(type(current_time))
+        print "CURRENT TIME: " + str(current_time)
         device_data = {}
         channel_data = self.getDeviceData(channels_to_record)
         if channel_data:

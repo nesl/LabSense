@@ -1,7 +1,6 @@
 import time                                 # For sleeping between sensoract transfers
 import sys, os                              # For importing from project directory
 from DataSink import DataSink
-from SensorAct.EatonSensorActFormatter import EatonSensorActFormatter
 from SensorAct.SensorActUploader import SensorActUploader
 
 import json 

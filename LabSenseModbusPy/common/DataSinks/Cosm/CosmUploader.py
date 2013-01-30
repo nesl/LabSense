@@ -1,4 +1,4 @@
-import httplib
+import httplib                              # For making http connection to Cosm
 import re                                   # Regex for extractinextracting feed id from cosm response
 import json                                 # For parsing json return from cosm
 
@@ -27,14 +27,12 @@ class CosmUploader(object):
         print feeds
         return feeds
 
-
     def checkFeedPresent(self, feed):
         cosmfeeds = self.getFeeds()
 
         for cosmfeed in cosmfeeds:
             if feed == cosmfeed["title"]:
                 return cosmfeed["id"]
-
         return -1
 
 
@@ -54,10 +52,6 @@ class CosmUploader(object):
         response = self.receive()
         response.read()
 
-    def send(self, data_stream, params):
-        self.updateDatastream(data_stream, params)
-        pass
-
     def receive(self):
         response = self.connection.getresponse()
         print response.status, response.reason
@@ -73,7 +67,3 @@ class CosmUploader(object):
         print location
         feedid = re.search(r"\d+$", location)
         return str(int(feedid.group()))
-
-        
-
-
