@@ -58,8 +58,6 @@ class CosmSink(DataSink):
                    "datastreams": datastreams
                   }
 
-        print "MESSAGE: " + str(message)
-
         self.cosmUploader.update(json.dumps(message), feed_id)
 
     """ Helper functions """

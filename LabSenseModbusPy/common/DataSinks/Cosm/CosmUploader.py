@@ -19,12 +19,8 @@ class CosmUploader(object):
         self.connection.request("GET", url, headers=self.headers)
         response = self.receive()
 
-        print response.status, response.reason
-
         feeds = json.loads(response.read())
         feeds = feeds["results"]
-
-        print feeds
         return feeds
 
     def checkFeedPresent(self, feed):
@@ -47,14 +43,17 @@ class CosmUploader(object):
 
     def update(self, body, feedid):
         url = "http://api.cosm.com/v2/feeds/" + str(feedid)
-        print "URL: " + url
         self.connection.request("PUT", url, body, self.headers)
         response = self.receive()
         response.read()
 
     def receive(self):
-        response = self.connection.getresponse()
-        print response.status, response.reason
+        try:
+            response = self.connection.getresponse()
+        except httplib.BadStatusLine:
+            pass
+
+        print "Cosm", response.status, response.reason
 
         return response
 
@@ -64,6 +63,5 @@ class CosmUploader(object):
     """ Extracts the feed id from the location returned by
     Cosm """
     def extractFeedId(self, location):
-        print location
         feedid = re.search(r"\d+$", location)
         return str(int(feedid.group()))

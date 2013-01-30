@@ -51,9 +51,6 @@ class SensorActSink(DataSink):
 
         device_config = self.config[device]
 
-        print "Device config: " + str(device_config["channels"])
-        print "Data channels: " + str(data["channels"])
-
         formatted_data_messages = []
         for sensor_name, channels in data["channels"].iteritems():
             message = {}

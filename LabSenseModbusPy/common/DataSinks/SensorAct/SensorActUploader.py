@@ -14,7 +14,6 @@ class SensorActUploader(object):
     def connect(self):
 
         self.connection = httplib.HTTPConnection(self.IP + ":" + str(self.PORT))
-
         print "Successfully connected to " + self.IP + ": " + str(self.PORT)
 
     def close(self):
@@ -22,15 +21,13 @@ class SensorActUploader(object):
 
     def receive(self):
         response = self.connection.getresponse()
-        print response.status, response.reason
+        print "SensorAct", response.status, response.reason
         data = response.read()
         print data
 
         return data
 
     def send(self, data):
-        print "Sending remotely: \n" + data
-
         self.connection.request("POST", "/data/upload/wavesegment", data, self.headers)
         self.receive()
 
