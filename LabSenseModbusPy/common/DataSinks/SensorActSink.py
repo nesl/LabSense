@@ -11,16 +11,19 @@ class SensorActSink(DataSink):
     dictionary constructed from config.json and contains
     info about SensorAct and the rest of the
     sensors/sinks. """
-    def __init__(self, config):
-        super(SensorActSink, self).__init__()
+    def __init__(self, config, queue):
+        super(SensorActSink, self).__init__(config["SensorAct"]["interval"], queue)
         self.config = config
 
         sensorActConfig = config["SensorAct"]
         self.sensorActUploader = SensorActUploader(sensorActConfig["IP"], sensorActConfig["PORT"])
 
-    def registerDevice(self, device_name, name):
-        if device_name not in self.devices:
-            self.devices.append(device_name)
+    """ Functions child classes must implement """
+
+    def __registerDevice(self, name):
+        """ Registers a device to the service """
+        if name not in self.devices:
+            self.devices.append(name)
 
         ####### TODO: ADD REGISTER DEVICE
         ####### CODE
@@ -45,9 +48,14 @@ class SensorActSink(DataSink):
         return sensor_name
 
     def update(self, data):
+        """ Updates SensorAct with the data given """
         messages = []
 
+        device_name = data["devicename"]
         device = data["device"]
+
+        if device_name not in self.devices:
+            self.__registerDevice(device_name)
 
         device_config = self.config[device]
 

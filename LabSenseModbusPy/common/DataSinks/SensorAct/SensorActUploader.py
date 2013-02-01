@@ -4,9 +4,6 @@ class SensorActUploader(object):
     def __init__(self, IP, PORT):
         self.IP = IP
         self.PORT = PORT
-
-        print "IP: " + str(IP)
-        print "PORT: " + str(PORT)
         self.headers = { "Content-type": "application/json",
                       "Accept": "text/plain" }
         self.connect()

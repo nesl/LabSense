@@ -109,6 +109,8 @@ class RaritanClient(object):
 
         return channel_data
 
+    """ Helper functions """
+
     def getChannelNumber(self, name):
         """ Gets the channel number from the
         second to last channel number. Example Snmp

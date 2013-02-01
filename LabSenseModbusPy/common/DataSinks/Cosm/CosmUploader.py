@@ -50,11 +50,9 @@ class CosmUploader(object):
     def receive(self):
         try:
             response = self.connection.getresponse()
+            print "Cosm", response.status, response.reason
         except httplib.BadStatusLine:
             pass
-
-        print "Cosm", response.status, response.reason
-
         return response
 
 

@@ -1,30 +1,38 @@
+import time                                 # For sleeping between data transfers
+import threading                            # For threading datasinks
+
 """ Represents a generic device. The Observer pattern is used to attach
 different loggers to each device. """
-class Device(object):
+class Device(threading.Thread):
 
-    def __init__(self):
-        self.observers = []
+    def __init__(self, sinterval):
+        """ Initializes device with the sampling interval. """
+        threading.Thread.__init__(self)
+        self.queues = []
+        self.sinterval = float(sinterval)
 
-    def attach(self, observer):
-        if not observer in self.observers:
-            self.observers.append(observer)
-            observer.registerDevice(self.devicename, self.name)
+    def attach(self, queue):
+        if not queue in self.queues:
+            self.queues.append(queue)
 
-    def detach(self, observer):
+    def detach(self, queue):
         try:
-            self.observers.remove(observer)
+            self.queues.remove(queue)
         except ValueError:
             pass
 
     def notify(self, data):
         if data:
-            for observer in self.observers:
-                observer.update(data)
-
-    #def getData(self):
-        #raise NotImplementedError("Device class is an abstract class.")
+            for queue in self.queues:
+                queue.put(data)
 
     def getData(self):
         data = self.client.getData(self.channels)
         self.notify(data)
         return data
+
+    def run(self):
+        print "Starting Device"
+        while True:
+            self.getData()
+            time.sleep(self.sinterval)

@@ -1,6 +1,7 @@
 import argparse                             # For parsing command line arguments
 import sys, os                              # for importing from project directory
 import time                                 # For sleeping between uploads
+import Queue                                # For communicating between datasinks and devices
 
 from RaritanClient import RaritanClient 
 
@@ -15,8 +16,8 @@ import LabSenseHandler.configReader as configReader
 
 class RaritanDevice(Device):
 
-    def __init__(self, name, IP, PORT, channels):
-        super(RaritanDevice, self).__init__()
+    def __init__(self, name, IP, PORT, channels, sinterval):
+        super(RaritanDevice, self).__init__(sinterval)
         self.name = name
         self.channels = channels
         self.devicename = "Raritan"
@@ -30,22 +31,41 @@ if __name__ == "__main__":
     parser.add_argument("time", help="Time (in seconds) between each retrieval of data from Raritan.")
     args = parser.parse_args()
 
+    # Read configuration
     config = configReader.config
-    # Initialize the Raritan Device
+
+    # Create communication threads
+    threads = []
+
+    name = "Raritan"
+
+    # Initialize the Raritan Device thread
     device = RaritanDevice(args.name, args.IP, args.PORT,
-            config["Raritan"]["channels"])
+            config[name]["channels"], config[name]["sinterval"])
+    threads.append(device)
 
-    # Create DataSinks
-    #stdoutSink = StdoutSink()
-    sensorActSink = SensorActSink(config)
-    cosmSink = CosmSink(config)
+    if config[name]["SensorAct"]:
+        sensorActQueue = Queue.Queue()
+        sensorActSink = SensorActSink(config, sensorActQueue)
+        device.attach(sensorActQueue)
+        threads.append(sensorActSink)
 
-    # Attach DatSinks
-    #device.attach(stdoutSink)
-    device.attach(sensorActSink)
-    device.attach(cosmSink)
+    if config[name]["Cosm"]:
+        cosmQueue = Queue.Queue()
+        cosmSink = CosmSink(config, cosmQueue)
+        device.attach(cosmQueue)
+        threads.append(cosmSink)
 
-    sample_time = float(args.time)
-    while True:
-        data = device.getData()
-        time.sleep(sample_time)
+    if config[name]["Stdout"]:
+        stdoutQueue = Queue.Queue()
+        stdoutSink = StdoutSink(config, stdoutQueue)
+        device.attach(stdoutQueue)
+        threads.append(stdoutSink)
+
+    for thread in threads:
+        thread.daemon = True
+        thread.start()
+
+    for thread in threads:
+        while thread.isAlive():
+            thread.join(5)

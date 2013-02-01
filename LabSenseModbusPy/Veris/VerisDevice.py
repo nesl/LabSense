@@ -2,6 +2,7 @@ import argparse                             # For parsing command line arguments
 import sys                                  # For importing from common directory
 import os                                   # For importing from common directory
 import time                                 # For sampling time
+import Queue                                # For communicating between datasinks and devices
 
 from VerisClient import VerisClient
 
@@ -17,11 +18,11 @@ from common.DataSinks.CosmSink import CosmSink
 
 class VerisDevice(Device):
 
-    def __init__(self, name, IP, PORT, channels):
-        super(VerisDevice, self).__init__()
+    def __init__(self, name, IP, PORT, channels, sinterval):
+        super(VerisDevice, self).__init__(sinterval)
         self.name = name
-        self.devicename = "Veris"
         self.channels = channels
+        self.devicename = "Veris"
         self.client = VerisClient(name, IP, PORT)
 
 if __name__ == "__main__":
@@ -32,22 +33,41 @@ if __name__ == "__main__":
     parser.add_argument("time", help="Time (in seconds) between each retrieval of data from Veris.")
     args = parser.parse_args()
 
+    # Read configuration
     config = configReader.config
+
+    # Create communication threads
+    threads = []
+
+    name = "Veris"
+
     # Initialize the Veris Device
     device = VerisDevice(args.name, args.IP, args.PORT,
-            config["Veris"]["channels"])
+            config[name]["channels"], config[name]["sinterval"])
+    threads.append(device)
 
-    # Create DataSinks
-    stdoutSink = StdoutSink()
-    sensorActSink = SensorActSink(config)
-    cosmSink = CosmSink(config)
+    if config[name]["SensorAct"]:
+        sensorActQueue = Queue.Queue()
+        sensorActSink = SensorActSink(config, sensorActQueue)
+        device.attach(sensorActQueue)
+        threads.append(sensorActSink)
 
-    # Attach DatSinks
-    device.attach(stdoutSink)
-    device.attach(sensorActSink)
-    device.attach(cosmSink)
+    if config[name]["Cosm"]:
+        cosmQueue = Queue.Queue()
+        cosmSink = CosmSink(config, cosmQueue)
+        device.attach(cosmQueue)
+        threads.append(cosmSink)
 
-    sample_time = float(args.time)
-    while True:
-        data = device.getData()
-        time.sleep(sample_time)
+    if config[name]["Stdout"]:
+        stdoutQueue = Queue.Queue()
+        stdoutSink = StdoutSink(config, stdoutQueue)
+        device.attach(stdoutQueue)
+        threads.append(stdoutSink)
+
+    for thread in threads:
+        thread.daemon = True
+        thread.start()
+
+    for thread in threads:
+        while thread.isAlive():
+            thread.join(5)

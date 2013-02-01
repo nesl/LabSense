@@ -2,13 +2,19 @@
     "SensorAct": {
         "IP": "128.97.93.51",
         "PORT": 9000,
-        "API_KEY": "2bb5d6b943fc44f0bb6b467450e07ce7"
+        "API_KEY": "2bb5d6b943fc44f0bb6b467450e07ce7",
+        "interval": "1"
     },
 
     "Cosm": {
         "URL": "http://api.cosm.com/v2/feeds/",
         "API_KEY": "6h8z-vpjKTBYjnt62cRh-f8yZ96SAKxoOTJjWWJkUm9uYz0g",
-        "user_name": "jtsao22"
+        "user_name": "jtsao22",
+        "interval": "1"
+    },
+
+    "Stdout": {
+        "interval": "1"
     },
 
     "Eaton": {
@@ -17,10 +23,11 @@
         "IP": "128.97.11.100",
         "PORT": "4660",
         "channels": ["VoltageAN", "VoltageBN", "VoltageCN", "CurrentA", "CurrentB", "CurrentC", "PowerA", "PowerB", "PowerC", "VARsA", "VARsB", "VARsC", "VAsA", "VAsB", "VAsC", "PowerFactorA", "PowerFactorB", "PowerFactorC"],
-        "sinterval": "60",
+        "sinterval": "1",
         "location": "Boelter",
-        "SensorAct": "1",
-        "Cosm": "1"
+        "SensorAct": true,
+        "Cosm": true,
+        "Stdout": true
     },
 
     "Veris": {
@@ -29,10 +36,11 @@
         "IP": "172.17.5.177",
         "PORT": "4660",
         "channels": ["Power", "PowerFactor", "Current"],
-        "sinterval": "60",
+        "sinterval": "1",
         "location": "Boelter",
-        "SensorAct": 1,
-        "Cosm": 1
+        "SensorAct": true,
+        "Cosm": true,
+        "Stdout": true
     },
 
     "Raritan": {
@@ -41,9 +49,10 @@
         "IP": "172.17.5.179",
         "PORT": "161",
         "channels": ["Current", "Voltage", "ActivePower", "ApparentPower", "PowerFactor"],
-        "sinterval": "60",
+        "sinterval": "1",
         "location": "Boelter",
-        "SensorAct": 1,
-        "Cosm": 1
+        "SensorAct": true,
+        "Cosm": true,
+        "Stdout": true
     }
 }

@@ -9,18 +9,18 @@ from DataSink import DataSink
 
 class CosmSink(DataSink):
 
-    def __init__(self, config):
-        super(CosmSink, self).__init__()
+    def __init__(self, config, queue):
+        super(CosmSink, self).__init__(config["Cosm"]["interval"], queue)
         self.config = config
 
         cosmConfig = config["Cosm"]
         self.cosmUploader = CosmUploader(cosmConfig["API_KEY"], cosmConfig["user_name"])
         self.feedids = {}
 
-    """ Registers a device to the service """
-    def registerDevice(self, device_name, name):
-        device_config = self.config[device_name]
-        
+    """ Functions child classes must implement """
+
+    def __registerDevice(self, name):
+        """ Registers a device to the service """
         feedid = self.cosmUploader.checkFeedPresent(name)
 
         # If the feed was not found,
@@ -29,13 +29,15 @@ class CosmSink(DataSink):
             feed_message = self.createFeed(name)
             feedid = self.cosmUploader.createFeed(feed_message)
         self.feedids[name] = feedid
-        
-        if device_name not in self.devices:
-            self.devices.append(device_name)
+        self.devices.append(name)
 
     def update(self, data):
+        """ Updates Cosm with the data given """
         device_name = data["devicename"]
         device = data["device"]
+
+        if device_name not in self.devices:
+            self.__registerDevice(device_name)
 
         feed_id = self.feedids[device_name]
         timestamp = data["timestamp"]

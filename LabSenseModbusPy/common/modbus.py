@@ -59,16 +59,15 @@ class TCPModbusClient(object):
             print "Received bad data. Skipping..."
             return []
 
-        #print "Response length: " + str(len(response))
         # Remove first 3 bytes and last two bytes (See
         # above)
         start = 3
         end = start + (reg_qty/2)
         data = data[start:end]
 
-        sys.stdout.write("Response: ")
-        for num in data:
-            sys.stdout.write(str(num) + " " )
+        #sys.stdout.write("Response: ")
+        #for num in data:
+            #sys.stdout.write(str(num) + " " )
 
         print "\n"
         return data
@@ -88,8 +87,6 @@ class TCPModbusClient(object):
         self.checkValidChannel(channels_to_record)
 
         current_time = time.time()
-        print "CURRENT TIME: " + str(type(current_time))
-        print "CURRENT TIME: " + str(current_time)
         device_data = {}
         channel_data = self.getDeviceData(channels_to_record)
         if channel_data:
