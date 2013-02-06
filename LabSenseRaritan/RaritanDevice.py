@@ -6,11 +6,11 @@ import Queue                                # For communicating between datasink
 from RaritanClient import RaritanClient 
 
 sys.path.insert(0, os.path.abspath(".."))
-from LabSenseModbusPy.common.Device import Device 
-from LabSenseModbusPy.common.Device import Device
-from LabSenseModbusPy.common.DataSinks.StdoutSink import StdoutSink
-from LabSenseModbusPy.common.DataSinks.SensorActSink import SensorActSink
-from LabSenseModbusPy.common.DataSinks.CosmSink import CosmSink 
+from LabSenseModbus.common.Device import Device 
+from LabSenseModbus.common.Device import Device
+from LabSenseModbus.common.DataSinks.StdoutSink import StdoutSink
+from LabSenseModbus.common.DataSinks.SensorActSink import SensorActSink
+from LabSenseModbus.common.DataSinks.CosmSink import CosmSink 
 
 import LabSenseHandler.configReader as configReader
 

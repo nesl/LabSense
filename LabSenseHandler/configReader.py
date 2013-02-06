@@ -21,7 +21,7 @@ def readConfiguration(config_file):
     config = convert(config)
 
     recognized_keys = ["SensorAct", "Cosm", "Eaton",
-            "Veris", "Raritan", "Stdout"]
+            "Veris", "Raritan", "Stdout", "Zwave"]
 
     for key in config:
         if key not in recognized_keys:
