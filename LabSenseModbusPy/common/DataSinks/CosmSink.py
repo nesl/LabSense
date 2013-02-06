@@ -9,8 +9,8 @@ from DataSink import DataSink
 
 class CosmSink(DataSink):
 
-    def __init__(self, config, queue):
-        super(CosmSink, self).__init__(config["Cosm"]["interval"], queue)
+    def __init__(self, config, queue, interval):
+        super(CosmSink, self).__init__(interval, queue)
         self.config = config
 
         cosmConfig = config["Cosm"]
@@ -33,6 +33,7 @@ class CosmSink(DataSink):
 
     def update(self, data):
         """ Updates Cosm with the data given """
+
         device_name = data["devicename"]
         device = data["device"]
 

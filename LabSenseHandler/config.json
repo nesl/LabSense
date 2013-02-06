@@ -2,57 +2,78 @@
     "SensorAct": {
         "IP": "128.97.93.51",
         "PORT": 9000,
-        "API_KEY": "2bb5d6b943fc44f0bb6b467450e07ce7",
-        "interval": "1"
+        "API_KEY": "2bb5d6b943fc44f0bb6b467450e07ce7"
     },
 
     "Cosm": {
         "URL": "http://api.cosm.com/v2/feeds/",
         "API_KEY": "6h8z-vpjKTBYjnt62cRh-f8yZ96SAKxoOTJjWWJkUm9uYz0g",
-        "user_name": "jtsao22",
-        "interval": "1"
-    },
-
-    "Stdout": {
-        "interval": "1"
+        "user_name": "jtsao22"
     },
 
     "Eaton": {
         "name": "NESL_Eaton",
-        "Operation": "read",
         "IP": "128.97.11.100",
         "PORT": "4660",
         "channels": ["VoltageAN", "VoltageBN", "VoltageCN", "CurrentA", "CurrentB", "CurrentC", "PowerA", "PowerB", "PowerC", "VARsA", "VARsB", "VARsC", "VAsA", "VAsB", "VAsC", "PowerFactorA", "PowerFactorB", "PowerFactorC"],
         "sinterval": "1",
         "location": "Boelter",
         "SensorAct": true,
+        "SensorActInterval": "1",
         "Cosm": true,
-        "Stdout": true
+        "CosmInterval": "2",
+        "Stdout": false,
+        "StdoutInterval": "2"
     },
 
     "Veris": {
         "name": "NESL_Veris",
-        "Operation": "read",
         "IP": "172.17.5.177",
         "PORT": "4660",
         "channels": ["Power", "PowerFactor", "Current"],
         "sinterval": "1",
         "location": "Boelter",
         "SensorAct": true,
+        "SensorActInterval": "1",
         "Cosm": true,
-        "Stdout": true
+        "CosmInterval": "2",
+        "Stdout": false,
+        "StdoutInterval": "2"
     },
 
     "Raritan": {
         "name": "NESL_Raritan",
-        "Operation": "read",
         "IP": "172.17.5.179",
         "PORT": "161",
         "channels": ["Current", "Voltage", "ActivePower", "ApparentPower", "PowerFactor"],
         "sinterval": "1",
         "location": "Boelter",
         "SensorAct": true,
+        "SensorActInterval": "1",
         "Cosm": true,
-        "Stdout": true
+        "CosmInterval": "2",
+        "Stdout": false,
+        "StdoutInterval": "2"
+
+    }
+
+    "Zwave": {
+        "name": "NESL_Zwave",
+        "IP": "172.17.5.117"
+        "PORT": 3480,
+        "Sensors": [
+            "SmartSwitch": {
+                "name": "NESL_SmartSwitch",
+                "channels": ["Power", "Energy"],
+                "sinterval": "1",
+                "location": "Boelter",
+                "SensorAct": true,
+                "SensorActInterval": "1",
+                "Cosm": true,
+                "CosmInterval": "2",
+                "Stdout": false,
+                "StdoutInterval": "2"
+            }
+        ]
     }
 }

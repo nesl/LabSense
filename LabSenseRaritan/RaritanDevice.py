@@ -45,22 +45,29 @@ if __name__ == "__main__":
     threads.append(device)
 
     if config[name]["SensorAct"]:
-        sensorActQueue = Queue.Queue()
-        sensorActSink = SensorActSink(config, sensorActQueue)
+        sensorActInterval = config[name]["SensorActInterval"]
+        sensorActQueue = Queue.Queue();
+        sensorActSink = SensorActSink(config,
+                sensorActQueue, sensorActInterval)
         device.attach(sensorActQueue)
         threads.append(sensorActSink)
 
     if config[name]["Cosm"]:
+        cosmInterval = config[name]["CosmInterval"]
         cosmQueue = Queue.Queue()
-        cosmSink = CosmSink(config, cosmQueue)
+        cosmSink = CosmSink(config, cosmQueue, cosmInterval)
         device.attach(cosmQueue)
         threads.append(cosmSink)
 
     if config[name]["Stdout"]:
+        stdoutInterval = config[name]["StdoutInterval"]
         stdoutQueue = Queue.Queue()
-        stdoutSink = StdoutSink(config, stdoutQueue)
+        stdoutSink = StdoutSink(config, stdoutQueue,
+                stdoutInterval)
         device.attach(stdoutQueue)
         threads.append(stdoutSink)
+
+    print "Number of threads: ", len(threads)
 
     for thread in threads:
         thread.daemon = True

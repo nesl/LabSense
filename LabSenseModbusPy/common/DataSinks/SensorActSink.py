@@ -11,8 +11,8 @@ class SensorActSink(DataSink):
     dictionary constructed from config.json and contains
     info about SensorAct and the rest of the
     sensors/sinks. """
-    def __init__(self, config, queue):
-        super(SensorActSink, self).__init__(config["SensorAct"]["interval"], queue)
+    def __init__(self, config, queue, interval):
+        super(SensorActSink, self).__init__(interval, queue)
         self.config = config
 
         sensorActConfig = config["SensorAct"]
@@ -49,6 +49,8 @@ class SensorActSink(DataSink):
 
     def update(self, data):
         """ Updates SensorAct with the data given """
+
+        print "Updating SensorAct"
         messages = []
 
         device_name = data["devicename"]
@@ -84,4 +86,3 @@ class SensorActSink(DataSink):
 
         for message in formatted_data_messages:
             self.sensorActUploader.send(message)
-

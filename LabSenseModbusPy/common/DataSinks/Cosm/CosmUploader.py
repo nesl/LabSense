@@ -42,6 +42,8 @@ class CosmUploader(object):
         return feedid
 
     def update(self, body, feedid):
+        print "Updating Cosm"
+        #self.connect()
         url = "http://api.cosm.com/v2/feeds/" + str(feedid)
         self.connection.request("PUT", url, body, self.headers)
         response = self.receive()
@@ -52,6 +54,7 @@ class CosmUploader(object):
             response = self.connection.getresponse()
             print "Cosm", response.status, response.reason
         except httplib.BadStatusLine:
+            print "Bad status!"
             pass
         return response
 
