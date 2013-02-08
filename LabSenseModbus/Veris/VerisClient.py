@@ -26,7 +26,7 @@ class VerisClient(TCPModbusClient):
 
         self.Valid_channels = ["Power", "PowerFactor", "Current"]
         self.sensor_names = self.Valid_channels
-        self.checkValidChannels(channels)
+        self.checkValidChannel(channels)
 
     """ Functions that must be implemented by child
     classes of TCPModbusClient """

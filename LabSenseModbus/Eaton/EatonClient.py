@@ -38,7 +38,7 @@ class EatonClient(TCPModbusClient):
                            "PowerFactorA", "PowerFactorB", "PowerFactorC"]
         self.sensor_names = ["Voltage", "Current", "PowerFactor", "VARs", "VAs",
                     "Power", "Frequency"]
-        self.checkValidChannels(channels)
+        self.checkValidChannel(channels)
 
     """ Functions that must be implemented by child
     classes of TCPModbusClient """

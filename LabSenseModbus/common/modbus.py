@@ -83,12 +83,10 @@ class TCPModbusClient(object):
         return True
 
     # Gets data from the meter
-    def getData(self, channels_to_record):  
-        self.checkValidChannel(channels_to_record)
-
+    def getData(self):  
         current_time = time.time()
         device_data = {}
-        channel_data = self.getDeviceData(channels_to_record)
+        channel_data = self.getDeviceData()
         if channel_data:
             device_data = {"devicename": self.name,
                            "device": self.devicename,
@@ -99,7 +97,7 @@ class TCPModbusClient(object):
         return device_data
 
     """ Functions that must be implemented by child classes. """
-    def getDeviceData(self, channels_to_record):
+    def getDeviceData(self):
         raise NotImplementedError("getDeviceData must be implemented by all child classes of TCPModbusClient.")
 
     def parseData(self, data, modbus_address):
