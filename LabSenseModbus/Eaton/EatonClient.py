@@ -14,10 +14,11 @@ correspond to channels. """
 class EatonClient(TCPModbusClient):
 
     # Initializes EatonClient and verifies channels are valid
-    def __init__(self, name, IP, PORT):
+    def __init__(self, name, IP, PORT, channels):
         super(EatonClient, self).__init__(IP, PORT)
         self.devicename = "Eaton"
         self.name = name
+        self.channels = channels
 
         # Eaton configuration: 
         # Modbus address = 1, Function Code = Read (3), Starting register = 999,
@@ -37,20 +38,21 @@ class EatonClient(TCPModbusClient):
                            "PowerFactorA", "PowerFactorB", "PowerFactorC"]
         self.sensor_names = ["Voltage", "Current", "PowerFactor", "VARs", "VAs",
                     "Power", "Frequency"]
+        self.checkValidChannels(channels)
 
     """ Functions that must be implemented by child
     classes of TCPModbusClient """
-    def getDeviceData(self, channels_to_record):
+    def getDeviceData(self):
         device_data = {}
         channel_data = {}
         for address in self.reg_addresses:
             data = self.modbusReadReg(self.modbus_addr, self.modbus_func, address, self.reg_qty)
-            parsed_data = self.parseData(data, address, channels_to_record)
+            parsed_data = self.parseData(data, address, )
             channel_data.update(parsed_data)
 
         return channel_data
 
-    def parseData(self, data, modbus_address, channels_to_record):
+    def parseData(self, data, modbus_address):
         channel_data = {}
         if data:
             channel_data_pairs = dict(zip(self.Valid_channels, data))
@@ -59,7 +61,7 @@ class EatonClient(TCPModbusClient):
 
             for chan in self.Valid_channels:
                 for sensor_name in self.sensor_names:
-                    if sensor_name in chan and chan not in used_channels and chan in channels_to_record:
+                    if sensor_name in chan and chan not in used_channels and chan in self.channels:
                         key_val_pair = (chan, channel_data_pairs[chan])
 
                         if sensor_name not in channel_data.keys():

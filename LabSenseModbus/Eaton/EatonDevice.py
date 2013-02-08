@@ -21,7 +21,7 @@ class EatonDevice(Device):
         self.name = name
         self.channels = channels
         self.devicename = "Eaton"
-        self.client = EatonClient(name, IP, PORT)
+        self.client = EatonClient(name, IP, PORT, channels)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

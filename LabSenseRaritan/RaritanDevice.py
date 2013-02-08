@@ -21,7 +21,7 @@ class RaritanDevice(Device):
         self.name = name
         self.channels = channels
         self.devicename = "Raritan"
-        self.client = RaritanClient(name, IP, PORT)
+        self.client = RaritanClient(name, IP, PORT, channels)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

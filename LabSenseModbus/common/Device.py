@@ -27,7 +27,7 @@ class Device(threading.Thread):
                 queue.put(data)
 
     def getData(self):
-        data = self.client.getData(self.channels)
+        data = self.client.getData()
         self.notify(data)
         return data
 

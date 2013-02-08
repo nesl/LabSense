@@ -52,30 +52,23 @@
         "SensorActInterval": "1",
         "Cosm": true,
         "CosmInterval": "2",
-        "Stdout": false,
+        "Stdout": true,
         "StdoutInterval": "2"
 
     },
 
-    "Zwave": {
-        "name": "NESL_Zwave",
+    "SmartSwitch": {
+        "name": "NESL_SmartSwitch",
         "IP": "172.17.5.117",
         "PORT": 3480,
-        "Sensors": [
-            {   
-                "SmartSwitch": {
-                    "name": "NESL_SmartSwitch",
-                    "channels": ["Power", "Energy"],
-                    "sinterval": "1",
-                    "location": "Boelter",
-                    "SensorAct": true,
-                    "SensorActInterval": "1",
-                    "Cosm": true,
-                    "CosmInterval": "2",
-                    "Stdout": false,
-                    "StdoutInterval": "2"
-                }
-            }
-        ]
+        "channels": ["Power", "Energy"],
+        "sinterval": "1",
+        "location": "Boelter",
+        "SensorAct": true,
+        "SensorActInterval": "1",
+        "Cosm": true,
+        "CosmInterval": "2",
+        "Stdout": true,
+        "StdoutInterval": "2"
     }
 }

@@ -1,5 +1,4 @@
 # Usage:
-# python raritan.py [Raritan_IP] [Sample_interval]
+# python RaritanDevice [Raritan_Name] [Raritan_IP] [Raritan_PORT] [Sample_interval]
 
-#python raritan.py 172.17.5.179 20
 python RaritanDevice.py NESL_Raritan 172.17.5.179 161 1

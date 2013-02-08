@@ -7,10 +7,11 @@ from common.modbus import TCPModbusClient
 
 class VerisClient(TCPModbusClient):
 
-    def __init__(self, name, IP, PORT):
+    def __init__(self, name, IP, PORT, channels):
         super(VerisClient, self).__init__(IP, PORT)
         self.devicename = "Veris"
         self.name = name
+        self.channels = channels
 
         # Veris configuration:
         # Modbus address = 1, Function Code = Read (3),
@@ -25,21 +26,22 @@ class VerisClient(TCPModbusClient):
 
         self.Valid_channels = ["Power", "PowerFactor", "Current"]
         self.sensor_names = self.Valid_channels
+        self.checkValidChannels(channels)
 
     """ Functions that must be implemented by child
     classes of TCPModbusClient """
-    def getDeviceData(self, channels_to_record):
+    def getDeviceData(self):
         device_data = {}
         channel_data = {}
-        for channel in channels_to_record:
+        for channel in self.channels:
             address = self.getModbusAddressForChannel(channel)
             data = self.modbusReadReg(self.modbus_addr, self.modbus_func, address, self.reg_qty)
-            parsed_data = self.parseData(data, address, channels_to_record)
+            parsed_data = self.parseData(data, address)
             channel_data.update(parsed_data)
 
         return channel_data
 
-    def parseData(self, data, modbus_address, channels_to_record):
+    def parseData(self, data, modbus_address):
         """ Maps the data received to the channels """
         if modbus_address == 2083:
             channel = "Power"

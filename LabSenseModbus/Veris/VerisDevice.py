@@ -23,7 +23,7 @@ class VerisDevice(Device):
         self.name = name
         self.channels = channels
         self.devicename = "Veris"
-        self.client = VerisClient(name, IP, PORT)
+        self.client = VerisClient(name, IP, PORT, channels)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
