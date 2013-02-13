@@ -1,5 +1,6 @@
 import sys                              # For importing from parent directory
 import os                               # For importing from parent directory
+import argparse                         # For running the client from command line
 
 # Import from common directory
 sys.path.insert(0, os.path.abspath(".."))
@@ -85,5 +86,22 @@ class VerisClient(TCPModbusClient):
             raise NotImplementedError("No such channel name")
 
         return units
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("Name", help="Name of Veris meter")
+    parser.add_argument("IP", help="IP of Veris meter")
+    parser.add_argument("PORT", help="PORT of Veris meter")
+    parser.add_argument("Channels", help="Channels to read")
+
+    args = parser.parse_args()
+
+    channels = [channel for channel in args.Channels.split(" ")]
+
+    verisClient = VerisClient(args.Name, args.IP, args.PORT, channels)
+    data = verisClient.getData()
+    print data
+
+
 
 

@@ -7,6 +7,14 @@ LabSenseDB
 *.dblite
 tags
 .Python
+log.txt
+
+bin/
+include/
+lib/
+local/
+
+LabSenseHandler/config.json
 
 LabSenseZwave/OZW_Log.txt
 LabSenseZwave/api_key.py

@@ -15,10 +15,10 @@ class DataSink(threading.Thread):
 
             if not self.queue.empty():
                 data = self.queue.get()
-                #start_time = time.time()
+                start_time = time.time()
                 self.update(data)
-                #end_time = time.time()
-                #print "update elapsed time: " + str(end_time - start_time)
+                end_time = time.time()
+                print "update elapsed time: %r, with %d items in queue. " % (end_time - start_time, self.queue.qsize())
             else:
                 print "Queue was empty"
 

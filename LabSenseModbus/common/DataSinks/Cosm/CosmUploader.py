@@ -43,11 +43,14 @@ class CosmUploader(object):
 
     def update(self, body, feedid):
         print "Updating Cosm"
-        #self.connect()
+        self.connect()
         url = "http://api.cosm.com/v2/feeds/" + str(feedid)
         self.connection.request("PUT", url, body, self.headers)
         response = self.receive()
+
+        print "Cosm: ", response.status, response.reason
         response.read()
+        self.connection.close()
 
     def receive(self):
         try:
