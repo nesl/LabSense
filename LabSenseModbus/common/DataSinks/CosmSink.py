@@ -29,11 +29,6 @@ class CosmSink(DataSink):
             if not self.queue.empty():
                 if self.batch:
                     data = self.__queue_get_all()
-                    print "____________________________________________________"
-                    print "COSM PRINT ALL OF SIZE %d QUEUE: " % len(data)
-                    print str(data)
-                    print "____________________________________________________"
-
                 else:
                     data = self.queue.get()
                 start_time = time.time()
@@ -115,8 +110,6 @@ class CosmSink(DataSink):
             message = {"version": "1.0.0",
                        "datastreams": datastreams
                       }
-
-            print "COSM MESSAGE: ", json.dumps(message)
 
             self.cosmUploader.update(json.dumps(message), feed_id)
 
