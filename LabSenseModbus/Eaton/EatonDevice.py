@@ -9,7 +9,6 @@ from common.DataSinks.StdoutSink import StdoutSink
 from common.DataSinks.SensorActSink import SensorActSink
 from common.DataSinks.CosmSink import CosmSink 
 
-
 sys.path.insert(0, os.path.abspath("../.."))
 import LabSenseHandler.configReader as configReader
 

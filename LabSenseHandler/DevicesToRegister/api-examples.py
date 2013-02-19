@@ -71,6 +71,7 @@ conn.request("POST", "/device/add", body, headers)
 """
 
 ### 5. Upload sensor data. ###
+"""
 body = '{ "secretkey": "' + API_KEY + '", \
 	"data": { \
 		"dname": "NESL-PlugCom-1", \
@@ -98,6 +99,7 @@ body = '{ "secretkey": "' + API_KEY + '", \
 	} \
 }'
 conn.request("POST", "/data/upload/wavesegment", body, headers)
+"""
 
 
 ### 6. Querying data ###
@@ -119,8 +121,8 @@ conn.request("POST", "/data/query", body, headers)
 
 
 # List devices.
-#body = '{ "secretkey": "' + API_KEY + '" }'
-#conn.request("POST", "/device/list", body, headers)
+body = '{ "secretkey": "' + API_KEY + '" }'
+conn.request("POST", "/device/list", body, headers)
 
 # Delete device
 #body = '{ "secretkey": "' + API_KEY + '", \

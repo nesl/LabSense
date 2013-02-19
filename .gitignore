@@ -33,3 +33,6 @@ LabSenseSupervisor/cache.db
 LabSenseModbus/.sconsign.dblite
 LabSenseModbus/TCPModbusClient
 LabSenseModbus/log1/*
+
+deprecated/LabSenseModbus/TCPModbusClient
+deprecated/LabSenseServer/SocketIOServer/cache.db

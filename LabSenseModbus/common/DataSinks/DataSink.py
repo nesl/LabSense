@@ -9,6 +9,9 @@ class DataSink(threading.Thread):
         self.devices = []
         self.queue = queue
 
+        # Default behavior for Datasinks is not to batch.
+        self.batch = False 
+
     def run(self):
         print "Starting DataSink"
         while True:

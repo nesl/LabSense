@@ -40,7 +40,7 @@ class LabSenseHandler:
         self.API_KEY = user.API_KEY
 
         self.headers = { "Content-type": "application/json",
-                      "Accept": "text/plain" }
+                         "Accept": "text/plain" }
 
 
     """ Connection functions """
