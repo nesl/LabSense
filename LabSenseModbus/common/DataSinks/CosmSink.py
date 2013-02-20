@@ -3,16 +3,13 @@ import json                                 # For writing cosm JSON message
 #from datetime import datetime               # For formatting timestamp into Cosm's format
 import time
 
-
 from Cosm.CosmUploader import CosmUploader
-from DataSink import DataSink
+import DataSink
 
-class CosmSink(DataSink):
+class CosmSink(DataSink.DataSink):
 
     def __init__(self, config, queue, interval):
-        super(CosmSink, self).__init__(interval, queue)
-        self.config = config
-
+        super(CosmSink, self).__init__(config, queue, interval) 
         cosmConfig = config["Cosm"]
         self.cosmUploader = CosmUploader(cosmConfig["API_KEY"], cosmConfig["user_name"])
         self.feedids = {}
@@ -35,8 +32,8 @@ class CosmSink(DataSink):
                 self.update(data)
                 end_time = time.time()
                 print "update elapsed time: %r, with %d items in queue. " % (end_time - start_time, self.queue.qsize())
-            else:
-                print "Queue was empty"
+            #else:
+                #print "Queue was empty"
 
             time.sleep(self.interval)
 

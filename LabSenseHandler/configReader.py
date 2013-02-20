@@ -20,14 +20,6 @@ def readConfiguration(config_file):
     
     config = convert(config)
 
-    recognized_keys = ["SensorAct", "Cosm", "Eaton",
-                       "Veris", "Raritan", "Stdout", "Zwave", "SmartSwitch", 
-                       "LabSenseServer"]
-
-    for key in config:
-        if key not in recognized_keys:
-            raise KeyError(key + " is not a recognized key.")
-
     return config
 
 config = readConfiguration("config.json")

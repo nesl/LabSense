@@ -45,9 +45,9 @@ def main():
     # Create communication threads
     threads = []
 
-    name = "SmartSwitch"
+    name = "DoorSensor"
 
-    # Initialize the SmartSwitch Device
+    # Initialize the DoorSensor Device
     HOST = ""
     server = SocketServer.TCPServer((HOST, int(args.Port)), LabSenseTCPHandler)
     server.queues = []
@@ -80,11 +80,9 @@ def main():
         thread.daemon = True
         thread.start()
 
-    for thread in threads:
-        while thread.isAlive():
-            thread.join(5)
-
-
+    #for thread in threads:
+        #while thread.isAlive():
+            #thread.join(5)
 
     try:
         server.serve_forever()

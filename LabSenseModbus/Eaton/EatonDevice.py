@@ -4,13 +4,7 @@ import time                                 # For sleeping between uploads
 import Queue                                # For communicating between datasinks and devices
 
 from EatonClient import EatonClient
-from common.Device import Device
-from common.DataSinks.StdoutSink import StdoutSink
-from common.DataSinks.SensorActSink import SensorActSink
-from common.DataSinks.CosmSink import CosmSink 
-
-sys.path.insert(0, os.path.abspath("../.."))
-import LabSenseHandler.configReader as configReader
+from LabSenseModbus.common.Device import Device
 
 """ Represents an Eaton device. """
 class EatonDevice(Device):
@@ -23,6 +17,15 @@ class EatonDevice(Device):
         self.client = EatonClient(name, IP, PORT, channels)
 
 if __name__ == "__main__":
+
+    # Import sinks and configReader
+    from LabSenseModbus.common.DataSinks.StdoutSink import StdoutSink
+    from LabSenseModbus.common.DataSinks.SensorActSink import SensorActSink
+    from LabSenseModbus.common.DataSinks.CosmSink import CosmSink 
+
+    sys.path.insert(0, os.path.abspath("../.."))
+    import LabSenseHandler.configReader as configReader
+
     parser = argparse.ArgumentParser()
     parser.add_argument("name", help="Name of Eaton device")
     parser.add_argument("IP", help="IP address for Eaton")

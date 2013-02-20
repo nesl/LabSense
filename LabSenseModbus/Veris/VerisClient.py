@@ -4,9 +4,9 @@ import argparse                         # For running the client from command li
 
 # Import from common directory
 sys.path.insert(0, os.path.abspath(".."))
-from common.modbus import TCPModbusClient
+import LabSenseModbus.common.modbus as modbus
 
-class VerisClient(TCPModbusClient):
+class VerisClient(modbus.TCPModbusClient):
 
     def __init__(self, name, IP, PORT, channels):
         super(VerisClient, self).__init__(IP, PORT)

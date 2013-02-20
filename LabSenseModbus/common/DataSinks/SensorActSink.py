@@ -12,8 +12,7 @@ class SensorActSink(DataSink):
     info about SensorAct and the rest of the
     sensors/sinks. """
     def __init__(self, config, queue, interval):
-        super(SensorActSink, self).__init__(interval, queue)
-        self.config = config
+        super(SensorActSink, self).__init__(config, queue, interval)
 
         sensorActConfig = config["SensorAct"]
         self.sensorActUploader = SensorActUploader(sensorActConfig["IP"], sensorActConfig["PORT"])
