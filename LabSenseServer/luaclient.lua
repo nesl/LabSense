@@ -21,10 +21,18 @@
     --sink = ltn12.sink.table(response_body)
   --}
 --end
-
-function sendToLabSense(IP, PORT, data)
+function sendToLabSense(device, IP, PORT, value, timestamp)
     local socket = require("socket")
 
     client = socket.connect(IP, PORT)
 
-    client.send("HELLO")
+    -- local timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ", ostime)
+
+    if device == "DoorSensor" then
+        local json_data = '{ "device": "DoorSensor", "devicename": "NESL_DoorSensor", "channels": { "Door": { "units": "Open/Closed", "measurements": [ ["Door", ' .. value .. ']]}}, "timestamp": ' .. timestamp .. '}'
+    elseif device == "Motion" then
+        local json_data = '{ "device": "MotionSensor", "devicename": "NESL_MotionSensor", "channels": { "Motion": { "units": "Motion/No Motion", "measurements": [ ["Motion", ' .. value .. ']]}}, "timestamp": ' .. timestamp .. '}'
+    end
+
+    client:send(json_data)
+end

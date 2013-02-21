@@ -64,11 +64,11 @@ class SensorActSink(DataSink):
         for sensor_name, channels in data["channels"].iteritems():
             message = {}
             formatted_data = {}
-            formatted_data = {"dname": device_config["name"], 
+            formatted_data = {"dname": device_name, 
                               "sname": sensor_name,
-                              "sinterval": device_config["sinterval"],
+                              #"sinterval": device_config["sinterval"],
                               "timestamp": data["timestamp"],
-                              "loc": device_config["location"],
+                              #"loc": device_config["location"],
                              }
             channel_list = []
             for channel in channels["measurements"]:
@@ -82,6 +82,8 @@ class SensorActSink(DataSink):
             message = {"secretkey": self.config["SensorAct"]["API_KEY"], "data": formatted_data }
 
             formatted_data_messages.append(json.dumps(message))
+
+        print "Formatted data message: %r" % formatted_data_messages
 
         for message in formatted_data_messages:
             self.sensorActUploader.send(message)
