@@ -4,6 +4,8 @@ import time                                 # For sleeping between uploads
 import Queue                                # For communicating between datasinks and devices
 
 from SmartSwitchClient import SmartSwitchClient
+from LightSensorClient import LightSensorClient
+from TemperatureSensorClient import TemperatureSensorClient
 
 sys.path.insert(0, os.path.abspath(".."))
 from LabSenseModbus.common.Device import Device 
@@ -16,16 +18,26 @@ import LabSenseHandler.configReader as configReader
 
 class ZwaveDevice(Device):
 
-    def __init__(self, name, IP, PORT, channels, sinterval):
+    def __init__(self, name, devicename, IP, PORT, channels, sinterval):
         super(ZwaveDevice, self).__init__(sinterval)
-        self.client = SmartSwitchClient(name, IP, PORT, channels)
+
+        if devicename == "SmartSwitch":
+            self.client = SmartSwitchClient(name, IP, PORT, channels)
+        elif devicename == "LightSensor":
+            self.client = LightSensorClient(name, IP, PORT, channels)
+        elif devicename == "TemperatureSensor":
+            self.client = TemperatureSensorClient(name, IP, PORT, channels)
+        else:
+            raise TypeError(devicename + " device unrecoganized.")
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("Name", help="Name for SmartSwitch")
-    parser.add_argument("IP", help="IP address for SmartSwitch")
-    parser.add_argument("PORT", help="Port for SmartSwitch")
-    parser.add_argument("time", help="Time (in seconds) between each retrieval of data from SmartSwitch.")
+    parser.add_argument("Name", help="Name for Zwave Device")
+    parser.add_argument("Devicename", help="Device Name for Zwave Device.")
+    parser.add_argument("IP", help="IP address for Zwave Device")
+    parser.add_argument("PORT", help="Port for Zwave Device")
+    parser.add_argument("time", help="Time (in seconds) between each retrieval of data from Zwave Device.")
     args = parser.parse_args()
 
     # Read configuration
@@ -33,30 +45,30 @@ if __name__ == "__main__":
 
     # Create communication threads
     threads = []
-    name = "SmartSwitch"
+    devicename = args.Devicename
 
     # Initialize the SmartSwitch Device thread
-    device = ZwaveDevice(args.Name, args.IP, args.PORT,
-            ["Power", "Energy"], args.time) 
+    device = ZwaveDevice(args.Name, devicename, args.IP, args.PORT,
+            config[devicename]["channels"], config[devicename]["sinterval"])
     threads.append(device)
 
-    if config[name]["SensorAct"]:
-        sensorActInterval = config[name]["SensorActInterval"]
+    if config[devicename]["SensorAct"]:
+        sensorActInterval = config[devicename]["SensorActInterval"]
         sensorActQueue = Queue.Queue();
         sensorActSink = SensorActSink(config,
                 sensorActQueue, sensorActInterval)
         device.attach(sensorActQueue)
         threads.append(sensorActSink)
 
-    if config[name]["Cosm"]:
-        cosmInterval = config[name]["CosmInterval"]
+    if config[devicename]["Cosm"]:
+        cosmInterval = config[devicename]["CosmInterval"]
         cosmQueue = Queue.Queue()
         cosmSink = CosmSink(config, cosmQueue, cosmInterval)
         device.attach(cosmQueue)
         threads.append(cosmSink)
 
-    if config[name]["Stdout"]:
-        stdoutInterval = config[name]["StdoutInterval"]
+    if config[devicename]["Stdout"]:
+        stdoutInterval = config[devicename]["StdoutInterval"]
         stdoutQueue = Queue.Queue()
         stdoutSink = StdoutSink(config, stdoutQueue,
                 stdoutInterval)
