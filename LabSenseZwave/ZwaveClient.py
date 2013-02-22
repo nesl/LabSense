@@ -1,63 +1,74 @@
 import argparse                         # For parsing command line arguments
-import time                             # For recording timestamp when getting data
-from VeraClient import VeraClient       # For zwave
+import sys                              # For importing from parent directory
+import os                               # For importing from parent directory
+import httplib                          # For making http requests to Vera 
+import json                             # For reading JSON returned from Vera
+import time                             # For timestamp
 
 class ZwaveClient(object):
 
     def __init__(self, IP, PORT, channels):
-        self.zwaveClient = VeraClient(IP, PORT, channels)
+        self.IP = IP
+        self.PORT = PORT
+        self.channels = channels
 
     def getData(self):
+        """ Gets data from vera and formats it into internal json structure """
         current_time = time.time()
-        data = self.zwaveClient.getData()
+        data = self.__getJsonData()
 
         device_data = []
         for device in data:
             device_name = device["name"]
             channel_data = {}
-            if device_name == "NESL_SmartSwitch":
-                # SmartSwitch has Power and Energy
-                channel_data["Power"] = {"units": "Watts",
-                        "measurements": [ ("Power", str(device["watts"]))]}
-                channel_data["Energy"] = {"units": "kwh",
-                                         "measurements": [ ("Energy", str(device["kwh"]))]}
+            if device_name == self.name:
+                device_data = self._formatChannelData(current_time, device, device_name)
+                return device_data
 
-            elif device_name == "NESL_LightSensor":
-                # Light Sensor has light reading
-                channel_data["Light"] = {"units": "Percent",
-                                         "measurements": [
-                                         ("Light", str(device["light"]))]}
-            elif device_name == "NESL_TemperatureSensor":
-                # Temperature Sensor has temperature reading in Fahrenheit
-                channel_data["Temperature"] = {
-                    "units": "Fahrenheit",
-                    "measurements": [
-                        ("Temperature", str(device["temperature"]))]}
+        # If the device was not found, raise an error
+        raise KeyError(self.name + " was not found when querying the Vera.")
 
-            device_data = {"devicename": device_name,
-                           "device": device_name,
-                           "timestamp": current_time,
-                           "channels": channel_data
-                           }
+    """ Functions that must be implemented by children """
+    def _formatChannelData(device):
+        raise NotImplementedError("Classes that inherit from ZwaveClient must implement _formatChannelData")
 
-            device_datas.append(device_data)
+    """ Functions Called within VeraClient """
+    def __connect(self):
+        self.connection = httplib.HTTPConnection(self.IP, self.PORT)
 
-        return device_data
+    def __getJsonData(self):
+        """ Gets data in json format from Vera (Zwave Receiver) """
+        device_data = {}
+        channel_data = self.__getDeviceData()
+        json_chan_data = json.loads(channel_data)
+        return json_chan_data["devices"]
 
-    def __checkValidChannel(self, channels):
-        if not all([channel in self.Valid_channels for channel in channels]):
-            raise KeyError("Channels given were not recognized")
-        return True
+    def __getDeviceData(self):
+        self.__connect()
+        url = "/data_request?id=sdata&output_format=json"
+        self.connection.request("GET", url)
+        response = self.__receive()
+        return response.read()
+        self.connection.close()
 
-            
+    def __receive(self):
+        try:
+            response = self.connection.getresponse()
+        except httplib.BadStatusLine:
+            print "Bad status!"
+            pass
+        return response
+
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("IP", help="IP of ZwaveClient")
-    parser.add_argument("PORT", help="PORT of ZwaveClient")
+    parser.add_argument("IP", help="IP of VeraClient")
+    parser.add_argument("PORT", help="PORT of VeraClient")
     args = parser.parse_args()
 
     channels = ["Power", "Energy"]
-    client = ZwaveClient("NESL_SmartSwitch", args.IP, args.PORT, channels)
+    client = VeraClient(args.IP, args.PORT, channels)
 
-    data = client.getData()
+    data = client.getData(["Power", "Energy"])
     print data

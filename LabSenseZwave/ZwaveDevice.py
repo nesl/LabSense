@@ -3,7 +3,7 @@ import sys, os                              # for importing from project directo
 import time                                 # For sleeping between uploads
 import Queue                                # For communicating between datasinks and devices
 
-from ZwaveClient import ZwaveClient 
+from SmartSwitchClient import SmartSwitchClient
 
 sys.path.insert(0, os.path.abspath(".."))
 from LabSenseModbus.common.Device import Device 
@@ -16,22 +16,13 @@ import LabSenseHandler.configReader as configReader
 
 class ZwaveDevice(Device):
 
-    def __init__(self, IP, PORT, channels, sinterval):
+    def __init__(self, name, IP, PORT, channels, sinterval):
         super(ZwaveDevice, self).__init__(sinterval)
-        self.client = ZwaveClient(IP, PORT, channels)
-
-    """ Device Overwritten functions """
-
-    def getData(self):
-        """ getData overrides Device's getData because querying the Vera returns
-        data for several zwave devices """
-        data = self.client.getData()
-        for datum in data:
-            self.notify(datum)
-        return data
+        self.client = SmartSwitchClient(name, IP, PORT, channels)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
+    parser.add_argument("Name", help="Name for SmartSwitch")
     parser.add_argument("IP", help="IP address for SmartSwitch")
     parser.add_argument("PORT", help="Port for SmartSwitch")
     parser.add_argument("time", help="Time (in seconds) between each retrieval of data from SmartSwitch.")
@@ -42,33 +33,32 @@ if __name__ == "__main__":
 
     # Create communication threads
     threads = []
+    name = "SmartSwitch"
 
     # Initialize the SmartSwitch Device thread
-    device = ZwaveDevice(args.IP, args.PORT,
-            [], 0) 
+    device = ZwaveDevice(args.Name, args.IP, args.PORT,
+            ["Power", "Energy"], args.time) 
     threads.append(device)
 
-    Zwave_config = config["Zwave"]
-
-    if zwave_config[name]["SensorAct"]:
-        sensorActInterval = zwave_config[name]["SensorActInterval"]
+    if config[name]["SensorAct"]:
+        sensorActInterval = config[name]["SensorActInterval"]
         sensorActQueue = Queue.Queue();
-        sensorActSink = SensorActSink(zwave_config,
+        sensorActSink = SensorActSink(config,
                 sensorActQueue, sensorActInterval)
         device.attach(sensorActQueue)
         threads.append(sensorActSink)
 
-    if zwave_config[name]["Cosm"]:
-        cosmInterval = zwave_config[name]["CosmInterval"]
+    if config[name]["Cosm"]:
+        cosmInterval = config[name]["CosmInterval"]
         cosmQueue = Queue.Queue()
-        cosmSink = CosmSink(zwave_config, cosmQueue, cosmInterval)
+        cosmSink = CosmSink(config, cosmQueue, cosmInterval)
         device.attach(cosmQueue)
         threads.append(cosmSink)
 
-    if zwave_config[name]["Stdout"]:
-        stdoutInterval = zwave_config[name]["StdoutInterval"]
+    if config[name]["Stdout"]:
+        stdoutInterval = config[name]["StdoutInterval"]
         stdoutQueue = Queue.Queue()
-        stdoutSink = StdoutSink(zwave_config, stdoutQueue,
+        stdoutSink = StdoutSink(config, stdoutQueue,
                 stdoutInterval)
         device.attach(stdoutQueue)
         threads.append(stdoutSink)

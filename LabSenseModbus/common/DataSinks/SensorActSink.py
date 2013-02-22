@@ -58,7 +58,7 @@ class SensorActSink(DataSink):
         if device_name not in self.devices:
             self.__registerDevice(device_name)
 
-        device_config = self.config[device]
+        #device_config = self.config[device]
 
         formatted_data_messages = []
         for sensor_name, channels in data["channels"].iteritems():
@@ -82,8 +82,6 @@ class SensorActSink(DataSink):
             message = {"secretkey": self.config["SensorAct"]["API_KEY"], "data": formatted_data }
 
             formatted_data_messages.append(json.dumps(message))
-
-        print "Formatted data message: %r" % formatted_data_messages
 
         for message in formatted_data_messages:
             self.sensorActUploader.send(message)

@@ -3,10 +3,6 @@ import threading                            # For threading datasinks
 import sys                                  # For importing from common directory
 import os                                   # For importing from common directory
 
-# Import Sinks for abstract factory
-#sys.path.insert(0, os.path.abspath("."))
-sys.path.append(os.path.abspath("."))
-
 class DataSink(threading.Thread):
 
     def __init__(self, config, queue, interval):
@@ -44,13 +40,11 @@ class DataSink(threading.Thread):
 
             if not self.queue.empty():
                 data = self.queue.get()
-                start_time = time.time()
-                self.update(data)
-                end_time = time.time()
-                print "update elapsed time: %r, with %d items in queue. " % (end_time - start_time, self.queue.qsize())
-            #else:
-                #print "Queue was empty"
-
+                if data:
+                    start_time = time.time()
+                    self.update(data)
+                    end_time = time.time()
+                    print "update elapsed time: %r, with %d items in queue. " % (end_time - start_time, self.queue.qsize())
             time.sleep(self.interval)
 
     """ Functions child classes must implement """
@@ -63,4 +57,3 @@ class DataSink(threading.Thread):
         raise NotImplementedError("DataSink is an abstract class.\
                 RegisterDevice must be implemented by classes that inherit\
                 from DataSink.")
-

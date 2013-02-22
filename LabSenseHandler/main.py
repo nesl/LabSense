@@ -28,7 +28,6 @@ class LabSenseMain(object):
     def run(self):
         # Parse nodes in Configuration file
         for node, config in self.configuration.iteritems():
-
             # Sinks
             if node == "SensorAct":
                 pass
@@ -55,6 +54,7 @@ class LabSenseMain(object):
                                      config["sinterval"])
                 self.threads.append(device)
                 self.attachSinks(device, config)
+
             elif node == "Raritan":
                 device = RaritanDevice.RaritanDevice(config["name"],
                                                      config["IP"],
@@ -63,6 +63,7 @@ class LabSenseMain(object):
                                                      config["sinterval"])
                 self.threads.append(device)
                 self.attachSinks(device, config)
+
             elif node == "SmartSwitch":
                 device = SmartSwitchZwaveDevice.SmartSwitchZwaveDevice(
                                                 config["name"],
@@ -72,12 +73,20 @@ class LabSenseMain(object):
                                                 config["sinterval"])
                 self.threads.append(device)
                 self.attachSinks(device, config)
-            elif node == "DoorSensor":
-                pass
+
             elif node == "LabSenseServer":
-                pass
+                # LabSenseServer has several sensors
+                for innerNode, innerConfig in config:
+                    if innerNode == "DoorSensor":
+                        pass
+                    elif innerNode == "MotionSensor":
+                        pass
+                    else: 
+                        raise KeyError("Unrecognized LabSenseServer node: " +
+                                       innerNode)
+
             else:
-                raise nodeError(key + " is not a recognized node.")
+                raise KeyError("Unrecognized node: " + node)
 
         print "Number of threads: ", len(self.threads)
         for thread in self.threads:
@@ -89,31 +98,7 @@ class LabSenseMain(object):
                 thread.join(5)
 
     def attachSinks(self, device, device_config):
-
-        # Attach SensorAct
-        #if device_config["SensorAct"]:
-            #sensorActInterval = config[name]["SensorActInterval"]
-            #sensorActQueue = Queue.Queue();
-            #sensorActSink = SensorActSink(config,
-                    #sensorActQueue, sensorActInterval)
-            #device.attach(sensorActQueue)
-            #threads.append(sensorActSink)
-
-        #if device_config["Cosm"]:
-            #cosmInterval = config[name]["CosmInterval"]
-            #cosmQueue = Queue.Queue()
-            #cosmSink = CosmSink(config, cosmQueue, cosmInterval)
-            #device.attach(cosmQueue)
-            #threads.append(cosmSink)
-
-        #if device_config["Stdout"]:
-            #stdoutInterval = config[name]["StdoutInterval"]
-            #stdoutQueue = Queue.Queue()
-            #stdoutSink = StdoutSink(config, stdoutQueue,
-                    #stdoutInterval)
-            #device.attach(stdoutQueue)
-            #threads.append(stdoutSink)
-
+        """ Attaches sinks to devices based on configuration file. """
         for sink in ["SensorAct", "Cosm", "Stdout"]:
             if device_config[sink]:
                 interval = device_config[sink + "Interval"]

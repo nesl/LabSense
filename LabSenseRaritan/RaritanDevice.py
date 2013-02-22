@@ -18,9 +18,7 @@ class RaritanDevice(Device):
 
     def __init__(self, name, IP, PORT, channels, sinterval):
         super(RaritanDevice, self).__init__(sinterval)
-        self.name = name
         self.channels = channels
-        self.devicename = "Raritan"
         self.client = RaritanClient(name, IP, PORT, channels)
 
 if __name__ == "__main__":

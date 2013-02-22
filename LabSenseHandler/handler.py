@@ -42,7 +42,6 @@ class LabSenseHandler:
         self.headers = { "Content-type": "application/json",
                          "Accept": "text/plain" }
 
-
     """ Connection functions """
 
     def connect(self):
@@ -137,7 +136,6 @@ class LabSenseHandler:
         self.getResponse()
 
         return True
-
 
     def deleteDevice(self, devicename):
         """ Deletes device with the devicename given 
