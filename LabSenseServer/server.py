@@ -17,8 +17,13 @@ class LabSenseTCPHandler(SocketServer.BaseRequestHandler):
     def handle(self):
         """ Handle the TCP Handler traffic """
 
-        # Receive the data
-        data = self.request.recv(1024)
+        try:
+            # Receive the data
+            data = self.request.recv(1024)
+        except socket.error:
+            print "Connection reset by peer..."
+            return
+
         print "Data: ", data
         json_data = json.loads(data)
         print "Json data: ", json_data
@@ -59,29 +64,6 @@ def main():
                 server.queues.append(queue)
                 dataSink = DataSink.DataSink.dataSinkFactory(sink, config, queue, interval)
                 threads.append(dataSink)
-
-    #if config[name]["SensorAct"]:
-        #sensorActInterval = config[name]["SensorActInterval"]
-        #sensorActQueue = Queue.Queue();
-        #sensorActSink = SensorActSink(config,
-                #sensorActQueue, sensorActInterval)
-        #server.queues.append(sensorActQueue)
-        #threads.append(sensorActSink)
-
-    #if config[name]["Cosm"]:
-        #cosmInterval = config[name]["CosmInterval"]
-        #cosmQueue = Queue.Queue()
-        #cosmSink = CosmSink(config, cosmQueue, cosmInterval)
-        #server.queues.append(cosmQueue)
-        #threads.append(cosmSink)
-
-    #if config[name]["Stdout"]:
-        #stdoutInterval = config[name]["StdoutInterval"]
-        #stdoutQueue = Queue.Queue()
-        #stdoutSink = StdoutSink(config, stdoutQueue,
-                #stdoutInterval)
-        #server.queues.append(stdoutQueue)
-        #threads.append(stdoutSink)
 
     print "Number of threads: ", len(threads)
     for thread in threads:
