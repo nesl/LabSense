@@ -1,6 +1,7 @@
 import httplib                              # For making http connection to Cosm
 import re                                   # Regex for extractinextracting feed id from cosm response
 import json                                 # For parsing json return from cosm
+import time                                 # For waiting between retries
 
 class CosmUploader(object):
 
@@ -43,14 +44,29 @@ class CosmUploader(object):
 
     def update(self, body, feedid):
         print "Updating Cosm"
-        self.connect()
-        url = "http://api.cosm.com/v2/feeds/" + str(feedid)
-        self.connection.request("PUT", url, body, self.headers)
-        response = self.receive()
 
-        print "Cosm: ", response.status, response.reason
-        response.read()
-        self.connection.close()
+        try:
+            self.connect()
+            url = "http://api.cosm.com/v2/feeds/" + str(feedid)
+            self.connection.request("PUT", url, body, self.headers)
+            response = self.receive()
+
+            print "Cosm: ", response.status, response.reason
+            response.read()
+            self.connection.close()
+
+            if response.status != 200:
+                print "Retrying Upload to Cosm because of %s error" % str(response.status)
+                time.sleep(10)
+                self.update(body, feedid)
+
+            return True
+        except IOError, detail:
+            print ("No internet connection, will send the data when the internet"
+                  " becomes available")
+            time.sleep(60)
+            self.update(body, feedid)
+            return False
 
     def receive(self):
         try:

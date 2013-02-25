@@ -7,7 +7,7 @@ LabSenseDB
 *.dblite
 tags
 .Python
-log.txt
+*log.txt
 
 bin/
 include/
