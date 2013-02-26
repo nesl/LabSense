@@ -6,13 +6,15 @@ import Queue                                # For communicating between datasink
 import configReader                         # For reading the configuration
 
 sys.path.insert(1, os.path.abspath(".."))
-import LabSenseModbus.Veris.VerisDevice as VerisDevice
-import LabSenseModbus.Eaton.EatonDevice as EatonDevice
+#import LabSenseModbus.Veris.VerisDevice as VerisDevice
+#import LabSenseModbus.Eaton.EatonDevice as EatonDevice
 #import LabSenseModbus.common.Device
 #sys.path.insert(1, os.path.abspath(".."))
 import LabSenseModbus.common.DataSinks.DataSink as DataSink
-import LabSenseZwave.SmartSwitchZwaveDevice as SmartSwitchZwaveDevice
-import LabSenseRaritan.RaritanDevice as RaritanDevice
+import LabSenseModbus.common.Device as Device
+#import LabSenseZwave.SmartSwitchZwaveDevice as SmartSwitchZwaveDevice
+#import LabSenseZwave.ZwaveDevice as ZwaveDevice
+#import LabSenseRaritan.RaritanDevice as RaritanDevice
 
 class LabSenseMain(object):
 
@@ -20,13 +22,8 @@ class LabSenseMain(object):
         self.configuration = configuration
         self.threads = []
 
-        self.recognized_nodes = ["SensorAct", "Cosm", "Eaton",
-                                 "Veris", "Raritan", "Stdout", 
-                                 "Zwave", "SmartSwitch", 
-                                 "DoorSensor", "LabSenseServer"]
-
     def run(self):
-        # Parse nodes in Configuration file
+        """ Parse nodes in Configuration file """
         for node, config in self.configuration.iteritems():
             # Sinks
             if node == "SensorAct":
@@ -37,46 +34,62 @@ class LabSenseMain(object):
                 pass
 
             # Devices 
-            elif node == "Eaton":
-                device = EatonDevice.EatonDevice(config["name"], 
-                                     config["IP"], 
-                                     config["PORT"],
-                                     config["channels"],
-                                     config["sinterval"])
-                self.threads.append(device)
-                self.attachSinks(device, config)
-
-            elif node == "Veris":
-                device = VerisDevice.VerisDevice(config["name"],
-                                     config["IP"],
-                                     config["PORT"],
-                                     config["channels"],
-                                     config["sinterval"])
-                self.threads.append(device)
-                self.attachSinks(device, config)
-
-            elif node == "Raritan":
-                device = RaritanDevice.RaritanDevice(config["name"],
-                                                     config["IP"],
-                                                     config["PORT"],
-                                                     config["channels"],
+            elif node in ["Eaton", "Veris", "Raritan", "SmartSwitch",
+                          "LightSensor", "TemperatureSensor"]:
+                device = Device.Device.deviceFactory(node, 
+                                                     config["name"], 
+                                                     config["IP"], 
+                                                     config["PORT"], 
+                                                     config["channels"], 
                                                      config["sinterval"])
                 self.threads.append(device)
                 self.attachSinks(device, config)
+            #elif node == "Eaton":
+                #device = EatonDevice.EatonDevice(config["name"], 
+                                     #config["IP"], 
+                                     #config["PORT"],
+                                     #config["channels"],
+                                     #config["sinterval"])
+                #self.threads.append(device)
+                #self.attachSinks(device, config)
 
-            elif node == "SmartSwitch":
-                device = SmartSwitchZwaveDevice.SmartSwitchZwaveDevice(
-                                                config["name"],
-                                                config["IP"],
-                                                config["PORT"],
-                                                config["channels"],
-                                                config["sinterval"])
-                self.threads.append(device)
-                self.attachSinks(device, config)
+            #elif node == "Veris":
+                #device = VerisDevice.VerisDevice(config["name"],
+                                     #config["IP"],
+                                     #config["PORT"],
+                                     #config["channels"],
+                                     #config["sinterval"])
+                #self.threads.append(device)
+                #self.attachSinks(device, config)
 
+            #elif node == "Raritan":
+                #device = RaritanDevice.RaritanDevice(config["name"],
+                                                     #config["IP"],
+                                                     #config["PORT"],
+                                                     #config["channels"],
+                                                     #config["sinterval"])
+                #self.threads.append(device)
+                #self.attachSinks(device, config)
+
+            #elif node in ["SmartSwitch", "LightSensor", "TemperatureSensor"]:
+                #device = ZwaveDevice.ZwaveDevice(node, 
+                                                #config["name"],
+                                                #config["IP"],
+                                                #config["PORT"],
+                                                #config["channels"],
+                                                #config["sinterval"])
+                #self.threads.append(device)
+                #self.attachSinks(device, config)
+
+            # Server
             elif node == "LabSenseServer":
+                try:
+                    sensors_config = config["Sensors"]
+                except KeyError:
+                    raise KeyError("No Sensors were specified in LabSenseServer")
+
                 # LabSenseServer has several sensors
-                for innerNode, innerConfig in config:
+                for innerNode, innerConfig in sensors_config.iteritems():
                     if innerNode == "DoorSensor":
                         pass
                     elif innerNode == "MotionSensor":
@@ -84,7 +97,7 @@ class LabSenseMain(object):
                     else: 
                         raise KeyError("Unrecognized LabSenseServer node: " +
                                        innerNode)
-
+            # Unrecognized
             else:
                 raise KeyError("Unrecognized node: " + node)
 

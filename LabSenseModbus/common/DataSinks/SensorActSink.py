@@ -49,7 +49,6 @@ class SensorActSink(DataSink):
     def update(self, data):
         """ Updates SensorAct with the data given """
 
-        print "Updating SensorAct"
         messages = []
 
         device_name = data["devicename"]

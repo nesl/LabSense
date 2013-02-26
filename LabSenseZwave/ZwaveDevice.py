@@ -18,7 +18,7 @@ import LabSenseHandler.configReader as configReader
 
 class ZwaveDevice(Device):
 
-    def __init__(self, name, devicename, IP, PORT, channels, sinterval):
+    def __init__(self, devicename, name, IP, PORT, channels, sinterval):
         super(ZwaveDevice, self).__init__(sinterval)
 
         if devicename == "SmartSwitch":

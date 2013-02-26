@@ -15,7 +15,13 @@ class TCPModbusClient(object):
         self.connect()
 
     def connect(self):
-        self.sock = socket.create_connection(self.server_addr)
+        try:
+            self.sock = socket.create_connection(self.server_addr)
+        except socket.error:
+            print ("Could not establish modbus"
+                   "connection. Retrying in 5 seconds...")
+            time.sleep(5)
+            self.connect()
 
     def send(self, msg):
         pass
@@ -36,15 +42,18 @@ class TCPModbusClient(object):
 
         #print "Packed data: " + repr(packed_data)
 
-        try:
-            self.sock.sendall(packed_data)
-            response = self.getResponse(reg_qty)
-        except socket.error:
-            print ("Modbus Connection was closed by Modbus Server. "
-                   "Retrying in 5 seconds...")
-            time.sleep(5)
-            self.connect()
-            self.sock.sendall(packed_data)
+        sent = False
+        while sent == False:
+            try:
+                # Send data
+                self.sock.sendall(packed_data)
+                response = self.getResponse(reg_qty)
+                sent = True
+            except socket.error:
+                print ("Modbus Connection was closed by Modbus Server. "
+                       "Retrying in 5 seconds...")
+                time.sleep(5)
+                self.connect()
     
         return response
 

@@ -51,8 +51,7 @@ class CosmSink(DataSink.DataSink):
         """ Registers a device to the service """
         feedid = self.cosmUploader.checkFeedPresent(name)
 
-        # If the feed was not found,
-        # create it.
+        # If the feed was not found, create it.
         if feedid == -1:
             feed_message = self.createFeed(name)
             feedid = self.cosmUploader.createFeed(feed_message)

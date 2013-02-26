@@ -11,6 +11,47 @@ class Device(threading.Thread):
         self.queues = []
         self.sinterval = float(sinterval)
 
+    def deviceFactory(device_type, name, ip, port,
+                      channels, sinterval):
+        import LabSenseModbus.Eaton.EatonDevice as EatonDevice
+        import LabSenseModbus.Veris.VerisDevice as VerisDevice
+        import LabSenseZwave.ZwaveDevice as ZwaveDevice
+        import LabSenseRaritan.RaritanDevice as RaritanDevice
+
+        if device_type == "Eaton":
+            return EatonDevice.EatonDevice(name, 
+                                           ip,
+                                           port,
+                                           channels,
+                                           sinterval)
+        elif device_type == "Veris":
+            return VerisDevice.VerisDevice(name,
+                                           ip,
+                                           port,
+                                           channels,
+                                           sinterval)
+        elif device_type == "Raritan":
+            return RaritanDevice.RaritanDevice(name,
+                                           ip,
+                                           port,
+                                           channels,
+                                           sinterval)
+        elif device_type in ["SmartSwitch",
+                             "LightSensor",
+                             "TemperatureSensor"]:
+            return ZwaveDevice.ZwaveDevice(device_type,
+                                           name,
+                                           ip,
+                                           port,
+                                           channels,
+                                           sinterval)
+        else:
+            raise KeyError("Unrecognized Device Name " +
+                           device_type)
+    # Make deviceFactory static so Device does not have to be instantiated
+    # to run
+    deviceFactory = staticmethod(deviceFactory)
+
     def attach(self, queue):
         if not queue in self.queues:
             self.queues.append(queue)

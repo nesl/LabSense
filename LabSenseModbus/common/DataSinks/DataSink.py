@@ -30,7 +30,7 @@ class DataSink(threading.Thread):
         else:
             raise TypeError("Unrecognized Sink Type for DataSinkFactory: " + sink_type)
     # Make DataSinkFactory static so DataSinks does not
-    # hahave to be instantiated to run.
+    # have to be instantiated to run.
     dataSinkFactory = staticmethod(dataSinkFactory)
 
 
