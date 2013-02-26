@@ -38,14 +38,14 @@ class TCPModbusClient(object):
 
         try:
             self.sock.sendall(packed_data)
-        except e:
+            response = self.getResponse(reg_qty)
+        except socket.error:
             print ("Modbus Connection was closed by Modbus Server. "
                    "Retrying in 5 seconds...")
             time.sleep(5)
             self.connect()
             self.sock.sendall(packed_data)
     
-        response = self.getResponse(reg_qty)
         return response
 
     def getResponse(self, reg_qty):

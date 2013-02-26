@@ -28,8 +28,9 @@ class Device(threading.Thread):
 
     def getData(self):
         data = self.client.getData()
-        self.notify(data)
-        return data
+        if data:
+            self.notify(data)
+            return data
 
     def run(self):
         print "Starting Device"

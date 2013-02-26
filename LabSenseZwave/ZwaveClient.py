@@ -17,13 +17,16 @@ class ZwaveClient(object):
         current_time = time.time()
         data = self.__getJsonData()
 
-        device_data = []
-        for device in data:
-            device_name = device["name"]
-            channel_data = {}
-            if device_name == self.name:
-                device_data = self._formatChannelData(current_time, device, device_name)
-                return device_data
+        if data:
+            device_data = []
+            for device in data:
+                device_name = device["name"]
+                channel_data = {}
+                if device_name == self.name:
+                    device_data = self._formatChannelData(current_time, device, device_name)
+                    return device_data
+        else:
+            return None
 
         # If the device was not found, raise an error
         raise KeyError(self.name + " was not found when querying the Vera.")
@@ -40,23 +43,29 @@ class ZwaveClient(object):
         """ Gets data in json format from Vera (Zwave Receiver) """
         device_data = {}
         channel_data = self.__getDeviceData()
-        json_chan_data = json.loads(channel_data)
-        return json_chan_data["devices"]
+        if channel_data:
+            json_chan_data = json.loads(channel_data)
+            return json_chan_data["devices"]
+        else:
+            return None
 
     def __getDeviceData(self):
         self.__connect()
         url = "/data_request?id=sdata&output_format=json"
         self.connection.request("GET", url)
         response = self.__receive()
-        return response.read()
         self.connection.close()
+        if response:
+            return response.read()
+        else:
+            return None
 
     def __receive(self):
         try:
             response = self.connection.getresponse()
         except httplib.BadStatusLine:
             print "Bad status!"
-            pass
+            return None
         return response
 
 
