@@ -24,10 +24,15 @@ class LabSenseTCPHandler(SocketServer.BaseRequestHandler):
             print "Connection reset by peer..."
             return
 
-        print "Data: ", data
         json_data = json.loads(data)
         print "Json data: ", json_data
-        self.notify(json_data)
+        
+        # Verify Api Key
+        if json_data["API_KEY"] == self.server.api_key:
+            self.notify(json_data["data"])
+            print "Api Key was verified."
+        else:
+            print "Received message from unverified Api key."
 
     def notify(self, data):
         if data:
@@ -54,8 +59,12 @@ def main():
     server = SocketServer.TCPServer((HOST, int(args.Port)), LabSenseTCPHandler)
     server.queues = []
 
+    # Initialize tcp handler with api key
+    print config[name]
+    server.api_key = config[name]["API_KEY"]
+
     # LabSenseServer has several sensors
-    for innerNode, innerConfig in config[name].iteritems():
+    for innerNode, innerConfig in config[name]["Sensors"].iteritems():
         """ Attaches sinks to devices based on configuration file. """
         for sink in ["SensorAct", "Cosm", "Stdout"]:
             if innerConfig[sink]:
