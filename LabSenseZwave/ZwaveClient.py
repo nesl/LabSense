@@ -50,11 +50,15 @@ class ZwaveClient(object):
             return None
 
     def __getDeviceData(self):
-        self.__connect()
-        url = "/data_request?id=sdata&output_format=json"
-        self.connection.request("GET", url)
-        response = self.__receive()
-        self.connection.close()
+        try:
+            self.__connect()
+            url = "/data_request?id=sdata&output_format=json"
+            self.connection.request("GET", url)
+            response = self.__receive()
+            self.connection.close()
+        except IOError, detail:
+            return None
+
         if response:
             return response.read()
         else:
