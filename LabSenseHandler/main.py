@@ -6,15 +6,8 @@ import Queue                                # For communicating between datasink
 import configReader                         # For reading the configuration
 
 sys.path.insert(1, os.path.abspath(".."))
-#import LabSenseModbus.Veris.VerisDevice as VerisDevice
-#import LabSenseModbus.Eaton.EatonDevice as EatonDevice
-#import LabSenseModbus.common.Device
-#sys.path.insert(1, os.path.abspath(".."))
 import LabSenseModbus.common.DataSinks.DataSink as DataSink
 import LabSenseModbus.common.Device as Device
-#import LabSenseZwave.SmartSwitchZwaveDevice as SmartSwitchZwaveDevice
-#import LabSenseZwave.ZwaveDevice as ZwaveDevice
-#import LabSenseRaritan.RaritanDevice as RaritanDevice
 
 class LabSenseMain(object):
 
@@ -44,42 +37,6 @@ class LabSenseMain(object):
                                                      config["sinterval"])
                 self.threads.append(device)
                 self.attachSinks(device, config)
-            #elif node == "Eaton":
-                #device = EatonDevice.EatonDevice(config["name"], 
-                                     #config["IP"], 
-                                     #config["PORT"],
-                                     #config["channels"],
-                                     #config["sinterval"])
-                #self.threads.append(device)
-                #self.attachSinks(device, config)
-
-            #elif node == "Veris":
-                #device = VerisDevice.VerisDevice(config["name"],
-                                     #config["IP"],
-                                     #config["PORT"],
-                                     #config["channels"],
-                                     #config["sinterval"])
-                #self.threads.append(device)
-                #self.attachSinks(device, config)
-
-            #elif node == "Raritan":
-                #device = RaritanDevice.RaritanDevice(config["name"],
-                                                     #config["IP"],
-                                                     #config["PORT"],
-                                                     #config["channels"],
-                                                     #config["sinterval"])
-                #self.threads.append(device)
-                #self.attachSinks(device, config)
-
-            #elif node in ["SmartSwitch", "LightSensor", "TemperatureSensor"]:
-                #device = ZwaveDevice.ZwaveDevice(node, 
-                                                #config["name"],
-                                                #config["IP"],
-                                                #config["PORT"],
-                                                #config["channels"],
-                                                #config["sinterval"])
-                #self.threads.append(device)
-                #self.attachSinks(device, config)
 
             # Server
             elif node == "LabSenseServer":
