@@ -74,7 +74,7 @@ class CosmUploader(object):
             print "Cosm", response.status, response.reason
         except httplib.BadStatusLine:
             print "Bad status!"
-            pass
+            response = None
         return response
 
 

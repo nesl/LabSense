@@ -48,7 +48,7 @@ if __name__ == "__main__":
     devicename = args.Devicename
 
     # Initialize the SmartSwitch Device thread
-    device = ZwaveDevice(args.Name, devicename, args.IP, args.PORT,
+    device = ZwaveDevice(devicename, args.Name, args.IP, args.PORT,
             config[devicename]["channels"], config[devicename]["sinterval"])
     threads.append(device)
 
