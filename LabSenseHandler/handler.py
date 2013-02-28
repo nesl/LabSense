@@ -20,9 +20,6 @@ from device import DeviceClass      # For combining device properties into one
 class LabSenseHandler:
 
     def __init__(self, config_file):
-        self.IP = "1"
-        self.PORT = "1"
-
         self.devices = [];
         self.SensorAct = {}
         self.Cosm = {}
@@ -40,6 +37,8 @@ class LabSenseHandler:
 
         self.headers = { "Content-type": "application/json",
                          "Accept": "text/plain" }
+
+
 
     """ Connection functions """
 
@@ -206,19 +205,19 @@ if __name__ == "__main__":
     labSenseHandler = LabSenseHandler(args.f)
 
     # Read Config file adn connect
-    labSenseHandler.readConfiguration()
+    #labSenseHandler.readConfiguration()
     labSenseHandler.connect()
 
     # Add Devices Specified
-    labSenseHandler.addDevices()
+    #labSenseHandler.addDevices()
 
     labSenseHandler.listDevices()
 
     # Launch the executables with parameters
-    labSenseHandler.startDevices()
+    #labSenseHandler.startDevices()
 
     # Monitor the devices (restart when they fail and log)
-    labSenseHandler.monitorDevices(1)
+    #labSenseHandler.monitorDevices(1)
 
     print "Adding a device"
     #labSenseHandler.addDevice("Raritan")
