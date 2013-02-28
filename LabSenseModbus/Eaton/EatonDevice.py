@@ -19,7 +19,6 @@ class EatonDevice(Device):
 if __name__ == "__main__":
 
     # Import sinks and configReader
-    #sys.path.insert(0, os.path.abspath("../.."))
     import LabSenseHandler.configReader as configReader
     from LabSenseModbus.common.DataSinks.DataSink import DataSink
 
