@@ -75,6 +75,7 @@ class LabSenseMain(object):
                 queue = Queue.Queue()
                 device.attach(queue)
                 dataSink = DataSink.DataSink.dataSinkFactory(sink, config, queue, interval)
+                dataSink.registerDevice(device_config["name"])
                 self.threads.append(dataSink)
 
 if __name__ == "__main__":

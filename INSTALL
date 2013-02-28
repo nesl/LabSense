@@ -1,8 +1,0 @@
-# Install Pip:
-curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py && sudo python get-pip.py
-
-# Source the virtual environment
-source bin/activate
-
-# Install dependencies virtualenv and py-snmp
-pip install -r requirements.txt

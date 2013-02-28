@@ -6,8 +6,8 @@ class StdoutSink(DataSink.DataSink):
         super(StdoutSink, self).__init__(config, queue, interval) 
 
     def registerDevice(self, name):
-        if device_name not in self.devices:
-            self.devices.append(device_name)
+        if name not in self.devices:
+            self.devices.append(name)
 
     def update(self, data):
         print "StdoutSink data: " + str(data)

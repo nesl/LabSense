@@ -52,6 +52,7 @@ if __name__ == "__main__":
             queue = Queue.Queue()
             device.attach(queue)
             dataSink = DataSink.dataSinkFactory(sink, config, queue, interval)
+            dataSink.registerDevice(args.name)
             threads.append(dataSink)
 
     # Start threads

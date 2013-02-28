@@ -19,7 +19,7 @@ class SensorActSink(DataSink):
 
     """ Functions child classes must implement """
 
-    def __registerDevice(self, name):
+    def registerDevice(self, name):
         """ Registers a device to the service """
         if name not in self.devices:
             self.devices.append(name)
@@ -54,20 +54,13 @@ class SensorActSink(DataSink):
         device_name = data["devicename"]
         device = data["device"]
 
-        if device_name not in self.devices:
-            self.__registerDevice(device_name)
-
-        #device_config = self.config[device]
-
         formatted_data_messages = []
         for sensor_name, channels in data["channels"].iteritems():
             message = {}
             formatted_data = {}
             formatted_data = {"dname": device_name, 
                               "sname": sensor_name,
-                              #"sinterval": device_config["sinterval"],
                               "timestamp": data["timestamp"],
-                              #"loc": device_config["location"],
                              }
             channel_list = []
             for channel in channels["measurements"]:
