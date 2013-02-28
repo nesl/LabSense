@@ -17,7 +17,6 @@ class CosmSink(DataSink.DataSink):
         # CosmSink's default behavior is to batch because it is rate-limited.
         self.batch = True
 
-
     def run(self):
         """ Overrides DataSink run function because Cosm can use batching """
         print "Starting DataSink"
@@ -47,7 +46,7 @@ class CosmSink(DataSink.DataSink):
 
     """ Functions child classes must implement """
 
-    def __registerDevice(self, name):
+    def registerDevice(self, name):
         """ Registers a device to the service """
         feedid = self.cosmUploader.checkFeedPresent(name)
 
@@ -71,7 +70,7 @@ class CosmSink(DataSink.DataSink):
             device = item["device"]
 
             if device_name not in self.devices:
-                self.__registerDevice(device_name)
+                self.registerDevice(device_name)
 
             feed_id = self.feedids[device_name]
 

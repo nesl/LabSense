@@ -8,7 +8,6 @@ import logging                  # For logging the output of each device process
 import time                     # For sleeping between each check that
                                     # processes are still running
 
-
 import DevicesToRegister.raritan as Raritan
 import DevicesToRegister.veris as Veris
 import DevicesToRegister.zwaveDoorWindow as ZwaveDoorWindow

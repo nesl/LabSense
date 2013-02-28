@@ -53,7 +53,7 @@ class DataSink(threading.Thread):
         raise NotImplementedError("DataSink is an abstract class. sendData must\
                 be implemented by classes that inherit from DataSink.")
 
-    def __registerDevice(self, device_name, name):
+    def registerDevice(self, device_name, name):
         raise NotImplementedError("DataSink is an abstract class.\
                 RegisterDevice must be implemented by classes that inherit\
                 from DataSink.")

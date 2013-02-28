@@ -101,7 +101,3 @@ if __name__ == "__main__":
     verisClient = VerisClient(args.Name, args.IP, args.PORT, channels)
     data = verisClient.getData()
     print data
-
-
-
-

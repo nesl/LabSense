@@ -1,4 +1,3 @@
-#import LabSenseModbus.common.DataSinks.DataSink as DataSink
 import DataSink
 
 class StdoutSink(DataSink.DataSink):

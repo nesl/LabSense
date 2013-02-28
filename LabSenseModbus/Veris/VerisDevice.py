@@ -22,10 +22,7 @@ if __name__ == "__main__":
     import LabSenseHandler.configReader as configReader
     from LabSenseModbus.common.DataSinks.DataSink import DataSink
 
-    #from LabSenseModbus.common.DataSinks.StdoutSink import StdoutSink
-    #from LabSenseModbus.common.DataSinks.SensorActSink import SensorActSink
-    #from LabSenseModbus.common.DataSinks.CosmSink import CosmSink 
-
+    # Parse command line for arguments
     parser = argparse.ArgumentParser()
     parser.add_argument("name", help="Name of Veris device")
     parser.add_argument("IP", help="IP address for Veris")
@@ -48,6 +45,7 @@ if __name__ == "__main__":
             config[name]["channels"], config[name]["sinterval"])
     threads.append(device)
 
+    # Attach sinks
     for sink in ["SensorAct", "Cosm", "Stdout"]:
         if device_config[sink]:
             interval = device_config[sink + "Interval"]
@@ -56,6 +54,7 @@ if __name__ == "__main__":
             dataSink = DataSink.dataSinkFactory(sink, config, queue, interval)
             threads.append(dataSink)
 
+    # Start threads
     print "Number of threads: ", len(threads)
     for thread in threads:
         thread.daemon = True
