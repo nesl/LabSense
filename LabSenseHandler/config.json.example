@@ -1,0 +1,130 @@
+{
+    "SensorAct": {
+        "IP": "128.97.93.51",
+        "PORT": 9000,
+        "API_KEY": "[API_KEY]"
+    },
+
+    "Cosm": {
+        "API_KEY": "6h8z-vpjKTBYjnt62cRh-f8yZ96SAKxoOTJjWWJkUm9uYz0g",
+        "user_name": "[USER_NAME]"
+    },
+
+    "Eaton": {
+        "name": "NESL_Eaton",
+        "IP": "128.97.11.100",
+        "PORT": "4660",
+        "channels": ["VoltageAN", "VoltageBN", "VoltageCN", "CurrentA", "CurrentB", "CurrentC", "PowerA", "PowerB", "PowerC", "VARsA", "VARsB", "VARsC", "VAsA", "VAsB", "VAsC", "PowerFactorA", "PowerFactorB", "PowerFactorC"],
+        "sinterval": 2,
+        "location": "Boelter",
+        "SensorAct": true,
+        "SensorActInterval": 1,
+        "Cosm": true,
+        "CosmInterval": 5,
+        "Stdout": false,
+        "StdoutInterval": "2"
+    },
+
+    "Veris": {
+        "name": "NESL_Veris",
+        "IP": "128.97.93.90",
+        "PORT": "4660",
+        "channels": ["Power", "PowerFactor", "Current"],
+        "sinterval": 2,
+        "location": "Boelter",
+        "SensorAct": true,
+        "SensorActInterval": "1",
+        "Cosm": true,
+        "CosmInterval": 5,
+        "Stdout": true,
+        "StdoutInterval": "2"
+    },
+
+    "Raritan": {
+        "name": "NESL_Raritan",
+        "IP": "172.17.5.179",
+        "PORT": "161",
+        "channels": ["Current", "Voltage", "ActivePower", "ApparentPower", "PowerFactor"],
+        "sinterval": "1",
+        "location": "Boelter",
+        "SensorAct": true,
+        "SensorActInterval": "1",
+        "Cosm": true,
+        "CosmInterval": 5,
+        "Stdout": true,
+        "StdoutInterval": "2"
+
+    },
+
+    "SmartSwitch": {
+        "name": "NESL_SmartSwitch",
+        "IP": "172.17.5.117",
+        "PORT": 3480,
+        "channels": ["Power", "Energy"],
+        "sinterval": "1",
+        "location": "Boelter",
+        "SensorAct": true,
+        "SensorActInterval": "1",
+        "Cosm": true,
+        "CosmInterval": 5,
+        "Stdout": true,
+        "StdoutInterval": "2"
+    },
+
+    "LightSensor": {
+        "name": "NESL_LightSensor",
+        "IP": "172.17.5.117",
+        "PORT": 3480,
+        "channels": ["Light"],
+        "sinterval": "1",
+        "location": "Boelter",
+        "SensorAct": true,
+        "SensorActInterval": "1",
+        "Cosm": true,
+        "CosmInterval": 5,
+        "Stdout": true,
+        "StdoutInterval": "2"
+    },
+
+    "TemperatureSensor": {
+        "name": "NESL_TemperatureSensor",
+        "IP": "172.17.5.117",
+        "PORT": 3480,
+        "channels": ["Temperature"],
+        "sinterval": "1",
+        "location": "Boelter",
+        "SensorAct": true,
+        "SensorActInterval": "1",
+        "Cosm": true,
+        "CosmInterval": 5,
+        "Stdout": true,
+        "StdoutInterval": "2"
+    },
+
+    "LabSenseServer": {
+        "name": "NESL_LabSenseServer",
+        "PORT": 8000,
+        "API_KEY": "6h8z-vpjKTBYjnt62cRh-f8yZ96SAKxoOTJjWWJkUm9uYz0g",
+        "Sensors": {
+
+            "DoorSensor": {
+                "SensorAct": true,
+                "SensorActInterval": 1,
+                "Cosm": true,
+                "CosmInterval": 5,
+                "Stdout": true,
+                "StdoutInterval": 2
+            },
+
+            "MotionSensor": {
+                "SensorAct": true,
+                "SensorActInterval": 1,
+                "Cosm": true,
+                "CosmInterval": 5,
+                "Stdout": true,
+                "StdoutInterval": 2
+            }
+
+        }
+    }
+}

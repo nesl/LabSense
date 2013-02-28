@@ -82,9 +82,7 @@ if __name__ == "__main__":
 
     # Read configuration
     config = configReader.config
-
     main = LabSenseMain(config)
-
     main.run()
 
 
