@@ -1,114 +1,118 @@
-"deviceprofile": { 
-    "devicename": "%s", 
-    "location": "%s", 
-    "IP": "%s", 
-    "latitude": %s, 
-    "longitude": %s, 
-    "sensors": [ 
-        { "name": "PhaseA", 
-            "sid": "1", 
-            "channels": [ 
-                { "name": "Voltage", 
-                    "type": "Float", 
-                    "unit": "Volts", 
-                    "samplingperiod": 1 
-                },
-                { "name": "Current", 
-                    "type": "Float", 
-                    "unit": "Amps", 
-                    "samplingperiod": 1 
-                },
-                { "name": "Power", 
-                    "type": "Float", 
-                    "unit": "Watts", 
-                    "samplingperiod": 1 
-                },
-                { "name": "VARs", 
-                    "type": "Float", 
-                    "unit": "VARs", 
-                    "samplingperiod": 1 
-                },
-                { "name": "VAs", 
-                    "type": "Float", 
-                    "unit": "VAs", 
-                    "samplingperiod": 1 
-                },
-                { "name": "Power Factor", 
-                    "type": "Float", 
-                    "unit": "None", 
-                    "samplingperiod": 1 
-                }
-            ] 
-        },
-        { "name": "PhaseB", 
-            "sid": "2", 
-            "channels": [ 
-                { "name": "Voltage", 
-                    "type": "Float", 
-                    "unit": "Volts", 
-                    "samplingperiod": 1 
-                },
-                { "name": "Current", 
-                    "type": "Float", 
-                    "unit": "Amps", 
-                    "samplingperiod": 1 
-                },
-                { "name": "Power", 
-                    "type": "Float", 
-                    "unit": "Watts", 
-                    "samplingperiod": 1 
-                },
-                { "name": "VARs", 
-                    "type": "Float", 
-                    "unit": "VARs", 
-                    "samplingperiod": 1 
-                },
-                { "name": "VAs", 
-                    "type": "Float", 
-                    "unit": "VAs", 
-                    "samplingperiod": 1 
-                },
-                { "name": "Power Factor", 
-                    "type": "Float", 
-                    "unit": "None", 
-                    "samplingperiod": 1 
-                }
-            ] 
-        },
-        { "name": "PhaseC", 
-            "sid": "3", 
-            "channels": [ 
-                { "name": "Voltage", 
-                    "type": "Float", 
-                    "unit": "Volts", 
-                    "samplingperiod": 1 
-                },
-                { "name": "Current", 
-                    "type": "Float", 
-                    "unit": "Amps", 
-                    "samplingperiod": 1 
-                },
-                { "name": "Power", 
-                    "type": "Float", 
-                    "unit": "Watts", 
-                    "samplingperiod": 1 
-                },
-                { "name": "VARs", 
-                    "type": "Float", 
-                    "unit": "VARs", 
-                    "samplingperiod": 1 
-                },
-                { "name": "VAs", 
-                    "type": "Float", 
-                    "unit": "VAs", 
-                    "samplingperiod": 1 
-                },
-                { "name": "Power Factor", 
-                    "type": "Float", 
-                    "unit": "None", 
-                    "samplingperiod": 1 
-                }
-            ] 
-        }
-    ] 
+{
+    "secretkey": "%s", 
+    "deviceprofile": { 
+        "devicename": "%s", 
+        "location": "%s", 
+        "IP": "%s", 
+        "tags": "LabSense", 
+        "latitude": %s, 
+        "longitude": %s, 
+        "sensors": [ 
+            { "name": "PhaseA", 
+                "sid": "1", 
+                "channels": [ 
+                    { "name": "Voltage", 
+                        "type": "Float", 
+                        "unit": "Volts", 
+                        "samplingperiod": 1 
+                    },
+                    { "name": "Current", 
+                        "type": "Float", 
+                        "unit": "Amps", 
+                        "samplingperiod": 1 
+                    },
+                    { "name": "Power", 
+                        "type": "Float", 
+                        "unit": "Watts", 
+                        "samplingperiod": 1 
+                    },
+                    { "name": "VARs", 
+                        "type": "Float", 
+                        "unit": "VARs", 
+                        "samplingperiod": 1 
+                    },
+                    { "name": "VAs", 
+                        "type": "Float", 
+                        "unit": "VAs", 
+                        "samplingperiod": 1 
+                    },
+                    { "name": "Power Factor", 
+                        "type": "Float", 
+                        "unit": "None", 
+                        "samplingperiod": 1 
+                    }
+                ] 
+            },
+            { "name": "PhaseB", 
+                "sid": "2", 
+                "channels": [ 
+                    { "name": "Voltage", 
+                        "type": "Float", 
+                        "unit": "Volts", 
+                        "samplingperiod": 1 
+                    },
+                    { "name": "Current", 
+                        "type": "Float", 
+                        "unit": "Amps", 
+                        "samplingperiod": 1 
+                    },
+                    { "name": "Power", 
+                        "type": "Float", 
+                        "unit": "Watts", 
+                        "samplingperiod": 1 
+                    },
+                    { "name": "VARs", 
+                        "type": "Float", 
+                        "unit": "VARs", 
+                        "samplingperiod": 1 
+                    },
+                    { "name": "VAs", 
+                        "type": "Float", 
+                        "unit": "VAs", 
+                        "samplingperiod": 1 
+                    },
+                    { "name": "Power Factor", 
+                        "type": "Float", 
+                        "unit": "None", 
+                        "samplingperiod": 1 
+                    }
+                ] 
+            },
+            { "name": "PhaseC", 
+                "sid": "3", 
+                "channels": [ 
+                    { "name": "Voltage", 
+                        "type": "Float", 
+                        "unit": "Volts", 
+                        "samplingperiod": 1 
+                    },
+                    { "name": "Current", 
+                        "type": "Float", 
+                        "unit": "Amps", 
+                        "samplingperiod": 1 
+                    },
+                    { "name": "Power", 
+                        "type": "Float", 
+                        "unit": "Watts", 
+                        "samplingperiod": 1 
+                    },
+                    { "name": "VARs", 
+                        "type": "Float", 
+                        "unit": "VARs", 
+                        "samplingperiod": 1 
+                    },
+                    { "name": "VAs", 
+                        "type": "Float", 
+                        "unit": "VAs", 
+                        "samplingperiod": 1 
+                    },
+                    { "name": "Power Factor", 
+                        "type": "Float", 
+                        "unit": "None", 
+                        "samplingperiod": 1 
+                    }
+                ] 
+            }
+        ] 
+    }
 }
