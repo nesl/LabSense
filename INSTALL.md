@@ -1,8 +1,10 @@
 Installation
 ============
 
-1. Install Pip:
+1. Install Distribute and Pip to install python packages. If you have pip
+already, you can skip this step:
     <pre>
+    curl -O http://python-distribute.org/distribute_setup.py && sudo python distribute_setup.py
     curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py && sudo python get-pip.py
     </pre>
 
@@ -13,7 +15,7 @@ Installation
 
 3. Install dependencies virtualenv and py-snmp
     <pre>
-    pip install -r requirements.txt
+    sudo pip install -r requirements.txt
     </pre>
 
 4. In order to use SensorAct, you must create a SensorAct account:
@@ -47,3 +49,14 @@ Installation
         <pre>
         {"apiname":"user/login","statuscode":0,"message":"[API-KEY]"}
         </pre>
+    3. Copy the Api key to the config.json file in the SensorAct section.
+
+5. In order to use Cosm, you must first create an account at www.cosm.com
+
+    1. Navigate to www.cosm.com and follow instructions.
+    2. Sign in and click on the "Keys" button on the top right area.
+    3. Click the blue "+Key" button.
+    4. In the options, enter a Label, Choose "Use any public feed", and make
+       Access Prileges set to "all." Then click the orange "Create" button.
+    5. Copy the Api key to the config.json file in the Cosm section.
+
