@@ -1,0 +1,238 @@
+{
+    "secretkey": "", 
+    "deviceprofile": { 
+        "devicename": "", 
+        "location": "", 
+        "tags": "LabSense", 
+        "IP": "", 
+        "latitude": "", 
+        "longitude": "", 
+        "sensors": [ 
+            { "name": "Current", 
+                "sid": "", 
+                "channels": [ 
+                    { "name": "Current1", 
+                        "type": "Float", 
+                        "unit": "mA", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Current2", 
+                        "type": "Float", 
+                        "unit": "mA", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Current3", 
+                        "type": "Float", 
+                        "unit": "mA", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Current4", 
+                        "type": "Float", 
+                        "unit": "mA", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Current5", 
+                        "type": "Float", 
+                        "unit": "mA", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Current6", 
+                        "type": "Float", 
+                        "unit": "mA", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Current7", 
+                        "type": "Float", 
+                        "unit": "mA", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Current8", 
+                        "type": "Float", 
+                        "unit": "mA", 
+                        "samplingperiod": "" 
+                    }
+                ] 
+            },
+            { "name": "ActivePower", 
+                "sid": "2", 
+                "channels": [ 
+                    { "name": "ActivePower1", 
+                        "type": "Float", 
+                        "unit": "Watts", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "ActivePower2", 
+                        "type": "Float", 
+                        "unit": "Watts", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "ActivePower3", 
+                        "type": "Float", 
+                        "unit": "Watts", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "ActivePower4", 
+                        "type": "Float", 
+                        "unit": "Watts", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "ActivePower5", 
+                        "type": "Float", 
+                        "unit": "Watts", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "ActivePower6", 
+                        "type": "Float", 
+                        "unit": "Watts", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "ActivePower7", 
+                        "type": "Float", 
+                        "unit": "Watts", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "ActivePower8", 
+                        "type": "Float", 
+                        "unit": "Watts", 
+                        "samplingperiod": "" 
+                    }
+                ] 
+            },
+            { "name": "ApparentPower", 
+                "sid": "3", 
+                "channels": [ 
+                    { "name": "ApparentPower1", 
+                        "type": "Float", 
+                        "unit": "Volt-amps", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "ApparentPower2", 
+                        "type": "Float", 
+                        "unit": "Volt-amps", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "ApparentPower3", 
+                        "type": "Float", 
+                        "unit": "Volt-amps", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "ApparentPower4", 
+                        "type": "Float", 
+                        "unit": "Volt-amps", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "ApparentPower5", 
+                        "type": "Float", 
+                        "unit": "Volt-amps", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "ApparentPower6", 
+                        "type": "Float", 
+                        "unit": "Volt-amps", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "ApparentPower7", 
+                        "type": "Float", 
+                        "unit": "Volt-amps", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "ApparentPower8", 
+                        "type": "Float", 
+                        "unit": "Volt-amps", 
+                        "samplingperiod": "" 
+                    }
+                ] 
+            },
+            { "name": "Voltage", 
+                "sid": "4", 
+                "channels": [ 
+                    { "name": "Voltage1", 
+                        "type": "Float", 
+                        "unit": "mV", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Voltage2", 
+                        "type": "Float", 
+                        "unit": "mV", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Voltage3", 
+                        "type": "Float", 
+                        "unit": "mV", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Voltage4", 
+                        "type": "Float", 
+                        "unit": "mV", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Voltage5", 
+                        "type": "Float", 
+                        "unit": "mV", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Voltage6", 
+                        "type": "Float", 
+                        "unit": "mV", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Voltage7", 
+                        "type": "Float", 
+                        "unit": "mV", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Voltage8", 
+                        "type": "Float", 
+                        "unit": "mV", 
+                        "samplingperiod": "" 
+                    },
+                ] 
+            },
+            { "name": "PowerFactor", 
+                "sid": "5", 
+                "channels": [ 
+                    { "name": "PowerFactor1", 
+                        "type": "Float", 
+                        "unit": "Percent", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerFactor2", 
+                        "type": "Float", 
+                        "unit": "Percent", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerFactor3", 
+                        "type": "Float", 
+                        "unit": "Percent", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerFactor4", 
+                        "type": "Float", 
+                        "unit": "Percent", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerFactor5", 
+                        "type": "Float", 
+                        "unit": "Percent", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerFactor6", 
+                        "type": "Float", 
+                        "unit": "Percent", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerFactor7", 
+                        "type": "Float", 
+                        "unit": "Percent", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerFactor8", 
+                        "type": "Float", 
+                        "unit": "Percent", 
+                        "samplingperiod": "" 
+                    }
+                ] 
+            }
+        ] 
+    }
+}
