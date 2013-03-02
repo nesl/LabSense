@@ -88,4 +88,6 @@ if __name__ == '__main__':
     saRegisterer.getRegisteredDevices()
 
     # Register Devices
-    saRegisterer.registerDevice("Eaton", config["Eaton"])
+    devices = ["Eaton", "Raritan"]
+    for device in devices:
+        saRegisterer.registerDevice(device, config[device])

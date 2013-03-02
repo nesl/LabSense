@@ -20,11 +20,16 @@ class LabSenseMain(object):
         for node, config in self.configuration.iteritems():
             # Sinks
             if node == "SensorAct":
-                pass
+                required_fields = ["IP", "PORT", "API_KEY"]
+                for field in required_fields:
+                    if not config[field]:
+                        sys.exit("SensorAct requires the field " + field)
+
             elif node == "Cosm":
-                pass
-            elif node == "Stdout":
-                pass
+                required_fields = ["API_KEY", "username"]
+                for field in required_fields:
+                    if not config[field]:
+                        sys.exit("Cosm requires the field " + field)
 
             # Devices 
             elif node in ["Eaton", "Veris", "Raritan", "SmartSwitch",
