@@ -92,8 +92,6 @@ class RaritanClient(object):
                 return device_data
 
     def mapValues(self, varBinds):
-
-         
         channel_data = {}
         channel_val_pairs = []
         for name, val in varBinds:
@@ -154,6 +152,6 @@ class RaritanClient(object):
         elif channel == "PowerFactor":
             units = "None"
         else:
-            raise NotImplementedError("No such channel name")
+            raise KeyError("No such channel name")
 
         return units

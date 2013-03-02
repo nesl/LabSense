@@ -1,45 +1,45 @@
 {
-    "secretkey": "%s", 
+    "secretkey": "", 
     "deviceprofile": { 
-        "devicename": "%s", 
-        "location": "%s", 
-        "IP": "%s", 
+        "devicename": "", 
+        "location": "", 
+        "IP": "", 
         "tags": "LabSense", 
-        "latitude": %s, 
-        "longitude": %s, 
+        "latitude": "", 
+        "longitude": "", 
         "sensors": [ 
             { "name": "PhaseA", 
-                "sid": "1", 
+                "sid": """", 
                 "channels": [ 
                     { "name": "Voltage", 
                         "type": "Float", 
                         "unit": "Volts", 
-                        "samplingperiod": 1 
+                        "samplingperiod": "" 
                     },
                     { "name": "Current", 
                         "type": "Float", 
                         "unit": "Amps", 
-                        "samplingperiod": 1 
+                        "samplingperiod": "" 
                     },
                     { "name": "Power", 
                         "type": "Float", 
                         "unit": "Watts", 
-                        "samplingperiod": 1 
+                        "samplingperiod": "" 
                     },
                     { "name": "VARs", 
                         "type": "Float", 
                         "unit": "VARs", 
-                        "samplingperiod": 1 
+                        "samplingperiod": "" 
                     },
                     { "name": "VAs", 
                         "type": "Float", 
                         "unit": "VAs", 
-                        "samplingperiod": 1 
+                        "samplingperiod": "" 
                     },
                     { "name": "Power Factor", 
                         "type": "Float", 
                         "unit": "None", 
-                        "samplingperiod": 1 
+                        "samplingperiod": "" 
                     }
                 ] 
             },
@@ -49,32 +49,32 @@
                     { "name": "Voltage", 
                         "type": "Float", 
                         "unit": "Volts", 
-                        "samplingperiod": 1 
+                        "samplingperiod": "" 
                     },
                     { "name": "Current", 
                         "type": "Float", 
                         "unit": "Amps", 
-                        "samplingperiod": 1 
+                        "samplingperiod": "" 
                     },
                     { "name": "Power", 
                         "type": "Float", 
                         "unit": "Watts", 
-                        "samplingperiod": 1 
+                        "samplingperiod": "" 
                     },
                     { "name": "VARs", 
                         "type": "Float", 
                         "unit": "VARs", 
-                        "samplingperiod": 1 
+                        "samplingperiod": "" 
                     },
                     { "name": "VAs", 
                         "type": "Float", 
                         "unit": "VAs", 
-                        "samplingperiod": 1 
+                        "samplingperiod": "" 
                     },
                     { "name": "Power Factor", 
                         "type": "Float", 
                         "unit": "None", 
-                        "samplingperiod": 1 
+                        "samplingperiod": "" 
                     }
                 ] 
             },
@@ -84,32 +84,32 @@
                     { "name": "Voltage", 
                         "type": "Float", 
                         "unit": "Volts", 
-                        "samplingperiod": 1 
+                        "samplingperiod": "" 
                     },
                     { "name": "Current", 
                         "type": "Float", 
                         "unit": "Amps", 
-                        "samplingperiod": 1 
+                        "samplingperiod": "" 
                     },
                     { "name": "Power", 
                         "type": "Float", 
                         "unit": "Watts", 
-                        "samplingperiod": 1 
+                        "samplingperiod": "" 
                     },
                     { "name": "VARs", 
                         "type": "Float", 
                         "unit": "VARs", 
-                        "samplingperiod": 1 
+                        "samplingperiod": "" 
                     },
                     { "name": "VAs", 
                         "type": "Float", 
                         "unit": "VAs", 
-                        "samplingperiod": 1 
+                        "samplingperiod": "" 
                     },
                     { "name": "Power Factor", 
                         "type": "Float", 
                         "unit": "None", 
-                        "samplingperiod": 1 
+                        "samplingperiod": "" 
                     }
                 ] 
             }

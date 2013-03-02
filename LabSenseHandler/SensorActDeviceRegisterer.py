@@ -1,5 +1,6 @@
 import httplib                  # For connecting to SensorAct
 import os                       # For opening json files
+import json                     # For reading json
 
 from DeviceRegisterer import DeviceRegisterer 
 
@@ -31,7 +32,9 @@ class SensorActDeviceRegisterer(DeviceRegisterer):
 
         device_file_path = os.path.abspath(os.path.dirname(__file__)) + "/DevicesToRegister/%s.json" % device
         device_file = open(device_file_path)
-        return device_file.read()
+        device_json = json.load(device_file)
+        device_json = self.__convert(device_json)
+        return device_json
 
     def getRegisteredDevices(self):
         """ Gets the registered devices on SensorAct and puts them into self.devices """
@@ -48,14 +51,20 @@ class SensorActDeviceRegisterer(DeviceRegisterer):
         # Get SensorAct registration json for device
         device_json = self.getDeviceJson(device)
 
-        # Replace the variables with ones in the configuration
-        device_profile = device_json % (self.api_key,
-                                        device_config["name"],
-                                        device_config["location"],
-                                        device_config["IP"],
-                                        device_config["latitude"],
-                                        device_config["longitude"])
-        return device_profile
+        # Fill in deviceprofile with configuration options
+        device_json["secretkey"] = self.api_key
+        device_json["deviceprofile"]["devicename"] = device_config["name"]
+        device_json["deviceprofile"]["location"] = device_config["location"]
+        device_json["deviceprofile"]["IP"] = device_config["IP"]
+        device_json["deviceprofile"]["latitude"] = device_config["latitude"]
+        device_json["deviceprofile"]["longitude"] = device_config["longitude"]
+
+        samplingperiod = device_config["sinterval"]
+        for sensors in device_json["deviceprofile"]["sensors"]:
+            for channels in sensors["channels"]:
+                channel["samplingperiod"] = samplingperiod
+
+        return json.dumps(device_json)
 
     def registerDevice(self, device, device_config):
         """ Registers a device to SensorAct """
@@ -73,6 +82,20 @@ class SensorActDeviceRegisterer(DeviceRegisterer):
         data = self.getResponse()
         print "Response: %s" % data
 
+    """ Helper functions """
+
+    def __convert(self, unicode_dict):
+        """ When reading in a JSON file into a dictionary, the elements are read in as unicode. This function converts it to strings. """
+
+        if isinstance(unicode_dict, dict):
+            return {self.__convert(key): self.__convert(value) for key, value in unicode_dict.iteritems()}
+        elif isinstance(unicode_dict, list):
+            return [self.__convert(element) for element in unicode_dict]
+        elif isinstance(unicode_dict, unicode):
+            return unicode_dict.encode('utf-8')
+        else:
+            return unicode_dict 
+
 
 if __name__ == '__main__':
     # Read the configuration
@@ -88,4 +111,8 @@ if __name__ == '__main__':
     saRegisterer.getRegisteredDevices()
 
     # Register Devices
-    saRegisterer.registerDevice("Eaton", config["Eaton"])
+    #saRegisterer.registerDevice("Eaton", config["Eaton"])
+    saRegisterer.registerDevice("Raritan", config["Raritan"])
+
+    # List Devices
+    saRegisterer.getRegisteredDevices()
