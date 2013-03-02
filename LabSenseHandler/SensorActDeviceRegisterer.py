@@ -21,6 +21,7 @@ class SensorActDeviceRegisterer(DeviceRegisterer):
         response = self.connection.getresponse()
         print response.status, response.reason
         data = response.read()
+        self.connection.close()
         return data
 
     def getDeviceJson(self, device):
@@ -33,30 +34,44 @@ class SensorActDeviceRegisterer(DeviceRegisterer):
         return device_file.read()
 
     def getRegisteredDevices(self):
-        """ Gets the registered devices on SensorAct """
+        """ Gets the registered devices on SensorAct and puts them into self.devices """
         self.connect()
         body = '{"secretkey": "%s"}' % self.api_key
         self.connection.request("POST", "/device/list", body, self.headers )
         data = self.getResponse()
-        print data
+        print "Data: %s" %data
 
-    def registerDevice(self, device, device_config):
-        """ Registers a device to SensorAct """
+    def getDeviceProfile(self, device, device_config):
+        """ Gets the device profile and fills it with
+        the configuration options """
 
         # Get SensorAct registration json for device
         device_json = self.getDeviceJson(device)
 
         # Replace the variables with ones in the configuration
-        device_profile = device_json % (device_config["name"],
+        device_profile = device_json % (self.api_key,
+                                        device_config["name"],
                                         device_config["location"],
                                         device_config["IP"],
                                         device_config["latitude"],
                                         device_config["longitude"])
+        return device_profile
 
+    def registerDevice(self, device, device_config):
+        """ Registers a device to SensorAct """
 
+        # Get the device profile
+        device_profile = self.getDeviceProfile(device, device_config)
+        print "Device profile: %s" % device_profile
 
-
-
+        # Register the Device to SensorAct
+        self.connect()
+        self.connection.request("POST", 
+                                "/device/add",
+                                device_profile, 
+                                self.headers)
+        data = self.getResponse()
+        print "Response: %s" % data
 
 
 if __name__ == '__main__':
@@ -72,7 +87,5 @@ if __name__ == '__main__':
     # List Devices
     saRegisterer.getRegisteredDevices()
 
-
-
     # Register Devices
-    #saRegisterer.registerDevice("Eaton", config["Eaton"])
+    saRegisterer.registerDevice("Eaton", config["Eaton"])
