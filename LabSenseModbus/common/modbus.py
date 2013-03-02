@@ -17,7 +17,7 @@ class TCPModbusClient(object):
     def connect(self):
         try:
             # Try connecting with a timeout of 5 seconds
-            self.sock = socket.create_connection(self.server_addr, 5)
+            self.sock = socket.create_connection(self.server_addr, 10)
         except socket.error:
             print ("Could not establish modbus"
                    "connection. Retrying in 5 seconds...")

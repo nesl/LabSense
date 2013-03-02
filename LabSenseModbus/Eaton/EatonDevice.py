@@ -58,6 +58,25 @@ if __name__ == "__main__":
         thread.daemon = True
         thread.start()
 
-    for thread in threads:
-        while thread.isAlive():
-            thread.join(5)
+    while True:
+        for thread in threads:
+            if not thread.isAlive():
+                sys.exit("Thread died. Exiting Program")
+
+
+    #while len(threads) > 0:
+        #try:
+            #threads = [t.join(1) for t in threads if t is not None and
+                       #t.isAlive()]
+        #except KeyboardInterrupt:
+            #print "Ctrl-c received! Sending kill to threads..."
+            #for thread in threads:
+                #thread.kill_received = True
+
+    #for thread in threads:
+        #if not thread.isAlive():
+            #print "A thread just died!"
+
+    #for thread in threads:
+        #while thread.isAlive():
+            #thread.join(5)

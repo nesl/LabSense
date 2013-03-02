@@ -6,27 +6,39 @@ class SensorActUploader(object):
         self.PORT = PORT
         self.headers = { "Content-type": "application/json",
                       "Accept": "text/plain" }
-        self.connect()
 
     def connect(self):
 
         self.connection = httplib.HTTPConnection(self.IP + ":" + str(self.PORT))
-        print "Successfully connected to " + self.IP + ": " + str(self.PORT)
 
     def close(self):
         self.connection.close()
 
     def receive(self):
-        response = self.connection.getresponse()
-        print "SensorAct", response.status, response.reason
-        data = response.read()
-        print data
-
-        return data
+        try:
+            response = self.connection.getresponse()
+            print "SensorAct ", response.status, response.reason
+        except httplib.BadStatusLine:
+            print "Bad status!"
+            response = None
+        return response
 
     def send(self, data):
-        self.connection.request("POST", "/data/upload/wavesegment", data, self.headers)
-        self.receive()
+        sent = False
+        while sent == False:
+            try:
+                self.connect()
+                self.connection.request("POST", "/data/upload/wavesegment", data, self.headers)
+                response = self.receive()
+                self.connection.close()
+
+                if response.status == 200:
+                    # If response was 200 break out of loop
+                    sent = True
+            except IOError:
+                print ("No internet connection, will send the data when the internet"
+                      " becomes available")
+                time.sleep(5)
 
 
 if __name__ == "__main__":
