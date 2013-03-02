@@ -52,13 +52,15 @@ class CosmUploader(object):
                 self.connection.request("PUT", url, body, self.headers)
                 response = self.receive()
 
-                print "Cosm: ", response.status, response.reason
-                response.read()
-                self.connection.close()
+                if response:
+                    print "Cosm: ", response.status, response.reason
+                    response.read()
+                    self.connection.close()
 
-                if response.status == 200:
-                    # If response was 200 break out of loop
-                    sent = True
+                    if response.status == 200:
+                        # If response was 200 break out of loop
+                        sent = True
+
                 # Otherwise, loop again
 
             except IOError, detail:

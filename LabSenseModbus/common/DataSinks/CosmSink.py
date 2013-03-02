@@ -31,8 +31,6 @@ class CosmSink(DataSink.DataSink):
                 self.update(data)
                 end_time = time.time()
                 print "update elapsed time: %r, with %d items in queue. " % (end_time - start_time, self.queue.qsize())
-            #else:
-                #print "Queue was empty"
 
             time.sleep(self.interval)
 
@@ -71,10 +69,6 @@ class CosmSink(DataSink.DataSink):
             item = data[0]
             device_name = item["devicename"]
             device = item["device"]
-
-            #if device_name not in self.devices:
-                #self.registerDevice(device_name)
-
             feed_id = self.feedids[device_name]
 
             datastreams = []
@@ -101,16 +95,24 @@ class CosmSink(DataSink.DataSink):
                         else:
                             # If not first time, add to the datastreams created
                             # already
-                            datastreams[channel_counter]["current_value"] = channel[1]
-                            datastreams[channel_counter]["datapoints"].append(datapoint)
+                            try:
+                                datastreams[channel_counter]["current_value"] = channel[1]
+                                datastreams[channel_counter]["datapoints"].append(datapoint)
+                            except IndexError:
+                                print "Channel_counter: " + str(channel_counter)
+                                print "Channel: " + str(channel)
+                                print "Datastreams: " + str(datastreams)
+
                         channel_counter += 1
 
             message = {"version": "1.0.0",
                        "datastreams": datastreams
                       }
 
-            self.cosmUploader.update(json.dumps(message), feed_id)
+            #print "Combined %s" % json.dumps(data)
+            #print "Sending to Cosm: %s" % json.dumps(message)
 
+            self.cosmUploader.update(json.dumps(message), feed_id)
 
         else:
 
