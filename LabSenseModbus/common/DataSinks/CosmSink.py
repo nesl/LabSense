@@ -26,7 +26,7 @@ class CosmSink(DataSink.DataSink):
                 if self.batch:
                     data = self.__queue_get_all()
                 else:
-                    data = self.queue.get()
+                    data = self.queue.get_nowait()
                 start_time = time.time()
                 self.update(data)
                 end_time = time.time()
@@ -39,7 +39,7 @@ class CosmSink(DataSink.DataSink):
         """ Gets all items in a queue """
         items = []
         while not self.queue.empty():
-            items.append(self.queue.get())
+            items.append(self.queue.get_nowait())
         return items
 
     """ Functions child classes must implement """

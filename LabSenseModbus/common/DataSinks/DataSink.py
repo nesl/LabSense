@@ -39,7 +39,7 @@ class DataSink(threading.Thread):
         while True:
 
             if not self.queue.empty():
-                data = self.queue.get()
+                data = self.queue.get_nowait()
                 if data:
                     start_time = time.time()
                     self.update(data)
