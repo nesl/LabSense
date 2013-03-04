@@ -72,8 +72,9 @@ class CosmUploader(object):
         try:
             response = self.connection.getresponse()
             print "Cosm", response.status, response.reason
-        except httplib.BadStatusLine:
-            print "Bad status!"
+        #except httplib.BadStatusLine:
+        except Exception:
+            print "Exception when getting response from Cosm!"
             response = None
         return response
 

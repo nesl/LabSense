@@ -62,7 +62,6 @@ class CosmSink(DataSink.DataSink):
         """ Updates Cosm with the data given """
 
         if self.batch:
-
             # All items in data are the same format. 
             # Thus, use the first item for all the metadata (device_name,
             # feed_id, etc)
@@ -105,19 +104,7 @@ class CosmSink(DataSink.DataSink):
 
                         channel_counter += 1
 
-            message = {"version": "1.0.0",
-                       "datastreams": datastreams
-                      }
-
-            #print "Combined %s" % json.dumps(data)
-            #print "Sending to Cosm: %s" % json.dumps(message)
-
-            self.cosmUploader.update(json.dumps(message), feed_id)
-
         else:
-
-            if device_name not in self.devices:
-                self.__registerDevice(device_name)
 
             feed_id = self.feedids[device_name]
             timestamp = data["timestamp"]
@@ -136,11 +123,11 @@ class CosmSink(DataSink.DataSink):
                                  }
                     datastreams.append(datastream)
 
-            message = {"version": "1.0.0",
-                       "datastreams": datastreams
-                      }
+        message = {"version": "1.0.0",
+                   "datastreams": datastreams
+                  }
 
-            self.cosmUploader.update(json.dumps(message), feed_id)
+        self.cosmUploader.update(json.dumps(message), feed_id)
 
     """ Helper functions """
     def createFeed(self, feed_title):
