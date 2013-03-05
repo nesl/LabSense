@@ -44,8 +44,8 @@ class CosmSink(DataSink.DataSink):
 
     """ Functions child classes must implement """
 
-    def registerDevice(self, name):
-        """ Registers a device to the service """
+    def registerDevice(self, name, devicename):
+        """ Registers a device to the service with the name (i.e. NESL_Eaton) """
 
         feedid = self.cosmUploader.checkFeedPresent(name)
 

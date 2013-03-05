@@ -16,16 +16,15 @@ class SensorActSink(DataSink):
 
         sensorActConfig = config["SensorAct"]
         self.sensorActUploader = SensorActUploader(sensorActConfig["IP"], sensorActConfig["PORT"])
+        self.registerer = SensorActRegisterer(sensorActConfig["IP"],
+                                              sensorActConfig["PORT"],
+                                              sensorActConfig["API_KEY"])
 
     """ Functions child classes must implement """
 
-    def registerDevice(self, name):
-        """ Registers a device to the service """
-        if name not in self.devices:
-            self.devices.append(name)
-
-        ####### TODO: ADD REGISTER DEVICE
-        ####### CODE
+    def registerDevice(self, name, devicename):
+        """ Registers a device to the service with the device's name (i.e. Eaton). """
+        self.registerer.registerDevice(devicename, self.config)
 
     def getSensorName(self, channel_name):
         sensor_name = ""
