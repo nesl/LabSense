@@ -17,7 +17,6 @@ class SmartSwitchClient(ZwaveClient):
                                  "measurements": [ ("Energy", str(device["kwh"]))]}
 
         device_data = {"devicename": device_name,
-                       "device": device_name,
                        "timestamp": current_time,
                        "channels": channel_data
                        }

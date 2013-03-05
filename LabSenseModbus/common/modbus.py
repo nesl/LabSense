@@ -106,7 +106,6 @@ class TCPModbusClient(object):
         channel_data = self.getDeviceData()
         if channel_data:
             device_data = {"devicename": self.name,
-                           "device": self.devicename,
                            "timestamp": current_time,
                            "channels": channel_data
                           }

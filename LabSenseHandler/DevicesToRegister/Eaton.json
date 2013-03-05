@@ -9,7 +9,7 @@
         "longitude": "", 
         "sensors": [ 
             { "name": "PhaseA", 
-                "sid": """", 
+                "sid": "1", 
                 "channels": [ 
                     { "name": "Voltage", 
                         "type": "Float", 

@@ -17,7 +17,6 @@ class LightSensorClient(ZwaveClient):
                                  ("Light", str(device["light"]))]}
 
         device_data = {"devicename": device_name,
-                       "device": device_name,
                        "timestamp": current_time,
                        "channels": channel_data
                        }

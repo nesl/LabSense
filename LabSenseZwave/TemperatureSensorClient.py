@@ -17,7 +17,6 @@ class TemperatureSensorClient(ZwaveClient):
                 ("Temperature", str(device["temperature"]))]}
 
         device_data = {"devicename": device_name,
-                       "device": device_name,
                        "timestamp": current_time,
                        "channels": channel_data
                        }

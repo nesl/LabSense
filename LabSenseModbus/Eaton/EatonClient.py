@@ -16,7 +16,6 @@ class EatonClient(modbus.TCPModbusClient):
     # Initializes EatonClient and verifies channels are valid
     def __init__(self, name, IP, PORT, channels):
         super(EatonClient, self).__init__(IP, PORT)
-        self.devicename = "Eaton"
         self.name = name
         self.channels = channels
 
