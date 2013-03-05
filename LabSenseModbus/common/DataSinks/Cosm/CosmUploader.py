@@ -30,9 +30,10 @@ class CosmUploader(object):
         for cosmfeed in cosmfeeds:
             if feed == cosmfeed["title"]:
                 return cosmfeed["id"]
-        return -1
+        return None
 
     def createFeed(self, params):
+        self.connect()
         self.connection.request("POST", "/v2/feeds", params, self.headers)
         response = self.receive()
 

@@ -47,16 +47,14 @@ class CosmSink(DataSink.DataSink):
     def registerDevice(self, name):
         """ Registers a device to the service """
 
+        # Check if the feed is created already on Cosm
         feedid = self.cosmUploader.checkFeedPresent(name)
 
         # If the feed was not found, create it.
-        if feedid == -1:
+        if feedid == None:
             feed_message = self.createFeed(name)
             feedid = self.cosmUploader.createFeed(feed_message)
         self.feedids[name] = feedid
-
-        if name not in self.devices:
-            self.devices.append(name)
 
     def update(self, data):
         """ Updates Cosm with the data given """
@@ -105,6 +103,7 @@ class CosmSink(DataSink.DataSink):
 
         else:
 
+            device_name = data["devicename"]
             feed_id = self.feedids[device_name]
             timestamp = data["timestamp"]
             cosmTimestamp = time.strftime("%Y-%m-%dT%H:%M:%S", time.gmtime(timestamp))
