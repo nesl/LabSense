@@ -38,8 +38,6 @@ class LabSenseHandler:
         self.headers = { "Content-type": "application/json",
                          "Accept": "text/plain" }
 
-
-
     """ Connection functions """
 
     def connect(self):
