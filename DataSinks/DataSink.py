@@ -8,7 +8,6 @@ class DataSink(threading.Thread):
     def __init__(self, config, queue, interval):
         threading.Thread.__init__(self)
         self.interval = float(interval)
-        self.devices = []
         self.queue = queue
         self.config = config
 
@@ -53,7 +52,7 @@ class DataSink(threading.Thread):
         raise NotImplementedError("DataSink is an abstract class. sendData must\
                 be implemented by classes that inherit from DataSink.")
 
-    def registerDevice(self, device_name, name):
+    def registerDevice(self, devicename, config):
         raise NotImplementedError("DataSink is an abstract class.\
                 RegisterDevice must be implemented by classes that inherit\
                 from DataSink.")

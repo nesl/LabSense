@@ -2,6 +2,7 @@ import time                                 # For sleeping between sensoract tra
 import sys, os                              # For importing from project directory
 from DataSink import DataSink
 from SensorAct.SensorActUploader import SensorActUploader
+from SensorAct.SensorActDeviceRegisterer import SensorActDeviceRegisterer
 
 import json 
 
@@ -14,17 +15,16 @@ class SensorActSink(DataSink):
     def __init__(self, config, queue, interval):
         super(SensorActSink, self).__init__(config, queue, interval)
 
-        sensorActConfig = config["SensorAct"]
-        self.sensorActUploader = SensorActUploader(sensorActConfig["IP"], sensorActConfig["PORT"])
-        self.registerer = SensorActRegisterer(sensorActConfig["IP"],
-                                              sensorActConfig["PORT"],
-                                              sensorActConfig["API_KEY"])
+        self.sensorActUploader = SensorActUploader(config["IP"], config["PORT"])
+        self.registerer = SensorActDeviceRegisterer(config["IP"],
+                                                    config["PORT"],
+                                                    config["API_KEY"])
 
     """ Functions child classes must implement """
 
-    def registerDevice(self, name, devicename):
+    def registerDevice(self, devicename, config):
         """ Registers a device to the service with the device's name (i.e. Eaton). """
-        self.registerer.registerDevice(devicename, self.config)
+        self.registerer.registerDevice(devicename, config)
 
     def getSensorName(self, channel_name):
         sensor_name = ""
@@ -69,7 +69,7 @@ class SensorActSink(DataSink):
                 channel_list.append(channel_data)
 
             formatted_data["channels"] = channel_list
-            message = {"secretkey": self.config["SensorAct"]["API_KEY"], "data": formatted_data }
+            message = {"secretkey": self.config["API_KEY"], "data": formatted_data }
 
             formatted_data_messages.append(json.dumps(message))
 

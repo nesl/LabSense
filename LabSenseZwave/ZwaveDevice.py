@@ -58,7 +58,7 @@ if __name__ == "__main__":
             queue = Queue.Queue()
             device.attach(queue)
             dataSink = DataSink.dataSinkFactory(sink, config, queue, interval)
-            dataSink.registerDevice(args.Name)
+            dataSink.registerDevice(args.Name, args.Devicename)
             threads.append(dataSink)
 
     print "Number of threads: ", len(threads)

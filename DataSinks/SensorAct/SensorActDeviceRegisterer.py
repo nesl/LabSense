@@ -2,9 +2,9 @@ import httplib                  # For connecting to SensorAct
 import os                       # For opening json files
 import json                     # For reading json
 
-from DeviceRegisterer import DeviceRegisterer 
+from .. import DeviceRegisterer 
 
-class SensorActDeviceRegisterer(DeviceRegisterer):
+class SensorActDeviceRegisterer(DeviceRegisterer.DeviceRegisterer):
 
     def __init__(self, ip, port, api_key):
         """ SensorAct constructor"""

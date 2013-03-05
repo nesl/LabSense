@@ -10,8 +10,7 @@ class CosmSink(DataSink.DataSink):
 
     def __init__(self, config, queue, interval):
         super(CosmSink, self).__init__(config, queue, interval) 
-        cosmConfig = config["Cosm"]
-        self.cosmUploader = CosmUploader(cosmConfig["API_KEY"], cosmConfig["user_name"])
+        self.cosmUploader = CosmUploader(config["API_KEY"], config["user_name"])
         self.feedids = {}
 
         # CosmSink's default behavior is to batch because it is rate-limited.
@@ -44,9 +43,10 @@ class CosmSink(DataSink.DataSink):
 
     """ Functions child classes must implement """
 
-    def registerDevice(self, name, devicename):
+    def registerDevice(self, devicename, config):
         """ Registers a device to the service with the name (i.e. NESL_Eaton) """
 
+        name = config["name"]
         # Check if the feed is created already on Cosm
         feedid = self.cosmUploader.checkFeedPresent(name)
 
