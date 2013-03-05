@@ -25,6 +25,13 @@ class SensorActDeviceRegisterer(DeviceRegisterer):
         self.connection.close()
         return data
 
+    def deleteDevice(self, device):
+        """ Deletes the device from SensorAct """
+        body = '{"secretkey": "%s", "devicename": "%s"}' % (self.api_key, device)
+        self.connection.request("POST", "/device/delete", body, self.headers )
+        data = self.getResponse()
+        print "Data: %s" %data
+
     def getDeviceJson(self, device):
         """ Looks in DevicesToRegister
         directory for SensorAct json for
@@ -61,7 +68,7 @@ class SensorActDeviceRegisterer(DeviceRegisterer):
 
         samplingperiod = device_config["sinterval"]
         for sensors in device_json["deviceprofile"]["sensors"]:
-            for channels in sensors["channels"]:
+            for channel in sensors["channels"]:
                 channel["samplingperiod"] = samplingperiod
 
         return json.dumps(device_json)
@@ -111,7 +118,14 @@ if __name__ == '__main__':
     saRegisterer.getRegisteredDevices()
 
     # Register Devices
-    devices = ["Eaton", "Raritan"]
+    #devices = ["Eaton", "Raritan", "Veris"]
+    #devices = ["SmartSwitch"]
+    devices = ["LightSensor", "TemperatureSensor"]
+
+    #device_names = ["NESL_Eaton", "NESL_Raritan"]
+    #for device_name in device_names:
+        #saRegisterer.deleteDevice(device_name)
+        
     for device in devices:
         saRegisterer.registerDevice(device, config[device])
 

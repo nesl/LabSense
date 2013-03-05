@@ -52,7 +52,6 @@ class SensorActSink(DataSink):
         messages = []
 
         device_name = data["devicename"]
-        device = data["device"]
 
         formatted_data_messages = []
         for sensor_name, channels in data["channels"].iteritems():

@@ -9,7 +9,7 @@
         "longitude": "", 
         "sensors": [ 
             { "name": "Current", 
-                "sid": "", 
+                "sid": "1", 
                 "channels": [ 
                     { "name": "Current1", 
                         "type": "Float", 
@@ -185,7 +185,7 @@
                         "type": "Float", 
                         "unit": "mV", 
                         "samplingperiod": "" 
-                    },
+                    }
                 ] 
             },
             { "name": "PowerFactor", 

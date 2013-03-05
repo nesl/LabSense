@@ -67,7 +67,6 @@ class CosmSink(DataSink.DataSink):
             # feed_id, etc)
             item = data[0]
             device_name = item["devicename"]
-            device = item["device"]
             feed_id = self.feedids[device_name]
 
             datastreams = []

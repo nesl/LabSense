@@ -1,0 +1,33 @@
+{
+    "secretkey": "", 
+    "deviceprofile": { 
+        "devicename": "", 
+        "location": "", 
+        "IP": "", 
+        "tags": "LabSense", 
+        "latitude": "", 
+        "longitude": "", 
+        "sensors": [ 
+            { "name": "Energy", 
+                "sid": "1", 
+                "channels": [ 
+                    { "name": "Energy", 
+                        "type": "Float", 
+                        "unit": "kwh", 
+                        "samplingperiod": "" 
+                    }
+                ] 
+            },
+            { "name": "Power", 
+                "sid": "2", 
+                "channels": [ 
+                    { "name": "Power", 
+                        "type": "Float", 
+                        "unit": "Watts", 
+                        "samplingperiod": "" 
+                    }
+                ] 
+            }
+        ] 
+    }
+}

@@ -5,7 +5,6 @@ class RaritanClient(object):
 
     def __init__(self, name, IP, PORT, channels):
        self.name = name
-       self.devicename = "Raritan"
        self.ip = IP
        self.port = PORT
        self.channels = channels
@@ -85,7 +84,6 @@ class RaritanClient(object):
                 device_data = {}
                 if channel_data:
                     device_data = {"devicename": self.name,
-                                   "device": self.devicename,
                                    "timestamp": current_time,
                                    "channels": channel_data
                                   }
