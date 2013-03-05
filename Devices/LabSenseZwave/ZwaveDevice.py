@@ -7,9 +7,8 @@ from SmartSwitchClient import SmartSwitchClient
 from LightSensorClient import LightSensorClient
 from TemperatureSensorClient import TemperatureSensorClient
 
-sys.path.insert(0, os.path.abspath(".."))
-from LabSenseModbus.common.Device import Device 
-
+sys.path.insert(0, os.path.abspath("../.."))
+from Devices.Device import Device 
 
 class ZwaveDevice(Device):
 
@@ -29,7 +28,7 @@ class ZwaveDevice(Device):
 if __name__ == "__main__":
     # Import configReader and DataSink
     import LabSenseHandler.configReader as configReader
-    from LabSenseModbus.common.DataSinks.DataSink import DataSink
+    from DataSinks.DataSink import DataSink
 
     parser = argparse.ArgumentParser()
     parser.add_argument("Name", help="Name for Zwave Device")
@@ -57,8 +56,8 @@ if __name__ == "__main__":
             interval = device_config[sink + "Interval"]
             queue = Queue.Queue()
             device.attach(queue)
-            dataSink = DataSink.dataSinkFactory(sink, config, queue, interval)
-            dataSink.registerDevice(args.Name, args.Devicename)
+            dataSink = DataSink.dataSinkFactory(sink, config[sink], queue, interval)
+            dataSink.registerDevice(devicename, device_config)
             threads.append(dataSink)
 
     print "Number of threads: ", len(threads)

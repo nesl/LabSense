@@ -5,9 +5,9 @@ import sys                                  # For importing from project directo
 import os                                   # For importing from project directory
 import Queue                                # For sink queues
 
-sys.path.insert(0, os.path.abspath(".."))
-from LabSenseModbus.common.Device import Device
-import LabSenseModbus.common.DataSinks.DataSink as DataSink
+sys.path.insert(0, os.path.abspath("../.."))
+from Devices.Device import Device
+import DataSinks.DataSink as DataSink
 import LabSenseHandler.configReader as configReader
 
 class LabSenseTCPHandler(SocketServer.BaseRequestHandler):
@@ -81,8 +81,8 @@ def main():
                 # keys: name of Device
                 # values: list of queues for that device
                 server.queues[innerConfig["name"]].append(queue)
-                dataSink = DataSink.DataSink.dataSinkFactory(sink, config, queue, interval)
-                dataSink.registerDevice(innerConfig["name"])
+                dataSink = DataSink.DataSink.dataSinkFactory(sink, config[sink], queue, interval)
+                dataSink.registerDevice(innerNode, innerConfig)
                 threads.append(dataSink)
 
     print "Number of threads: ", len(threads)
