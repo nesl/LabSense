@@ -4,9 +4,9 @@ import os                                   # For importing from common director
 import time                                 # For sampling time
 import Queue                                # For communicating between datasinks and devices
 
-sys.path.insert(1, os.path.abspath("../.."))
+sys.path.insert(1, os.path.abspath("../../.."))
 from VerisClient import VerisClient
-from LabSenseModbus.common.Device import Device
+from Devices.Device import Device
 
 class VerisDevice(Device):
 
@@ -20,7 +20,7 @@ class VerisDevice(Device):
 if __name__ == "__main__":
     # import config and DataSink
     import LabSenseHandler.configReader as configReader
-    from LabSenseModbus.common.DataSinks.DataSink import DataSink
+    from DataSinks.DataSink import DataSink
 
     # Parse command line for arguments
     parser = argparse.ArgumentParser()
@@ -30,11 +30,11 @@ if __name__ == "__main__":
     parser.add_argument("time", help="Time (in seconds) between each retrieval of data from Veris.")
     args = parser.parse_args()
 
-    name = "Veris"
+    device_name = "Veris"
 
     # Read configuration
     config = configReader.config
-    device_config = config[name]
+    device_config = config[device_name]
 
     # Create communication threads
     threads = []
@@ -42,7 +42,7 @@ if __name__ == "__main__":
 
     # Initialize the Veris Device
     device = VerisDevice(args.name, args.IP, args.PORT,
-            config[name]["channels"], config[name]["sinterval"])
+            config[device_name]["channels"], config[device_name]["sinterval"])
     threads.append(device)
 
     # Attach sinks
@@ -51,8 +51,8 @@ if __name__ == "__main__":
             interval = device_config[sink + "Interval"]
             queue = Queue.Queue()
             device.attach(queue)
-            dataSink = DataSink.dataSinkFactory(sink, config, queue, interval)
-            dataSink.registerDevice(args.name)
+            dataSink = DataSink.dataSinkFactory(sink, config[sink], queue, interval)
+            dataSink.registerDevice(device_name, device_config)
             threads.append(dataSink)
 
     # Start threads
