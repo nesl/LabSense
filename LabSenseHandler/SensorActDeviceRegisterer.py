@@ -33,8 +33,7 @@ class SensorActDeviceRegisterer(DeviceRegisterer):
         print "Data: %s" %data
 
     def getDeviceJson(self, device):
-        """ Looks in DevicesToRegister
-        directory for SensorAct json for
+        """ Looks in DevicesToRegister directory for SensorAct json for
         registerinregistering the device."""
 
         device_file_path = os.path.abspath(os.path.dirname(__file__)) + "/DevicesToRegister/%s.json" % device
@@ -120,14 +119,25 @@ if __name__ == '__main__':
     # Register Devices
     #devices = ["Eaton", "Raritan", "Veris"]
     #devices = ["SmartSwitch"]
-    devices = ["LightSensor", "TemperatureSensor"]
+    #devices = ["LightSensor", "TemperatureSensor"]
+    #devices = ["TemperatureSensor"]
+    #devices = ["DoorSensor", "MotionSensor"]
+    devices = ["LabSenseServer"]
 
     #device_names = ["NESL_Eaton", "NESL_Raritan"]
     #for device_name in device_names:
         #saRegisterer.deleteDevice(device_name)
         
     for device in devices:
-        saRegisterer.registerDevice(device, config[device])
+        if device == "LabSenseServer":
+            # LabSenseServer has several sensors
+            # (DoorSensor and MotionSensor)
+            for sensorname, sensorconfig in config[device]["Sensors"].iteritems():
+                saRegisterer.registerDevice(sensorname,
+                                            sensorconfig)
+        else:
+            # All others have one type of sensor
+            saRegisterer.registerDevice(device, config[device])
 
     # List Devices
     saRegisterer.getRegisteredDevices()
