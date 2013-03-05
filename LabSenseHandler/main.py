@@ -6,8 +6,8 @@ import Queue                                # For communicating between datasink
 import configReader                         # For reading the configuration
 
 sys.path.insert(1, os.path.abspath(".."))
-import LabSenseModbus.common.DataSinks.DataSink as DataSink
-import LabSenseModbus.common.Device as Device
+import DataSinks.DataSink as DataSink
+import Devices.Device as Device
 
 class LabSenseMain(object):
 
@@ -41,7 +41,7 @@ class LabSenseMain(object):
                                                      config["channels"], 
                                                      config["sinterval"])
                 self.threads.append(device)
-                self.attachSinks(device, config)
+                self.attachSinks(device, node, config)
 
             # Server
             elif node == "LabSenseServer":
@@ -72,7 +72,7 @@ class LabSenseMain(object):
             while thread.isAlive():
                 thread.join(5)
 
-    def attachSinks(self, device, device_config):
+    def attachSinks(self, device, devicename, device_config):
         """ Attaches sinks to devices based on configuration file. """
         for sink in ["SensorAct", "Cosm", "Stdout"]:
             if device_config[sink]:
@@ -80,7 +80,7 @@ class LabSenseMain(object):
                 queue = Queue.Queue()
                 device.attach(queue)
                 dataSink = DataSink.DataSink.dataSinkFactory(sink, config, queue, interval)
-                dataSink.registerDevice(device_config["name"])
+                dataSink.registerDevice(devicename, device_config)
                 self.threads.append(dataSink)
 
 if __name__ == "__main__":
@@ -89,5 +89,3 @@ if __name__ == "__main__":
     config = configReader.config
     main = LabSenseMain(config)
     main.run()
-
-
