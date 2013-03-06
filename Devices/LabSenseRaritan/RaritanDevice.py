@@ -22,32 +22,30 @@ if __name__ == "__main__":
     import LabSenseHandler.configReader as configReader
     from DataSinks.DataSink import DataSink
     parser = argparse.ArgumentParser()
-    parser.add_argument("name", help="Name of Raritan device")
-    parser.add_argument("IP", help="IP address for Raritan")
-    parser.add_argument("PORT", help="Port for Raritan")
-    parser.add_argument("time", help="Time (in seconds) between each retrieval of data from Raritan.")
+    parser.add_argument("config", help="Configuration of Raritan Device.")
     args = parser.parse_args()
 
     # Read configuration
-    config = configReader.config
+    config = configReader.readConfiguration(args.config)
 
     # Create communication threads
     threads = []
 
+    # Get the device config
     device_name = "Raritan"
+    device_config = config[device_name]
 
     # Initialize the Raritan Device thread
-    device = RaritanDevice(args.name, 
-                           args.IP, 
-                           args.PORT,
-                           config[device_name]["channels"], 
-                           config[device_name]["sinterval"],
-                           config[device_name]["username"],
-                           config[device_name]["password"])
+    device = RaritanDevice(device_config["name"],
+                           device_config["IP"],
+                           device_config["PORT"],
+                           device_config["channels"], 
+                           device_config["sinterval"],
+                           device_config["username"],
+                           device_config["password"])
     threads.append(device)
 
     # Attach the sinks
-    device_config = config[device_name]
     for sink in ["SensorAct", "Cosm", "Stdout"]:
         if device_config[sink]:
             interval = device_config[sink + "Interval"]

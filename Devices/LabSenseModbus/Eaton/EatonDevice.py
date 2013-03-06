@@ -7,7 +7,6 @@ sys.path.insert(1, os.path.abspath("../../.."))
 from EatonClient import EatonClient
 from Devices.Device import Device
 
-""" Represents an Eaton device. """
 class EatonDevice(Device):
 
     def __init__(self, name, IP, PORT, channels, sinterval):
