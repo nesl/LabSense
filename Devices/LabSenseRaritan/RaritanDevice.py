@@ -11,10 +11,10 @@ import LabSenseHandler.configReader as configReader
 
 class RaritanDevice(Device):
 
-    def __init__(self, name, IP, PORT, channels, sinterval):
+    def __init__(self, name, IP, PORT, channels, sinterval, username, password):
         super(RaritanDevice, self).__init__(sinterval)
         self.channels = channels
-        self.client = RaritanClient(name, IP, PORT, channels)
+        self.client = RaritanClient(name, IP, PORT, channels, username, password)
 
 if __name__ == "__main__":
 
@@ -37,8 +37,13 @@ if __name__ == "__main__":
     device_name = "Raritan"
 
     # Initialize the Raritan Device thread
-    device = RaritanDevice(args.name, args.IP, args.PORT,
-            config[device_name]["channels"], config[device_name]["sinterval"])
+    device = RaritanDevice(args.name, 
+                           args.IP, 
+                           args.PORT,
+                           config[device_name]["channels"], 
+                           config[device_name]["sinterval"],
+                           config[device_name]["username"],
+                           config[device_name]["password"])
     threads.append(device)
 
     # Attach the sinks

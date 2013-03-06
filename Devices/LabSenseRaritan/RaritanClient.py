@@ -3,11 +3,14 @@ import time                                 # For timestamping data retrieval
 from pysnmp.entity.rfc3413.oneliner import cmdgen       # For getting data over snmp 
 class RaritanClient(object):
 
-    def __init__(self, name, IP, PORT, channels):
+    def __init__(self, name, IP, PORT, channels, username,
+                 password):
        self.name = name
        self.ip = IP
        self.port = PORT
        self.channels = channels
+       self.username = username
+       self.password = password
 
     # getData Command Generator;
     # Format: Current (8, milliamps), Voltage (8, millivolts), Active Power (Watts),
@@ -16,7 +19,8 @@ class RaritanClient(object):
         count=0
         current_time = time.time()
         errorIndication, errorStatus, errorIndex, varBinds = cmdgen.CommandGenerator().getCmd(
-        cmdgen.CommunityData('admin', 'abcd'), # read-only
+        cmdgen.CommunityData(self.username,
+                             self.password), # read-only
         # SNMP v3
         cmdgen.UdpTransportTarget((self.ip, self.port)),
 
