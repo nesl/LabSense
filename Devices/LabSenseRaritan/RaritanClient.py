@@ -95,14 +95,18 @@ class RaritanClient(object):
         for name, val in varBinds:
             value = int(val.prettyPrint())
             channel = self.getChannelNameFromNumberChannel(name)
-            channel_number = self.getChannelNumber(name)
-            channel_val_pair = (channel + str(channel_number), value )
-            channel_val_pairs.append(channel_val_pair)
-            if channel_number == 8:
-                channel_data[channel] = {}
-                channel_data[channel]["measurements"] = channel_val_pairs
-                channel_data[channel]["units"] = self.getUnitsForChannel(channel)
-                channel_val_pairs = []
+
+            if channel in self.channels:
+                # If the channel is in the channels wanted
+                channel_number = self.getChannelNumber(name)
+                channel_val_pair = (channel + str(channel_number), value )
+                channel_val_pairs.append(channel_val_pair)
+                if channel_number == 8:
+                    # If we get to the end of 8 outlets, record
+                    channel_data[channel] = {}
+                    channel_data[channel]["measurements"] = channel_val_pairs
+                    channel_data[channel]["units"] = self.getUnitsForChannel(channel)
+                    channel_val_pairs = []
 
         return channel_data
 
@@ -117,12 +121,11 @@ class RaritanClient(object):
         return int(name[-1])
 
     def getChannelNameFromNumberChannel(self, name):
-        """ Gets the channel name from the
-        second to last channel number. Example Snmp
-        name format is:
-        1.3.6.1.4.1.13742.4.1.2.2.1.s.n.
-        This function find s and returns
-        the channel name equivalent. """
+        """ Gets the channel name from the second to last channel number. 
+            Example Snmp name format is:
+                1.3.6.1.4.1.13742.4.1.2.2.1.s.n.
+            This function find s and returns the channel name 
+            equivalent. """
         number_channel = name[-2]
         channel = ""
         if number_channel == 4:

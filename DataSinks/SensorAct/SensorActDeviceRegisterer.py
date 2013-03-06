@@ -77,7 +77,6 @@ class SensorActDeviceRegisterer(DeviceRegisterer.DeviceRegisterer):
 
         # Get the device profile
         device_profile = self.getDeviceProfile(device, device_config)
-        print "Device profile: %s" % device_profile
 
         # Register the Device to SensorAct
         self.connect()
