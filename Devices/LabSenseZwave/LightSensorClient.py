@@ -11,7 +11,11 @@ class LightSensorClient(ZwaveClient):
         """ returns channel data in internal json
         format """
         channel_data = {}
-        # Light Sensor has light reading
+
+        # Light Sensor has light reading. Only return data if its specified
+        if "Light" not in self.channels:
+            return None
+
         channel_data["Light"] = {"units": "Percent",
                                  "measurements": [
                                  ("Light", str(device["light"]))]}

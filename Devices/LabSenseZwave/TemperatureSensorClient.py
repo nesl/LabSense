@@ -11,6 +11,10 @@ class TemperatureSensorClient(ZwaveClient):
         """ Returns channel data in internal json format """
         channel_data = {}
         # Temperature Sensor has temperature reading in Fahrenheit
+        if "Temperature" not in self.channels:
+            return None
+
+        # Only return data if Temperature channel is specified
         channel_data["Temperature"] = {
             "units": "Fahrenheit",
             "measurements": [

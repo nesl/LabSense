@@ -10,11 +10,22 @@ class SmartSwitchClient(ZwaveClient):
                            device_name):
         """ Returns channel data in internal json format """
         channel_data = {}
+
+        print "CHANNELS : " + str(self.channels)
+
         # SmartSwitch has Power and Energy
-        channel_data["Power"] = {"units": "Watts",
-                "measurements": [ ("Power", str(device["watts"]))]}
-        channel_data["Energy"] = {"units": "kwh",
-                                 "measurements": [ ("Energy", str(device["kwh"]))]}
+        if "Power" in self.channels:
+            print "INCLUDING POWER"
+            channel_data["Power"] = {"units": "Watts",
+                    "measurements": [ ("Power", str(device["watts"]))]}
+        if "Energy" in self.channels:
+            print "INCLUDING ENERGY"
+            channel_data["Energy"] = {"units": "kwh",
+                                     "measurements": [ ("Energy", str(device["kwh"]))]}
+
+        if channel_data == {}:
+            # If no channel data was written, don't send device data.
+            return None
 
         device_data = {"devicename": device_name,
                        "timestamp": current_time,
