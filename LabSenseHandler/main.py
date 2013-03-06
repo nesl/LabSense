@@ -34,12 +34,23 @@ class LabSenseMain(object):
             # Devices 
             elif node in ["Eaton", "Veris", "Raritan", "SmartSwitch",
                           "LightSensor", "TemperatureSensor"]:
-                device = Device.Device.deviceFactory(node, 
-                                                     config["name"], 
-                                                     config["IP"], 
-                                                     config["PORT"], 
-                                                     config["channels"], 
-                                                     config["sinterval"])
+                if node == "Raritan":
+                    # Raritan needs username and password
+                    device = Device.Device.deviceFactory(node, 
+                                                         config["name"], 
+                                                         config["IP"], 
+                                                         config["PORT"], 
+                                                         config["channels"], 
+                                                         config["sinterval"],
+                                                         config["username"],
+                                                         config["password"])
+                else:
+                    device = Device.Device.deviceFactory(node, 
+                                                         config["name"], 
+                                                         config["IP"], 
+                                                         config["PORT"], 
+                                                         config["channels"], 
+                                                         config["sinterval"])
                 self.threads.append(device)
                 self.attachSinks(device, node, config)
 
@@ -85,7 +96,7 @@ class LabSenseMain(object):
 
 if __name__ == "__main__":
 
-    # Read configuration
+    # Read configuration and run LabSense
     config = configReader.config
     main = LabSenseMain(config)
     main.run()

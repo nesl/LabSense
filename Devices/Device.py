@@ -12,7 +12,14 @@ class Device(threading.Thread):
         self.sinterval = float(sinterval)
 
     def deviceFactory(device_type, name, ip, port,
-                      channels, sinterval):
+                      channels, sinterval, username = None, password = None):
+        """ Device factory that instantiates the following types of devices: 
+            1. Eaton
+            2. Veris
+            3. Zwave (SmartSwitch, TemperatureSensor, LightSensor),
+            4. Raritan
+            Note: Only Raritan requires that the username and password be specified
+            """
         import LabSenseModbus.Eaton.EatonDevice as EatonDevice
         import LabSenseModbus.Veris.VerisDevice as VerisDevice
         import LabSenseZwave.ZwaveDevice as ZwaveDevice
@@ -35,7 +42,9 @@ class Device(threading.Thread):
                                            ip,
                                            port,
                                            channels,
-                                           sinterval)
+                                           sinterval,
+                                           username,
+                                           password)
         elif device_type in ["SmartSwitch",
                              "LightSensor",
                              "TemperatureSensor"]:
