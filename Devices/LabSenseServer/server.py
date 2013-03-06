@@ -8,36 +8,47 @@ import Queue                                # For sink queues
 sys.path.insert(1, os.path.abspath("../.."))
 from Devices.Device import Device
 
-class LabSenseTCPHandler(SocketServer.BaseRequestHandler):
-    """ The tcp handler for LabSense that adds the data
-    coming to each of its queues."""
+class LabSenseServer(SocketServer.TCPServer):
+    """ This class handles traffic coming into LabSenseServer """
 
-    def handle(self):
-        """ Handle the TCP Handler traffic """
+    class LabSenseTCPHandler(SocketServer.BaseRequestHandler):
+        """ The tcp handler for LabSense that adds the data
+        coming to each of its queues."""
 
-        try:
-            # Receive the data
-            data = self.request.recv(1024)
-        except socket.error:
-            print "Connection reset by peer..."
-            return
+        def handle(self):
+            """ Handle the TCP Handler traffic """
 
-        json_data = json.loads(data)
-        #print "Json data: ", json_data
-        
-        # Verify Api Key
-        if json_data["API_KEY"] == self.server.api_key:
-            # Convert the unicode json to string json
-            converted_data = configReader.convert(json_data["data"])
-            self.notify(converted_data["devicename"],
-                        converted_data)
-        else:
-            print "Received message from unverified Api key."
+            try:
+                # Receive the data
+                data = self.request.recv(1024)
+            except socket.error:
+                print "Connection reset by peer..."
+                return
 
-    def notify(self, device, data):
-        if data:
-            for queue in self.server.queues[device]:
-                queue.put(data)
+            json_data = json.loads(data)
+            
+            # Verify Api Key
+            if json_data["API_KEY"] == self.server.api_key:
+                # Convert the unicode json to string json
+                converted_data = configReader.convert(json_data["data"])
+                self.notify(converted_data["devicename"],
+                            converted_data)
+            else:
+                print "Received message from unverified Api key."
+
+        def notify(self, device, data):
+            if data:
+                for queue in self.server.queues[device]:
+                    queue.put(data)
+
+    def __init__(self, host, port, api_key):
+        self.api_key = api_key
+        # server.queues is a dictionary with:
+        #   keys: name of Device
+        #   values: list of queues for that device
+        self.queues = {}
+        self.allow_reuse_address = True
+        SocketServer.TCPServer.__init__(self, (host, port), self.LabSenseTCPHandler)
 
 if __name__ == "__main__":
 
@@ -62,11 +73,7 @@ if __name__ == "__main__":
 
     # Initialize the LabSenseServer
     HOST = ""
-    server = SocketServer.TCPServer((HOST, int(server_config["PORT"])), LabSenseTCPHandler)
-    server.queues = {}
-
-    # Initialize tcp handler with api key
-    server.api_key = server_config["API_KEY"]
+    server = LabSenseServer(HOST, int(server_config["PORT"]), server_config["API_KEY"])
 
     # LabSenseServer has several sensors: DoorSensor and MotionSensor
     for device, device_config in server_config["Sensors"].iteritems():
@@ -82,9 +89,6 @@ if __name__ == "__main__":
                     server.queues[device_name] = []
                     first_time = False
 
-                # server.queues is a dictionary with:
-                # keys: name of Device
-                # values: list of queues for that device
                 server.queues[device_name].append(queue)
                 dataSink = DataSink.dataSinkFactory(sink, config[sink], queue, interval)
                 dataSink.registerDevice(device, device_config)
