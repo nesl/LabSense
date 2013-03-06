@@ -1,6 +1,6 @@
 #!/bin/bash
 
-while ! python server.py 8000
+while ! python server.py ../../LabSenseHandler/config.json
 
 do
     sleep 1

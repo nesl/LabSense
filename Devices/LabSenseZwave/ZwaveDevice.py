@@ -24,47 +24,55 @@ class ZwaveDevice(Device):
         else:
             raise TypeError(devicename + " device unrecoganized.")
 
-
 if __name__ == "__main__":
-    # Import configReader and DataSink
+
+    # Import sinks and configReader
     import LabSenseHandler.configReader as configReader
     from DataSinks.DataSink import DataSink
 
+    # Parse command line arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument("Name", help="Name for Zwave Device")
-    parser.add_argument("Devicename", help="Device Name for Zwave Device.")
-    parser.add_argument("IP", help="IP address for Zwave Device")
-    parser.add_argument("PORT", help="Port for Zwave Device")
-    parser.add_argument("time", help="Time (in seconds) between each retrieval of data from Zwave Device.")
+    parser.add_argument("config", help="Configuration path.")
+    parser.add_argument("Devicename", help="Choose between the following Zwave\
+                        Devices: SmartSwitch, LightSensor, TemperatureSensor")
     args = parser.parse_args()
 
     # Read configuration
-    config = configReader.config
+    config = configReader.readConfiguration(args.config)
 
     # Create communication threads
     threads = []
-    devicename = args.Devicename
 
-    # Initialize the SmartSwitch Device thread
-    device = ZwaveDevice(devicename, args.Name, args.IP, args.PORT,
-            config[devicename]["channels"], config[devicename]["sinterval"])
+    # Get the device config
+    device_name = args.Devicename
+    device_config = config[device_name]
+
+    # Initialize the Zwave Device thread
+    device = ZwaveDevice(args.Devicename,
+                         device_config["name"],
+                         device_config["IP"],
+                         device_config["PORT"],
+                         device_config["channels"], 
+                         device_config["sinterval"])
     threads.append(device)
 
-    device_config = config[devicename]
+    # Attach the sinks
     for sink in ["SensorAct", "Cosm", "Stdout"]:
         if device_config[sink]:
             interval = device_config[sink + "Interval"]
             queue = Queue.Queue()
             device.attach(queue)
             dataSink = DataSink.dataSinkFactory(sink, config[sink], queue, interval)
-            dataSink.registerDevice(devicename, device_config)
+            dataSink.registerDevice(device_name, device_config)
             threads.append(dataSink)
 
+    # Start threads
     print "Number of threads: ", len(threads)
     for thread in threads:
         thread.daemon = True
         thread.start()
 
+    # Keep on running forever
     for thread in threads:
         while thread.isAlive():
             thread.join(5)

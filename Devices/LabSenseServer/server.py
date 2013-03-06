@@ -5,10 +5,8 @@ import sys                                  # For importing from project directo
 import os                                   # For importing from project directory
 import Queue                                # For sink queues
 
-sys.path.insert(0, os.path.abspath("../.."))
+sys.path.insert(1, os.path.abspath("../.."))
 from Devices.Device import Device
-import DataSinks.DataSink as DataSink
-import LabSenseHandler.configReader as configReader
 
 class LabSenseTCPHandler(SocketServer.BaseRequestHandler):
     """ The tcp handler for LabSense that adds the data
@@ -41,60 +39,67 @@ class LabSenseTCPHandler(SocketServer.BaseRequestHandler):
             for queue in self.server.queues[device]:
                 queue.put(data)
 
-def main():
+if __name__ == "__main__":
 
-    # Parse command line arguments
+    # Import sinks and configReader
+    import LabSenseHandler.configReader as configReader
+    from DataSinks.DataSink import DataSink
+
+    # Parse command line for arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument("Port", help="Port to serve tcp handler on.")
+    parser.add_argument("config", help="Configuration path.")
     args = parser.parse_args()
 
     # Read configuration
-    config = configReader.config
+    config = configReader.readConfiguration(args.config)
 
     # Create communication threads
     threads = []
 
-    name = "LabSenseServer"
+    # Get the device config
+    server_name = "LabSenseServer"
+    server_config = config[server_name]
 
     # Initialize the LabSenseServer
     HOST = ""
-    server = SocketServer.TCPServer((HOST, int(args.Port)), LabSenseTCPHandler)
+    server = SocketServer.TCPServer((HOST, int(server_config["PORT"])), LabSenseTCPHandler)
     server.queues = {}
 
     # Initialize tcp handler with api key
-    server.api_key = config[name]["API_KEY"]
+    server.api_key = server_config["API_KEY"]
 
-    # LabSenseServer has several sensors
-    for innerNode, innerConfig in config[name]["Sensors"].iteritems():
+    # LabSenseServer has several sensors: DoorSensor and MotionSensor
+    for device, device_config in server_config["Sensors"].iteritems():
         """ Attaches sinks to devices based on configuration file. """
         first_time = True
         for sink in ["SensorAct", "Cosm", "Stdout"]:
-            if innerConfig[sink]:
-                interval = innerConfig[sink + "Interval"]
+            if device_config[sink]:
+                interval = device_config[sink + "Interval"]
                 queue = Queue.Queue()
+                device_name = device_config["name"]
 
                 if first_time:
-                    server.queues[innerConfig["name"]] = []
+                    server.queues[device_name] = []
                     first_time = False
 
                 # server.queues is a dictionary with:
                 # keys: name of Device
                 # values: list of queues for that device
-                server.queues[innerConfig["name"]].append(queue)
-                dataSink = DataSink.DataSink.dataSinkFactory(sink, config[sink], queue, interval)
-                dataSink.registerDevice(innerNode, innerConfig)
+                server.queues[device_name].append(queue)
+                dataSink = DataSink.dataSinkFactory(sink, config[sink], queue, interval)
+                dataSink.registerDevice(device, device_config)
                 threads.append(dataSink)
 
+    # Start threads
     print "Number of threads: ", len(threads)
     for thread in threads:
         thread.daemon = True
         thread.start()
 
+    # Keep running the server forever
     try:
         server.serve_forever()
     except KeyboardInterrupt:
         server.shutdown()
         sys.exit(0)
 
-if __name__ == "__main__":
-    main()

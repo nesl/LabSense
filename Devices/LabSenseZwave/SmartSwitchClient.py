@@ -15,11 +15,9 @@ class SmartSwitchClient(ZwaveClient):
 
         # SmartSwitch has Power and Energy
         if "Power" in self.channels:
-            print "INCLUDING POWER"
             channel_data["Power"] = {"units": "Watts",
                     "measurements": [ ("Power", str(device["watts"]))]}
         if "Energy" in self.channels:
-            print "INCLUDING ENERGY"
             channel_data["Energy"] = {"units": "kwh",
                                      "measurements": [ ("Energy", str(device["kwh"]))]}
 

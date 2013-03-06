@@ -1,19 +1,16 @@
 import argparse                             # For parsing command line arguments
-import sys, os                              # for importing from project directory
-import time                                 # For sleeping between uploads
+import sys                                  # For importing from common directory
+import os                                   # For importing from common directory
 import Queue                                # For communicating between datasinks and devices
 
 sys.path.insert(1, os.path.abspath("../.."))
 from RaritanClient import RaritanClient 
 from Devices.Device import Device 
 
-import LabSenseHandler.configReader as configReader
-
 class RaritanDevice(Device):
 
     def __init__(self, name, IP, PORT, channels, sinterval, username, password):
         super(RaritanDevice, self).__init__(sinterval)
-        self.channels = channels
         self.client = RaritanClient(name, IP, PORT, channels, username, password)
 
 if __name__ == "__main__":
@@ -21,8 +18,10 @@ if __name__ == "__main__":
     # Import sinks and configReader
     import LabSenseHandler.configReader as configReader
     from DataSinks.DataSink import DataSink
+
+    # Parse command line arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument("config", help="Configuration of Raritan Device.")
+    parser.add_argument("config", help="Configuration path.")
     args = parser.parse_args()
 
     # Read configuration
@@ -55,12 +54,13 @@ if __name__ == "__main__":
             dataSink.registerDevice(device_name, device_config)
             threads.append(dataSink)
 
+    # Start threads
     print "Number of threads: ", len(threads)
-
     for thread in threads:
         thread.daemon = True
         thread.start()
 
+    # Keep on running forever
     for thread in threads:
         while thread.isAlive():
             thread.join(5)

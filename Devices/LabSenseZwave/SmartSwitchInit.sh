@@ -1,6 +1,6 @@
 #!/bin/bash
 
-while ! python ZwaveDevice.py NESL_SmartSwitch SmartSwitch 172.17.5.117 3480 2
+while ! python ZwaveDevice.py ../../LabSenseHandler/config.json SmartSwitch
 
 do
     sleep 1

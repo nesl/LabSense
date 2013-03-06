@@ -1,6 +1,6 @@
 import argparse                             # For parsing command line arguments
-import sys, os                              # for importing from project directory
-import time                                 # For sleeping between uploads
+import sys                                  # For importing from common directory
+import os                                   # For importing from common directory
 import Queue                                # For communicating between datasinks and devices
 
 sys.path.insert(1, os.path.abspath("../../.."))
@@ -11,9 +11,6 @@ class EatonDevice(Device):
 
     def __init__(self, name, IP, PORT, channels, sinterval):
         super(EatonDevice, self).__init__(sinterval)
-        self.name = name
-        self.channels = channels
-        self.devicename = "Eaton"
         self.client = EatonClient(name, IP, PORT, channels)
 
 if __name__ == "__main__":
@@ -22,28 +19,30 @@ if __name__ == "__main__":
     import LabSenseHandler.configReader as configReader
     from DataSinks.DataSink import DataSink
 
+    # Parse command line for arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument("name", help="Name of Eaton device")
-    parser.add_argument("IP", help="IP address for Eaton")
-    parser.add_argument("PORT", help="Port for Eaton")
-    parser.add_argument("time", help="Time (in seconds) between each retrieval of data from Eaton.")
+    parser.add_argument("config", help="Configuration path.")
     args = parser.parse_args()
 
     # Read configuration
-    config = configReader.config
+    config = configReader.readConfiguration(args.config)
 
     # Create communication threads
     threads = []
 
+    # Get the device config
     device_name = "Eaton"
+    device_config = config[device_name]
 
     # Initialize the Eaton Device
-    device = EatonDevice(args.name, args.IP, args.PORT,
-            config[device_name]["channels"], config[device_name]["sinterval"])
+    device = EatonDevice(device_config["name"],
+                         device_config["IP"],
+                         device_config["PORT"],
+                         device_config["channels"], 
+                         device_config["sinterval"])
     threads.append(device)
 
     # Attach the sinks
-    device_config = config[device_name]
     for sink in ["SensorAct", "Cosm", "Stdout"]:
         if device_config[sink]:
             interval = device_config[sink + "Interval"]
@@ -53,30 +52,13 @@ if __name__ == "__main__":
             dataSink.registerDevice(device_name, device_config)
             threads.append(dataSink)
 
+    # Start threads
     print "Number of threads: ", len(threads)
     for thread in threads:
         thread.daemon = True
         thread.start()
 
-    while True:
-        for thread in threads:
-            if not thread.isAlive():
-                sys.exit("Thread died. Exiting Program")
-
-
-    #while len(threads) > 0:
-        #try:
-            #threads = [t.join(1) for t in threads if t is not None and
-                       #t.isAlive()]
-        #except KeyboardInterrupt:
-            #print "Ctrl-c received! Sending kill to threads..."
-            #for thread in threads:
-                #thread.kill_received = True
-
-    #for thread in threads:
-        #if not thread.isAlive():
-            #print "A thread just died!"
-
-    #for thread in threads:
-        #while thread.isAlive():
-            #thread.join(5)
+    # Keep on running forever
+    for thread in threads:
+        while thread.isAlive():
+            thread.join(5)

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-while ! python EatonDevice.py NESL_Eaton 128.97.11.100 4660 1
+while ! python EatonDevice.py ../../../LabSenseHandler/config.json
 
 do
     sleep 1

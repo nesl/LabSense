@@ -1,7 +1,6 @@
 import argparse                             # For parsing command line arguments
 import sys                                  # For importing from common directory
 import os                                   # For importing from common directory
-import time                                 # For sampling time
 import Queue                                # For communicating between datasinks and devices
 
 sys.path.insert(1, os.path.abspath("../../.."))
@@ -12,37 +11,35 @@ class VerisDevice(Device):
 
     def __init__(self, name, IP, PORT, channels, sinterval):
         super(VerisDevice, self).__init__(sinterval)
-        self.name = name
-        self.channels = channels
-        self.devicename = "Veris"
         self.client = VerisClient(name, IP, PORT, channels)
 
 if __name__ == "__main__":
-    # import config and DataSink
+
+    # Import sinks and configReader
     import LabSenseHandler.configReader as configReader
     from DataSinks.DataSink import DataSink
 
     # Parse command line for arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument("name", help="Name of Veris device")
-    parser.add_argument("IP", help="IP address for Veris")
-    parser.add_argument("PORT", help="Port for Veris")
-    parser.add_argument("time", help="Time (in seconds) between each retrieval of data from Veris.")
+    parser.add_argument("config", help="Configuration path.")
     args = parser.parse_args()
 
-    device_name = "Veris"
-
     # Read configuration
-    config = configReader.config
-    device_config = config[device_name]
+    config = configReader.readConfiguration(args.config)
 
     # Create communication threads
     threads = []
 
+    # Get the device config
+    device_name = "Veris"
+    device_config = config[device_name]
 
     # Initialize the Veris Device
-    device = VerisDevice(args.name, args.IP, args.PORT,
-            config[device_name]["channels"], config[device_name]["sinterval"])
+    device = VerisDevice(device_config["name"],
+                         device_config["IP"],
+                         device_config["PORT"],
+                         device_config["channels"], 
+                         device_config["sinterval"])
     threads.append(device)
 
     # Attach sinks
@@ -61,6 +58,7 @@ if __name__ == "__main__":
         thread.daemon = True
         thread.start()
 
+    # Keep on running forever
     for thread in threads:
         while thread.isAlive():
             thread.join(5)
