@@ -2,101 +2,144 @@ import argparse                             # For parsing command line arguments
 import sys                                  # For importing from project directory
 import os                                   # For importing from project directory
 import Queue                                # For communicating between datasinks and devices
-
+import subprocess                           # For launching each device's processes
+import logging                              # For logging each of the devices
 import configReader                         # For reading the configuration
-
-sys.path.insert(1, os.path.abspath(".."))
-import DataSinks.DataSink as DataSink
-import Devices.Device as Device
 
 class LabSenseMain(object):
 
-    def __init__(self, configuration):
-        self.configuration = configuration
-        self.threads = []
+    class DeviceClass(object):
+        """ Stores a device's name, process, and logger """
+        def __init__(self, name, process, logger):
+            self.name = name
+            self.process = process
+            self.logger = logger
 
-    def run(self):
-        """ Parse nodes in Configuration file """
-        for node, config in self.configuration.iteritems():
+    def __init__(self, config_file):
+        self.config_file = config_file
+        self.config = configReader.readConfiguration(config_file)
+        self.running_devices = []
+
+    def startDevices(self):
+        """ Parse devices in Configuration file """
+        for device, config in self.config.iteritems():
             # Sinks
-            if node == "SensorAct":
+            if device == "SensorAct":
                 required_fields = ["IP", "PORT", "API_KEY"]
                 for field in required_fields:
                     if not config[field]:
                         sys.exit("SensorAct requires the field " + field)
 
-            elif node == "Cosm":
-                required_fields = ["API_KEY", "username"]
+            elif device == "Cosm":
+                required_fields = ["API_KEY", "user_name"]
                 for field in required_fields:
                     if not config[field]:
                         sys.exit("Cosm requires the field " + field)
 
+            elif device == "Stdout":
+                pass
+
             # Devices 
-            elif node in ["Eaton", "Veris", "Raritan", "SmartSwitch",
-                          "LightSensor", "TemperatureSensor"]:
-                if node == "Raritan":
-                    # Raritan needs username and password
-                    device = Device.Device.deviceFactory(node, 
-                                                         config["name"], 
-                                                         config["IP"], 
-                                                         config["PORT"], 
-                                                         config["channels"], 
-                                                         config["sinterval"],
-                                                         config["username"],
-                                                         config["password"])
-                else:
-                    device = Device.Device.deviceFactory(node, 
-                                                         config["name"], 
-                                                         config["IP"], 
-                                                         config["PORT"], 
-                                                         config["channels"], 
-                                                         config["sinterval"])
-                self.threads.append(device)
-                self.attachSinks(device, node, config)
+            elif device in ["Eaton", "Veris", "Raritan", "SmartSwitch",
+                          "LightSensor", "TemperatureSensor", "LabSenseServer"]:
+                # For each device, start the device process, create a logger for
+                # it, and store into running_devices list.
+                process = self.__startDevice(device)
+                logger = logging.getLogger(device)
+                logger.addHandler(logging.FileHandler("logs/%s.log" % config["name"]))
+                device_class = self.DeviceClass(config["name"], process, logger)
+                self.running_devices.append(device_class)
 
-            # Server
-            elif node == "LabSenseServer":
-                try:
-                    sensors_config = config["Sensors"]
-                except KeyError:
-                    raise KeyError("No Sensors were specified in LabSenseServer")
-
-                # LabSenseServer has several sensors
-                for innerNode, innerConfig in sensors_config.iteritems():
-                    if innerNode == "DoorSensor":
-                        pass
-                    elif innerNode == "MotionSensor":
-                        pass
-                    else: 
-                        raise KeyError("Unrecognized LabSenseServer node: " +
-                                       innerNode)
             # Unrecognized
             else:
-                raise KeyError("Unrecognized node: " + node)
+                raise KeyError("Unrecognized device: " + device)
 
-        print "Number of threads: ", len(self.threads)
-        for thread in self.threads:
-            thread.daemon = True
-            thread.start()
+    def monitorDevices(self, timeout):
 
-        for thread in self.threads:
-            while thread.isAlive():
-                thread.join(5)
+        while True:
+            for device in self.running_devices:
+                device.process.poll()
+                std_line = device.process.stdout.readline()
+                std_err_line = device.process.stderr.readline()
 
-    def attachSinks(self, device, devicename, device_config):
-        """ Attaches sinks to devices based on configuration file. """
-        for sink in ["SensorAct", "Cosm", "Stdout"]:
-            if device_config[sink]:
-                interval = device_config[sink + "Interval"]
-                queue = Queue.Queue()
-                device.attach(queue)
-                dataSink = DataSink.DataSink.dataSinkFactory(sink, config, queue, interval)
-                dataSink.registerDevice(devicename, device_config)
-                self.threads.append(dataSink)
+                if std_line:
+                    device.logger.debug(std_line)
+
+                if std_err_line:
+                    device.logger.debug(std_err_line)
+                
+                time.sleep(timeout)
+
+    """ Helper functions called within LabSenseMain class """
+
+    def __startDevice(self, device):
+        """ Starts the device's process """
+
+        # Create device arguments for running with python
+        args = ["python"]
+
+        # First argument is the python file to run
+        # This is the Device directory + path to the device
+        device_directory = os.path.join(os.path.dirname(__file__),\
+                                    "../Devices")
+        device_path = self.__getDevicePath(device)
+        device_path = os.path.join(device_directory, device_path)
+        args.append(device_path)
+
+        # Append the config file path
+        config_path = os.path.join(os.path.dirname(__file__), self.config_file)
+        args.append(config_path)
+
+        # Start the process
+        # SmartSwitch, LightSensor, and TemperatureSensor need device name
+        if device in ["SmartSwitch", "LightSensor", "TemperatureSensor"]:
+            args.append(device)
+            
+        process = self.__startProcess(args)
+
+        return process
+
+    def __getDevicePath(self, device):
+        """ Gets the path for the given device """
+        name = None
+        if device == "LabSenseServer":
+            device_path = "LabSenseServer/server.py"
+
+        elif device == "Eaton":
+            device_path = "LabSenseModbus/Eaton/EatonDevice.py"
+
+        elif device == "Veris":
+            device_path = "LabSenseModbus/Veris/VerisDevice.py"
+
+        elif device == "Raritan":
+            device_path = "LabSenseRaritan/RaritanDevice.py"
+
+        elif device in ["SmartSwitch", "LightSensor", "TemperatureSensor"]:
+            device_path = "LabSenseZwave/ZwaveDevice.py"
+        else: 
+            raise KeyError("No device named " + device)
+
+        return device_path
+
+
+    def __startProcess(self, args):
+        """ Starts a new process with the given arguments """
+
+        print "ARGS: " + str(args)
+
+        process = subprocess.Popen(args, stdout=subprocess.PIPE,
+                                   stderr=subprocess.PIPE)
+        return process
 
 if __name__ == "__main__":
 
+    # Get configuration file from command line
+    parser = argparse.ArgumentParser()
+    parser.add_argument("config", help="Configuration File, defaults to\
+                        config.json", default="config.json")
+    args = parser.parse_args()
+
     # Read configuration and run LabSense
-    config = configReader.config
-    main = LabSenseMain(config)
-    main.run()
+    main = LabSenseMain(args.config)
+    main.startDevices()
+    main.monitorDevices(1)

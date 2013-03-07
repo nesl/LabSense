@@ -24,3 +24,4 @@ deprecated/LabSenseModbus/TCPModbusClient
 deprecated/LabSenseServer/SocketIOServer/cache.db
 
 LabSenseHandler/config.json
+LabSenseHandler/logs/*

@@ -38,8 +38,13 @@ class LabSenseServer(SocketServer.TCPServer):
 
         def notify(self, device, data):
             if data:
-                for queue in self.server.queues[device]:
-                    queue.put(data)
+                try:
+                    # Put the data in the queues according to the device
+                    for queue in self.server.queues[device]:
+                        queue.put(data)
+                except KeyError:
+                    # If no queue was made for the device, let it pass
+                    pass
 
     def __init__(self, host, port, api_key):
         self.api_key = api_key
