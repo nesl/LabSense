@@ -1,1 +1,1 @@
-python handler.py NESL_Veris 172.17.5.177 4660
+python main.py config.json

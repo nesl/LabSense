@@ -10,8 +10,9 @@ class LabSenseMain(object):
 
     class DeviceClass(object):
         """ Stores a device's name, process, and logger """
-        def __init__(self, name, process, logger):
+        def __init__(self, name, device_type, process, logger):
             self.name = name
+            self.device_type = device_type
             self.process = process
             self.logger = logger
 
@@ -45,9 +46,10 @@ class LabSenseMain(object):
                 # For each device, start the device process, create a logger for
                 # it, and store into running_devices list.
                 process = self.__startDevice(device)
-                logger = logging.getLogger(device)
-                logger.addHandler(logging.FileHandler("logs/%s.log" % config["name"]))
-                device_class = self.DeviceClass(config["name"], process, logger)
+                name = config["name"]
+                logger = logging.getLogger(name)
+                logger.addHandler(logging.FileHandler("logs/%s.log" % name, "w"))
+                device_class = self.DeviceClass(config["name"], device, process, logger)
                 self.running_devices.append(device_class)
 
             # Unrecognized
@@ -58,7 +60,12 @@ class LabSenseMain(object):
 
         while True:
             for device in self.running_devices:
-                device.process.poll()
+                device_process = device.process.poll()
+
+                # If child process dies, restart it
+                if device_process is not None:
+                    device.process = self.__startDevice(device.device_type)
+
                 std_line = device.process.stdout.readline()
                 std_err_line = device.process.stderr.readline()
 
@@ -87,7 +94,7 @@ class LabSenseMain(object):
         args.append(device_path)
 
         # Append the config file path
-        config_path = os.path.join(os.path.dirname(__file__), self.config_file)
+        config_path = os.path.abspath(self.config_file)
         args.append(config_path)
 
         # Start the process
