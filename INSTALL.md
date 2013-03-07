@@ -8,8 +8,11 @@ already, you can skip this step:
     curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py && sudo python get-pip.py
     </pre>
 
-2. Source the virtual environment
+2. Create a virtual environment using virtualenv and get the code:
     <pre>
+    virtualenv LabSense
+    cd LabSense
+    git clone git@github.com:jtsao22/LabSense.git
     source bin/activate
     </pre>
 

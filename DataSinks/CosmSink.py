@@ -23,7 +23,7 @@ class CosmSink(DataSink.DataSink):
 
             if not self.queue.empty():
                 if self.batch:
-                    data = self.__queue_get_all()
+                    data = self.__queue_get_items(10)
                 else:
                     data = self.queue.get_nowait()
                 start_time = time.time()
@@ -34,11 +34,12 @@ class CosmSink(DataSink.DataSink):
             time.sleep(self.interval)
 
     """ Helper functions """
-    def __queue_get_all(self):
-        """ Gets all items in a queue """
+    def __queue_get_items(self, max_items):
+        """ Gets max items from queue """
         items = []
-        while not self.queue.empty():
+        while not self.queue.empty() and max_items > 0:
             items.append(self.queue.get_nowait())
+            max_items -= 1
         return items
 
     """ Functions child classes must implement """
