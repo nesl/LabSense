@@ -1,4 +1,5 @@
-import httplib, urllib          # For connecting to VPDS Server
+import httplib                  # For connecting to VPDS Server
+import urllib                   # For connecting to VPDS Server
 import argparse                 # For Parsing Command Line Arguments
 import user                     # Specifies the API_KEY
 import json                     # For JSON sent to/from VPDS Server
