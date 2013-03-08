@@ -65,6 +65,7 @@ if __name__ == "__main__":
     # Parse command line for arguments
     parser = argparse.ArgumentParser()
     parser.add_argument("config", help="Configuration path.")
+    parser.add_argument("name", help="Name of device (name field in config.json file)")
     args = parser.parse_args()
 
     # Read configuration
@@ -75,41 +76,48 @@ if __name__ == "__main__":
 
     # Get the device config
     server_name = "LabSenseServer"
-    server_config = config[server_name]
+    for device, dev_config in config.iteritems():
+        if device == server_name:
+            if dev_config["name"] == args.name:
+                server_config = dev_config
 
-    # Initialize the LabSenseServer
-    HOST = ""
-    server = LabSenseServer(HOST, int(server_config["PORT"]), server_config["API_KEY"])
+    # If the device is present, run it
+    if server_config:
+        print "Found %s device" % server_name
 
-    # LabSenseServer has several sensors: DoorSensor and MotionSensor
-    for device, device_config in server_config["Sensors"].iteritems():
-        """ Attaches sinks to devices based on configuration file. """
-        first_time = True
-        for sink in ["SensorAct", "Cosm", "Stdout"]:
-            if device_config[sink]:
-                interval = device_config[sink + "Interval"]
-                queue = Queue.Queue()
-                device_name = device_config["name"]
+        # Initialize the LabSenseServer
+        HOST = ""
+        server = LabSenseServer(HOST, int(server_config["PORT"]), server_config["API_KEY"])
 
-                if first_time:
-                    server.queues[device_name] = []
-                    first_time = False
+        # LabSenseServer has several sensors: DoorSensor and MotionSensor
+        for device, device_config in server_config["Sensors"].iteritems():
+            """ Attaches sinks to devices based on configuration file. """
+            first_time = True
+            for sink in ["SensorAct", "Cosm", "Stdout"]:
+                if device_config[sink]:
+                    interval = device_config[sink + "Interval"]
+                    queue = Queue.Queue()
+                    device_name = device_config["name"]
 
-                server.queues[device_name].append(queue)
-                dataSink = DataSink.dataSinkFactory(sink, config[sink], queue, interval)
-                dataSink.registerDevice(device, device_config)
-                threads.append(dataSink)
+                    if first_time:
+                        server.queues[device_name] = []
+                        first_time = False
 
-    # Start threads
-    print "Number of threads: ", len(threads)
-    for thread in threads:
-        thread.daemon = True
-        thread.start()
+                    server.queues[device_name].append(queue)
+                    dataSink = DataSink.dataSinkFactory(sink, config[sink], queue, interval)
+                    dataSink.registerDevice(device, device_config)
+                    threads.append(dataSink)
 
-    # Keep running the server forever
-    try:
-        server.serve_forever()
-    except KeyboardInterrupt:
-        server.shutdown()
-        sys.exit(0)
+        # Start threads
+        print "Number of threads: ", len(threads)
+        for thread in threads:
+            thread.daemon = True
+            thread.start()
+
+        # Keep running the server forever
+        try:
+            server.serve_forever()
+        except KeyboardInterrupt:
+            server.shutdown()
+            sys.exit(0)
 

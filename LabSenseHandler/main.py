@@ -27,7 +27,7 @@ class LabSenseMain(object):
         self.running_devices = []
 
         # Set up logging for debugging
-        logging.basicConfig(format="%(asctime)s %(message)s",\
+        logging.basicConfig(format="%(asctime)s %(levelname)s %(message)s",\
                 level=logging.DEBUG)
 
     def startDevices(self):
@@ -54,15 +54,16 @@ class LabSenseMain(object):
                           "LightSensor", "TemperatureSensor", "LabSenseServer"]:
                 # For each device, start the device process, create a logger for
                 # it, and store into running_devices list.
-                process = self.__startDevice(device)
+                process = self.__startDevice(device, config["name"])
                 name = config["name"]
                 logger = logging.getLogger(name)
-                logger.addHandler(logging.FileHandler("logs/%s.log" % name, "w"))
+                logger.propagate = False            # Don't propagate to console
+                formatter = logging.Formatter("%(asctime)s %(message)s")
+                filehandler = logging.FileHandler("logs/%s.log" % name, "w")
+                filehandler.setLevel(logging.DEBUG)
+                filehandler.setFormatter(formatter)
+                logger.addHandler(filehandler)
                 device_queue = Queue.Queue()
-                #device_thread = threading.Thread(target=self.__enqueueDeviceOutput,\
-                                       #args=(process.stdout, device_queue))
-                #device_thread.daemon = True
-                #device_thread.start()
                 device_class = self.DeviceClass(config["name"], device, process, logger, device_queue)
                 self.running_devices.append(device_class)
 
@@ -79,7 +80,7 @@ class LabSenseMain(object):
                 # If child process dies, restart it
                 if device_process is not None:
                     print "CHILD DIED"
-                    device.process = self.__startDevice(device.device_type)
+                    device.process = self.__startDevice(device.device_type, device.name)
 
                 std_out_line = None
                 std_err_line = None
@@ -99,12 +100,7 @@ class LabSenseMain(object):
 
     """ Helper functions called within LabSenseMain class """
 
-    def __enqueueDeviceOutput(self, out, queue):
-        output = out.readline()
-        queue.put(output)
-        out.close()
-
-    def __startDevice(self, device):
+    def __startDevice(self, device, devicename):
         """ Starts the device's process """
 
         # Create device arguments for running with python
@@ -126,6 +122,9 @@ class LabSenseMain(object):
         # SmartSwitch, LightSensor, and TemperatureSensor need device name
         if device in ["SmartSwitch", "LightSensor", "TemperatureSensor"]:
             args.append(device)
+
+        # Append the name of the device
+        args.append(devicename)
             
         process = self.__startProcess(args)
 
