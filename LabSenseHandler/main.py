@@ -2,24 +2,33 @@ import argparse                             # For parsing command line arguments
 import sys                                  # For importing from project directory
 import os                                   # For importing from project directory
 import Queue                                # For communicating between datasinks and devices
+#import threading                            # For making device communication threads
 import subprocess                           # For launching each device's processes
 import logging                              # For logging each of the devices
+import time                                 # For waiting between syncing stdout's of device processes
 import configReader                         # For reading the configuration
+
+import fcntl
 
 class LabSenseMain(object):
 
     class DeviceClass(object):
         """ Stores a device's name, process, and logger """
-        def __init__(self, name, device_type, process, logger):
+        def __init__(self, name, device_type, process, logger, queue):
             self.name = name
             self.device_type = device_type
             self.process = process
             self.logger = logger
+            self.queue = queue
 
     def __init__(self, config_file):
         self.config_file = config_file
         self.config = configReader.readConfiguration(config_file)
         self.running_devices = []
+
+        # Set up logging for debugging
+        logging.basicConfig(format="%(asctime)s %(message)s",\
+                level=logging.DEBUG)
 
     def startDevices(self):
         """ Parse devices in Configuration file """
@@ -49,7 +58,12 @@ class LabSenseMain(object):
                 name = config["name"]
                 logger = logging.getLogger(name)
                 logger.addHandler(logging.FileHandler("logs/%s.log" % name, "w"))
-                device_class = self.DeviceClass(config["name"], device, process, logger)
+                device_queue = Queue.Queue()
+                #device_thread = threading.Thread(target=self.__enqueueDeviceOutput,\
+                                       #args=(process.stdout, device_queue))
+                #device_thread.daemon = True
+                #device_thread.start()
+                device_class = self.DeviceClass(config["name"], device, process, logger, device_queue)
                 self.running_devices.append(device_class)
 
             # Unrecognized
@@ -64,13 +78,19 @@ class LabSenseMain(object):
 
                 # If child process dies, restart it
                 if device_process is not None:
+                    print "CHILD DIED"
                     device.process = self.__startDevice(device.device_type)
 
-                std_line = device.process.stdout.readline()
-                std_err_line = device.process.stderr.readline()
+                std_out_line = None
+                std_err_line = None
+                try:
+                    std_out_line = device.process.stdout.read()
+                    std_err_line = device.process.stderr.read()
+                except IOError:
+                    pass
 
-                if std_line:
-                    device.logger.debug(std_line)
+                if std_out_line:
+                    device.logger.debug(std_out_line)
 
                 if std_err_line:
                     device.logger.debug(std_err_line)
@@ -78,6 +98,11 @@ class LabSenseMain(object):
                 time.sleep(timeout)
 
     """ Helper functions called within LabSenseMain class """
+
+    def __enqueueDeviceOutput(self, out, queue):
+        output = out.readline()
+        queue.put(output)
+        out.close()
 
     def __startDevice(self, device):
         """ Starts the device's process """
@@ -103,6 +128,10 @@ class LabSenseMain(object):
             args.append(device)
             
         process = self.__startProcess(args)
+
+        # Make the stdout and stderr nonblocking
+        fcntl.fcntl(process.stdout.fileno(), fcntl.F_SETFL, os.O_NONBLOCK)
+        fcntl.fcntl(process.stderr.fileno(), fcntl.F_SETFL, os.O_NONBLOCK)
 
         return process
 

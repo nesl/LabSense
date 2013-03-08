@@ -3,7 +3,6 @@ import os                               # For importing from parent directory
 import argparse                         # For running the client from command line
 
 # Import from common directory
-sys.path.insert(0, os.path.abspath(".."))
 import Devices.LabSenseModbus.common.modbus as modbus
 
 class VerisClient(modbus.TCPModbusClient):

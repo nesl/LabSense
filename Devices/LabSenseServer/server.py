@@ -5,7 +5,8 @@ import sys                                  # For importing from project directo
 import os                                   # For importing from project directory
 import Queue                                # For sink queues
 
-sys.path.insert(1, os.path.abspath("../.."))
+device_path = os.path.join(os.path.dirname(sys.argv[0]), "../..")
+sys.path.insert(1, device_path)
 from Devices.Device import Device
 
 class LabSenseServer(SocketServer.TCPServer):

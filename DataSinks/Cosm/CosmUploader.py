@@ -20,16 +20,21 @@ class CosmUploader(object):
         self.connection.request("GET", url, headers=self.headers)
         response = self.receive()
 
-        feeds = json.loads(response.read())
-        feeds = feeds["results"]
+        try:
+            feeds = json.loads(response.read())
+            feeds = feeds["results"]
+        except ValueError:
+            print "Error in JSON from Cosm."
+            return None
         return feeds
 
     def checkFeedPresent(self, feed):
         cosmfeeds = self.getFeeds()
 
-        for cosmfeed in cosmfeeds:
-            if feed == cosmfeed["title"]:
-                return cosmfeed["id"]
+        if cosmfeeds:
+            for cosmfeed in cosmfeeds:
+                if feed == cosmfeed["title"]:
+                    return cosmfeed["id"]
         return None
 
     def createFeed(self, params):
@@ -55,7 +60,7 @@ class CosmUploader(object):
 
                 if response:
                     print "Cosm: ", response.status, response.reason
-                    response.read()
+                    print response.read()
                     self.connection.close()
 
                     if response.status == 200:

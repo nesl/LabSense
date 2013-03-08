@@ -7,7 +7,8 @@ from SmartSwitchClient import SmartSwitchClient
 from LightSensorClient import LightSensorClient
 from TemperatureSensorClient import TemperatureSensorClient
 
-sys.path.insert(0, os.path.abspath("../.."))
+device_path = os.path.join(os.path.dirname(sys.argv[0]), "../../")
+sys.path.insert(1, device_path)
 from Devices.Device import Device 
 
 class ZwaveDevice(Device):

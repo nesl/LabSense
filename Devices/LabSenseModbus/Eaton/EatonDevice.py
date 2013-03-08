@@ -3,7 +3,8 @@ import sys                                  # For importing from common director
 import os                                   # For importing from common directory
 import Queue                                # For communicating between datasinks and devices
 
-sys.path.insert(1, os.path.abspath("../../.."))
+device_path = os.path.join(os.path.dirname(sys.argv[0]), "../../..")
+sys.path.insert(1, device_path)
 from EatonClient import EatonClient
 from Devices.Device import Device
 

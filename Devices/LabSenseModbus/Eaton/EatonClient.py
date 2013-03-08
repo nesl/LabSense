@@ -4,8 +4,7 @@ import os                               # For importing from parent directory
 import time                             # For recording timestamp when getting data
 
 # Import from common directory
-sys.path.insert(0, os.path.abspath("../.."))
-import LabSenseModbus.common.modbus as modbus
+import Devices.LabSenseModbus.common.modbus as modbus
 
 """ EatonClient inherits from the TCPModbusClient, which can read data from any
 modbus device. EatonClient adds a level on top to specify what channels should
