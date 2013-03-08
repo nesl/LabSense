@@ -63,3 +63,15 @@ already, you can skip this step:
        Access Prileges set to "all." Then click the orange "Create" button.
     5. Copy the Api key to the config.json file in the Cosm section.
 
+Usage
+=====
+1. Navigate to the LabSenseHandler directory.
+
+2. Create a config.json file using the config.json.example as a template. This
+file is used to specify all the parameters of the different sensors and sinks
+you will be using in your LabSense deployment.
+
+3. Start the program by running:
+    <pre>
+    python main.py config.json
+    </pre>
