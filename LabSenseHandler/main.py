@@ -160,7 +160,7 @@ class LabSenseMain(object):
     def __startProcess(self, args):
         """ Starts a new process with the given arguments """
 
-        print "ARGS: " + str(args)
+        print "Starting process: " + " ".join(args)
 
         process = subprocess.Popen(args, stdout=subprocess.PIPE,
                                    stderr=subprocess.PIPE)

@@ -25,7 +25,7 @@
         "SensorAct": true,
         "SensorActInterval": 1,
         "Cosm": true,
-        "CosmInterval": 5,
+        "CosmInterval": 6,
         "Stdout": true,
         "StdoutInterval": "1"
     },
@@ -42,7 +42,7 @@
         "SensorAct": true,
         "SensorActInterval": "1",
         "Cosm": true,
-        "CosmInterval": 5,
+        "CosmInterval": 6,
         "Stdout": true,
         "StdoutInterval": "2"
     },
@@ -61,7 +61,7 @@
         "SensorAct": true,
         "SensorActInterval": "1",
         "Cosm": true,
-        "CosmInterval": 5,
+        "CosmInterval": 6,
         "Stdout": true,
         "StdoutInterval": "2"
 
@@ -79,7 +79,7 @@
         "SensorAct": true,
         "SensorActInterval": "1",
         "Cosm": true,
-        "CosmInterval": 5,
+        "CosmInterval": 6,
         "Stdout": true,
         "StdoutInterval": "2"
     },
@@ -96,7 +96,7 @@
         "SensorAct": true,
         "SensorActInterval": "1",
         "Cosm": true,
-        "CosmInterval": 5,
+        "CosmInterval": 6,
         "Stdout": true,
         "StdoutInterval": "2"
     },
@@ -113,7 +113,7 @@
         "SensorAct": true,
         "SensorActInterval": "1",
         "Cosm": true,
-        "CosmInterval": 5,
+        "CosmInterval": 6,
         "Stdout": true,
         "StdoutInterval": "2"
     },
@@ -134,7 +134,7 @@
                 "SensorAct": true,
                 "SensorActInterval": 1,
                 "Cosm": true,
-                "CosmInterval": 5,
+                "CosmInterval": 6,
                 "Stdout": true,
                 "StdoutInterval": 2
             },
@@ -149,7 +149,7 @@
                 "SensorAct": true,
                 "SensorActInterval": 1,
                 "Cosm": true,
-                "CosmInterval": 5,
+                "CosmInterval": 6,
                 "Stdout": true,
                 "StdoutInterval": 2
             }
