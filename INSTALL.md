@@ -63,6 +63,10 @@ already, you can skip this step:
        Access Prileges set to "all." Then click the orange "Create" button.
     5. Copy the Api key to the config.json file in the Cosm section.
 
+6. If you pla on using Zwave, make sure to set up the Vera 2 hardware correctly
+by following this video:
+
+
 Usage
 =====
 1. Navigate to the LabSenseHandler directory.
