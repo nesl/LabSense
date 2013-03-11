@@ -159,7 +159,6 @@ TemperatureSensor, DoorSensor, and MotionSensor):
             to the IP of your Vera and click on the "Devices" tab. Check what
             the name of the LightSensor is and make sure it matches with the
             "name" field of the sensor in question. See the following image:
-
             ![Zwave name](https://raw.github.com/jtsao22/LabSense/master/imgs/LabSenseZwaveInstallStartupLua.jpg)
 
         2. Event-driven: DoorSensor and MotionSensor.
@@ -178,7 +177,7 @@ TemperatureSensor, DoorSensor, and MotionSensor):
             6. Click on the "Triggers" tab and add three triggers: 
                 1. Door opened with the Door Sensor 
                     Configure like the following:
-                    ![Config]([3](https://raw.github.com/jtsao22/LabSense/master/imgs/DoorOpenedTrigger.jpg)
+                    ![Config](https://raw.github.com/jtsao22/LabSense/master/imgs/DoorOpenedTrigger.jpg)
                     Add code by clicking on "Luup Event" and copy/pasting code
                     from Devices/LabSenseServer/lua/door_opened_luup_event.lua.
                 2. Door closed with the Door Sensor
@@ -188,7 +187,7 @@ TemperatureSensor, DoorSensor, and MotionSensor):
                     from Devices/LabSenseServer/lua/door_closed_luup_event.lua.
                 3. Motion Detected with the Motion Sensor
                     Configure like the following:
-                    ![Config]([5](https://raw.github.com/jtsao22/LabSense/master/imgs/MotionDetectedTrigger.jpg)
+                    ![Config](https://raw.github.com/jtsao22/LabSense/master/imgs/MotionDetectedTrigger.jpg)
                     Add code by clicking on "Luup Event" and copy/pasting code
                     from Devices/LabSenseServer/lua/motion_detected_luup_event.lua.
                 4. **IMPORTANT** For all Luup events, make sure to change the local api_key
