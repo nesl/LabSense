@@ -159,7 +159,7 @@ TemperatureSensor, DoorSensor, and MotionSensor):
             to the IP of your Vera and click on the "Devices" tab. Check what
             the name of the LightSensor is and make sure it matches with the
             "name" field of the sensor in question. See the following image:
-            ![Zwave name](https://raw.github.com/jtsao22/LabSense/master/imgs/LabSenseZwaveInstallStartupLua.jpg)
+            ![Zwave name](https://raw.github.com/jtsao22/LabSense/master/imgs/LabSenseZwaveInstall.jpg)
 
         * Event-driven: DoorSensor and MotionSensor.
             For these sensors, lua code must be written by the Vera sensors to
