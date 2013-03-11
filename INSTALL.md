@@ -177,7 +177,7 @@ TemperatureSensor, DoorSensor, and MotionSensor):
             6. Click on the "Triggers" tab and add three triggers: 
                 1. Door opened with the Door Sensor 
                     Configure like the following:
-                    ![Config](https://raw.github.com/jtsao22/LabSense/master/imgs/DoorOpenedTrigger.jpg)
+                    ![Config](https://raw.github.com/jtsao22/LabSense/master/imgs/DoorOpenTrigger.jpg)
                     Add code by clicking on "Luup Event" and copy/pasting code
                     from Devices/LabSenseServer/lua/door_opened_luup_event.lua.
                     ![Copying Lua](https://raw.github.com/jtsao22/LabSense/master/imgs/CopyLuaToTriggerLuupEvent.png)
