@@ -198,8 +198,8 @@ TemperatureSensor, DoorSensor, and MotionSensor):
                     
             
     
-[1]: https://www.dropbox.com/s/0ekdfod6mv050lq/LabSenseZwaveInstall.jpg
-[2]: https://www.dropbox.com/s/3dk1f6c8id5eu1j/LabSenseZwaveInstallStartupLua.jpg
-[3]:
-[4]:
-[5]:
+[1]: https://raw.github.com/jtsao22/LabSense/master/imgs/LabSenseZwaveInstall.jpg
+[2]: https://raw.github.com/jtsao22/LabSense/master/imgs/LabSenseZwaveInstallStartupLua.jpg
+[3]: https://raw.github.com/jtsao22/LabSense/master/imgs/DoorOpenedTrigger.jpg
+[4]: https://raw.github.com/jtsao22/LabSense/master/imgs/DoorClosedTrigger.jpg
+[5]: https://raw.github.com/jtsao22/LabSense/master/imgs/MotionDetectedTrigger.jpg
