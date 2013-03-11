@@ -180,9 +180,9 @@ TemperatureSensor, DoorSensor, and MotionSensor):
                     ![Config](https://raw.github.com/jtsao22/LabSense/master/imgs/DoorOpenedTrigger.jpg)
                     Add code by clicking on "Luup Event" and copy/pasting code
                     from Devices/LabSenseServer/lua/door_opened_luup_event.lua.
+                    ![Copying Lua](https://raw.github.com/jtsao22/LabSense/master/imgs/CopyLuaToTriggerLuupEvent.png)
                 2. Door closed with the Door Sensor
-                    Configure like the following:
-                    ![Config](https://raw.github.com/jtsao22/LabSense/master/imgs/DoorClosedTrigger.jpg)
+                    Configure like the following: ![Config](https://raw.github.com/jtsao22/LabSense/master/imgs/DoorClosedTrigger.jpg)
                     Add code by clicking on "Luup Event" and copy/pasting code
                     from Devices/LabSenseServer/lua/door_closed_luup_event.lua.
                 3. Motion Detected with the Motion Sensor
