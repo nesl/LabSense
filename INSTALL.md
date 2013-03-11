@@ -160,7 +160,7 @@ TemperatureSensor, DoorSensor, and MotionSensor):
             the name of the LightSensor is and make sure it matches with the
             "name" field of the sensor in question. See the following image:
 
-            ![Zwave name]([1])
+            ![Zwave name](https://raw.github.com/jtsao22/LabSense/master/imgs/LabSenseZwaveInstallStartupLua.jpg)
 
         2. Event-driven: DoorSensor and MotionSensor.
             For these sensors, lua code must be written by the Vera sensors to
@@ -172,34 +172,25 @@ TemperatureSensor, DoorSensor, and MotionSensor):
             3. Click on "Edit Startup Lua" and copy/paste the "startup.lua" code
             in Devices/LabSenseServer/lua/startup.lua to the box and click "Go."
             4. Click the red "Save" button on the top right.
-            ![Edit startup]([2])
+            ![Edit startup](https://raw.github.com/jtsao22/LabSense/master/imgs/LabSenseZwaveInstallStartupLua.jpg)
             5. Click on the "Automation" tab, and click on the settings page of
             your scene. 
             6. Click on the "Triggers" tab and add three triggers: 
                 1. Door opened with the Door Sensor 
                     Configure like the following:
-                    ![Config]([3])
+                    ![Config]([3](https://raw.github.com/jtsao22/LabSense/master/imgs/DoorOpenedTrigger.jpg)
                     Add code by clicking on "Luup Event" and copy/pasting code
                     from Devices/LabSenseServer/lua/door_opened_luup_event.lua.
                 2. Door closed with the Door Sensor
                     Configure like the following:
-                    ![Config]([4])
+                    ![Config](https://raw.github.com/jtsao22/LabSense/master/imgs/DoorClosedTrigger.jpg)
                     Add code by clicking on "Luup Event" and copy/pasting code
                     from Devices/LabSenseServer/lua/door_closed_luup_event.lua.
                 3. Motion Detected with the Motion Sensor
                     Configure like the following:
-                    ![Config]([5])
+                    ![Config]([5](https://raw.github.com/jtsao22/LabSense/master/imgs/MotionDetectedTrigger.jpg)
                     Add code by clicking on "Luup Event" and copy/pasting code
                     from Devices/LabSenseServer/lua/motion_detected_luup_event.lua.
                 4. **IMPORTANT** For all Luup events, make sure to change the local api_key
                 line to reflect the same API_KEY specified in the API_KEY field
                 of LabSenseServer in the config.json file!
-
-                    
-            
-    
-[1]: https://raw.github.com/jtsao22/LabSense/master/imgs/LabSenseZwaveInstall.jpg
-[2]: https://raw.github.com/jtsao22/LabSense/master/imgs/LabSenseZwaveInstallStartupLua.jpg
-[3]: https://raw.github.com/jtsao22/LabSense/master/imgs/DoorOpenedTrigger.jpg
-[4]: https://raw.github.com/jtsao22/LabSense/master/imgs/DoorClosedTrigger.jpg
-[5]: https://raw.github.com/jtsao22/LabSense/master/imgs/MotionDetectedTrigger.jpg
