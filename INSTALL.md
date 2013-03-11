@@ -63,10 +63,6 @@ already, you can skip this step:
        Access Prileges set to "all." Then click the orange "Create" button.
     5. Copy the Api key to the config.json file in the Cosm section.
 
-6. If you pla on using Zwave, make sure to set up the Vera 2 hardware correctly
-by following this video:
-
-
 Usage
 =====
 1. Navigate to the LabSenseHandler directory.
@@ -131,7 +127,7 @@ TemperatureSensor, DoorSensor, and MotionSensor):
     * name: This is the name you give your device. It must be **unique** and will be
             used for the Cosm channel name and SensorAct devicename. 
     * IP: IP of the device. Note:
-        * Eaton, Veris, SmartSwitch, TemperatureSensor all have IP's from which to query. 
+        * Eaton, Veris, SmartSwitch, TemperatureSensor all have IPs from which to query. 
         * LabSenseServer devices (DoorSensor and MotionSensor) should both specify the IP of the computer you are running LabSense on. This IP is used for SensorAct, which requires an IP for the devices sending data.
     * PORT: Port of the device
     * location: This is used by SensorAct. Simply give a string specifying your location.
@@ -142,7 +138,7 @@ TemperatureSensor, DoorSensor, and MotionSensor):
     * SensorActInterval, CosmInterval, StdoutInterval: The amount of time between each sending of the data.
 
 5. LabSenseServer requirements.
-    * name: This is the name of your LabSenseServer. It must be **unique** and is identified by this name (you can have several LabSenseServer's).
+    * name: This is the name of your LabSenseServer. It must be **unique** and is identified by this name (you can have several LabSenseServers).
     * PORT: This is the port on your computer/server that you would like to
     serve the server on. Event-driven Zwave Devices (currently Door Sensor and
     Motion Sensor) send data to this server, which then forwards the data to the
