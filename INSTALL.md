@@ -153,7 +153,7 @@ TemperatureSensor, DoorSensor, and MotionSensor):
 6. Setting Up Zwave
     * Zwave Devices include: LightSensor, TemperatureSensor, SmartSwitch, DoorSensor, and MotionSensor.
     * There are two groups of Zwave Devices:
-        1. Polling based: LightSensor, TemperatureSensor, and SmartSwitch.
+        * Polling based: LightSensor, TemperatureSensor, and SmartSwitch.
             * The "name" field must be the same name given to the sensor on the
             Vera 2 webpage. To check/change the name on the Vera 2 webpage, go
             to the IP of your Vera and click on the "Devices" tab. Check what
@@ -161,7 +161,7 @@ TemperatureSensor, DoorSensor, and MotionSensor):
             "name" field of the sensor in question. See the following image:
             ![Zwave name](https://raw.github.com/jtsao22/LabSense/master/imgs/LabSenseZwaveInstallStartupLua.jpg)
 
-        2. Event-driven: DoorSensor and MotionSensor.
+        * Event-driven: DoorSensor and MotionSensor.
             For these sensors, lua code must be written by the Vera sensors to
             send to the LabSenseServer you will host on your computer.
 
