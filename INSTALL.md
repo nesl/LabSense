@@ -183,8 +183,7 @@ TemperatureSensor, DoorSensor, and MotionSensor):
             in Devices/LabSenseServer/lua/startup.lua to the box and click "Go."
             4. Click the red "Save" button on the top right.
             ![Edit startup](https://raw.github.com/jtsao22/LabSense/master/imgs/LabSenseZwaveInstallStartupLua.jpg)
-            5. Click on the "Automation" tab, and click on the settings page of
-            your scene. 
+            5. Click on the "Automation" tab, and click on the settings page of your scene. If you have not made a scene, click the "New Scene" tab and name the Scene whatever you would like.
             6. Click on the "Triggers" tab and add three triggers: 
                 1. Door opened with the Door Sensor 
                     Configure like the following:

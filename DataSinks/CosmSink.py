@@ -1,6 +1,5 @@
 import sys, os                              # For importing from project directory
 import json                                 # For writing cosm JSON message
-#from datetime import datetime               # For formatting timestamp into Cosm's format
 import time
 
 from Cosm.CosmUploader import CosmUploader

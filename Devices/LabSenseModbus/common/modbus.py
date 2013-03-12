@@ -24,9 +24,6 @@ class TCPModbusClient(object):
             time.sleep(5)
             self.connect()
 
-    def send(self, msg):
-        pass
-
     def modbusReadReg(self, addr, modbus_func, reg_addr, reg_qty):
 
         # Create request with network endianness
