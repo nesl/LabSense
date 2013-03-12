@@ -1,11 +1,12 @@
 Installation
 ============
 
-1. Install Distribute and Pip to install python packages. If you have pip
-already, you can skip this step:
+1. Install Distribute, Pip, and virtualenv to install python packages. If you
+have pip and virtualenv already, you can skip this step:
     <pre>
     curl -O http://python-distribute.org/distribute_setup.py && sudo python distribute_setup.py
     curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py && sudo python get-pip.py
+    sudo pip install virtualenv
     </pre>
 
 2. Create a virtual environment using virtualenv and get the code:
@@ -136,6 +137,7 @@ TemperatureSensor, DoorSensor, and MotionSensor):
     * sinterval: This is the amount of time between each sampling of the device. 
     * SensorAct, Cosm, Stdout: This are boolean values: true means send to the datasink, false means do not.
     * SensorActInterval, CosmInterval, StdoutInterval: The amount of time between each sending of the data.
+    * Raritan also has the username and password fields to fill out. Please see the Raritan Section for more information.
 
 5. LabSenseServer requirements.
     * name: This is the name of your LabSenseServer. It must be **unique** and is identified by this name (you can have several LabSenseServers).
@@ -146,7 +148,20 @@ TemperatureSensor, DoorSensor, and MotionSensor):
     * API_KEY: This is an agreed upon API_KEY that is specified in the config file and in the json sent from the Zwave Device.
     * Sensors: This can contain any number of MotionSensors and DoorSensors with configurations exactly the same as other device requirements except a PORT is not required.
 
-6. Setting Up Zwave
+6. Setting up Raritan
+    * The Raritan has two extra fields that need to be filled in: username and * password. 
+        These must be looked up from the Raritan control panel website (See diagram below):
+            1. Login to the Raritan website at the Raritans IP.
+            2. Click device settings and then SNMP settings.
+            ![Raritan Setup](https://raw.github.com/jtsao22/LabSense/master/imgs/RaritanSetup1.jpg)
+            3. Make sure both the Enable SNMP v1/v2c Protocol and v3 Protocol
+            are enabled. Copy the "Read Community" field into the config.json
+            "password" field.
+            4. Copy the "User" field on the top left of the screen into the
+            "username" field of the config.json file.
+            ![Raritan Setup](https://raw.github.com/jtsao22/LabSense/master/imgs/RaritanSetup2.jpg)
+
+7. Setting Up Zwave
     * Zwave Devices include: LightSensor, TemperatureSensor, SmartSwitch, DoorSensor, and MotionSensor.
     * There are two groups of Zwave Devices:
         * Polling based: LightSensor, TemperatureSensor, and SmartSwitch.
@@ -188,4 +203,7 @@ TemperatureSensor, DoorSensor, and MotionSensor):
                     from Devices/LabSenseServer/lua/motion_detected_luup_event.lua.
                 4. **IMPORTANT** For all Luup events, make sure to change the local api_key
                 line to reflect the same API_KEY specified in the API_KEY field
-                of LabSenseServer in the config.json file!
+                of LabSenseServer in the config.json file! Also, make sure the
+                "local name" line pasted matches the "name" field in the
+                "LabSenseServer" configuration in the config.json file.
+                    
