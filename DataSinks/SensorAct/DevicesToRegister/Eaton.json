@@ -1,0 +1,133 @@
+{
+    "secretkey": "", 
+    "deviceprofile": { 
+        "devicename": "", 
+        "location": "", 
+        "IP": "", 
+        "tags": "LabSense", 
+        "latitude": "", 
+        "longitude": "", 
+        "sensors": [ 
+            { "name": "Current", 
+                "sid": "1", 
+                "channels": [ 
+                    { "name": "CurrentA", 
+                        "type": "Float", 
+                        "unit": "Amps", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "CurrentB", 
+                        "type": "Float", 
+                        "unit": "Amps", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "CurrentC", 
+                        "type": "Float", 
+                        "unit": "Amps", 
+                        "samplingperiod": "" 
+                    }
+                ] 
+            },
+            { "name": "Power", 
+                "sid": "2", 
+                "channels": [ 
+                    { "name": "PowerA", 
+                        "type": "Float", 
+                        "unit": "Watts", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerB", 
+                        "type": "Float", 
+                        "unit": "Watts", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerC", 
+                        "type": "Float", 
+                        "unit": "Watts", 
+                        "samplingperiod": "" 
+                    }
+                ] 
+            },
+            { "name": "VARs", 
+                "sid": "3", 
+                "channels": [ 
+                    { "name": "VARsA", 
+                        "type": "Float", 
+                        "unit": "VARs", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "VARsB", 
+                        "type": "Float", 
+                        "unit": "VARs", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "VARsC", 
+                        "type": "Float", 
+                        "unit": "VARs", 
+                        "samplingperiod": "" 
+                    }
+                ] 
+            },
+            { "name": "VAs", 
+                "sid": "4", 
+                "channels": [ 
+                    { "name": "VAsA", 
+                        "type": "Float", 
+                        "unit": "VAs", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "VAsB", 
+                        "type": "Float", 
+                        "unit": "VAs", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "VAsC", 
+                        "type": "Float", 
+                        "unit": "VAs", 
+                        "samplingperiod": "" 
+                    }
+                ] 
+            },
+            { "name": "PowerFactor", 
+                "sid": "5", 
+                "channels": [ 
+                    { "name": "PowerFactorA", 
+                        "type": "Float", 
+                        "unit": "None", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerFactorB", 
+                        "type": "Float", 
+                        "unit": "None", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerFactorC", 
+                        "type": "Float", 
+                        "unit": "None", 
+                        "samplingperiod": "" 
+                    }
+                ] 
+            },
+            { "name": "Voltage", 
+                "sid": "6", 
+                "channels": [ 
+                    { "name": "VoltageAN", 
+                        "type": "Float", 
+                        "unit": "Volts", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "VoltageBN", 
+                        "type": "Float", 
+                        "unit": "Volts", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "VoltageCN", 
+                        "type": "Float", 
+                        "unit": "Volts", 
+                        "samplingperiod": "" 
+                    }
+                ] 
+            }
+        ] 
+    }
+}

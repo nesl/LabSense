@@ -1,0 +1,23 @@
+{
+    "secretkey": "", 
+    "deviceprofile": { 
+        "devicename": "", 
+        "location": "", 
+        "IP": "", 
+        "tags": "LabSense", 
+        "latitude": "", 
+        "longitude": "", 
+        "sensors": [ 
+            { "name": "Motion", 
+                "sid": "1", 
+                "channels": [ 
+                    { "name": "Motion", 
+                        "type": "Float", 
+                        "unit": "Motion/No Motion", 
+                        "samplingperiod": "" 
+                    }
+                ] 
+            }
+        ] 
+    }
+}

@@ -4,18 +4,24 @@ LabSenseDB
 *.o
 *.swp
 *.svn
+*.dblite
 tags
 .Python
+*log.txt
 
-LabSenseZwave/OZW_Log.txt
-LabSenseZwave/api_key.py
-LabSenseZwave/LabSenseZwave
+bin/
+include/
+lib/
+local/
 
-LabSenseSupervisor/OZW_Log.txt
-LabSenseSupervisor/logs/
+deprecated/LabSenseServer/SocketIOServer/cache.db
+deprecated/LabSenseSupervisor/zwcfg_0x014d08e6.xml
+deprecated/LabSenseSupervisor/zwscene.xml
+deprecated/LabSenseSupervisor/cache.db
+deprecated/LabSenseSupervisor/OZW_Log.txt
+deprecated/LabSenseSupervisor/logs/
+deprecated/LabSenseModbus/TCPModbusClient
+deprecated/LabSenseServer/SocketIOServer/cache.db
 
-LabSenseSupervisor/supervisord.conf
-
-LabSenseServer/SocketIOServer/cache.db
-LabSenseSupervisor/zwcfg_0x014d08e6.xml
-LabSenseSupervisor/zwscene.xml
+LabSenseHandler/config.json
+LabSenseHandler/logs/*.log
