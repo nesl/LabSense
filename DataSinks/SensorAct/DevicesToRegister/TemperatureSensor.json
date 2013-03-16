@@ -1,0 +1,23 @@
+{
+    "secretkey": "", 
+    "deviceprofile": { 
+        "devicename": "", 
+        "location": "", 
+        "IP": "", 
+        "tags": "LabSense", 
+        "latitude": "", 
+        "longitude": "", 
+        "sensors": [ 
+            { "name": "Temperature", 
+                "sid": "1", 
+                "channels": [ 
+                    { "name": "Temperature", 
+                        "type": "Float", 
+                        "unit": "Fahrenheit", 
+                        "samplingperiod": "" 
+                    }
+                ] 
+            }
+        ] 
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "secretkey": "", 
+    "deviceprofile": { 
+        "devicename": "", 
+        "location": "", 
+        "IP": "", 
+        "tags": "LabSense", 
+        "latitude": "", 
+        "longitude": "", 
+        "sensors": [ 
+            { "name": "Door", 
+                "sid": "1", 
+                "channels": [ 
+                    { "name": "Door", 
+                        "type": "Float", 
+                        "unit": "Open/Closed", 
+                        "samplingperiod": "" 
+                    }
+                ] 
+            }
+        ] 
+    }
+}

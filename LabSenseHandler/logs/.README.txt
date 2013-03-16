@@ -1,0 +1,2 @@
+This file is here to add the logs directory to the git repository. Git does
+not support adding empty directories.

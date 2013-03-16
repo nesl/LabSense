@@ -1,0 +1,343 @@
+{
+    "secretkey": "", 
+    "deviceprofile": { 
+        "devicename": "", 
+        "location": "", 
+        "IP": "", 
+        "tags": "LabSense", 
+        "latitude": "", 
+        "longitude": "", 
+        "sensors": [ 
+            { "name": "Current", 
+                "sid": "1", 
+                "channels": [ 
+                    { "name": "Current0", 
+                        "type": "Float", 
+                        "unit": "Amps", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Current1", 
+                        "type": "Float", 
+                        "unit": "Amps", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Current2", 
+                        "type": "Float", 
+                        "unit": "Amps", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Current3", 
+                        "type": "Float", 
+                        "unit": "Amps", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Current4", 
+                        "type": "Float", 
+                        "unit": "Amps", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Current5", 
+                        "type": "Float", 
+                        "unit": "Amps", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Current6", 
+                        "type": "Float", 
+                        "unit": "Amps", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Current7", 
+                        "type": "Float", 
+                        "unit": "Amps", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Current8", 
+                        "type": "Float", 
+                        "unit": "Amps", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Current9", 
+                        "type": "Float", 
+                        "unit": "Amps", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Current10", 
+                        "type": "Float", 
+                        "unit": "Amps", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Current11", 
+                        "type": "Float", 
+                        "unit": "Amps", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Current12", 
+                        "type": "Float", 
+                        "unit": "Amps", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Current13", 
+                        "type": "Float", 
+                        "unit": "Amps", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Current14", 
+                        "type": "Float", 
+                        "unit": "Amps", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Current15", 
+                        "type": "Float", 
+                        "unit": "Amps", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Current16", 
+                        "type": "Float", 
+                        "unit": "Amps", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Current17", 
+                        "type": "Float", 
+                        "unit": "Amps", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Current18", 
+                        "type": "Float", 
+                        "unit": "Amps", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Current19", 
+                        "type": "Float", 
+                        "unit": "Amps", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Current20", 
+                        "type": "Float", 
+                        "unit": "Amps", 
+                        "samplingperiod": "" 
+                    }
+                ] 
+            },
+            { "name": "Power", 
+                "sid": "2", 
+                "channels": [ 
+                    { "name": "Power0", 
+                        "type": "Float", 
+                        "unit": "kW", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Power1", 
+                        "type": "Float", 
+                        "unit": "kW", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Power2", 
+                        "type": "Float", 
+                        "unit": "kW", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Power3", 
+                        "type": "Float", 
+                        "unit": "kW", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Power4", 
+                        "type": "Float", 
+                        "unit": "kW", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Power5", 
+                        "type": "Float", 
+                        "unit": "kW", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Power6", 
+                        "type": "Float", 
+                        "unit": "kW", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Power7", 
+                        "type": "Float", 
+                        "unit": "kW", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Power8", 
+                        "type": "Float", 
+                        "unit": "kW", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Power9", 
+                        "type": "Float", 
+                        "unit": "kW", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Power10", 
+                        "type": "Float", 
+                        "unit": "kW", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Power11", 
+                        "type": "Float", 
+                        "unit": "kW", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Power12", 
+                        "type": "Float", 
+                        "unit": "kW", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Power13", 
+                        "type": "Float", 
+                        "unit": "kW", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Power14", 
+                        "type": "Float", 
+                        "unit": "kW", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Power15", 
+                        "type": "Float", 
+                        "unit": "kW", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Power16", 
+                        "type": "Float", 
+                        "unit": "kW", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Power17", 
+                        "type": "Float", 
+                        "unit": "kW", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Power18", 
+                        "type": "Float", 
+                        "unit": "kW", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Power19", 
+                        "type": "Float", 
+                        "unit": "kW", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "Power20", 
+                        "type": "Float", 
+                        "unit": "kW", 
+                        "samplingperiod": "" 
+                    }
+                ] 
+            },
+            { "name": "PowerFactor", 
+                "sid": "3", 
+                "channels": [ 
+                    { "name": "PowerFactor0", 
+                        "type": "Float", 
+                        "unit": "None", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerFactor1", 
+                        "type": "Float", 
+                        "unit": "None", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerFactor2", 
+                        "type": "Float", 
+                        "unit": "None", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerFactor3", 
+                        "type": "Float", 
+                        "unit": "None", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerFactor4", 
+                        "type": "Float", 
+                        "unit": "None", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerFactor5", 
+                        "type": "Float", 
+                        "unit": "None", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerFactor6", 
+                        "type": "Float", 
+                        "unit": "None", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerFactor7", 
+                        "type": "Float", 
+                        "unit": "None", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerFactor8", 
+                        "type": "Float", 
+                        "unit": "None", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerFactor9", 
+                        "type": "Float", 
+                        "unit": "None", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerFactor10", 
+                        "type": "Float", 
+                        "unit": "None", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerFactor11", 
+                        "type": "Float", 
+                        "unit": "None", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerFactor12", 
+                        "type": "Float", 
+                        "unit": "None", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerFactor13", 
+                        "type": "Float", 
+                        "unit": "None", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerFactor14", 
+                        "type": "Float", 
+                        "unit": "None", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerFactor15", 
+                        "type": "Float", 
+                        "unit": "None", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerFactor16", 
+                        "type": "Float", 
+                        "unit": "None", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerFactor17", 
+                        "type": "Float", 
+                        "unit": "None", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerFactor18", 
+                        "type": "Float", 
+                        "unit": "None", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerFactor19", 
+                        "type": "Float", 
+                        "unit": "None", 
+                        "samplingperiod": "" 
+                    },
+                    { "name": "PowerFactor20", 
+                        "type": "Float", 
+                        "unit": "None", 
+                        "samplingperiod": "" 
+                    }
+                ] 
+            }
+        ] 
+    }
+}

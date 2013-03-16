@@ -1,0 +1,159 @@
+{
+    "SensorAct": {
+        "IP": "128.97.93.51",
+        "PORT": 9000,
+        "API_KEY": "[API_KEY]"
+    },
+
+    "Cosm": {
+        "API_KEY": "6h8z-vpjKTBYjnt62cRh-f8yZ96SAKxoOTJjWWJkUm9uYz0g",
+        "user_name": "[USER_NAME]"
+    },
+
+    "Stdout": {
+    },
+
+    "Eaton": {
+        "name": "NESL_Eaton",
+        "IP": "128.97.11.100",
+        "PORT": "4660",
+        "location": "Boelter",
+        "latitude": 34.069,
+        "longitude": -118.443,
+        "channels": ["VoltageAN", "VoltageBN", "VoltageCN", "CurrentA", "CurrentB", "CurrentC", "PowerA", "PowerB", "PowerC", "VARsA", "VARsB", "VARsC", "VAsA", "VAsB", "VAsC", "PowerFactorA", "PowerFactorB", "PowerFactorC"],
+        "sinterval": 2,
+        "SensorAct": true,
+        "SensorActInterval": 1,
+        "Cosm": true,
+        "CosmInterval": 6,
+        "Stdout": true,
+        "StdoutInterval": "1"
+    },
+
+    "Veris": {
+        "name": "NESL_Veris",
+        "IP": "128.97.93.90",
+        "PORT": "4660",
+        "location": "Boelter",
+        "latitude": 34.069,
+        "longitude": -118.443,
+        "channels": ["Power", "PowerFactor", "Current"],
+        "sinterval": 2,
+        "SensorAct": true,
+        "SensorActInterval": "1",
+        "Cosm": true,
+        "CosmInterval": 6,
+        "Stdout": true,
+        "StdoutInterval": "2"
+    },
+
+    "Raritan": {
+        "name": "NESL_Raritan",
+        "IP": "172.17.5.179",
+        "PORT": "161",
+        "username": "",
+        "password": "",
+        "location": "Boelter",
+        "latitude": 34.069,
+        "longitude": -118.443,
+        "channels": ["Current", "Voltage", "ActivePower", "ApparentPower", "PowerFactor"],
+        "sinterval": "1",
+        "SensorAct": true,
+        "SensorActInterval": "1",
+        "Cosm": true,
+        "CosmInterval": 6,
+        "Stdout": true,
+        "StdoutInterval": "2"
+
+    },
+
+    "SmartSwitch": {
+        "name": "NESL_SmartSwitch",
+        "IP": "172.17.5.117",
+        "PORT": 3480,
+        "location": "Boelter",
+        "latitude": 34.069,
+        "longitude": -118.443,
+        "channels": ["Power", "Energy"],
+        "sinterval": "1",
+        "SensorAct": true,
+        "SensorActInterval": "1",
+        "Cosm": true,
+        "CosmInterval": 6,
+        "Stdout": true,
+        "StdoutInterval": "2"
+    },
+
+    "LightSensor": {
+        "name": "NESL_LightSensor",
+        "IP": "172.17.5.117",
+        "PORT": 3480,
+        "location": "Boelter",
+        "latitude": 34.069,
+        "longitude": -118.443,
+        "channels": ["Light"],
+        "sinterval": "1",
+        "SensorAct": true,
+        "SensorActInterval": "1",
+        "Cosm": true,
+        "CosmInterval": 6,
+        "Stdout": true,
+        "StdoutInterval": "2"
+    },
+
+    "TemperatureSensor": {
+        "name": "NESL_TempSensor",
+        "IP": "172.17.5.117",
+        "PORT": 3480,
+        "location": "Boelter",
+        "latitude": 34.069,
+        "longitude": -118.443,
+        "channels": ["Temperature"],
+        "sinterval": "1",
+        "SensorAct": true,
+        "SensorActInterval": "1",
+        "Cosm": true,
+        "CosmInterval": 6,
+        "Stdout": true,
+        "StdoutInterval": "2"
+    },
+
+    "LabSenseServer": {
+        "name": "NESL_LabSenseServer",
+        "PORT": 8000,
+        "API_KEY": "6h8z-vpjKTBYjnt62cRh-f8yZ96SAKxoOTJjWWJkUm9uYz0g",
+        "Sensors": {
+
+            "DoorSensor": {
+                "name": "NESL_DoorSensor",
+                "IP": "128.97.93.90",
+                "sinterval": 1,
+                "location": "Boelter",
+                "latitude": 34.069,
+                "longitude": -118.443,
+                "SensorAct": true,
+                "SensorActInterval": 1,
+                "Cosm": true,
+                "CosmInterval": 6,
+                "Stdout": true,
+                "StdoutInterval": 2
+            },
+
+            "MotionSensor": {
+                "name": "NESL_MotionSensor",
+                "IP": "128.97.93.90",
+                "sinterval": 1,
+                "location": "Boelter",
+                "latitude": 34.069,
+                "longitude": -118.443,
+                "SensorAct": true,
+                "SensorActInterval": 1,
+                "Cosm": true,
+                "CosmInterval": 6,
+                "Stdout": true,
+                "StdoutInterval": 2
+            }
+
+        }
+    }
+}

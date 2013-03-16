@@ -1,0 +1,23 @@
+{
+    "secretkey": "", 
+    "deviceprofile": { 
+        "devicename": "", 
+        "location": "", 
+        "IP": "", 
+        "tags": "LabSense", 
+        "latitude": "", 
+        "longitude": "", 
+        "sensors": [ 
+            { "name": "Light", 
+                "sid": "1", 
+                "channels": [ 
+                    { "name": "Light", 
+                        "type": "Float", 
+                        "unit": "Percent", 
+                        "samplingperiod": "" 
+                    }
+                ] 
+            }
+        ] 
+    }
+}
