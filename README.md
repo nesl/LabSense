@@ -1,4 +1,4 @@
-LabSense
+LabSense v2
 ========
 
 This project involves sensing many different characteristics about a lab (i.e.
