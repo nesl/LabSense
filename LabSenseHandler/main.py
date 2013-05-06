@@ -72,6 +72,10 @@ class LabSenseMain(object):
                 raise KeyError("Unrecognized device: " + device)
 
     def monitorDevices(self, timeout):
+        """ This variable helps increase timeout for everytime the error
+        persists"""
+
+        i = 0
 
         while True:
             for device in self.running_devices:
@@ -80,6 +84,11 @@ class LabSenseMain(object):
                 # If child process dies, restart it
                 if device_process is not None:
                     print "CHILD DIED"
+                    print "linearly increasing timeout = "+str(i)
+                    i = i+5
+                    if i == 500:
+                        i = 0
+                        print "timeout backoff at 500 seconds, resetting to 0"
                     device.process = self.__startDevice(device.device_type, device.name)
 
                 std_out_line = None
@@ -96,7 +105,7 @@ class LabSenseMain(object):
                 if std_err_line:
                     device.logger.debug(std_err_line)
                 
-                time.sleep(timeout)
+                time.sleep(timeout+i) 
 
     """ Helper functions called within LabSenseMain class """
 
