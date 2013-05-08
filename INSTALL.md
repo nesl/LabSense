@@ -13,7 +13,7 @@ have pip and virtualenv already, you can skip this step:
     <pre>
     virtualenv LabSense
     cd LabSense
-    git clone git@github.com:jtsao22/LabSense.git
+    git clone git@github.com:nesl/LabSense.git
     source bin/activate
     </pre>
 
