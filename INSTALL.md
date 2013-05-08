@@ -19,7 +19,7 @@ have pip and virtualenv already, you can skip this step:
 
 3. Install dependencies virtualenv and py-snmp
     <pre>
-    sudo pip install -r requirements.txt
+    sudo pip install -r LabSense/requirements.txt
     </pre>
 
 4. In order to use SensorAct, you must create a SensorAct account:
