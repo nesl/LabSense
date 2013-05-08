@@ -67,6 +67,9 @@ have pip and virtualenv already, you can skip this step:
 Usage
 =====
 1. Navigate to the LabSenseHandler directory.
+    <pre>
+    cd LabSense/LabSenseHandler
+    </pre>
 
 2. Create a config.json file using the config.json.example as a template. This
 file is used to specify all the parameters of the different sensors and sinks
