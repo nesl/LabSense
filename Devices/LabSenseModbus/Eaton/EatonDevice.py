@@ -34,10 +34,13 @@ if __name__ == "__main__":
 
     # Get the device config
     device_name = "Eaton"
-    for device, dev_config in config.iteritems():
-        if device == device_name:
-            if dev_config["name"] == args.name:
-                device_config = dev_config
+    for device, dev_configs in config.iteritems():
+        if (type(dev_configs)!=list):
+            dev_configs = [dev_configs]
+        for dev_config in dev_configs:
+            if device == device_name:
+                if dev_config["name"] == args.name:
+                    device_config = dev_config
 
     # If the device is present, run it
     if device_config:

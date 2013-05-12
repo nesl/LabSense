@@ -33,9 +33,9 @@ class LabSenseMain(object):
     def startDevices(self):
         """ Parse devices in Configuration file """
         for device, configs in self.config.iteritems():
-			if (type(configs)!=list):
-            	configs = [configs]
-			for config in configs.iteritems():
+            if (type(configs)!=list):
+                configs = [configs]
+            for config in configs:
             	# Sinks
 	            if device == "SensorAct":
 	                required_fields = ["IP", "PORT", "API_KEY"]
