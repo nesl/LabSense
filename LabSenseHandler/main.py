@@ -34,7 +34,7 @@ class LabSenseMain(object):
         """ Parse devices in Configuration file """
         for device, configs in self.config.iteritems():
 			if (type(configs)!=list):
-				configs = [configs]
+            	configs = [configs]
 			for config in configs.iteritems():
             	# Sinks
 	            if device == "SensorAct":
