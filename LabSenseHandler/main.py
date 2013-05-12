@@ -32,44 +32,47 @@ class LabSenseMain(object):
 
     def startDevices(self):
         """ Parse devices in Configuration file """
-        for device, config in self.config.iteritems():
-            # Sinks
-            if device == "SensorAct":
-                required_fields = ["IP", "PORT", "API_KEY"]
-                for field in required_fields:
-                    if not config[field]:
-                        sys.exit("SensorAct requires the field " + field)
+        for device, configs in self.config.iteritems():
+			if (type(configs)!=list):
+				configs = [configs]
+			for config in configs.iteritems():
+            	# Sinks
+	            if device == "SensorAct":
+	                required_fields = ["IP", "PORT", "API_KEY"]
+	                for field in required_fields:
+	                    if not config[field]:
+	                        sys.exit("SensorAct requires the field " + field)
 
-            elif device == "Cosm":
-                required_fields = ["API_KEY", "user_name"]
-                for field in required_fields:
-                    if not config[field]:
-                        sys.exit("Cosm requires the field " + field)
+	            elif device == "Cosm":
+	                required_fields = ["API_KEY", "user_name"]
+	                for field in required_fields:
+	                    if not config[field]:
+	                        sys.exit("Cosm requires the field " + field)
 
-            elif device == "Stdout":
-                pass
+	            elif device == "Stdout":
+	                pass
 
-            # Devices 
-            elif device in ["Eaton", "Veris", "Raritan", "SmartSwitch",
-                          "LightSensor", "TemperatureSensor", "LabSenseServer"]:
-                # For each device, start the device process, create a logger for
-                # it, and store into running_devices list.
-                process = self.__startDevice(device, config["name"])
-                name = config["name"]
-                logger = logging.getLogger(name)
-                logger.propagate = False            # Don't propagate to console
-                formatter = logging.Formatter("%(asctime)s %(message)s")
-                filehandler = logging.FileHandler("logs/%s.log" % name, "w")
-                filehandler.setLevel(logging.DEBUG)
-                filehandler.setFormatter(formatter)
-                logger.addHandler(filehandler)
-                device_queue = Queue.Queue()
-                device_class = self.DeviceClass(config["name"], device, process, logger, device_queue)
-                self.running_devices.append(device_class)
+	            # Devices 
+	            elif device in ["Eaton", "Veris", "Raritan", "SmartSwitch",
+	                          "LightSensor", "TemperatureSensor", "LabSenseServer"]:
+	                # For each device, start the device process, create a logger for
+	                # it, and store into running_devices list.
+	                process = self.__startDevice(device, config["name"])
+	                name = config["name"]
+	                logger = logging.getLogger(name)
+	                logger.propagate = False            # Don't propagate to console
+	                formatter = logging.Formatter("%(asctime)s %(message)s")
+	                filehandler = logging.FileHandler("logs/%s.log" % name, "w")
+	                filehandler.setLevel(logging.DEBUG)
+	                filehandler.setFormatter(formatter)
+	                logger.addHandler(filehandler)
+	                device_queue = Queue.Queue()
+	                device_class = self.DeviceClass(config["name"], device, process, logger, device_queue)
+	                self.running_devices.append(device_class)
 
-            # Unrecognized
-            else:
-                raise KeyError("Unrecognized device: " + device)
+	            # Unrecognized
+	            else:
+	                raise KeyError("Unrecognized device: " + device)
 
     def monitorDevices(self, timeout):
         """ This variable helps increase timeout for everytime the error
